@@ -24,7 +24,7 @@
     	string name = "";
     	for (int i = 0; i < 5; i++)
     	{
-    		name = nameSeed[i]; //通过string容器为选手名字复制
+    		name = nameSeed[i]; //通过string容器为选手名字赋值
     		deque<int> score;
     		attendent a(name, score);
     		v.push_back(a); //将选手放进vector容器中
