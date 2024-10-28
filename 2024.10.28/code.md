@@ -1,67 +1,27 @@
-错误代码：
-
-    class Solution {
+**704.二分查找**
+        
+        class Solution {
         public:
-            vector<int> searchRange(vector<int>& nums, int target)
+            int search(vector<int>& nums, int target) 
             {
-                int left_find_leftBoundary = 0;
-                int left_find_rightBoundary = 0;
-                int right_find_leftBoundary = nums.size() - 1;
-                int right_find_rightBoundary = nums.size() - 1;
-                int leftBoundary = 0;
-                int rightBoundary = 0;
-        
-                while (left_find_leftBoundary <= right_find_leftBoundary && left_find_rightBoundary <= right_find_rightBoundary)
+                int left = 0;
+                int right = nums.size() - 1; //通过vector自带的size函数得到数组终点位置
+                while(left <= right)
                 {
-                    while (left_find_leftBoundary <= right_find_leftBoundary)
+                    int middle = left + (right - left) / 2;
+                    if (nums[middle] > target) //说明target在更小的左半边中
                     {
-                        int middle_find_leftBoundary = left_find_leftBoundary + (right_find_leftBoundary - left_find_leftBoundary) / 2;
-                        if (nums[middle_find_leftBoundary] > target)
-                        {
-                            right_find_leftBoundary = middle_find_leftBoundary - 1;
-                        }
-                        else if (nums[middle_find_leftBoundary] < target)
-                        {
-                            left_find_leftBoundary = middle_find_leftBoundary + 1;
-                        }
-                        else if (nums[middle_find_leftBoundary == target])
-                        {
-                            leftBoundary = middle_find_leftBoundary;
-                            break;
-                        }
-                        else
-                        {
-                            leftBoundary = left_find_leftBoundary;
-                            break;
-                        }
+                        right = middle - 1; //将right向左移动，减一是因为right是闭区间，我们不能将已经确认target不存在的位置再次放到新的比较区间中
                     }
-        
-                    while (left_find_rightBoundary <= right_find_rightBoundary)
+                    else if (nums[middle] < target) //说明target在更大的右半边中
                     {
-                        int middle_find_rightBoundary = left_find_rightBoundary + (right_find_rightBoundary - left_find_rightBoundary) / 2;
-                        if (nums[middle_find_rightBoundary] > target)
-                        {
-                            right_find_rightBoundary = middle_find_rightBoundary - 1;
-                        }
-                        else if (nums[middle_find_rightBoundary] < target)
-                        {
-                            left_find_rightBoundary = middle_find_rightBoundary + 1;
-                        }
-                        else if (nums[middle_find_rightBoundary == target])
-                        {
-                            rightBoundary = middle_find_rightBoundary;
-                            break;
-                        }
-                        else
-                        {
-                            rightBoundary = left_find_rightBoundary;
-                            break;
-                        }
+                        left = middle + 1; //将left向右移动，加一也是同理
                     }
-        
-                    return {leftBoundary, rightBoundary};
+                    else
+                    {
+                        return middle; //在循环中会重复整个过程，直到找到目标数所在的位置
+                    }
                 }
-        
-                return {-1, -1};
+                return -1; //如果目标数不在数组中则返回-1
             }
         };
