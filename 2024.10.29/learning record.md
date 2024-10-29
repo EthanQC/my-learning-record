@@ -66,7 +66,11 @@
 整体来说这题也不算很难，只是容易陷入思维陷阱，还是要学会变通才行，灵活使用if判断
 
 ## 一些知识
-
+### c++ primer plus
+- `cin.get()`语句可以实现类似于`system("pause")`的效果，但感觉没有后者好，并不是那种**按任意键继续**的效果
+- 可以通过`using std::cout` `using std::cin` `using std::endl`来代替`using namespace std`（在大型项目中）
+- `\n`可被包含在字符串中，当作换行符
+- `sqrt()`函数可用来返回平方根，直接传入需要开方的数即可（cmath库中）
 
 
 ## 碎碎念
