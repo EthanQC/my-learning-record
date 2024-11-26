@@ -57,6 +57,8 @@
 >[**2024.11.17**](https://github.com/EthanQC/My-LearningHub-StudyJourney-with-cpp/blob/55200dff08da4481f8e26f0e51d2ee0fa56af4ee/2024.11.17/learning-record.md)
 >
 >[**2024.11.19**](https://github.com/EthanQC/My-LearningHub-StudyJourney-with-cpp/blob/a4d92acbc8978159ceeca7d812cb3e5881734346/2024.11.19/learning-record.md)
+>
+>[**2024.11.26**]()
 
 ## 我的其他仓库（记录学习类）
 >[我的第一个仓库：链接数据库并实现二叉树的可视化](https://github.com/EthanQC/using-cpp-and-MySQL-to-implement-the-visualization-of-a-binary-tree)
