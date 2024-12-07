@@ -19,7 +19,18 @@
 
 这就回到了最开始的话题，我们希望移动对象而非拷贝对象，如果使用左值引用，我们只能将左值作为常量引用传递，而无法修改或移动它；另外，左值引用也无法传递一个临时对象
 
-### 原子性 `<atomic>`
+在C++11中，引入了右值引用（Rvalue Reference），使用 && 符号表示。右值引用主要用于实现移动语义和完美转发，以提高性能和资源管理效率。
+
+右值引用允许我们：
+实现移动语义（Move Semantics）： 通过“移动”资源（如动态分配的内存）而不是“复制”，提高性能。
+完美转发（Perfect Forwarding）： 在模板中将参数精确地传递给另一个函数，无论参数是左值还是右值。
+
+使用右值引用有以下几个好处：
+
+性能优化： 避免不必要的拷贝，特别是对于大型对象或拥有动态资源的对象，如 std::function。
+资源管理： 允许函数“获取”传入对象的资源所有权，确保资源高效利用和避免资源泄漏。
+
+### 原子性
 原子性指的是一系列操作要么全部成功完成，要么全部不发生，且在这个过程中不会被中断或观察到中间状态
 
 #### 原子性的基本特征
@@ -34,23 +45,22 @@
 
 ![举个例子](https://github.com/EthanQC/My-LearningHub-StudyJourney-with-cpp/blob/c4e152e1259095c1ca9240a8a301c06829092be4/images/explaining%20atomic.png)
 
-回到之前讨论的 epoll_create1 和 EPOLL_CLOEXEC，这里的“原子性”具有重要意义。
+而在epoll中，使用 epoll_create 创建一个 epoll 实例后，如果需要设置 close-on-exec 标志，通常需要额外调用 fcntl 系统调用。这两个操作之间存在一个时间窗口（时间间隔），在这期间如果进程执行了 exec 函数，新的程序可能会继承未设置 close-on-exec 的文件描述符，导致资源泄漏或安全隐患。
 
-情景描述：
+#### `<atomic>`
+在c++
 
-使用 epoll_create 创建一个 epoll 实例后，如果需要设置 close-on-exec 标志，通常需要额外调用 fcntl 系统调用。这两个操作之间存在一个时间窗口（时间间隔），在这期间如果进程执行了 exec 函数，新的程序可能会继承未设置 close-on-exec 的文件描述符，导致资源泄漏或安全隐患。
+### 互斥锁 `<mutex>`
 
-### lock
+互斥锁是
 
-### `<mutex>` 互斥锁
-什么是线程安全的队列/回调列表？
 在多线程环境下，如果多个线程要向同一个队列中插入任务（回调函数等），那么就必须保护这个队列的访问防止数据竞争与不一致。例如：
 
 使用std::mutex对队列操作加锁，确保一次只有一个线程可以读写队列。
 或使用无锁结构（如atomic + lock-free队列）保证线程安全。
 在eventLoop中经常使用一个std::vector<std::function<void()>>存放需要在Loop所属的线程里执行的回调函数。如果其他线程要向这个vector中添加回调，就必须加锁保护，以保证多线程安全，然后通过eventfd唤醒eventLoop线程执行这些回调。
 
-这就是线程安全的队列/回调列表的含义：多线程并发情况下，对存放回调的容器进行互斥保护，从而安全地跨线程提交任务。
+多线程并发情况下，对存放回调的容器进行互斥保护，从而安全地跨线程提交任务。
 
 ### RAII和异常安全 `<stdexcept><system_error>`
 RAII (Resource Acquisition Is Initialization)：
@@ -59,7 +69,163 @@ RAII (Resource Acquisition Is Initialization)：
 异常安全（Exception Safety）：
 指的是在发生异常时，程序或组件仍能维持良好状态，不会泄漏资源或处于不一致状态。RAII的广泛使用也有助于实现异常安全。当异常抛出时，栈展开会调用对象的析构函数，从而确保资源释放，保证程序不崩溃或资源不遗失。
 
+#### 异常处理
+异常处理是编程中的一种机制，用于处理程序运行过程中出现的错误或意外情况。通过异常处理，程序可以在检测到错误时采取适当的措施，而不会导致程序崩溃或产生不可预料的行为。
+
+在C++中，异常处理主要通过以下关键字实现：
+
+try：用于包围可能抛出异常的代码块。
+throw：用于抛出异常。
+catch：用于捕捉异常并处理。
+
+    #include <iostream>
+    #include <stdexcept> // 包含标准异常类
+
+    int main() {
+        try {
+            // 可能抛出异常的代码
+            throw std::runtime_error("发生了一个运行时错误");
+        }
+        catch (const std::exception& e) {
+            // 处理异常
+            std::cerr << "捕捉到异常: " << e.what() << std::endl;
+        }
+        return 0;
+    }
+
+异常处理的优点
+分离错误处理与正常逻辑：使代码更加清晰和易于维护。
+提高代码的健壮性：通过捕捉并处理异常，防止程序因错误而崩溃。
+传递错误信息：允许在程序的不同层级传递错误信息，使高层代码能够做出相应的决策。
+
+异常处理的注意事项
+避免过度使用异常：在性能敏感的代码中，频繁抛出和捕捉异常可能影响性能。
+确保资源释放：使用RAII（资源获取即初始化）模式，确保在异常发生时资源能够被正确释放。
+捕获具体异常：尽量捕获具体的异常类型，而不是使用catch(...)，以便更精确地处理不同的错误。
+
+在C++编程中，<errno.h>、<cassert>、<stdexcept> 和 <system_error> 这几个头文件分别提供了不同的错误处理机制和断言工具。以下是它们的主要区别以及在现代C++中的使用情况：
+
+1. <errno.h>
+来源：这是一个C语言的头文件，C++中也可以使用。
+功能：定义了用于错误报告的宏（如 errno），通常与一些C标准库函数配合使用，以指示发生的错误类型。
+使用场景：主要用于C风格的错误处理，尤其是在调用C库函数或需要与C代码交互时。
+示例：
+cpp
+Copy code
+#include <errno.h>
+#include <cstdio>
+
+FILE* file = fopen("nonexistent.txt", "r");
+if (!file) {
+    perror("Error opening file");
+    // errno 会被设置为对应的错误码
+}
+2. <cassert>
+来源：C++标准库头文件。
+功能：提供 assert 宏，用于在调试阶段进行断言检查。如果断言失败，程序会终止并输出错误信息。
+使用场景：用于在开发和调试阶段验证程序中的假设和不变量，帮助发现逻辑错误。
+示例：
+cpp
+Copy code
+#include <cassert>
+
+void divide(int a, int b) {
+    assert(b != 0 && "Division by zero!");
+    int result = a / b;
+    // ...
+}
+3. <stdexcept>
+来源：C++标准库头文件。
+功能：定义了一系列标准异常类，如 std::runtime_error、std::logic_error 等，用于抛出和捕获异常。
+使用场景：用于C++风格的异常处理，通过抛出和捕获异常来处理错误，适用于需要更细粒度和结构化的错误处理。
+示例：
+cpp
+Copy code
+#include <stdexcept>
+
+double divide(double a, double b) {
+    if (b == 0.0) {
+        throw std::invalid_argument("Division by zero");
+    }
+    return a / b;
+}
+
+int main() {
+    try {
+        double result = divide(10.0, 0.0);
+    } catch (const std::invalid_argument& e) {
+        // 处理异常
+    }
+}
+4. <system_error>
+来源：C++11引入的标准库头文件。
+功能：提供了 std::error_code、std::error_condition 和 std::system_error 等，用于表示和处理与操作系统相关的错误。
+使用场景：适用于需要处理底层系统错误（如文件系统操作、网络操作等）的场景，提供了更丰富的错误信息和分类。
+示例：
+cpp
+Copy code
+#include <system_error>
+#include <fstream>
+
+void openFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file) {
+        throw std::system_error(errno, std::generic_category(), "Failed to open file");
+    }
+    // ...
+}
+
+int main() {
+    try {
+        openFile("nonexistent.txt");
+    } catch (const std::system_error& e) {
+        // 处理系统错误
+    }
+}
+在现代C++中的使用情况
+在现代C++中，<stdexcept> 和 <system_error> 被更广泛地使用，因为它们提供了面向对象的异常处理机制，能够更好地与C++的特性（如类、继承、多态）结合，提供更丰富和结构化的错误信息。而 <errno.h> 更多地用于与C代码交互或在某些特定场景下处理底层错误，不是C++惯用的错误处理方式。
+
+<cassert> 则主要用于调试和开发阶段，用于断言程序中的假设，不直接用于生产环境的错误处理。
+
+总的来说，现代C++推荐使用异常（<stdexcept> 和 <system_error>）进行错误处理，以提高代码的可读性、可维护性和健壮性，而不是依赖C风格的 errno。
+
 ### constexpr
+constexpr 是C++11引入的一个关键字，并在后续的C++14、C++17、C++20等版本中得到了扩展和增强。它用于指示编译器在编译时对表达式进行求值，从而实现更高效的代码执行和优化。
+
+constexpr 是“constant expression”（常量表达式）的缩写。它用于声明和定义可以在编译时求值的变量和函数。这意味着这些变量和函数的值在编译阶段就已确定，不需要在运行时计算，从而提高了程序的性能和效率。
+
+主要用途
+编译时常量：声明编译时常量，确保变量在编译阶段就已初始化。
+编译时计算：定义可以在编译时进行计算的函数，优化运行时性能。
+模板参数：在模板编程中，constexpr 常用于提供编译时参数。
+数组大小：用于定义数组的大小，因为数组大小需要在编译时确定。
+
+constexpr 与 const 的区别
+虽然constexpr和const都用于声明常量，但它们有着不同的用途和语义。
+
+const
+运行时常量：const用于声明在运行时不会改变的变量。
+不可修改：一旦初始化，const变量的值不能被修改。
+不一定编译时常量：const变量不一定在编译时就已确定，取决于初始化表达式是否是编译时常量。
+
+constexpr
+编译时常量：constexpr确保变量在编译时就已确定其值。
+更严格的要求：constexpr变量必须在编译时就能被求值，初始化表达式必须是编译时常量。
+函数声明：constexpr还可以用于声明函数，这些函数可以在编译时求值。
+
+#### constexpr 变量
+
+
+#### constexpr 函数
+
+
+#### constexpr 构造函数
+
+
+#### constexpr 的进化与限制
+
+
+#### constexpr 的实际应用
 
 
 ### explicit
@@ -143,6 +309,13 @@ epoll是Linux内核提供的一种多路复用I/O事件通知的机制。它与s
 区别：
 poll每次调用时需要传入一个文件描述符数组，内核需要遍历整个数组来检查事件。这在连接数很大时会有较高的开销。
 epoll使用内核中维护的数据结构（红黑树和事件队列），在注册事件时就将感兴趣的文件描述符加入到epoll内核结构中，之后只需调用epoll_wait()等待事件发生，不需要重复传入所有FD列表。这样在大量连接（数以万计）时仍能高效运行，减少了无谓的事件检查开销。
+
+epoll 是 Linux 内核提供的一种高效的 I/O 事件通知机制，用于监视多个文件描述符（如套接字、文件等）的 I/O 事件。相比传统的 select 和 poll，epoll 在处理大量并发连接时具有更高的性能和更低的资源消耗。
+
+epoll 的优势
+高效的事件通知：epoll 使用内核就绪事件列表，避免了每次调用时都要遍历所有文件描述符的开销。
+支持边缘触发（Edge Triggered）和水平触发（Level Triggered）：提供更灵活的事件通知模式。
+能够处理大量并发连接：适用于高性能网络服务器，如 Nginx、Redis 等。
 
 为什么epoll_wait阻塞？
 epoll_wait()是IO复用的核心，当没有事件发生时，线程在这里阻塞可以节省CPU资源。当有事件发生（文件描述符可读可写或有定时器事件等），epoll_wait返回，处理相应的事件回调。这种事件驱动模型避免了忙轮询，提高效率。
