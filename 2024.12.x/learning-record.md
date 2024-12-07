@@ -32,7 +32,7 @@
 
 在多线程或多进程环境中，多个执行单元可能会同时访问和修改共享资源。如果这些操作不是原子性的，就可能导致竞态条件（Race Conditions），从而引发数据不一致、程序崩溃或安全漏洞。
 
-![举个例子](images\image.png)
+![举个例子](https://github.com/EthanQC/My-LearningHub-StudyJourney-with-cpp/blob/c4e152e1259095c1ca9240a8a301c06829092be4/images/explaining%20atomic.png)
 
 回到之前讨论的 epoll_create1 和 EPOLL_CLOEXEC，这里的“原子性”具有重要意义。
 
