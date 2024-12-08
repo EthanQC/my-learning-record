@@ -3,7 +3,7 @@
 
 通过vector和deque容器，实现对于五个人的随机打分（**共十位评委**），在去掉一个最高分和一个最低分后，得出每个人最终的平均分，并打印输出
 
-[完整代码]()
+[完整代码](https://github.com/EthanQC/my-learning-record/blob/8c43ff69f687d16e1bcd9c8c6e818e9c1f5a9dd8/cpp/STL/exercise-judges-judge.cpp)
 
 ### 问题拆解与细分
 + 创建五个选手
@@ -31,6 +31,8 @@
 这是今天敲的一个小练习，基本描述如下：
 
 某公司有十个员工（ABCDEFGHIJ），公司一共有三个部门，分别是策划、美术、研发，现在需要我们分别给员工随机分配部门和工资，通过multimap进行信息的插入（key：部门，value：员工），最后分部门显示员工信息，打印输出
+
+[完整代码](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/exercise-appointing-employees.cpp)
 
 ### 需求拆解细分
 - 创建员工类
@@ -62,5 +64,3 @@
 >3. 将打印部分独立出来，重新封装成一个函数，避免第二个函数过于庞大
 >
 >4. 使用现代cpp特性
-
-[完整代码]()
