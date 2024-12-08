@@ -33,8 +33,18 @@
 * 
 
 ### cpp
-#### 智能指针
+#### 标准头文件
+[**`<random>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
 
+[**`<memory>`**]()
+
+[**`<algorithm>`**]()
+
+[**`<mutex>`**]()
+
+[**`<queue>`**]()
+
+[**`<list>`**]()
 
 #### STL(standard template library，标准模板库)
 >[**string**]()
@@ -52,14 +62,17 @@
 #### 异常
 
 
+### leetcode
+
+
 ## 碎碎念
->[**2024.10.24**]()
+>[**2024.10.24**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs/2024.10.24.md)
 >
->[**2024.10.25**]()
+>[**2024.10.25**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs/2024.10.25.md)
 >
 >[**2024.10.26**]()
 >
->[**2024.10.27**](https://github.com/EthanQC/My-LearningHub-StudyJourney-with-cpp/blob/a128f18fd4a18f901a2e02a320879dc684fa581f/2024.10.27/learning%20record.md)
+>[**2024.10.27**]()
 >
 >[**2024.10.28**](https://github.com/EthanQC/My-LearningHub-StudyJourney-with-cpp/blob/ab8049e5a5e5ceaf470277d68853b49c189cdc21/2024.10.28/learning%20record.md)
 >
