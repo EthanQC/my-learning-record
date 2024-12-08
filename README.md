@@ -10,7 +10,7 @@
 
 我目前正在
 
-## 目录
+## 知识们
 
 ### 前端
 #### HTML
@@ -39,7 +39,7 @@
 #### 异常
 
 
-### 碎碎念
+## 碎碎念
 * [**2024.10.24**](https://github.com/EthanQC/My-LearningHub-StudyJourney-with-cpp/blob/ec772867ff580e1615e77de30024a9ebc0762347/2024.10.24/today%20's%20learning%20record.md)
 
 * [**2024.10.25**](https://github.com/EthanQC/My-LearningHub-StudyJourney-with-cpp/blob/751840b2097055f959e36822e1065e88642199d5/2024.10.25/learning%20record.md)
