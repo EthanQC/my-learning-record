@@ -84,7 +84,7 @@
 ## 碎碎念和反思总结
 >[**2024.10.24**](https://github.com/EthanQC/my-learning-record/blob/39352e55fdc5e6fdc0f4755837859ad0e3fa205c/murmurs-and-reflection/2024.10.24.md)
 >
->[**2024.10.25**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs/2024.10.25.md)
+>[**2024.10.25**](https://github.com/EthanQC/my-learning-record/blob/39352e55fdc5e6fdc0f4755837859ad0e3fa205c/murmurs-and-reflection/2024.10.25.md)
 >
 >[**2024.10.26**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.10.26.md)
 >
