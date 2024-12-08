@@ -20,7 +20,7 @@
 ## 几道二分查找算法题（编号为leetcode上的题目编号）
 ### 704.二分查找
 #### [题目](https://leetcode.cn/problems/binary-search/description/)：给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
-[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/704-binary-search.md)找到
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/704-binary-search.md)
 
 这道题主要是对二分查找概念的检验，以及如何在cpp中实现二分查找算法，通过将基本想法转化一下（其实我最开始根本就完全不会，不知道怎么在cpp里面实现，然后去看了一下手撕的视频就会了，视频讲得很好）可得下面的细分步骤：
 - 创建left、right变量用于记录数组起始和结束位置
