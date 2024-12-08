@@ -3,7 +3,7 @@
 
 通过vector和deque容器，实现对于五个人的随机打分（**共十位评委**），在去掉一个最高分和一个最低分后，得出每个人最终的平均分，并打印输出
 
-[完整代码](https://github.com/EthanQC/my-learning-record/blob/8c43ff69f687d16e1bcd9c8c6e818e9c1f5a9dd8/cpp/STL/exercise-judges-judge.cpp)
+[完整代码]()
 
 ### 问题拆解与细分
 + 创建五个选手
@@ -63,4 +63,4 @@
 >
 >4. 使用现代cpp特性
 
-[完整代码](https://github.com/EthanQC/my-learning-record/blob/39352e55fdc5e6fdc0f4755837859ad0e3fa205c/cpp/STL/appointing-employees.cpp)
+[完整代码]()
