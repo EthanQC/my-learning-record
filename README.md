@@ -21,9 +21,50 @@
 如果你想跟我一起完善这个仓库，添加更多内容（不局限于我自己的技术栈），欢迎发起`pull request`，也欢迎添加我的微信`wkr1835484520`跟我交流~😉
 （后续我可能会出一个贡献模板）
 
+## 操作系统
+* [**基础知识**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
+
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+
+
+## 数据库
+#### MySQL
+* [**名词解释**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
+* [**常用操作**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
+
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+
+
+## 计算机网络
+
+
+
+
+## Git 和 Github
+* [**名词解释**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
+* [**常用操作**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
+
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+
+
 ## 前端
 #### HTML
-* 
+* [**基础知识**](https://github.com/EthanQC/my-learning-record/blob/main/front-end/HTML/fundamentals.md)
+
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+
 
 #### CSS
 * 
@@ -38,46 +79,77 @@
 * 
 
 ## 后端
-#### epoll
-* 
+#### 网络库
+[**`<muduo网络库>`**](https://github.com/EthanQC/my-learning-record/blob/main/back-end/muduo.md)
+
 
 ## cpp
 #### 标准头文件
 [**`<random>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
 
-[**`<memory>`**]()
+[**`<memory>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/memory.md)
 
 [**`<algorithm>`**](https://github.com/EthanQC/my-learning-record/blob/4a6f6f15bae1c343f7bd3fe783138ece869d5b35/cpp/hpp/algorithm.md)
 
-[**`<mutex>`**]()
+[**`<mutex>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/mutex.md)
 
 [**`<queue>`**]()
 
 [**`<list>`**]()
 
+[**`<atomic>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/atomic.md)
+
+[**`<functional>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/functional.md)
+
+[**`<thread>`**]()
+
+[**`<chrono>`**]()
+
+[**`<>`**]()
+
 #### STL(standard template library，标准模板库)
 >[**一些STL小练习**](https://github.com/EthanQC/my-learning-record/blob/9c6694ca0e2a5cee4c7e2d5c8a97b5d70fa4cbb1/cpp/STL/test%20your%20skills.md)
->
->[**string**]()
->
->[**vector**]()
->
->[**deque**]()
->
->[**stack**]()
->
->[**queue**]()
->
->[**list**]()
->
->[**set/multiset**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/set-multiset.md)
->
->[**map/multimap/unordered_map**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/map-multimap-unordered_map.md)
->
->[**pair**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
 
-#### 异常
+[**`<string>`**]()
 
+[**`<vector>`**]()
+
+[**`<deque>`**]()
+
+[**`<stack>`**]()
+
+[**`<queue>`**]()
+
+[**`<list>`**]()
+
+[**`<set/multiset>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/set-multiset.md)
+
+[**`<map/multimap/unordered_map>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/map-multimap-unordered_map.md)
+
+[**`<pair>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
+
+#### 关键字
+[**`<constexpr>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/constexpr.md)
+
+[**`<explicit>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/explicit.md)
+
+[**`<typedef>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/typedef.md)
+
+[**`<>`**]()
+
+#### 对象的拷贝和移动
+[**`<lambda表达式>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/lambda.md)
+
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+
+#### 异常处理与安全
+[**`<异常处理（待细分）>`**]()
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
 
 ## [leetcode](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
 
@@ -94,43 +166,43 @@
 >
 >[**2024.10.29**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.10.29.md)
 >
->[**2024.10.30**]()
+>[**2024.10.30**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.10.30.md)
 >
->[**2024.10.31**]()
+>[**2024.10.31**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.10.31.md)
 >
->[**2024.11.1**]()
+>[**2024.11.1**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.1.md)
 >
->[**2024.11.2**]()
+>[**2024.11.2**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.2.md)
 >
->[**2024.11.3**]()
+>[**2024.11.3**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.3.md)
 >
->[**2024.11.4**]()
+>[**2024.11.4**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.4.md)
 >
->[**2024.11.5**]()
+>[**2024.11.5**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.5.md)
 >
->[**2024.11.6**]()
+>[**2024.11.6**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.6.md)
 >
->[**2024.11.7**]()
+>[**2024.11.7**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.7.md)
 >
->[**2024.11.9**]()
+>[**2024.11.9**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.9.md)
 >
->[**2024.11.10**]()
+>[**2024.11.10**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.10.md)
 >
->[**2024.11.12**]()
+>[**2024.11.12**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.12.md)
 >
->[**2024.11.13**]()
+>[**2024.11.13**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.13.md)
 >
->[**2024.11.15**]()
+>[**2024.11.15**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.15.md)
 >
->[**2024.11.16**]()
+>[**2024.11.16**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.16.md)
 >
->[**2024.11.17**]()
+>[**2024.11.17**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.17.md)
 >
->[**2024.11.19**]()
+>[**2024.11.19**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.19.md)
 >
->[**2024.11.26**]()
+>[**2024.11.26**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.26.md)
 >
->[**2024.11.27-28**]()
+>[**2024.11.27-28**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.11.27-28.md)
 >
 >[**2024.12.7**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.12.7.md)
 >
