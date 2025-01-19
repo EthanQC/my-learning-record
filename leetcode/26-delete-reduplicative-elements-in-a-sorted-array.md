@@ -1,25 +1,4 @@
-### 27.移除元素
-
-    class Solution {
-    public:
-        int removeElement(vector<int>& nums, int val)
-        {
-            int slow = 0; //创建慢指针
-    
-            for (int fast = 0; fast < nums.size(); fast++)
-            {
-                if (nums[fast] != val) //快指针先遍历
-                {
-                    nums[slow] = nums[fast]; //如果没找到要删除的，就赋值并右移慢指针
-                    slow++;
-                }
-            }
-    
-            return slow;
-        }
-    };
-
-### 26.删除有序数组中的重复项
+## 26.删除有序数组中的重复项
 错误代码：
 
     class Solution {
@@ -64,24 +43,5 @@
             }
     
             return slow;
-        }
-    };
-
-### 283.移动零
-
-    class Solution {
-    public:
-        void moveZeroes(vector<int>& nums)
-        {
-            int slow = 0;
-    
-            for (int fast = 0; fast < nums.size(); fast++)
-            {
-                if (nums[fast] != 0)
-                {
-                    swap(nums[slow], nums[fast]); //利用库函数交换元素
-                    slow++;
-                }
-            }
         }
     };
