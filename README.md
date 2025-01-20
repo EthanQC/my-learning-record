@@ -22,16 +22,17 @@
 （后续我可能会出一个贡献模板）
 
 ## 操作系统
-* [**基础知识**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
+[**`<词汇解释>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
 
-[**`<>`**]()
+### Linux
+[**`<常用命令>`**]()
 [**`<>`**]()
 [**`<>`**]()
 [**`<>`**]()
 
 
 ## 数据库
-#### MySQL
+### MySQL
 * [**名词解释**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
 * [**常用操作**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
 
