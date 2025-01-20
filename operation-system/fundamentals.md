@@ -64,14 +64,7 @@ Ubuntu是Linux的一个非常流行的发行版，也是WSL支持的多个Linux�
 
 可以通过直接在Microsoft Store（可能要挂梯子，反正我是挂了梯子才成功打开了这玩意）中搜索Ubuntu来安装发行版，通常22版的会比较稳定和安全，24版的就是最新的目前；安装完成后可以在命令行中启动Ubuntu，进入Ubuntu的命令行环境
 
-常用命令：
-* 安装MySQL：`sudo apt install mysql-server`
-* 启动MySQL：`sudo service mysql start`
-* 登录MySQL：`sudo mysql -u root -p`
-* 查看当前目录下所含文件：`ls`
-* 查看python版本：`python3 --version`
-* 激活虚拟环境：`source /path/to/your/venv/bin/activate`
-* 退出虚拟环境：`deactivate`
+
 
 #### epoll
 epoll是什么，epoll和poll的区别是什么？
