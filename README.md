@@ -21,14 +21,30 @@
 如果你想跟我一起完善这个仓库，添加更多内容（不局限于我自己的技术栈），欢迎发起`pull request`，也欢迎添加我的微信`wkr1835484520`跟我交流~😉
 （后续我可能会出一个贡献模板）
 
+
+
 ## 操作系统
-[**`<词汇解释>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
+[**`<基础概念>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
 
 ### Linux
-[**`<常用命令>`**]()
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
+[**`<常用命令>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/common-instructions-for-Linux.md)
+
+[**`<Epoll与多路复用I/O>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/epoll-and-multiplexing-I-O.md)
+
+
+
+## 计算机网络
+
+
+
+## 数据结构与算法
+
+
+
+
+## 设计模式
+
+
 
 
 ## 数据库
@@ -40,12 +56,6 @@
 [**`<>`**]()
 [**`<>`**]()
 [**`<>`**]()
-
-
-## 计算机网络
-
-
-
 
 ## Git 和 Github
 * [**名词解释**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
@@ -212,6 +222,8 @@
 >[**2025.1.17**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.1.17.md)
 >
 >[**2025.1.19**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.1.19.md)
+>
+>[**2025.1.20**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.1.20.md)
 
 ## 我的其他仓库（记录学习类）
 >[我的第一个仓库：链接数据库并实现二叉树的可视化](https://github.com/EthanQC/using-cpp-and-MySQL-to-implement-the-visualization-of-a-binary-tree)
