@@ -38,6 +38,20 @@
 
 
 ## 数据结构与算法
+#### 数据结构
+[**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/array.md)
+
+[**`<>`**]()
+[**`<>`**]()
+[**`<>`**]()
+
+#### 算法分析
+[**`<时间复杂度与空间复杂度>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
+
+[**`<二分查找>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/binary-search.md)
+
+[**`<>`**]()
+[**`<>`**]()
 
 
 
@@ -119,17 +133,18 @@
 [**`<>`**]()
 
 #### STL(standard template library，标准模板库)
->[**一些STL小练习**](https://github.com/EthanQC/my-learning-record/blob/9c6694ca0e2a5cee4c7e2d5c8a97b5d70fa4cbb1/cpp/STL/test%20your%20skills.md)
 
-[**`<string>`**]()
+[**`<vector>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md)
 
-[**`<vector>`**]()
+[**`<array>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/array.md)
 
 [**`<deque>`**]()
 
 [**`<stack>`**]()
 
 [**`<queue>`**]()
+
+[**`<string>`**]()
 
 [**`<list>`**]()
 
@@ -139,6 +154,8 @@
 
 [**`<pair>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
 
+[**`<几个STL小练习>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/test%20your%20skills.md)
+
 #### 关键字
 [**`<constexpr>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/constexpr.md)
 
@@ -146,7 +163,7 @@
 
 [**`<typedef>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/typedef.md)
 
-[**`<>`**]()
+[**`<auto>`**]()
 
 #### 对象的拷贝和移动
 [**`<lambda表达式>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/lambda.md)
