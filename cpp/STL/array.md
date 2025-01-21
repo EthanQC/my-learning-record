@@ -7,6 +7,8 @@
 * 类型安全： **`std::array`** 提供了类型安全，支持[边界检查](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md#边界检查)等操作。
 * 可以与STL算法兼容： **`std::array`** 支持C++标准库中的许多算法，像 **`std::sort()`**、 **`std::reverse()`** 等。
 
+***
+
 ## **`std::array`** 常用操作：
 * **`size()`** ：返回数组的元素个数。
 * **`at()`** ：提供边界检查，返回指定位置的元素。
@@ -44,6 +46,8 @@
         // 使用std::array的size()方法
         std::cout << "Size: " << arr.size() << std::endl;  // 输出Size: 5
     }
+
+***
 
  **`std::array`** 与C风格数组的区别：
 类型安全： **`std::array`** 提供了更多的功能，例如边界检查，而C风格数组没有。
