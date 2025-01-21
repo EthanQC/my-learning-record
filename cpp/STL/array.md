@@ -4,7 +4,7 @@
 #### 特点：
 * 固定大小：**`std::array`** 的大小在编译时确定，一旦定义大小就不能更改。
 * 数组包装：它在内部封装了一个C风格的数组，因此它的内存布局与普通数组相同，但是提供了更多的成员函数来操作数据。
-* 类型安全： **`std::array`** 提供了类型安全，支持[边界检查](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md######边界检查-Bounds-Checking）：)等操作。
+* 类型安全： **`std::array`** 提供了类型安全，支持[边界检查](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md#边界检查bounds-checking）：)等操作。
 * 可以与STL算法兼容： **`std::array`** 支持C++标准库中的许多算法，像 **`std::sort()`**、 **`std::reverse()`** 等。
 
 ## **`std::array`** 常用操作：
