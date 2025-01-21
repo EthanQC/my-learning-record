@@ -1,34 +1,13 @@
 ## 一些知识
-### 二分查找
-二分查找是一种搜索算法（我不太确定能不能这样叫，但确实是用来搜索的），基本想法如下：
-- 找到一组有顺序（一般为**升序**）的数据的中位数，跟目标数比对
-  * 大了：说明目标数在左半边更小的那一半数据中，于是舍弃右半边，找到左半边数据的中位数，重复跟目标数比对
-  * 小了：同理，舍弃左半边，找到右半边数据的中位数，重复跟目标数比对
-- 重复上面的过程，直到找到目标数为止
-二分查找的效率很高，每次迭代就能将范围缩小一半，其**时间复杂度**一般为**O(log n)**，**空间复杂度**一般为**O(1)**
 
-### 时间复杂度
->是一个衡量算法执行效率的概念，它描述了算法运行所需的时间随输入规模变化的增长情况
->时间复杂度通常表示为**O(f(n))**，其中*f(n)* 是输入规模为n的一个函数。它表示算法在最坏情况下（或某些情况下是平均情况）完成所需的基本操作数量。
->O(log n)：算法的执行时间随着输入规模对数增长
 
-### 空间复杂度
->是一个衡量算法所需内存空间的概念，它描述了算法在执行过程中所需的额外空间，随输入规模变化的增长情况
->空间复杂度通常表示为**O(g(n))**，其中**g(n)**是输入规模为n的一个函数。它表示算法运行时所需的额外内存空间（不包括输入本身所占的空间）
->O(1)：算法只需要常数级的额外空间，比如几个变量的空间
+
 
 ### c++ primer plus
 - `cin.get()`语句可以实现类似于`system("pause")`的效果，但感觉没有后者好，并不是那种**按任意键继续**的效果
 - 可以通过`using std::cout` `using std::cin` `using std::endl`来代替`using namespace std`（在大型项目中）
 - `\n`可被包含在字符串中，当作换行符
 - `sqrt()`函数可用来返回平方根，直接传入需要开方的数即可（cmath库中）
-
-### 数组
-- 数组，顾名思义，是存放多个数字，并把它们组合到一起的一种数据结构，常用的容器为**vector**（动态数组）和deque（双向动态数组），这两个容器均支持随机访问和动态扩展大小
-  + vector的底层实现是array（我还没看STL源码剖析，所以没办法细讲暂时）
-- 数组的元素在内存空间中是**连续**的（cpp中），所以我们不能单独删除数组中的某个元素，只能覆盖，也就是移动其他元素的地址
-  + 但在不同编程语言中，对于二维数组的内存管理是**不一样**的
-- 数组的下标是**从0**开始的
 
 ### 双指针法
 双指针法是一种可以用来解决数组、字符串和链表等数据结构相关算法题的方法，其本质思想，至少在数组中，我感觉并不是真正意义上的指针`*p`，而是对数组的索引（虽然本质上确实也是一种指针），但方便起见还是称为指针
@@ -37,7 +16,7 @@
 
 
 
-## 几道二分查找算法题（编号为leetcode上的题目编号）
+## 算法题记录（编号为leetcode上的题目编号）
 ### 704.二分查找
 #### [题目](https://leetcode.cn/problems/binary-search/description/)：给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/704-binary-search.md)
@@ -54,7 +33,7 @@
 
 ### 35.搜索插入位置
 #### [题目](https://leetcode.cn/problems/search-insert-position/description/)：给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。请必须使用时间复杂度为 O(log n) 的算法。
-我的解答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/35-search-insert-location.md)找到
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/35-search-insert-location.md)
 
 这道题其实是上一道题的变形，跟上一题基本完全一样，不一样的地方在于需要找到是什么代表了**按顺序插入的位置**，我们可以进行以下分析：
 - 在二分查找过程中，left和right代表的是查找范围的左边界和右边界，并随着查找的推进不断更新
@@ -70,7 +49,7 @@
 
 ### 34.在排序数组中查找元素的第一个和最后一个位置
 #### [题目](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description/)：给你一个按照非递减顺序排列的整数数组 nums，和一个目标值 target。请你找出给定目标值在数组中的开始位置和结束位置。如果数组中不存在目标值 target，返回 [-1, -1]。你必须设计并实现时间复杂度为 O(log n) 的算法解决此问题。
-我的解答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/34-find-the-first-and-last-position-of-elements-in-a-sorted-array.md)找到
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/34-find-the-first-and-last-position-of-elements-in-a-sorted-array.md)
 
 **非递减顺序**：意味着数组中元素值不会递减，简单来说就是*递增*或*持平*，所以可以将它理解为*递增顺序*，只是可能包含相同的元素
 
@@ -99,7 +78,7 @@
 
 ### 69.x的平方根
 #### [题目](https://leetcode.cn/problems/sqrtx/description/)：给你一个非负整数 x ，计算并返回 x 的算术平方根。由于返回类型是整数，结果只保留整数部分 ，小数部分将被舍去。注意：不允许使用任何内置指数函数和算符，例如 pow(x, 0.5) 或者 x ** 0.5 。
-我的解答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/69-x's-square-root.md)找到
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/69-x's-square-root.md)
 
 这题一开始很容易没有思路，而且也很难联想到要用二分查找，但其实二分查找可以帮助我们快速找到满足条件的整数，思路如下：
 - 将问题**转化为寻找一个mid**，使得`mid * mid = x`，从而求解
@@ -109,7 +88,7 @@
 
 ### 367.有效的完全平方数
 #### [题目](https://leetcode.cn/problems/valid-perfect-square/description/)：给你一个正整数 num 。如果 num 是一个完全平方数，则返回 true ，否则返回 false 。完全平方数是一个可以写成某个整数的平方的整数。换句话说，它可以写成某个整数和自身的乘积。不能使用任何内置的库函数，如  sqrt 。
-我的解答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/367-valid-perfect-square-numbers.md)找到
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/367-valid-perfect-square-numbers.md)
 
 这题其实就是上一题的升级版，多了一个需求，但具体实现是差不多的，只是有一些细节要注意，我一开始写的时候遇到了下面几个问题（错误代码也在解答里面）：
 - num小于2时，可以直接返回真，没必要再计算一次平方根了
@@ -121,7 +100,7 @@
 ### 27.移除元素
 #### [题目](https://leetcode.cn/problems/remove-element/description/)：给你一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素。元素的顺序可能发生改变。然后返回 nums 中与 val 不同的元素的数量。假设 nums 中不等于 val 的元素数量为 k，要通过此题，您需要执行以下操作：更改 nums 数组，使 nums 的前 k 个元素包含不等于 val 的元素。nums 的其余元素和 nums 的大小并不重要。返回 k。
 
-我的回答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/27-delete-elements.md)找到，本题为简单题
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/27-delete-elements.md)，本题为简单题
 
 原地：其实就是保留原数组，对原数组进行一系列的操作，而不是重新创建一个新数组
 
@@ -137,7 +116,7 @@
 ### 26.删除有序数组中的重复项
 #### [题目](https://leetcode.cn/problems/remove-duplicates-from-sorted-array/description/)：给你一个非严格递增排列的数组 nums ，请你原地删除重复出现的元素，使每个元素只出现一次 ，返回删除后数组的新长度。元素的相对顺序应该保持一致 。然后返回 nums 中唯一元素的个数。考虑 nums 的唯一元素的数量为 k ，你需要做以下事情确保你的题解可以被通过：更改数组 nums ，使 nums 的前 k 个元素包含唯一元素，并按照它们最初在 nums 中出现的顺序排列。nums 的其余元素与 nums 的大小不重要。返回 k 。
 
-我的回答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/26-delete-reduplicative-elements-in-a-sorted-array.md)找到，本题为简单题
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/26-delete-reduplicative-elements-in-a-sorted-array.md)，本题为简单题
 
 这道题其实跟上一题非常像，只是修改了一下需求，上一题是要移除某个特定的元素，这一题是要找到重复的元素并将重复出现的均删掉，只保留一个；我们还是可以使用双指针法，分析如下：
 - 创建快慢指针
@@ -157,7 +136,7 @@
 ### 283.移动零
 #### [题目](https://leetcode.cn/problems/move-zeroes/description/)：给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。请注意 ，必须在不复制数组的情况下原地对数组进行操作。
 
-我的回答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/283-remove-zero.md)找到，本题为简单题
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/283-remove-zero.md)，本题为简单题
 
 这道题一开始容易没思路（比如现在在写记录的我，哈哈哈哈哈），但只要能把双指针法和库函数里面的`swap()`函数想起来就会发现跟前面两题本质上也是一样滴，分析如下：
 - 同样创建快慢指针和for循环、if语句
@@ -170,7 +149,7 @@
 ### 844.比较含退格的字符串
 #### [题目](https://leetcode.cn/problems/backspace-string-compare/description/)：给定 s 和 t 两个字符串，当它们分别被输入到空白的文本编辑器后，如果两者相等，返回 true 。# 代表退格字符。注意：如果对空文本输入退格字符，文本继续为空。
 
-我的回答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/844-compare-strings-having-backspace.md)找到，本题为简单题（但我感觉还是挺难的，毕竟第一次做字符串的题目👉👈）
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/844-compare-strings-having-backspace.md)，本题为简单题（但我感觉还是挺难的，毕竟第一次做字符串的题目👉👈）
 
 这道题其实是属于字符串的相关题目了，所以做起来会比较陌生，毕竟还没做到这一块，之所以会有这道题是因为它被放在了代码随想录数组题目的相关题目推荐里面，于是也顺便一起做了，也是用双指针法，分析如下：
 - 在不改变两个字符串的前提下， 我们可以考虑对两字符串分别的遍历（使用快慢指针，但这里其实是两个字符串各自的索引指针所形成的快慢）
@@ -196,7 +175,7 @@
 ### 977.有序数组的平方
 #### [题目](https://leetcode.cn/problems/squares-of-a-sorted-array/description/)：给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。
 
-我的回答可在[此处](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/977-square-of-a-sorted-array.md)找到，本题为简单题
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/977-square-of-a-sorted-array.md)，本题为简单题
 
 这题最暴力的方法还是直接对每个数平方（利用`*=`），平方完之后再直接用sort算法排序，但双指针法可以优化时间复杂度，分析如下：
 - 由于数组是按照非递减顺序排序的，所以很有可能最左边的负数平方之后反而比右边最大的正数平方之后还要大，于是我们可以考虑用两个指针（一左一右）来遍历整个数组并比较
