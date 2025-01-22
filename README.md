@@ -183,7 +183,7 @@
 
 [**`<forward>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/forward.md)
 
-[**`<template>`⭐**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/auto.md)
+[**`<template>`⭐**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/template.md)
 
 
 
