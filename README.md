@@ -177,7 +177,13 @@
 
 [**`<auto>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/auto.md)
 
-[**`<new>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/auto.md)
+[**`<new（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/new.md)
+
+[**`<noexcept>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/noexcept.md)
+
+[**`<forward>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/forward.md)
+
+[**`<template>`⭐**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/auto.md)
 
 
 
