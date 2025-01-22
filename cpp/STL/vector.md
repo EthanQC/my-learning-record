@@ -31,6 +31,51 @@ vector是C++标准库中的一个动态数组容器，属于 **`std::vector`** �
     std::vector<int> v2(5, 10);  // 创建一个包含5个元素，每个元素的值为10的vector
     std::vector<int> v3 = {1, 2, 3, 4, 5};  // 使用列表初始化
 
+##### 提前分配内存
+`reserve` 函数用于为 `std::vector` 提前分配足够的存储空间，**防止动态扩容时多次分配内存**，从而提高性能。
+
+语法
+
+    void vector::reserve(size_type n);
+
+* 参数：n 是要保留的元素容量。
+* 功能：
+    * 修改 vector 的容量。
+    * 不会改变当前已存储的元素数量。
+* 使用场景
+    * 在预先知道将会插入大量元素的情况下，可以使用 `reserve` 提前分配所需的内存，避免插入时多次重新分配内存。
+    * 避免不必要的动态内存分配，提高程序性能。
+
+示例代码
+
+    #include <iostream>
+    #include <vector>
+
+    int main()
+    {
+        std::vector<int> vec;
+
+        std::cout << "Initial capacity: " << vec.capacity() << std::endl;
+
+        vec.reserve(10);  // 预先分配容量为10
+        std::cout << "Capacity after reserve: " << vec.capacity() << std::endl;
+
+        vec.push_back(1);
+        std::cout << "Size: " << vec.size() << ", Capacity: " << vec.capacity() << std::endl;
+
+        return 0;
+    }
+
+输出
+
+    Initial capacity: 0
+    Capacity after reserve: 10
+    Size: 1, Capacity: 10
+
+注意事项:
+* 如果 n 小于当前 `capacity()`，`reserve` 不会减少容量。
+* 如果 n 小于当前的元素个数（`size()`），`reserve` 不会影响现有的元素。
+
 ##### 访问元素
 使用下标运算符 **`[]`** 或 `at()` 方法来访问元素：
 
@@ -72,6 +117,91 @@ vector是C++标准库中的一个动态数组容器，属于 **`std::vector`** �
 使用 **`erase()`** 方法删除**指定位置**的元素：
 
     v3.erase(v3.begin() + 2);  // 删除下标为2的元素
+
+***
+
+##### `emplace_back()`
+`emplace_back` 是 C++11 引入的一个函数，用于在 vector 的尾部直接构造对象。
+
+与 `push_back` 相比，`emplace_back` 可以**避免不必要的临时对象创建和拷贝操作**，提高性能。
+
+语法
+
+    template <class... Args>
+    void emplace_back(Args&&... args);
+
+* 参数：接受对象的构造函数参数。
+* 功能：
+    * 使用传入的参数在容器尾部直接构造对象。
+    * 避免了临时对象的创建和复制，提升性能。
+
+**与 `push_back` 的区别**
+
+`push_back`：需要一个**完整**的对象作为参数，可能会导致拷贝或移动。
+`emplace_back`：**直接在容器尾部构造对象**，传入的参数用于调用对象的构造函数。
+
+示例代码1：`push_back`
+
+    #include <iostream>
+    #include <vector>
+    #include <string>
+
+    class MyClass
+    {
+    public:
+        MyClass(int a, const std::string& b) : x(a), y(b)
+        {
+            std::cout << "Constructor called: " << x << ", " << y << std::endl;
+        }
+
+    private:
+        int x;
+        std::string y;
+    };
+
+    int main() {
+        std::vector<MyClass> vec;
+        MyClass obj(1, "Hello");
+
+        vec.push_back(obj);  // 插入左值，拷贝构造，无法直接构造
+        vec.push_back(MyClass(2, "World"));  // 插入右值，移动构造，需要使用匿名对象才能构造
+
+        return 0;
+    }
+
+示例代码2：`emplace_back`
+
+    #include <iostream>
+    #include <vector>
+    #include <string>
+
+    class MyClass
+    {
+    public:
+        MyClass(int a, const std::string& b) : x(a), y(b)
+        {
+            std::cout << "Constructor called: " << x << ", " << y << std::endl;
+        }
+
+    private:
+        int x;
+        std::string y;
+    };
+
+    int main()
+    {
+        std::vector<MyClass> vec;
+
+        vec.emplace_back(1, "Hello");  // 直接在容器尾部构造对象
+        vec.emplace_back(2, "World");
+
+        return 0;
+    }
+
+**注意事项**
+
+* 如果构造的对象需要**多参数**，则 `emplace_back` 的效率会更高，因为它避免了额外的临时对象。
+* 对于简单类型（如 int 或 double），`emplace_back` 和 `push_back` 的性能基本相同。
 
 ***
 
