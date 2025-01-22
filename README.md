@@ -1,7 +1,5 @@
 # My learning record
 
-***
-
 ## 这是一个学习记录仓库！
 
 我会在这里记录我每天（perhaps🤪）的学习内容，包括但不限于：
@@ -25,8 +23,6 @@
 如果你想跟我一起完善这个仓库，添加更多内容（不局限于我自己的技术栈），欢迎发起`pull request`，也欢迎添加我的微信`wkr1835484520`跟我交流~😉
 （后续我可能会出一个贡献模板）
 
-***
-
 ## 操作系统
 [**`<基础概念>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
 
@@ -35,116 +31,118 @@
 
 [**`<Epoll与多路复用I/O>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/epoll-and-multiplexing-I-O.md)
 
-***
-
 ## 计算机网络
 
-***
+
 
 ## 数据结构与算法
 #### 数据结构
 [**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/array.md)
 
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
+
 
 #### 算法分析
-[**`<时间复杂度与空间复杂度>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
+[**`<时间复杂度与空间复杂度（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
 
-[**`<二分查找>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/binary-search.md)
+[**`<二分查找（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/binary-search.md)
 
-[**`<>`**]()
-[**`<>`**]()
+[**`<双指针法（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/double-pointers.md)
 
-***
 
 ## 设计模式
 
 
-***
+
 
 ## 数据库
 ### MySQL
-* [**名词解释**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
-* [**常用操作**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
+* [**`<名词解释（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
+* [**`<常用操作（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
 
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
 
-***
+
 
 ## Git 和 Github
-* [**名词解释**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
-* [**常用操作**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
+* [**`<名词解释（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
+* [**`<常用操作（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
 
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
 
-***
 
 ## Markdown
 [**`<语法>`**](https://github.com/EthanQC/my-learning-record/blob/main/markdown/grammars.md)
 
-[**`<自己造一个markdown编辑器（前端项目）>`**]()
+[**`<自己造一个markdown编辑器（前端项目）（待整理）>`**]()
 
 ## 前端
 #### HTML
-* [**基础知识**](https://github.com/EthanQC/my-learning-record/blob/main/front-end/HTML/fundamentals.md)
+[**`<基础知识（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/front-end/HTML/fundamentals.md)
 
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
+
 
 
 #### CSS
-* 
+
+
+
 
 #### JavaScript
-* 
+
+
+
 
 #### react
-* 
+
+
+
 
 #### vue
-* 
+
+
+
 
 #### 项目们
+
+
+
+
 
 ## 后端
 #### 网络库
-[**`<muduo网络库>`**](https://github.com/EthanQC/my-learning-record/blob/main/back-end/muduo.md)
+[**`<muduo网络库（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/back-end/muduo.md)
+
+
+
+
 
 #### 项目们
 
+
+
+
+
 ## cpp
 #### 标准头文件
-[**`<random>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
+[**`<random（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
 
-[**`<memory>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/memory.md)
+[**`<memory（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/memory.md)
 
-[**`<algorithm>`**](https://github.com/EthanQC/my-learning-record/blob/4a6f6f15bae1c343f7bd3fe783138ece869d5b35/cpp/hpp/algorithm.md)
+[**`<algorithm（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/4a6f6f15bae1c343f7bd3fe783138ece869d5b35/cpp/hpp/algorithm.md)
 
-[**`<mutex>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/mutex.md)
+[**`<mutex（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/mutex.md)
 
-[**`<queue>`**]()
+[**`<queue（待整理）>`**]()
 
-[**`<list>`**]()
+[**`<list（待整理）>`**]()
 
-[**`<atomic>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/atomic.md)
+[**`<atomic（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/atomic.md)
 
 [**`<functional>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/functional.md)
 
-[**`<thread>`**]()
+[**`<thread（待整理）>`**]()
 
-[**`<chrono>`**]()
+[**`<chrono（待整理）>`**]()
 
-[**`<>`**]()
+
 
 #### STL(standard template library，标准模板库)
 
@@ -152,46 +150,50 @@
 
 [**`<array>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/array.md)
 
-[**`<deque>`**]()
+[**`<deque（待整理）>`**]()
 
-[**`<stack>`**]()
+[**`<stack（待整理）>`**]()
 
-[**`<queue>`**]()
+[**`<queue（待整理）>`**]()
 
-[**`<string>`**]()
+[**`<string（待整理）>`**]()
 
-[**`<list>`**]()
+[**`<list（待整理）>`**]()
 
-[**`<set/multiset>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/set-multiset.md)
+[**`<set/multiset（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/set-multiset.md)
 
-[**`<map/multimap/unordered_map>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/map-multimap-unordered_map.md)
+[**`<map/multimap/unordered_map（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/map-multimap-unordered_map.md)
 
-[**`<pair>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
+[**`<pair（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
 
-[**`<几个STL小练习>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/test%20your%20skills.md)
+[**`<几个STL小练习（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/test%20your%20skills.md)
 
 #### 关键字
-[**`<constexpr>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/constexpr.md)
+[**`<constexpr（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/constexpr.md)
 
-[**`<explicit>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/explicit.md)
+[**`<explicit（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/explicit.md)
 
-[**`<typedef>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/typedef.md)
+[**`<typedef（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/typedef.md)
 
-[**`<auto>`**]()
+[**`<auto>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/auto.md)
+
+[**`<new>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/auto.md)
+
+
 
 #### 对象的拷贝和移动
 [**`<lambda表达式>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/lambda.md)
 
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
+[**`<函数指针>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/function's-pointer.md)
+
+
+
 
 #### 异常处理与安全
 [**`<异常处理（待细分）>`**]()
-[**`<>`**]()
-[**`<>`**]()
-[**`<>`**]()
+
+
+
 
 ## [leetcode](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
 
