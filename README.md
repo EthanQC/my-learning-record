@@ -62,6 +62,12 @@
 
 
 
+## 参加开源
+[**`<各类信息>`**]()
+
+[**`<我现在正在尝试参加的>`**]()
+
+
 ## Git 和 Github
 * [**`<名词解释（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
 * [**`<常用操作（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
@@ -263,6 +269,10 @@
 >[**2025.1.19**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.1.19.md)
 >
 >[**2025.1.20**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.1.20.md)
+>
+>[**2025.1.22**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.1.22.md)
+>
+>[**2025.1.26**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.1.26.md)
 
 ## 我的其他仓库（记录学习类）
 >[我的第一个仓库：链接数据库并实现二叉树的可视化](https://github.com/EthanQC/using-cpp-and-MySQL-to-implement-the-visualization-of-a-binary-tree)
