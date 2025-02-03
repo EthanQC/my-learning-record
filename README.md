@@ -63,9 +63,9 @@
 
 
 ## 参加开源
-[**`<各类信息>`**]()
+[**`<各类信息>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/information.md)
 
-[**`<我现在正在尝试参加的>`**]()
+[**`<我现在正在尝试参加的开源活动>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/open-source-events-that-I'm-trying-to-engage.md)
 
 
 ## Git 和 Github
