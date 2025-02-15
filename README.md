@@ -281,10 +281,12 @@
 >[**2025.2.15**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.15.md)
 
 ## 我的其他仓库（记录学习类）
->[我的第一个仓库：链接数据库并实现二叉树的可视化](https://github.com/EthanQC/using-cpp-and-MySQL-to-implement-the-visualization-of-a-binary-tree)
+>[链接数据库并实现二叉树的可视化](https://github.com/EthanQC/using-cpp-and-MySQL-to-implement-the-visualization-of-a-binary-tree)
 >
->（第二个就是现在这个记录学习的仓库哈哈哈）
+>[不烂大街且高性能的webServer](https://github.com/EthanQC/A-High-Efficiency-WebServer-using-cpp)
 >
->[我的第三个仓库：前端学习/测试](https://github.com/EthanQC/my-test-page-website)
+>[复习学校期末考试](https://github.com/EthanQC/reviewing-school-final)
 >
->[我的第四个仓库：不烂大街且高性能的webServer](https://github.com/EthanQC/A-High-Efficiency-WebServer-using-cpp)
+>[《月华》后端服务器项目](https://github.com/EthanQC/back-end-server-for-Moonlight-Radiance)
+>
+>[《月华》游戏设计与前端项目](https://github.com/EthanQC/Moonlight-Radiance-front-end-design)
