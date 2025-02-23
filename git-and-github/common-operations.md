@@ -5,7 +5,7 @@
 
 vs code默认使用的是HTTPS，但我不知道为什么我的HTTPS的token一直不行，配置了好久也还是连接失败（我可以确定我的梯子没问题），可能是校园网的问题，所以索性就直接用ssh了
 
-可以通过：`git config --global url."git@github.com".insteadOf "https://github.com/"`，将所有的`https://github.com/` URL 自动替换为 `git@github.com:`，从而配置vs code默认使用ssh，而不是HTTPS
+可以通过：`git config --global url."git@github.com".insteadOf "https://github.com/"`，将所有的`https://github.com/` URL 自动替换为 `git@github.com:`，从而配置vs code默认使用ssh，而不是HTTPS；也可以在 vs code 的设置里面搜索 git 来修改默认克隆方式
 
 配置了ssh之后，在本地克隆仓库时就要复制仓库的ssh的url，然后再粘贴到vs code里面，就可以克隆啦，如果是本地想让vs code远程创建的话，需要先配置好git中的账户名和邮箱：
 
