@@ -6,6 +6,8 @@
 * 查看python版本：`python3 --version`
 * 激活虚拟环境：`source /path/to/your/venv/bin/activate`
 * 退出虚拟环境：`deactivate`
+* 检查更新：`sudo apt update`
+* 更新：`sudo apt upgrade`
 
 #### 在WSL中安装vs code的辅助工具（在Ubuntu终端中）：
 
