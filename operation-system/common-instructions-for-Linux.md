@@ -1,13 +1,30 @@
 ## Linux
+#### MySQL
 * 安装MySQL：`sudo apt install mysql-server`
-* 启动MySQL：`sudo service mysql start`
+* 确认版本信息：`mysql --version`
+* 安装 MySQL
+    * Linux 中：`sudo apt install mysql-server`
+* 启动 MySQL
+    * Windows 中，用管理员权限打开cmd或powershell：`net start mysql80`
+    * Linux 中：`sudo systemctl start mysql` 或 
+    `sudo service mysql start`（service 是老版本Ubuntu的命令工具）
+* 检查 MySQL 服务状态：
+    * Linux 中：`sudo systemctl status mysql`
 * 登录MySQL：`sudo mysql -u root -p`
+* 停止 MySQL 服务：
+    * Linux 中：`sudo systemctl stop mysql`
+* 重启 MySQL 服务：
+    * Linux 中：`sudo systemctl restart mysql`
+
+#### 文件管理
 * 查看当前目录下所含文件：`ls`
+* 检查更新：`sudo apt update`
+* 更新：`sudo apt upgrade`
+
+#### 环境管理
 * 查看python版本：`python3 --version`
 * 激活虚拟环境：`source /path/to/your/venv/bin/activate`
 * 退出虚拟环境：`deactivate`
-* 检查更新：`sudo apt update`
-* 更新：`sudo apt upgrade`
 
 #### 在WSL中安装vs code的辅助工具（在Ubuntu终端中）：
 
