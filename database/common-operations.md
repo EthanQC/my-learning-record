@@ -1,12 +1,11 @@
 ### MySQL
 #### 添加环境变量
-将MySQL的安装地址(/bin)添加到系统的环境变量`path`中后，即可在任意终端运行MySQL命令
+将 MySQL 的安装地址(/bin)添加到系统的环境变量 `path` 中后，即可在任意终端运行 MySQL 命令
 1. 打开系统设置，搜索并进入环境变量设置
-2. 找到系统变量，进入后找到Path，点击**编辑**
+2. 找到系统变量，进入后找到 Path ，点击**编辑**
 3. 添加MySQL的安装路径，保存设置并重新打开命令提示符即可
-#### 一些MySQL命令
-* 确认版本信息：`mysql --version`
-* 启动MySQL（Windows中，用管理员权限打开cmd或powershell）：`net start mysql80`
+
+#### 一些 MySQL 命令
 * 查看创建的数据库：`SHOW DATABASES;`
 * 创建数据库：`CREATE DATABASE yourdatabase;`
 * 进入创建的数据库：`USE yourdatabase;`
