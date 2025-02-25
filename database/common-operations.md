@@ -13,10 +13,15 @@
 * 查看某个表的结构：`describe table_name`
 * 插入数据：`insert into table_name (username, password) values ('admin', '123');`，其中第一个括号里的是列名，第二个括号里的是值
 * 查询插入的数据：`select * from table_name;`
-* 删除表中某一行数据：`DELETE FROM user WHERE username = 'name';`
-* 清空整个表的所有数据：`DELETE FROM user;`
-* 删除整个表而不是数据：`DROP TABLE user;`
-* 完全清空表结构和数据：`TRUNCATE TABLE user`
+* 更新表中的数据：`update table_name set xxx=xxx where xxx=xxx;`，其中 where 后面的是用来索引的
+* 删除表中某一行数据：`delete from table_name where xxx=xxx;`
+* 清空整个表的所有数据：`delete from table_name;`
+* 删除整个表而不是数据：`drop table table_name;`
+* 向现有表中添加新列：`alter table table_name add column xxx type`
+* 从表中删除列：`alter table table_name drop column xxx;`
+* 修改表中现有列的数据类型：`alter table table_name modify column xxx type;`
+* 完全清空表结构和数据：`TRUNCATE TABLE table_name`
+* 删除数据库及其所有表：`drop database database_name`
 * 查看当前 MySQL 服务被多少个客户端连接：`show processlist`
 * 退出MySQL：`EXIT;`
 
