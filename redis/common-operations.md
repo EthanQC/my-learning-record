@@ -4,6 +4,9 @@
 
 * 安装 Redis：`sudo apt install redis-server`
     * 安装完成后 Redis 会自动启动
+* 启动 Redis： `sudo systemctl start redis`
+* 关闭 Redis： `sudo systemctl stop redis`
+* 查看 Redis运行状态： `sudo systemctl status redis`
 * 进入 Redistribution 命令行工具：`redis-cli`
     * 默认会显示127.0.0.1:6379，本地回环地址，默认端口是6379
 * 一些简单的命令：
