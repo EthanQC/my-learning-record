@@ -12,3 +12,6 @@
 ### 运行
 * 直接运行：`go run xxx.go`
 * 生成可执行文件并运行：`go build xxx.go`、`./main`
+
+### 工具
+* 初始化 go 模块管理：`go mod init`
