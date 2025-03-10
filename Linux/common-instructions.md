@@ -1,4 +1,8 @@
 ## Linux
+#### 安装 Ubuntu
+* 需要梯子，推荐直接在 Microsoft Store 中搜索 Ubuntu 后下载即可
+* 安装后要设置用户名和密码
+
 #### MySQL
 * 安装MySQL：`sudo apt install mysql-server`
 * 确认版本信息：`mysql --version`
