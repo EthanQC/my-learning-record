@@ -23,13 +23,83 @@
 如果你想跟我一起完善这个仓库，添加更多内容（不局限于我自己的技术栈），欢迎发起`pull request`，也欢迎添加我的微信`wkr1835484520`跟我交流~😉
 （后续我可能会出一个贡献模板）
 
-## 操作系统
-[**`<基础概念>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
+## 计划
+中短期
+* 实习三个月，到六月份差不多了就辞职，好好准备一下期末考试，大概四月中左右跟 mentor 提一下
+* 三月份改简历，一共四份，分为 go 后端开发、cpp 客户端/后端开发、游戏开发、全栈开发
+* 三月改完简历之后开始针对简历内容学习，同时做做对应项目
+* 四月到六月边学边实习边海投，有约面就面，尽量找到实习，找不到的话可以考虑要不要延到暑假等找到了下一份再辞职，这个走一步看一步比较好
+* 综合来看时间比较紧张，因为要学的东西比较多，还要兼顾实习和学业
 
-### Linux
-[**`<常用命令>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/common-instructions-for-Linux.md)
+要学的
+* cpp ⭐⭐⭐⭐
+    * 现代 cpp 特性复习，包括智能指针、Lambda 表达式、移动语义、性能分析、内存优化、原子操作、并发与多线程编程等
+    * 熟悉封装、继承、多态等 OOP 特性以及 STL 常用容器（如 vector、map、set）
+    * 考虑要不要看底层实现，尽量把这些东西都用到项目中
+* go ⭐⭐⭐⭐
+    * map， struct， slice， channal，GMP 模型调度器，GC 垃圾回收，内存逃逸等底层原理
+    * Gin，GORM， gRPC，Protobuf 等框架的使用
+    * 其他可能的东西
+* 虚幻五 ⭐⭐⭐
+    * UE5 的项目架构与工作流程，使用 C++ 和 Blueprints 进行游戏逻辑开发
+    * 虚幻引擎关键模块，如 Actor、Pawn、GameMode、Controller、Gameplay Framework 等，Unreal 构件的生命周期与事件驱动机制等
+    * 虚幻引擎的 Chaos 物理系统、动画系统（Anim Blueprint、状态机、IK 技术）、AI 系统（Behavior Tree、Blackboard、NavMesh 等）
+    * UE5 中的 Lumen、Nanite 等新特性，渲染管线和 Shader 编写方法
+* 前端 ⭐
+    * HTML、CSS、JavaScript/TypeScript 复习与学习
+    * React / Vue 等主流前端框架，前端组件化、模块化以及常见的状态管理方案（Redux / Vuex 等），性能优化
+    * Node.js、jQuery 等常见框架或库，相应的扩展编写
+* 数据结构与算法 ⭐⭐⭐
+    * 刷代码随想录
+    * 链表、栈、队列、二叉树等
+    * 排序，回溯，贪心，动态规划等
+* 数据库 ⭐⭐⭐
+    * MySQL：索引优化、事务管理、存储引擎（如 InnoDB）和锁机制等，数据库设计与 SQL 调优
+    * NoSQL、Key-value 存储原理等
+* 中间件 ⭐⭐
+    * Redis
+    * Elasticsearch
+* 计网 ⭐
+    * OSI 分层模型，TCP/IP、UDP、HTTP 等网络协议
+    * TCP 三次握手、四次挥手、流量控制、拥塞控制等机制
+    * RESTful API 设计原则等
+* 操作系统 ⭐
+    * 进程通信（管道、信号量、共享内存）、死锁处理、内存管理（分页、分段）等
+* Linux ⭐⭐⭐
+    * Socket 网络编程、epoll 高效事件处理、I/O 多路复用技术等
+    * 内存管理、文件系统、进程和线程调度等
+    * 常用命令行操作、文件/包管理工具
+* 设计模式 ⭐⭐
+    * 单例、工厂、观察者、策略模式等
+    * 软件工程常见思想
+* 图形学 ⭐⭐
+    * 基础的 3D 数学和渲染管线理论，光照模型、材质系统、后期处理等图形学概念
+    * 根据需求调试渲染效果，常见的渲染优化手段（如批次合并、LOD、延迟渲染等）
+* Git ⭐
+    * 常用操作指令
+    * 版本控制、分支管理、代码审查等复盘
+* 其他 ⭐
+    * 分布式系统、消息队列、系统容灾和负载均衡等概念
+    * 微服务架构和云原生的基本思想
+    * 常见容器工具（如 Docker）及 CI/CD 流程等
+    * 了解 python、Shell、Perl等脚本语言
+
+要做的项目
+* 游戏：月华
+* cpp
+    * HTTP 服务框架
+    * 分布式存储
+* go
+    * 月华的后端服务器/字节青训营商城
+    * go roadmap 项目
+
+## Linux
+[**`<常用命令>`**](https://github.com/EthanQC/my-learning-record/blob/main/Linux/common-instructions.md)
 
 [**`<Epoll与多路复用I/O>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/epoll-and-multiplexing-I-O.md)
+
+## 操作系统
+[**`<基础概念>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
 
 ## 计算机网络
 
@@ -281,6 +351,15 @@
 >[**2025.2.15**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.15.md)
 >
 >[**2025.2.18**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.18.md)
+>[**2025.2.23**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.23.md)
+>[**2025.2.24**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.24.md)
+>[**2025.2.25**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.25.md)
+>[**2025.2.26**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.26.md)
+>[**2025.2.27**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.27.md)
+>[**2025.2.28**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.2.28.md)
+>[**2025.3.3**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.3.3.md)
+>[**2025.3.4**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.3.4.md)
+>[**2025.3.9**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.3.9.md)
 
 ## 我的其他仓库（记录学习类）
 >[链接数据库并实现二叉树的可视化](https://github.com/EthanQC/using-cpp-and-MySQL-to-implement-the-visualization-of-a-binary-tree)
