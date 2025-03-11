@@ -239,7 +239,10 @@
 ## [leetcode](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
 
 ## 面试问题总结
+[后端](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/back-end.md)
 
+## 实习记录
+[密纸科技](https://github.com/EthanQC/my-learning-record/blob/main/internship-records/mespery.md)
 
 ## 碎碎念和反思总结
 >[**2024.10.24**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2024.10.24.md)
