@@ -94,6 +94,40 @@
     * go roadmap 项目
 
 ## 目录
+* cpp
+    * [标准头文件](https://github.com/EthanQC/my-learning-record/blob/main/README.md#标准头文件)
+    * [STL](https://github.com/EthanQC/my-learning-record/blob/main/README.md#stl)
+    * [关键字](https://github.com/EthanQC/my-learning-record/blob/main/README.md#关键字)
+    * [对象的拷贝和移动](https://github.com/EthanQC/my-learning-record/blob/main/README.md#对象的拷贝和移动)
+    * [异常处理与安全](https://github.com/EthanQC/my-learning-record/blob/main/README.md#异常处理与安全)
+* go
+* 数据库
+    * [MySQL](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [参加开源](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* 前端
+    * [HTML](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+    * [CSS](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+    * [JavaScript](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+    * [React](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+    * [Vue](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+    * [项目们](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* 后端
+    * [网络库](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+    * [项目们](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [操作系统](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [计算机网络](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* 数据结构与算法
+    * [数据结构](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+    * [算法分析](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [Linux](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [Git 和 GitHub](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [设计模式](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [markdown](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [leetcode](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [面试问题总结](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [实习记录](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [碎碎念和反思总结](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
+* [我的其他仓库](https://github.com/EthanQC/my-learning-record/blob/main/README.md)
 
 ## cpp
 #### 标准头文件
@@ -192,9 +226,9 @@
 
 #### JavaScript
 
-#### react
+#### React
 
-#### vue
+#### Vue
 
 #### 项目们
 
@@ -328,7 +362,7 @@
 >[**2025.3.4**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.3.4.md)
 >[**2025.3.9**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.3.9.md)
 
-## 我的其他仓库（记录学习类）
+## 我的其他仓库
 >[链接数据库并实现二叉树的可视化](https://github.com/EthanQC/using-cpp-and-MySQL-to-implement-the-visualization-of-a-binary-tree)
 >
 >[不烂大街且高性能的webServer](https://github.com/EthanQC/A-High-Efficiency-WebServer-using-cpp)
