@@ -162,7 +162,7 @@
 #### 标准头文件
 [**`<random（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
 
-[**`<memory（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/memory.md)
+[**`<memory>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/memory.md)（智能指针）
 
 [**`<algorithm（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/4a6f6f15bae1c343f7bd3fe783138ece869d5b35/cpp/hpp/algorithm.md)
 
