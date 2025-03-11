@@ -151,7 +151,8 @@
 
 [**`<chrono（待整理）>`**]()
 
-#### STL(standard template library，标准模板库)
+#### STL
+(standard template library，标准模板库)
 
 [**`<vector>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md)
 
