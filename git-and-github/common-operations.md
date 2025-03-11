@@ -8,7 +8,8 @@
 * 检查vs code是否默认使用SSH：`git remote -v`
 * 推送代码到远程仓库：`git push origin main`
 * 本地拉取同步远程仓库：`git fetch`
-* 切换分支：`git switch <branch name>`
+* 切换到本地有的分支：`git switch <branch name>`
+* 切换到本地没有远程有的分支：`git checkout <branch name>`
 * 创建并切换分支：`git switch -c <new branch name>`
 * 确保本地的主分支是最新的：`git pull origin main`
 * 合并新分支到主分支：`git merge new-branch`（合并后要处理冲突才能完成合并）
@@ -17,6 +18,7 @@
 * 强制推送：`git push --force`
 * 查看当前分支：`git branch`
 * 查看远程分支：`git branch -r`
+* 查看本地和远程分支：`git branch -a`
 * 强制合并：`git merge branch --allow-unrelated-histories`
 * 删除某个分支：`git branch -D branch1`
 * 重命名当前分支：`git branch -m branch`
