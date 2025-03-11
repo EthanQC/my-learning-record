@@ -103,13 +103,9 @@
 
 ## 计算机网络
 
-
-
 ## 数据结构与算法
 #### 数据结构
 [**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/array.md)
-
-
 
 #### 算法分析
 [**`<时间复杂度与空间复杂度（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
@@ -118,83 +114,49 @@
 
 [**`<双指针法（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/double-pointers.md)
 
-
 ## 设计模式
-
-
 
 
 ## 数据库
 ### MySQL
-* [**`<名词解释（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
-* [**`<常用操作（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
+* [**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
 
+* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
 
-
+* [**`<常见问题>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/FAQ.md)
 
 ## 参加开源
 [**`<各类信息>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/information.md)
 
 [**`<我现在正在尝试参加的开源活动>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/open-source-events-that-I'm-trying-to-engage.md)
 
-
 ## Git 和 Github
-* [**`<名词解释（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
-* [**`<常用操作（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
+* [**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
 
-
+* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
 
 ## Markdown
 [**`<语法>`**](https://github.com/EthanQC/my-learning-record/blob/main/markdown/grammars.md)
-
-[**`<自己造一个markdown编辑器（前端项目）（待整理）>`**]()
 
 ## 前端
 #### HTML
 [**`<基础知识（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/front-end/HTML/fundamentals.md)
 
-
-
-
 #### CSS
-
-
-
 
 #### JavaScript
 
-
-
-
 #### react
-
-
-
 
 #### vue
 
-
-
-
 #### 项目们
-
-
-
-
 
 ## 后端
 #### 网络库
 [**`<muduo网络库（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/back-end/muduo.md)
 
-
-
-
-
 #### 项目们
-
-
-
-
 
 ## cpp
 #### 标准头文件
@@ -217,8 +179,6 @@
 [**`<thread（待整理）>`**]()
 
 [**`<chrono（待整理）>`**]()
-
-
 
 #### STL(standard template library，标准模板库)
 
@@ -261,20 +221,13 @@
 
 [**`<template>`⭐**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/template.md)
 
-
-
 #### 对象的拷贝和移动
 [**`<lambda表达式>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/lambda.md)
 
 [**`<函数指针>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/function's-pointer.md)
 
-
-
-
 #### 异常处理与安全
 [**`<异常处理（待细分）>`**]()
-
-
 
 ## go
 
