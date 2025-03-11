@@ -93,71 +93,6 @@
     * 月华的后端服务器/字节青训营商城
     * go roadmap 项目
 
-## Linux
-[**`<常用命令>`**](https://github.com/EthanQC/my-learning-record/blob/main/Linux/common-instructions.md)
-
-[**`<Epoll与多路复用I/O>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/epoll-and-multiplexing-I-O.md)
-
-## 操作系统
-[**`<基础概念>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
-
-## 计算机网络
-
-## 数据结构与算法
-#### 数据结构
-[**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/array.md)
-
-#### 算法分析
-[**`<时间复杂度与空间复杂度（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
-
-[**`<二分查找（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/binary-search.md)
-
-[**`<双指针法（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/double-pointers.md)
-
-## 设计模式
-
-
-## 数据库
-### MySQL
-* [**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
-
-* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
-
-* [**`<常见问题>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/FAQ.md)
-
-## 参加开源
-[**`<各类信息>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/information.md)
-
-[**`<我现在正在尝试参加的开源活动>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/open-source-events-that-I'm-trying-to-engage.md)
-
-## Git 和 Github
-* [**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
-
-* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
-
-## Markdown
-[**`<语法>`**](https://github.com/EthanQC/my-learning-record/blob/main/markdown/grammars.md)
-
-## 前端
-#### HTML
-[**`<基础知识（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/front-end/HTML/fundamentals.md)
-
-#### CSS
-
-#### JavaScript
-
-#### react
-
-#### vue
-
-#### 项目们
-
-## 后端
-#### 网络库
-[**`<muduo网络库（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/back-end/muduo.md)
-
-#### 项目们
-
 ## cpp
 #### 标准头文件
 [**`<random（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
@@ -231,6 +166,73 @@
 
 ## go
 
+
+## 数据库
+### MySQL
+* [**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
+
+* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
+
+* [**`<常见问题>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/FAQ.md)
+
+## 参加开源
+[**`<各类信息>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/information.md)
+
+[**`<我现在正在尝试参加的开源活动>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/open-source-events-that-I'm-trying-to-engage.md)
+
+## 前端
+#### HTML
+[**`<基础知识（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/front-end/HTML/fundamentals.md)
+
+#### CSS
+
+#### JavaScript
+
+#### react
+
+#### vue
+
+#### 项目们
+
+## 后端
+#### 网络库
+[**`<muduo网络库（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/back-end/muduo.md)
+
+#### 项目们
+
+
+## 操作系统
+[**`<基础概念>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/fundamentals.md)
+
+## 计算机网络
+
+
+## 数据结构与算法
+#### 数据结构
+[**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/array.md)
+
+#### 算法分析
+[**`<时间复杂度与空间复杂度（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
+
+[**`<二分查找（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/binary-search.md)
+
+[**`<双指针法（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/double-pointers.md)
+
+## Linux
+[**`<常用命令>`**](https://github.com/EthanQC/my-learning-record/blob/main/Linux/common-instructions.md)
+
+[**`<Epoll与多路复用I/O>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/epoll-and-multiplexing-I-O.md)
+
+## Git 和 Github
+* [**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
+
+* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
+
+## 设计模式
+
+
+## Markdown
+[**`<语法>`**](https://github.com/EthanQC/my-learning-record/blob/main/markdown/grammars.md)
 
 ## [leetcode](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
 
