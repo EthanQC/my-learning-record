@@ -208,8 +208,6 @@
 
 ## 数据库
 ### MySQL
-* [**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/fundamentals.md)
-
 * [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
 
 * [**`<常见问题>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/FAQ.md)
@@ -276,7 +274,9 @@
 ## [leetcode](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
 
 ## 面试问题总结
-[后端](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/back-end.md)
+[实习](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/internship.md)
+
+[数据库（MySQL）](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/database(MySQL).md)
 
 ## 实习记录
 [密纸科技](https://github.com/EthanQC/my-learning-record/blob/main/internship-records/mespery.md)
