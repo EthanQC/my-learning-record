@@ -9,7 +9,7 @@
 公司业务是海外网文平台，我的岗位是后端开发，下面记录公司后端用到的一些技术工具
 
 * 编程语言：php
-* 框架：laravel + webman
+* 框架：laravel + webman + GatewayWorker
 * 数据库：MySQL
     * ORM：Eloquent ORM
     * 可视化：phpMyAdmin
@@ -71,6 +71,10 @@
     * 查看业务更新的需求文档
     * 听 mentor 的构思一下如果是我的话我会怎么写
     * 准备明天跟 mentor 聊之后开始具体开发公司的一个即时通讯的项目
+* 2025，3，28：**跟 mentor 聊 IM 该如何写**
+    * 确认 IM 的实现方式
+    * 看新框架 GatewayWorker 的文档
+    * 熟悉框架和仓库代码
 
 ## 项目架构
 公司采用的是比较严格的企业级架构划分，从代码规范到环境管理都比较清晰
