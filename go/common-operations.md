@@ -9,6 +9,11 @@
 `go install -v honnef.co/go/tools/cmd/staticcheck@latest`
     * 可能要等一会才能装好
 
+### 切换 go 代理为国内镜像源
+如果发现在使用 `go get` 指令安装某个包时命令行卡住或提示超时，可以使用下面这个镜像源防止被墙
+
+`go env -w GOPROXY=https://goproxy.cn,direct`
+
 ### 运行
 * 直接运行：`go run xxx.go`
 * 生成可执行文件并运行：`go build xxx.go`、`./main`
