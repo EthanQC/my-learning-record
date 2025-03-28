@@ -126,7 +126,7 @@
 * 写好代码之后，先用 Apifox 在本地开发环境自己测试一遍，不报错没问题再继续
 * 运行 `git add .` 将所有修改的文件添加跟踪，运行 `git commit -m "your_description"` 提交到本地仓库
 * 然后用 `arc diff` 把代码提交到 Phabricator 给 mentor 评审 review
-* review 通过之后关闭 review 申请，创建一个新分支并推送到远端，记得加 `dev/` 前缀
+* review 通过之后关闭 review 申请，创建一个新分支 `git switch -c dev/new branch name`，并推送到远端，记得加 `dev/` 前缀
 * 推送完之后用 `git checkout test` 切换到测试分支，运行 `git pull` 更新
 * 然后运行 `git merge new-branch-name` 来合并分支，再推送到远程
 * 推完之后登录 `https://pubsys.mespery.com/`，新建申请后选择对应的发布环境和应用，再点击发布就行
