@@ -124,6 +124,7 @@
 ## 代码流程
 * 先写接口文档，设计数据结构，每个接口的路由是什么，然后再写代码
 * 写好代码之后，先用 Apifox 在本地开发环境自己测试一遍，不报错没问题再继续
+* 运行 `git add .` 将所有修改的文件添加跟踪，运行 `git commit -m "your_description"` 提交到本地仓库
 * 然后用 `arc diff` 把代码提交到 Phabricator 给 mentor 评审 review
 * review 通过之后关闭 review 申请，创建一个新分支并推送到远端，记得加 `dev/` 前缀
 * 推送完之后用 `git checkout test` 切换到测试分支，运行 `git pull` 更新
