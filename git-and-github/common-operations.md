@@ -1,29 +1,40 @@
-#### 一些终端命令
+## 一些终端命令
+#### 分支相关
+* 查看当前分支：`git branch`
+* 查看远程分支：`git branch -r`
+* 查看本地和远程分支：`git branch -a`
+* 删除某个分支：`git branch -D branch1`
+* 重命名当前分支：`git branch -m branch`
+* 撤销合并分支：`git merge --abort`
+* 推送新建的分支并设置对应的远程分支：`git push --set-upstream origin new branch name`
+* 切换到本地有的分支：`git switch branch name`
+* 切换到本地没有远程有的分支：`git checkout branch name`
+* 创建并切换分支：`git switch -c new branch name`
+
+#### 推送拉取相关
+* 推送代码到远程仓库：`git push origin main`
+* 本地拉取同步远程仓库：`git fetch`
+* 确保本地的主分支是最新的：`git pull origin main`
+* 强制推送：`git push --force`
+
+#### 提交合并相关
+* 合并新分支到主分支：`git merge new-branch`（合并后要处理冲突才能完成合并）
+* 提交修改：`git commit`
+* 查看状态、确认是否有冲突：`git status`
+* 强制合并：`git merge branch --allow-unrelated-histories`
+
+#### 配置远程相关
 * 删除旧的远程仓库关联：`git remote remove origin`
 * 删除当前的.git文件夹并清除所有git 的历史记录：`Remove-Item -Recurse -Force .git`
-* 当前文件夹初始化Git：`git init`
 * 将远程仓库地址关联改为使用SSH：
 `git remote set-url origin git@github.com:yourUsername/yourRepo.git`
 * 验证SSH是否配置成功：`ssh -T git@github.com`
 * 检查vs code是否默认使用SSH：`git remote -v`
-* 推送代码到远程仓库：`git push origin main`
-* 本地拉取同步远程仓库：`git fetch`
-* 切换到本地有的分支：`git switch <branch name>`
-* 切换到本地没有远程有的分支：`git checkout <branch name>`
-* 创建并切换分支：`git switch -c <new branch name>`
-* 确保本地的主分支是最新的：`git pull origin main`
-* 合并新分支到主分支：`git merge new-branch`（合并后要处理冲突才能完成合并）
-* 提交修改：`git commit`
-* 查看状态、确认是否有冲突：`git status`
-* 强制推送：`git push --force`
-* 查看当前分支：`git branch`
-* 查看远程分支：`git branch -r`
-* 查看本地和远程分支：`git branch -a`
-* 强制合并：`git merge branch --allow-unrelated-histories`
-* 删除某个分支：`git branch -D branch1`
-* 重命名当前分支：`git branch -m branch`
-* 撤销合并分支：`git merge --abort`
 
+#### 初始化
+* 当前文件夹初始化Git：`git init`
+
+## 常见操作教程
 #### 如何在国内将项目用vs code托管在GitHub上
 我使用的是**ssh**，通过在命令行输入：`ssh-keygen -t rsa -b 4096 -C "你的GitHub邮箱"`和`cat ~/.ssh/id_rsa.pub`，然后复制输出的内容，打开[GitHub SSH配置页面](https://github.com/settings/keys)，粘贴公钥，再通过这个：`git remote set-url origin git@github.com:yourAccount/yourRepo`修改仓库地址为ssh，就好啦
 
