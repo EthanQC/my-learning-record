@@ -292,7 +292,7 @@
 * [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
 
 ## 设计模式
-
+* [**`<单例模式>`**](https://github.com/EthanQC/my-learning-record/blob/main/design-mod/single-instance.md)
 
 ## Markdown
 [**`<语法>`**](https://github.com/EthanQC/my-learning-record/blob/main/markdown/grammars.md)
