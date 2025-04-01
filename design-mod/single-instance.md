@@ -1,7 +1,7 @@
 ## 单例模式是什么
 [推荐阅读](https://github.com/youngyangyang04/kama-DesignPattern/blob/main/DesignPattern/1-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.md)
 
-## 示例题目与代码
+## 示例题目的代码
 cpp:
 
     # include <iostream>
