@@ -228,6 +228,11 @@
 #### 异常处理与安全
 [**`<异常处理（待细分）>`**]()
 
+#### 特性
+[**`<继承>`**]()
+
+[**`<多态>`**]()
+
 ## go
 
 
@@ -293,6 +298,8 @@
 
 ## 设计模式
 * [**`<单例模式>`**](https://github.com/EthanQC/my-learning-record/blob/main/design-mod/single-instance.md)
+
+* [**`<工厂模式>`**](https://github.com/EthanQC/my-learning-record/blob/main/design-mod/factory.md)
 
 ## Markdown
 [**`<语法>`**](https://github.com/EthanQC/my-learning-record/blob/main/markdown/grammars.md)
