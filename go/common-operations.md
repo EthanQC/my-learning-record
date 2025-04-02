@@ -20,3 +20,4 @@
 
 ### 工具
 * 初始化 go 模块管理：`go mod init`
+* 清理/自动安装包：`go mod tidy`

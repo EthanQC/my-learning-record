@@ -234,7 +234,7 @@
 [**`<多态>`**]()
 
 ## go
-
+* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-operations.md)
 
 ## 数据库
 ### MySQL
