@@ -69,11 +69,9 @@
 * cpp ⭐⭐⭐⭐
     * 现代 cpp 特性复习，包括~~智能指针~~、~~Lambda 表达式~~、~~移动语义~~、性能分析、内存优化、原子操作、并发与多线程编程等
     * 熟悉封装、继承、多态等 OOP 特性以及 STL 常用容器（如 vector、map、set）
-    * 考虑要不要看底层实现，尽量把这些东西都用到项目中
 * go ⭐⭐⭐⭐
     * map， struct， slice， channal，GMP 模型调度器，GC 垃圾回收，内存逃逸等底层原理
     * Gin，GORM， gRPC，Protobuf 等框架的使用
-    * 其他可能的东西
 * 虚幻五 ⭐⭐⭐
     * UE5 的项目架构与工作流程，使用 C++ 和 Blueprints 进行游戏逻辑开发
     * 虚幻引擎关键模块，如 Actor、Pawn、GameMode、Controller、Gameplay Framework 等，Unreal 构件的生命周期与事件驱动机制等
@@ -229,18 +227,54 @@
 [**`<异常处理（待细分）>`**]()
 
 #### 特性
+[**`<封装>`**]()
+
 [**`<继承>`**]()
 
 [**`<多态>`**]()
 
+#### 性能分析与内存优化
+
+
+#### 并发与多线程编程
+
+
 ## go
 * [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-operations.md)
 
+#### 基础
+[**`<map>`**]()
+
+[**`<struct>`**]()
+
+[**`<slice>`**]()
+
+[**`<channel>`**]()
+
+#### 底层原理
+[**`<GMP 模型调度器>`**]()
+
+[**`<GC 垃圾回收>`**]()
+
+[**`<内存逃逸>`**]()
+
+#### Gin
+
+
+#### GORM
+
+
+#### gRPC
+
+
+#### Protobuf
+
+
 ## 数据库
 ### MySQL
-* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
+[**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
 
-* [**`<常见问题>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/FAQ.md)
+[**`<常见问题>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/FAQ.md)
 
 ## 参加开源
 [**`<各类信息>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/information.md)
@@ -292,14 +326,14 @@
 [**`<Epoll与多路复用I/O>`**](https://github.com/EthanQC/my-learning-record/blob/main/operation-system/epoll-and-multiplexing-I-O.md)
 
 ## Git 和 Github
-* [**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
+[**`<基础知识>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/fundamentals.md)
 
-* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
+[**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/git-and-github/common-operations.md)
 
 ## 设计模式
-* [**`<单例模式>`**](https://github.com/EthanQC/my-learning-record/blob/main/design-mod/single-instance.md)
+[**`<单例模式>`**](https://github.com/EthanQC/my-learning-record/blob/main/design-mod/single-instance.md)
 
-* [**`<工厂模式>`**](https://github.com/EthanQC/my-learning-record/blob/main/design-mod/factory.md)
+[**`<工厂模式>`**](https://github.com/EthanQC/my-learning-record/blob/main/design-mod/factory.md)
 
 ## Markdown
 [**`<语法>`**](https://github.com/EthanQC/my-learning-record/blob/main/markdown/grammars.md)
