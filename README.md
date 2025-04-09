@@ -305,6 +305,10 @@
 
 [**`<计算机网络（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/computer-network.md)
 
+## 面经
+#### 腾讯
+[**`<IEG 天美游戏客户端开发日常实习一面凉经>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-experiences/tencent/IEG-timi-game-client-development-daily-internship-first-round-failure.md)
+
 ## 实习记录
 [**`<密纸科技>`**](https://github.com/EthanQC/my-learning-record/blob/main/internship-records/mespery.md)
 
