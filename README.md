@@ -273,7 +273,7 @@
 
 [**`<链表（待整理）>`**]()
 
-[**`<栈（待整理）>`**]()
+[**`<栈与堆（待整理）>`**]()
 
 [**`<队列（待整理）>`**]()
 
@@ -297,7 +297,7 @@
 [**`<leetcode 记录（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
 
 ## 面试八股问题总结
-[**`<实习（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/internship.md)
+[**`<总体与背景>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/internship.md)
 
 [**`<数据库（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/database.md)
 
@@ -306,6 +306,8 @@
 [**`<计算机网络（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/computer-network.md)
 
 ## 面经
+[**`<如何准备面试>`**](https://github.com/EthanQC/my-learning-record/blob/main/internship-records/mespery.md)
+
 #### 腾讯
 [**`<IEG 天美游戏客户端开发日常实习一面凉经>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-experiences/tencent/IEG-timi-game-client-development-daily-internship-first-round-failure.md)
 
