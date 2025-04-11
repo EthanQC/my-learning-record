@@ -141,7 +141,7 @@
 * review 通过之后关闭 review 申请，创建一个新分支 `git switch -c dev/new branch name`，并推送到远端，记得加 `dev/` 前缀
 * 推送到远端：`git push --set-upstream origin dev/new branch name`
 * 推送完之后用 `git checkout test` 切换到测试分支，运行 `git pull` 更新
-* 然后运行 `git merge new-branch-name` 来合并分支，再推送到远程
+* 然后运行 `git merge new-branch-name` 来合并分支，再推送到远程 `git push`
 * 推完之后登录 `https://pubsys.mespery.com/`，新建申请后选择对应的发布环境和应用，再点击发布就行
 * 发测试、预发布和生产环境的流程都是差不多的，先切到对应的分支，更新，merge，然后推送
 
