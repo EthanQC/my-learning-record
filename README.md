@@ -98,6 +98,8 @@
     * [数据结构](https://github.com/EthanQC/my-learning-record/blob/main/README.md#数据结构)
     * [算法分析](https://github.com/EthanQC/my-learning-record/blob/main/README.md#算法分析)
 * [面试八股问题总结](https://github.com/EthanQC/my-learning-record/blob/main/README.md#面试八股问题总结)
+* 面经
+    * [腾讯](https://github.com/EthanQC/my-learning-record/blob/main/README.md#腾讯)
 * [实习记录](https://github.com/EthanQC/my-learning-record/blob/main/README.md#实习记录)
 * 后端
     * [网络库](https://github.com/EthanQC/my-learning-record/blob/main/README.md#网络库)
@@ -146,17 +148,17 @@
 
 [**`<vector>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md)
 
-[**`<array>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/array.md)
+[**`<list（待整理）>`**]()
 
 [**`<deque（待整理）>`**]()
 
+[**`<array>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/array.md)
+
 [**`<stack（待整理）>`**]()
 
-[**`<queue（待整理）>`**]()
+[**`<queue/priority_queue（待整理）>`**]()
 
 [**`<string（待整理）>`**]()
-
-[**`<list（待整理）>`**]()
 
 [**`<set/multiset（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/set-multiset.md)
 
@@ -273,11 +275,15 @@
 
 [**`<链表（待整理）>`**]()
 
-[**`<栈与堆（待整理）>`**]()
+[**`<栈与队列（待整理）>`**]()
 
-[**`<队列（待整理）>`**]()
+[**`<堆与优先队列（待整理）>`**]()
 
-[**`<二叉树（待整理）>`**]()
+[**`<哈希表（待整理）>`**]()
+
+[**`<树与二叉树（待整理）>`**]()
+
+[**`<图（待整理）>`**]()
 
 #### 算法分析
 [**`<时间复杂度与空间复杂度（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
@@ -286,7 +292,11 @@
 
 [**`<双指针法（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/double-pointers.md)
 
+[**`<常见算法思想与方法（待整理）>`**]()
+
 [**`<排序（待整理）>`**]()
+
+[**`<查找（待整理）>`**]()
 
 [**`<回溯（待整理）>`**]()
 
