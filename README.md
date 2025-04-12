@@ -97,6 +97,7 @@
 * 数据结构与算法
     * [数据结构](https://github.com/EthanQC/my-learning-record/blob/main/README.md#数据结构)
     * [算法分析](https://github.com/EthanQC/my-learning-record/blob/main/README.md#算法分析)
+    * [刷题记录](https://github.com/EthanQC/my-learning-record/blob/main/README.md#刷题记录)
 * [面试八股问题总结](https://github.com/EthanQC/my-learning-record/blob/main/README.md#面试八股问题总结)
 * 面经
     * [腾讯](https://github.com/EthanQC/my-learning-record/blob/main/README.md#腾讯)
@@ -304,6 +305,7 @@
 
 [**`<动态规划（待整理）>`**]()
 
+#### 刷题记录
 [**`<leetcode 记录（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
 
 ## 面试八股问题总结
