@@ -210,7 +210,7 @@
 [**`<多态（待整理）>`**]()
 
 ## go
-* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-operations.md)
+[**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-operations.md)
 
 #### 基础
 [**`<slice>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/slice.md)
