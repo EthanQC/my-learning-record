@@ -155,11 +155,11 @@
 
 [**`<vector>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md)
 
+[**`<array>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/array.md)
+
 [**`<list（待整理）>`**]()
 
 [**`<deque（待整理）>`**]()
-
-[**`<array>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/array.md)
 
 [**`<stack（待整理）>`**]()
 
@@ -213,13 +213,13 @@
 * [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-operations.md)
 
 #### 基础
+[**`<slice（待整理）>`**]()
+
 [**`<range（待整理）>`**]()
 
 [**`<map（待整理）>`**]()
 
 [**`<struct（待整理）>`**]()
-
-[**`<slice（待整理）>`**]()
 
 [**`<channel（待整理）>`**]()
 
