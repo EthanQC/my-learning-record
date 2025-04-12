@@ -114,7 +114,7 @@
     * [JavaScript](https://github.com/EthanQC/my-learning-record/blob/main/README.md#javascript)
     * [React](https://github.com/EthanQC/my-learning-record/blob/main/README.md#react)
     * [Vue](https://github.com/EthanQC/my-learning-record/blob/main/README.md#vue)
-* [虚幻五与游戏开发](https://github.com/EthanQC/my-learning-record/blob/main/README.md#虚幻五与游戏开发)
+* [虚幻五与计算机图形学](https://github.com/EthanQC/my-learning-record/blob/main/README.md#虚幻五与计算机图形学)
 * [参加开源](https://github.com/EthanQC/my-learning-record/blob/main/README.md#参加开源)
 * [其他](https://github.com/EthanQC/my-learning-record/blob/main/README.md#其他)
 * [碎碎念和反思总结](https://github.com/EthanQC/my-learning-record/blob/main/README.md#碎碎念和反思总结)
@@ -305,6 +305,8 @@
 
 [**`<动态规划（待整理）>`**]()
 
+[**`<寻路（待整理）>`**]()
+
 #### 刷题记录
 [**`<leetcode 记录（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
 
@@ -407,16 +409,17 @@
 #### Vue
 （待整理）
 
-## 虚幻五与游戏开发
+## 虚幻五与计算机图形学
 **待整理**
 * 虚幻五 ⭐⭐⭐
     * UE5 的项目架构与工作流程，使用 C++ 和 Blueprints 进行游戏逻辑开发
     * 虚幻引擎关键模块，如 Actor、Pawn、GameMode、Controller、Gameplay Framework 等，Unreal 构件的生命周期与事件驱动机制等
-    * 虚幻引擎的 Chaos 物理系统、动画系统（Anim Blueprint、状态机、IK 技术）、AI 系统（Behavior Tree、Blackboard、NavMesh 等）
+    * 虚幻引擎的 Chaos 物理系统、动画系统（Anim Blueprint、状态机、IK 技术）、AI 系统（Behavior Tree、Blackboard、NavMesh 等）、多线程架构等
     * UE5 中的 Lumen、Nanite 等新特性，渲染管线和 Shader 编写方法
 * 图形学 ⭐⭐
-    * 基础的 3D 数学和渲染管线理论，光照模型、材质系统、后期处理等图形学概念
+    * 基础的 3D 数学和渲染管线理论，光照模型、材质系统、纹理映射与贴图、3D模型与网络、性能优化与渲染技巧、后期处理等图形学概念
     * 根据需求调试渲染效果，常见的渲染优化手段（如批次合并、LOD、延迟渲染等）
+    * DLSS 等现代技术
 
 ## 参加开源
 [**`<各类信息（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/join-in-open-source/information.md)
