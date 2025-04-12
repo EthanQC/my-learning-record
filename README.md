@@ -213,7 +213,7 @@
 * [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-operations.md)
 
 #### 基础
-[**`<slice（待整理）>`**]()
+[**`<slice>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/slice.md)
 
 [**`<range（待整理）>`**]()
 
