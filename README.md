@@ -121,12 +121,12 @@
 * [我的其他仓库](https://github.com/EthanQC/my-learning-record/blob/main/README.md#我的其他仓库)
 
 ## cpp
-* [**`<常用操作（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/common-operations.md)
+* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/common-operations.md)
 
 #### 标准头文件
 [**`<random（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
 
-[**`<memory>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/memory.md)（智能指针）
+[**`<memory> - 智能指针`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/memory.md)
 
 [**`<algorithm（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/algorithm.md)
 
@@ -143,6 +143,12 @@
 [**`<thread（待整理）>`**]()
 
 [**`<chrono（待整理）>`**]()
+
+[**`<condition_variable（待整理）>`**]()
+
+[**`<execution（待整理）>`**]()
+
+[**`<coroutine（待整理）>`**]()
 
 #### STL
 (standard template library，标准模板库)
@@ -189,7 +195,7 @@
 [**`<if>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/if.md)
 
 #### 对象的拷贝和移动
-[**`<lambda表达式>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/lambda.md)
+[**`<移动语义与 lambda 表达式>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/lambda.md)
 
 [**`<函数指针>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/function's-pointer.md)
 
@@ -202,12 +208,6 @@
 [**`<继承（待整理）>`**]()
 
 [**`<多态（待整理）>`**]()
-
-#### 性能分析与内存优化
-（待整理）
-
-#### 并发与多线程编程
-（待整理）
 
 ## go
 * [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-operations.md)
