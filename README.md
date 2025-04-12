@@ -124,7 +124,7 @@
 * [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/common-operations.md)
 
 #### 标准头文件
-[**`<random（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
+[**`<random>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
 
 [**`<memory> - 智能指针`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/memory.md)
 
@@ -308,7 +308,37 @@
 [**`<寻路（待整理）>`**]()
 
 #### 刷题记录
-[**`<leetcode 记录（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/leetcode.md)
+题目编号为 leetcode 上的题目编号
+
+[**`<数组（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/array-reflections.md)
+
+[**`<链表（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/linked-list/linked-list-reflections.md)
+
+[**`<哈希表（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/hash-table-reflections.md)
+
+[**`<字符串（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/string-reflections.md)
+
+[**`<栈与队列（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/stack-and-queue-reflections.md)
+
+[**`<二叉树（待整理）>`**]()
+
+[**`<回溯算法（待整理）>`**]()
+
+[**`<贪心算法（待整理）>`**]()
+
+[**`<动态规划基础（待整理）>`**]()
+
+[**`<动态规划背包（待整理）>`**]()
+
+[**`<动态规划打家劫舍（待整理）>`**]()
+
+[**`<动态规划股票（待整理）>`**]()
+
+[**`<动态规划子序列（待整理）>`**]()
+
+[**`<单调栈（待整理）>`**]()
+
+[**`<图论（待整理）>`**]()
 
 ## 面试八股问题总结
 [**`<总体与背景>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/overall.md)
