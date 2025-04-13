@@ -217,7 +217,7 @@
 #### 基础
 [**`<slice>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/slice.md)
 
-[**`<range（待整理）>`**]()
+[**`<for 循环和 range>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/for-loop-and-range.md)
 
 [**`<map（待整理）>`**]()
 
