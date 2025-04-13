@@ -1,4 +1,5 @@
 ## 977.有序数组的平方
+cpp：
 
 错误代码1：
 
@@ -111,3 +112,26 @@
             return result;
         }
     };
+
+go：
+
+    func sortedSquares(nums []int) []int {
+        left := 0
+        right := len(nums) - 1
+        index := len(nums) - 1
+        results := make([]int, len(nums), len(nums))
+        
+        for left <= right {
+            if nums[left] * nums[left] > nums[right] * nums[right] {
+                results[index] = nums[left] * nums[left]
+                left++
+            } else {
+                results[index] = nums[right] * nums[right]
+                right--
+            }
+
+            index--
+        }
+        
+        return results
+    }
