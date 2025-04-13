@@ -155,7 +155,7 @@
 #### STL
 (standard template library，标准模板库)
 
-[**`<vector>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md)
+[**`<vector>`⭐**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/vector.md)
 
 [**`<array>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/array.md)
 
@@ -184,7 +184,7 @@
 
 [**`<typedef（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/typedef.md)
 
-[**`<auto>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/auto.md)
+[**`<auto>`⭐**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/auto.md)
 
 [**`<new（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/new.md)
 
@@ -197,7 +197,7 @@
 [**`<if>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/keywords/if.md)
 
 #### 对象的拷贝和移动
-[**`<移动语义与 lambda 表达式>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/lambda.md)
+[**`<移动语义与 lambda 表达式>`⭐**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/lambda.md)
 
 [**`<函数指针>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/copy-and-move-objects/function's-pointer.md)
 
@@ -569,6 +569,10 @@
 >[**2025.3.30**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.3.30.md)
 >
 >[**2025.3.31**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.3.31.md)
+>
+>[**2025.4.7**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.4.7.md)
+>
+>[**2025.4.13**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.4.13.md)
 
 ## 我的其他仓库
 >[基于异步日志系统的 HTTP 框架](https://github.com/EthanQC/HTTP-framework-based-on-asynchronous-logging-system)
