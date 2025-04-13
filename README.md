@@ -293,15 +293,11 @@
 #### 算法分析
 [**`<时间复杂度与空间复杂度（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
 
-[**`<二分查找（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/binary-search.md)
-
-[**`<双指针法（待补充）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/double-pointers.md)
-
-[**`<常见算法思想与方法（待整理）>`**]()
+[**`<常见算法思想与方法（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/common-methods.md)
 
 [**`<排序（待整理）>`**]()
 
-[**`<查找（待整理）>`**]()
+[**`<查找>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/search.md)
 
 [**`<回溯（待整理）>`**]()
 
