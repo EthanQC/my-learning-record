@@ -16,12 +16,19 @@
 * 本地拉取同步远程仓库：`git fetch`
 * 确保本地的主分支是最新的：`git pull origin main`
 * 强制推送：`git push --force`
+* 强制推送到远程，覆盖远程分支历史（更安全）：`git push origin pre --force-with-lease`
+    * 注意需要先拉取远程最新信息 `git fetch origin` 然后切换到想要更改的分支
+    * 适用于不小心合错了分支但还没推送到远程
 
 #### 提交合并相关
 * 合并新分支到主分支：`git merge new-branch`（合并后要处理冲突才能完成合并）
 * 提交修改：`git commit`
 * 查看状态、确认是否有冲突：`git status`
 * 强制合并：`git merge branch --allow-unrelated-histories`
+* 将某次特定 commit 从一个分支迁到另一个分支而不是合并分支：`git cherry-pick <commit-hash>` `git cherry-pick <commit1> <commit2> <commit3> ...`
+    * **开发时一定要看清楚自己是在编辑哪个分支，换环境切换分支了记得要切换回平时开发环境的分支**
+* 连续的 cherry-pick：`git cherry-pick <commit-hash>^..<commit-hash>`，其中第一个是较早的，第二个是较晚的，中间连续的所有 commit 都会被迁移
+* 用 `reset --hard` 回退到想要的那个提交：`git reset --hard <commit-before-merge>`
 
 #### 配置远程相关
 * 删除旧的远程仓库关联：`git remote remove origin`
