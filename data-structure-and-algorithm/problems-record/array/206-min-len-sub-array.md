@@ -18,7 +18,7 @@ cpp：
                 while (sum >= target)
                 {
                     length = fast - slow + 1;
-                    results = results < length ? results : length;
+                    results = results < length ? results : length; //比较，实时更新长度
                     sum -= nums[slow];
                     slow++;
                 }
@@ -32,7 +32,7 @@ go：
 
     func minSubArrayLen(target int, nums []int) int {
         slow, length, sum := 0, 0, 0
-        results := len(nums) + 1
+        results := len(nums) + 1 // +1 是为了实现不存在子数组时返回 0
 
         for fast := 0; fast < len(nums); fast++ {
             sum += nums[fast]
