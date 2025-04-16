@@ -159,6 +159,8 @@
 
 [**`<array>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/array.md)
 
+[**`<pair>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
+
 [**`<list（待整理）>`**]()
 
 [**`<deque（待整理）>`**]()
@@ -172,8 +174,6 @@
 [**`<set/multiset（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/set-multiset.md)
 
 [**`<map/multimap/unordered_map（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/map-multimap-unordered_map.md)
-
-[**`<pair（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
 
 [**`<几个STL小练习（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/test%20your%20skills.md)
 
