@@ -33,7 +33,7 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
 
     std::vector<int> v1;  // 创建一个空的vector，类型为int
     std::vector<int> v2(5, 10);  // 创建一个包含5个元素，每个元素的值为10的vector
-    std::vector<int> v3 = {1, 2, 3, 4, 5};  // 使用列表初始化
+    std::vector<int> v3{1, 2, 3, 4, 5};  // 使用列表初始化
 
 ##### 提前分配内存
 `reserve` 函数用于为 `std::vector` **提前分配**足够的存储空间，**防止动态扩容时多次分配内存**，从而提高性能
