@@ -17,7 +17,6 @@
 
 ### 27.移除元素
 #### 题目：https://leetcode.cn/problems/remove-element/description/
-
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/27-delete-elements.md)
 
 原地：其实就是保留原数组，对原数组进行一系列的操作，而不是重新创建一个新数组
@@ -35,7 +34,6 @@
 
 ### 977.有序数组的平方
 #### 题目：https://leetcode.cn/problems/squares-of-a-sorted-array/description/
-
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/977-square-of-a-sorted-array.md)
 
 这题的**暴力解法**还是直接对每个数平方（利用 `*=`），平方完之后再直接用 `sort` 算法排序，但**双指针法 - 左右指针**可以优化时间复杂度，分析如下：
@@ -52,8 +50,7 @@
 这道题也是折磨了很久gpt才最后做出来的哈哈哈，说白了还是，就，明明有一种更方便、更快速的方式能使用，真的没必要非要钻牛角尖，这道题实际想过之后会发现双指针法并不一定是一个快一个慢，也可以一左一右，遍历的方式有很多，要灵活运用
 
 ### 206. 长度最小的子数组
-#### 题目：https://leetcode.cn/problems/minimum-size-subarray-sum/
-
+#### 题目：https://leetcode.cn/problems/minimum-size-subarray-sum/-
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/206-min-len-sub-array.md)
 
 这题的**暴力解法**是两个 for 循环嵌套，通过穷举来求子数组，但实际上我们可以使用**双指针法 - 滑动窗口**来解决这道题目，从而优化时间复杂度
@@ -71,7 +68,6 @@
 
 ### 59. 螺旋矩阵Ⅱ
 #### 题目：https://leetcode.cn/problems/spiral-matrix-ii/
-
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/59.%20spiral-matrix-ii.md)
 
 这题一般的解法是**直接模拟**，但我对其涉及到的边界判断和重复工作感到不适，所以通过 gpt 学到了另一种**建模索引**的方法，个人感觉写起来会更舒服一些
