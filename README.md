@@ -278,7 +278,7 @@
 #### 数据结构
 [**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/array.md)
 
-[**`<链表（待整理）>`**]()
+[**`<链表>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/linked-list.md)
 
 [**`<哈希表（待整理）>`**]()
 

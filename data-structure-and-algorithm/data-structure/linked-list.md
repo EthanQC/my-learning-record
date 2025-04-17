@@ -1,116 +1,111 @@
-1. 链表基本概念
-1.1 什么是链表
-链表（Linked List）是一种常用的数据结构，其特点是由一系列节点（Node）构成，每个节点包含数据和指向下一个节点（或前后节点）的引用。与数组相比，链表中元素的内存地址不一定连续，而是通过指针链接在一起。
+### 链表基本概念
+#### 什么是链表
+**链表**（Linked List）是一种常用的数据结构，其特点是由一系列**节点**（Node）构成，每个节点包含数据和指向下一个节点（或前后节点）的引用，与数组相比，**链表中元素的内存地址不一定连续**，而是**通过指针链接在一起**
 
 主要类型有：
 
-单链表（Singly Linked List）：
-每个节点只有一个指针，指向下一个节点。
+* **单链表**（Singly Linked List）：
+    * 每个节点只有一个指针，指向下一个节点
+* **双链表**（Doubly Linked List）：
+    * 每个节点包含两个指针，一个指向前一个节点，一个指向下一个节点，可以在两个方向上遍历
+* **循环链表**（Circular Linked List）：
+    * 链表的尾节点指向头节点，形成一个闭环
 
-双链表（Doubly Linked List）：
-每个节点包含两个指针，一个指向前一个节点，一个指向下一个节点，可以在两个方向上遍历。
+#### 链表的优缺点
+##### 优点：
 
-循环链表（Circular Linked List）：
-链表的尾节点指向头节点，形成一个闭环。
+* **动态大小**： 链表可以轻松地在运行时增减元素，内存分配灵活
+* **插入和删除操作高效**： 在已知节点位置的情况下，插入和删除操作不需要移动其他元素，时间复杂度通常为 O(1)（不考虑查找时间）
 
-1.2 链表的优缺点
-优点：
+##### 缺点：
 
-动态大小： 链表可以轻松地在运行时增减元素，内存分配灵活。
+* **随机访问困难**： 链表不支持快速随机访问，要访问第 k 个元素需**从头遍历**，时间复杂度为 O(k)
+* **额外内存开销**： 每个节点需要存储指针（单链表一个指针，双链表两个指针）
+* **缓存局部性较差**： 由于内存可能**不连续**，遍历时 CPU **缓存命中率较低**
 
-插入和删除操作高效： 在已知节点位置的情况下，插入和删除操作不需要移动其他元素，时间复杂度通常为 O(1)（不考虑查找时间）。
+### C++ 中链表的实现与使用
+在 C++ 中，你可以自己实现链表类，也可以使用标准模板库（STL）中的一些容器（例如 `std::list`）来使用链表
 
-缺点：
+#### 自定义单链表示例
+##### 节点定义
+每个节点通常包含**数据**和**指向下一个节点的指针**：
 
-随机访问困难： 链表不支持快速随机访问，要访问第 k 个元素需从头遍历，时间复杂度为 O(k)。
+    // Node.h
+    #ifndef NODE_H
+    #define NODE_H
 
-额外内存开销： 每个节点需要存储指针（单链表一个指针，双链表两个指针）。
+    template<typename T>
+    struct Node
+    {
+        T data;
+        Node* next;
 
-缓存局部性较差： 由于内存可能不连续，遍历时 CPU 缓存命中率较低。
+        // 构造函数
+        Node(const T& value, Node* nextNode = nullptr)
+            : data(value), next(nextNode) {}
+    };
 
-2. C++ 中链表的实现与使用
-在 C++ 中，你可以自己实现链表类，也可以使用标准模板库（STL）中的一些容器（例如 std::list）来使用链表。下面分别介绍自定义单链表和 STL 的链表容器。
+    #endif // NODE_H
 
-2.1 自定义单链表示例
-2.1.1 节点定义
-每个节点通常包含数据和指向下一个节点的指针：
-
-cpp
-Copy
-// Node.h
-#ifndef NODE_H
-#define NODE_H
-
-template<typename T>
-struct Node {
-    T data;
-    Node* next;
-
-    // 构造函数
-    Node(const T& value, Node* nextNode = nullptr)
-        : data(value), next(nextNode) {}
-};
-
-#endif // NODE_H
-2.1.2 链表类定义
+##### 链表类定义
 利用节点结构定义一个简单的单链表类，包含插入、删除、遍历等基本操作：
 
-cpp
-Copy
-// LinkedList.h
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+    // LinkedList.h
+    #ifndef LINKEDLIST_H
+    #define LINKEDLIST_H
 
-#include "Node.h"
-#include <iostream>
+    #include "Node.h"
+    #include <iostream>
 
-template<typename T>
-class LinkedList {
-private:
-    Node<T>* head;  // 头指针
+    template<typename T>
+    class LinkedList
+    {
+    private:
+        Node<T>* head;  // 头指针
 
-public:
-    // 构造函数和析构函数
-    LinkedList() : head(nullptr) {}
-    ~LinkedList() { clear(); }
+    public:
+        // 构造函数和析构函数
+        LinkedList() : head(nullptr) {}
+        ~LinkedList() { clear(); }
 
-    // 插入一个新节点到链表头部
-    void push_front(const T& value) {
-        head = new Node<T>(value, head);
-    }
-
-    // 删除头部节点
-    void pop_front() {
-        if (head) {
-            Node<T>* temp = head;
-            head = head->next;
-            delete temp;
+        // 插入一个新节点到链表头部
+        void push_front(const T& value) {
+            head = new Node<T>(value, head);
         }
-    }
 
-    // 清空链表
-    void clear() {
-        while (head) {
-            pop_front();
+        // 删除头部节点
+        void pop_front() {
+            if (head) {
+                Node<T>* temp = head;
+                head = head->next;
+                delete temp;
+            }
         }
-    }
 
-    // 打印链表
-    void print() const {
-        Node<T>* current = head;
-        while (current) {
-            std::cout << current->data;
-            if (current->next) std::cout << " -> ";
-            current = current->next;
+        // 清空链表
+        void clear() {
+            while (head) {
+                pop_front();
+            }
         }
-        std::cout << std::endl;
-    }
 
-    // 返回头节点（只读）
-    Node<T>* getHead() const { return head; }
-};
+        // 打印链表
+        void print() const {
+            Node<T>* current = head;
+            while (current) {
+                std::cout << current->data;
+                if (current->next) std::cout << " -> ";
+                current = current->next;
+            }
+            std::cout << std::endl;
+        }
 
-#endif // LINKEDLIST_H
+        // 返回头节点（只读）
+        Node<T>* getHead() const { return head; }
+    };
+
+    #endif // LINKEDLIST_H
+
 2.1.3 使用示例
 在主函数中使用这个单链表类：
 
