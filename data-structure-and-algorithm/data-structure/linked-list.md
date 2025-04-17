@@ -69,13 +69,16 @@
         ~LinkedList() { clear(); }
 
         // 插入一个新节点到链表头部
-        void push_front(const T& value) {
+        void push_front(const T& value)
+        {
             head = new Node<T>(value, head);
         }
 
         // 删除头部节点
-        void pop_front() {
-            if (head) {
+        void pop_front()
+        {
+            if (head)
+            {
                 Node<T>* temp = head;
                 head = head->next;
                 delete temp;
@@ -83,16 +86,20 @@
         }
 
         // 清空链表
-        void clear() {
-            while (head) {
+        void clear()
+        {
+            while (head)
+            {
                 pop_front();
             }
         }
 
         // 打印链表
-        void print() const {
+        void print() const
+        {
             Node<T>* current = head;
-            while (current) {
+            while (current)
+            {
                 std::cout << current->data;
                 if (current->next) std::cout << " -> ";
                 current = current->next;
@@ -106,178 +113,184 @@
 
     #endif // LINKEDLIST_H
 
-2.1.3 使用示例
+##### 使用示例
 在主函数中使用这个单链表类：
 
-cpp
-Copy
-// main.cpp
-#include "LinkedList.h"
-#include <iostream>
+    // main.cpp
+    #include "LinkedList.h"
+    #include <iostream>
 
-int main() {
-    LinkedList<int> list;
-    list.push_front(10);
-    list.push_front(20);
-    list.push_front(30);
+    int main()
+    {
+        LinkedList<int> list;
+        list.push_front(10);
+        list.push_front(20);
+        list.push_front(30);
 
-    std::cout << "链表内容: ";
-    list.print();  // 输出: 30 -> 20 -> 10
+        std::cout << "链表内容: ";
+        list.print();  // 输出: 30 -> 20 -> 10
 
-    list.pop_front();
-    std::cout << "删除头结点后: ";
-    list.print();  // 输出: 20 -> 10
+        list.pop_front();
+        std::cout << "删除头结点后: ";
+        list.print();  // 输出: 20 -> 10
 
-    list.clear();
-    std::cout << "清空后: ";
-    list.print();  // 输出为空
+        list.clear();
+        std::cout << "清空后: ";
+        list.print();  // 输出为空
 
-    return 0;
-}
-2.2 使用 STL 中的 std::list
-C++ STL 提供了 std::list 容器，它就是一个双向链表。使用起来非常简单：
-
-cpp
-Copy
-#include <iostream>
-#include <list>
-
-int main() {
-    std::list<int> myList;
-    
-    // 插入数据
-    myList.push_back(10);
-    myList.push_back(20);
-    myList.push_front(5);
-
-    // 遍历链表
-    std::cout << "std::list 内容: ";
-    for (int x : myList) {
-        std::cout << x << " ";
-    }
-    std::cout << std::endl;
-
-    // 删除头部元素
-    myList.pop_front();
-    
-    std::cout << "删除头部元素后: ";
-    for (int x : myList) {
-        std::cout << x << " ";
-    }
-    std::cout << std::endl;
-    
-    return 0;
-}
-优点是 STL 的实现经过高度优化，支持迭代器、常见算法等，使用时无需自己编写内存管理代码。
-
-3. Go 语言中的链表实现与使用
-在 Go 语言中，链表可以通过自己定义结构体（例如实现单链表或双链表），同时 Go 标准库也提供了一个双向链表容器，位于 "container/list" 包中。
-
-3.1 使用 container/list
-3.1.1 介绍
-Go 标准库中的 container/list 实现了一个双向链表，支持在两端插入、删除节点，以及任意位置插入和删除操作。链表中的每个元素类型是 interface{}，因此可以存储任意类型的值。
-
-3.1.2 示例代码
-go
-Copy
-package main
-
-import (
-    "container/list"
-    "fmt"
-)
-
-func main() {
-    // 创建一个新的链表
-    l := list.New()
-
-    // 在链表末尾添加元素
-    l.PushBack(10)
-    l.PushBack(20)
-    // 在链表头部添加元素
-    l.PushFront(5)
-
-    // 遍历链表
-    fmt.Print("链表内容: ")
-    for e := l.Front(); e != nil; e = e.Next() {
-        fmt.Print(e.Value, " ")
-    }
-    fmt.Println()
-
-    // 删除头节点（返回被删除的节点）
-    head := l.Front()
-    if head != nil {
-        l.Remove(head)
+        return 0;
     }
 
-    fmt.Print("删除头节点后: ")
-    for e := l.Front(); e != nil; e = e.Next() {
-        fmt.Print(e.Value, " ")
+#### 使用 STL 中的 `std::list`
+C++ STL 提供了 `std::list` 容器，它就是一个**双向链表**
+
+使用起来非常简单：
+
+    #include <iostream>
+    #include <list>
+
+    int main()
+    {
+        std::list<int> myList;
+        
+        // 插入数据
+        myList.push_back(10);
+        myList.push_back(20);
+        myList.push_front(5);
+
+        // 遍历链表
+        std::cout << "std::list 内容: ";
+        for (int x : myList)
+        {
+            std::cout << x << " ";
+        }
+        std::cout << std::endl;
+
+        // 删除头部元素
+        myList.pop_front();
+        
+        std::cout << "删除头部元素后: ";
+        for (int x : myList)
+        {
+            std::cout << x << " ";
+        }
+        std::cout << std::endl;
+        
+        return 0;
     }
-    fmt.Println()
-}
-3.2 自定义链表实现（单链表示例）
-有时你可能希望自己实现一个链表来加深理解。下面是一个简单的单链表示例。
 
-3.2.1 定义节点结构体
-go
-Copy
-package main
+优点是 STL 的实现经过高度优化，支持迭代器、常见算法等，使用时无需自己编写内存管理代码
 
-import "fmt"
+### Go 语言中的链表实现与使用
+在 Go 语言中，链表可以通过**自己定义结构体**（例如实现单链表或双链表），同时 **Go 标准库也提供了一个双向链表容器**，位于 `container/list` 包中
 
-// 定义一个节点，包含数据和指向下一个节点的指针
-type Node struct {
-    Data int
-    Next *Node
-}
-3.2.2 定义链表及基本方法
-go
-Copy
-// 定义单链表结构体
-type LinkedList struct {
-    Head *Node
-}
+#### 使用 `container/list`
+##### 介绍
+Go 标准库中的 `container/list` 实现了一个**双向链表**，**支持在两端插入、删除节点，以及任意位置插入和删除操作**
 
-// 在链表头部插入新节点
-func (l *LinkedList) PushFront(data int) {
-    newNode := &Node{
-        Data: data,
-        Next: l.Head,
+链表中的每个元素类型是 `interface{}`，因此**可以存储任意类型的值**
+
+##### 示例代码
+
+    package main
+
+    import (
+        "container/list"
+        "fmt"
+    )
+
+    func main() {
+        // 创建一个新的链表
+        l := list.New()
+
+        // 在链表末尾添加元素
+        l.PushBack(10)
+        l.PushBack(20)
+        // 在链表头部添加元素
+        l.PushFront(5)
+
+        // 遍历链表
+        fmt.Print("链表内容: ")
+        for e := l.Front(); e != nil; e = e.Next() {
+            fmt.Print(e.Value, " ")
+        }
+        fmt.Println()
+
+        // 删除头节点（返回被删除的节点）
+        head := l.Front()
+        if head != nil {
+            l.Remove(head)
+        }
+
+        fmt.Print("删除头节点后: ")
+        for e := l.Front(); e != nil; e = e.Next() {
+            fmt.Print(e.Value, " ")
+        }
+        fmt.Println()
     }
-    l.Head = newNode
-}
 
-// 删除头节点
-func (l *LinkedList) PopFront() {
-    if l.Head != nil {
-        l.Head = l.Head.Next
+#### 自定义链表实现（单链表示例）
+有时你可能希望自己实现一个链表来加深理解，下面是一个简单的单链表示例
+
+##### 定义节点结构体：
+
+    package main
+
+    import "fmt"
+
+    // 定义一个节点，包含数据和指向下一个节点的指针
+    type Node struct {
+        Data int
+        Next *Node
     }
-}
 
-// 打印链表
-func (l *LinkedList) Print() {
-    current := l.Head
-    for current != nil {
-        fmt.Printf("%d ", current.Data)
-        current = current.Next
+##### 定义链表及基本方法：
+
+    // 定义单链表结构体
+    type LinkedList struct {
+        Head *Node
     }
-    fmt.Println()
-}
 
-func main() {
-    list := LinkedList{}
-    list.PushFront(10)
-    list.PushFront(20)
-    list.PushFront(30)
+    // 在链表头部插入新节点
+    func (l *LinkedList) PushFront(data int) {
+        newNode := &Node{
+            Data: data,
+            Next: l.Head,
+        }
+        l.Head = newNode
+    }
 
-    fmt.Print("链表内容: ")
-    list.Print() // 输出: 30 20 10
+    // 删除头节点
+    func (l *LinkedList) PopFront() {
+        if l.Head != nil {
+            l.Head = l.Head.Next
+        }
+    }
 
-    list.PopFront()
-    fmt.Print("删除头节点后: ")
-    list.Print() // 输出: 20 10
-}
+    // 打印链表
+    func (l *LinkedList) Print() {
+        current := l.Head
+        for current != nil {
+            fmt.Printf("%d ", current.Data)
+            current = current.Next
+        }
+        fmt.Println()
+    }
+
+    func main() {
+        list := LinkedList{}
+        list.PushFront(10)
+        list.PushFront(20)
+        list.PushFront(30)
+
+        fmt.Print("链表内容: ")
+        list.Print() // 输出: 30 20 10
+
+        list.PopFront()
+        fmt.Print("删除头节点后: ")
+        list.Print() // 输出: 20 10
+    }
+
 3.2.3 说明
 这里我们定义了一个 Node 结构体表示单链表节点，每个节点存储一个整数数据和指向下一个节点的指针。
 
