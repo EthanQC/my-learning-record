@@ -161,7 +161,7 @@
 
 [**`<pair>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
 
-[**`<list（待整理）>`**]()
+[**`<list>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/list.md)
 
 [**`<deque（待整理）>`**]()
 
