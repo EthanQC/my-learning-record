@@ -219,9 +219,9 @@
 
 [**`<for 循环和 range>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/for-loop-and-range.md)
 
-[**`<map（待整理）>`**]()
+[**`<struct>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/struct.md)
 
-[**`<struct（待整理）>`**]()
+[**`<map（待整理）>`**]()
 
 [**`<channel（待整理）>`**]()
 
