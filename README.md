@@ -161,7 +161,7 @@
 
 [**`<pair>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/pair.md)
 
-[**`<list（待整理）>`**]()
+[**`<list>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/STL/list.md)
 
 [**`<deque（待整理）>`**]()
 
@@ -218,6 +218,8 @@
 [**`<slice>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/slice.md)
 
 [**`<for 循环和 range>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/for-loop-and-range.md)
+
+[**`<struct>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/struct.md)
 
 [**`<map>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/map.md)
 
@@ -314,7 +316,7 @@
 
 [**`<如何刷题>`**]()
 
-[**`<数组（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/array-reflections.md)
+[**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/array-reflections.md)
 
 [**`<链表（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/linked-list/linked-list-reflections.md)
 
