@@ -297,7 +297,7 @@
 
 [**`<常见算法思想与方法>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/common-methods.md)
 
-[**`<排序（待整理）>`**]()
+[**`<排序（待整理）>`**](data-structure-and-algorithm/algorithm-analysis/sort.md)
 
 [**`<查找>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/search.md)
 
@@ -347,7 +347,11 @@
 ## 面试八股问题总结
 [**`<总体与背景>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/overall.md)
 
-[**`<C++（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/cpp.md)
+[**`<项目>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/overall.md)
+
+[**`<C++（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/go.md)
+
+[**`<Go（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/cpp.md)
 
 [**`<数据结构与算法（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/cpp.md)
 
@@ -356,6 +360,8 @@
 [**`<操作系统（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/operation-system.md)
 
 [**`<计算机网络（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/computer-network.md)
+
+[**`<微服务与云原生（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/computer-network.md)
 
 [**`<计算机图形学（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/computer-graphics.md)
 
