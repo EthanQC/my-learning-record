@@ -353,7 +353,7 @@
 
 [**`<Go（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/cpp.md)
 
-[**`<数据结构与算法（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/cpp.md)
+[**`<数据结构与算法（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/data-structure-and-algorithms.md)
 
 [**`<数据库（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/database.md)
 
@@ -361,7 +361,7 @@
 
 [**`<计算机网络（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/computer-network.md)
 
-[**`<微服务与云原生（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/computer-network.md)
+[**`<微服务与云原生（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/microservices-and-cloud-native.md)
 
 [**`<计算机图形学（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/computer-graphics.md)
 
