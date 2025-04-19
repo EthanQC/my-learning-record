@@ -347,7 +347,7 @@
 ## 面试八股问题总结
 [**`<总体与背景>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/overall.md)
 
-[**`<项目>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/overall.md)
+[**`<项目与实习>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/overall.md)
 
 [**`<C++（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/go.md)
 
