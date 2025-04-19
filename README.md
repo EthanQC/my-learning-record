@@ -226,7 +226,7 @@
 [**`<channel>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/channel.md)
 
 #### 底层原理
-[**`<GMP 模型调度器（待整理）>`**]()
+[**`<GMP 模型调度器>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/underlying-principle/GMP-model-scheduler.md)
 
 [**`<GC 垃圾回收（待整理）>`**]()
 
