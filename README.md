@@ -223,8 +223,6 @@
 
 [**`<map>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/map.md)
 
-[**`<struct（待整理）>`**]()
-
 [**`<channel（待整理）>`**]()
 
 #### 底层原理
