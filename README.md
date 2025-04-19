@@ -223,7 +223,7 @@
 
 [**`<map>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/map.md)
 
-[**`<channel（待整理）>`**]()
+[**`<channel>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/channel.md)
 
 #### 底层原理
 [**`<GMP 模型调度器（待整理）>`**]()
