@@ -26,13 +26,13 @@
     * 它定义了 `slice` 在不分配新内存的前提下，**最多**能扩展到的大小
 
 可以用下面的伪结构体来表示 `slice`：
-
-    type sliceHeader struct {
-        Data uintptr // 指向底层数组的指针
-        Len  int     // 当前 slice 的长度
-        Cap  int     // 当前 slice 的容量
-    }
-
+```go
+type sliceHeader struct {
+    Data uintptr // 指向底层数组的指针
+    Len  int     // 当前 slice 的长度
+    Cap  int     // 当前 slice 的容量
+}
+```
 这种设计使得 `slice` 可以作为轻量级的数据视图，同时在扩容时能高效管理内存
 
 #### `slice` 的声明与初始化
