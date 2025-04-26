@@ -123,7 +123,7 @@
 * [我的其他仓库](https://github.com/EthanQC/my-learning-record/blob/main/README.md#我的其他仓库)
 
 ## cpp
-* [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/common-operations.md)
+[**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/common-operations.md)
 
 #### 标准头文件
 [**`<random>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/random.md)
@@ -249,18 +249,6 @@
 [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/common-operations.md)
 
 [**`<常见问题>`**](https://github.com/EthanQC/my-learning-record/blob/main/database/FAQ.md)
-
-[**`<索引优化（待整理）>`**]()
-
-[**`<事务管理（待整理）>`**]()
-
-[**`<存储引擎（待整理）>`**]()
-
-[**`<锁机制（待整理）>`**]()
-
-[**`<数据库设计（待整理）>`**]()
-
-[**`<SQL 调优（待整理）>`**]()
 
 ### NoSQL
 （待整理）
