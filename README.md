@@ -134,10 +134,6 @@
 
 [**`<mutex（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/mutex.md)
 
-[**`<queue（待整理）>`**]()
-
-[**`<list（待整理）>`**]()
-
 [**`<atomic（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/atomic.md)
 
 [**`<functional>`**](https://github.com/EthanQC/my-learning-record/blob/main/cpp/hpp/functional.md)
@@ -300,7 +296,7 @@
 #### 刷题记录
 题目编号为 leetcode 上的题目编号
 
-[**`<如何刷题>`**]()
+[**`<如何刷题>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/how.md)
 
 [**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/array-reflections.md)
 
@@ -362,6 +358,13 @@
 
 #### 腾讯
 [**`<IEG 天美游戏客户端开发日常实习一面凉经>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-experiences/tencent/IEG-timi-game-client-development-daily-internship-first-round-failure.md)
+
+[**`<IEG 光子游戏客户端开发日常实习一面凉经>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-experiences/tencent/IEG-LightSpeed-game-client-development-daily-internship-first-round-failure.md)
+
+#### 小鹅通
+[**`<后端开发日常实习一面面经>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-experiences/xiaoetong/back-end-daily-internship-first-round-experience.md)
+
+[**`<后端开发日常实习二面凉经>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-experiences/xiaoetong/back-end-daily-internship-second-round-failure.md)
 
 ## 实习记录
 [**`<密纸科技>`**](https://github.com/EthanQC/my-learning-record/blob/main/internship-records/mespery.md)
