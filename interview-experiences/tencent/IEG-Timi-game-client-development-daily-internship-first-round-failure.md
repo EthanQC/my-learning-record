@@ -12,18 +12,18 @@ A：面试官您好，我是来自深圳大学电子信息工程学院的大二�
 
 T1. 合并两个排序的链表
 
-leetcode类似题目：[合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/description/)
+leetcode 类似题目：[合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/description/)
 
 牛客原题：[BM4 合并两个排序的链表](https://www.nowcoder.com/practice/d8b6b4358f774294a89de2a6ac4d9337?tpId=295&tqId=23267&sourceUrl=%2Fexam%2Foj%3FquestionJobId%3D10%26subTabName%3Donline_coding_page)
 
 T2. 三数之和
 
-leetcode原题：[三数之和](https://leetcode.cn/problems/3sum/description/)
+leetcode 原题：[三数之和](https://leetcode.cn/problems/3sum/description/)
 
 
 T3. 二叉树的层序遍历
 
-leetcode原题：[二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/description/)
+leetcode 原题：[二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/description/)
 
 
 ###### 这三题我其实都没啥思路，虽然好像都见过但实在是太久没刷算法题了，面试官说完大概半小时之后就关摄像头了，然后可能是看我十分钟过去连简单题都没写出来就又打开摄像头跟我说没关系
