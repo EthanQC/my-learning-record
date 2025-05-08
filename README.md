@@ -101,6 +101,7 @@
 * [面试八股问题总结](https://github.com/EthanQC/my-learning-record/blob/main/README.md#面试八股问题总结)
 * 面经
     * [腾讯](https://github.com/EthanQC/my-learning-record/blob/main/README.md#腾讯)
+    * [小鹅通](https://github.com/EthanQC/my-learning-record/blob/main/README.md#小鹅通)
 * [实习记录](https://github.com/EthanQC/my-learning-record/blob/main/README.md#实习记录)
 * 后端
     * [网络库](https://github.com/EthanQC/my-learning-record/blob/main/README.md#网络库)
