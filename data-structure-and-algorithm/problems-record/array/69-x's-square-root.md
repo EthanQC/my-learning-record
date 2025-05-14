@@ -1,4 +1,5 @@
 ## 69. x的平方根
+### cpp：
 
     class Solution {
     public:

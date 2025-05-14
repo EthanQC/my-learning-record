@@ -1,5 +1,6 @@
 ## 26.删除有序数组中的重复项
-错误代码：
+### cpp：
+#### 错误代码：
 
     class Solution {
     public:
@@ -20,7 +21,7 @@
         }
     };
 
-正确代码：
+#### 正确代码：
 
     class Solution {
     public:

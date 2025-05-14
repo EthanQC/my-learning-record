@@ -1,6 +1,6 @@
 ## 367. 有效的完全平方数
-
-正确代码：
+### cpp：
+#### 正确代码：
     
     class Solution {
     public:
@@ -37,7 +37,7 @@
         }
     };
 
-错误代码：
+#### 错误代码：
 
     class Solution {
     public:
