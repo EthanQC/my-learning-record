@@ -1,6 +1,6 @@
 ## 707. 设计链表
 
-cpp：
+### cpp：
 
 ```cpp
 class MyLinkedList 
@@ -104,7 +104,7 @@ public:
  */
  ```
 
-go：
+### go：
 
 ```go
 type Node struct {

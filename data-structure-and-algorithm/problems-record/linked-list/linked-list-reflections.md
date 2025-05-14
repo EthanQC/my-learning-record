@@ -19,3 +19,17 @@
 * 对于 index 的定位要搞清，才能不混淆，举例子脑内模拟跑一下是最好的方法
 
 主要是 Go 语言的实现方式可能跟 C++ 的会有些不同，体现在类的区别上
+
+### 206. 反转链表
+#### 题目：https://leetcode.cn/problems/reverse-linked-list/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/linked-list/203-remove-linked-list-elements.md)
+
+这道题有双指针法和递归法两种方法可以解决，并不难，见过一次之后就能掌握基本的方法，其实就是遍历链表然后把链表节点之间的指针转向一下
+
+* 双指针法
+  * cur 指针表示当前节点，pre 指针表示当前节点的前一个节点
+  * 要注意 pre 的初始化方式
+* 递归法
+  * 有点绕，晚点再看看，顺便把链表数据结构和双向链表的记录补一下
+
