@@ -1,7 +1,7 @@
 ## 977.有序数组的平方
-cpp：
+### cpp：
 
-错误代码1：
+#### 错误代码1：
 
     class Solution {
     public:
@@ -30,7 +30,7 @@ cpp：
         }
     };
 
-错误代码2：
+#### 错误代码2：
 
         class Solution {
         public:
@@ -52,7 +52,7 @@ cpp：
             }
         };
 
-错误代码3：
+#### 错误代码3：
 
         class Solution {
         public:
@@ -82,7 +82,7 @@ cpp：
             }
         };
 
-正确代码：
+#### 正确代码：
 
     class Solution {
     public:
@@ -113,7 +113,7 @@ cpp：
         }
     };
 
-go：
+### go：
 
     func sortedSquares(nums []int) []int {
         left := 0

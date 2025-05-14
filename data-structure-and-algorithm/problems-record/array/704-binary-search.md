@@ -1,5 +1,5 @@
 ## 704.二分查找
-cpp：
+### cpp：
 
         class Solution {
         public:
@@ -28,7 +28,7 @@ cpp：
             }
         };
 
-go：
+### go：
 
     func search(nums []int, target int) int {
         left := 0

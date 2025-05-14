@@ -1,5 +1,5 @@
 ## 27.移除元素
-cpp：
+### cpp：
 
     class Solution {
     public:
@@ -20,7 +20,7 @@ cpp：
         }
     };
 
-go：
+### go：
 
     func removeElement(nums []int, val int) int {
         slow := 0
