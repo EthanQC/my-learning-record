@@ -229,74 +229,78 @@ Go 标准库中的 `container/list` 实现了一个**双向链表**，**支持�
         fmt.Println()
     }
 
-#### 自定义链表实现（单链表示例）
+#### 自定义链表实现
 有时你可能希望自己实现一个链表来加深理解，下面是一个简单的单链表示例
 
-##### 定义节点结构体：
+##### 定义节点结构体
 
-    package main
+```go
+package main
 
-    import "fmt"
+import "fmt"
 
-    // 定义一个节点，包含数据和指向下一个节点的指针
-    type Node struct {
-        Data int
-        Next *Node
+// 定义一个节点，包含数据和指向下一个节点的指针
+type Node struct {
+    Value interface{}
+    Next  *Node
+}
+
+// 链表结构：head 始终指向 dummy，不存业务数据
+type SinglyList struct {
+    head   *Node  // dummy head
+    Length int
+}
+
+// 构造函数
+func NewSinglyList() *SinglyList {
+    return &SinglyList{head: &Node{}}
+}
+```
+
+##### 核心操作
+
+```go
+// 在“头部”插入 —— 统一用 head.Next
+func (l *SinglyList) InsertAtHead(v interface{}) {
+    n := &Node{Value: v}
+    n.Next = l.head.Next
+    l.head.Next = n
+    l.Length++
+}
+
+// 在“尾部”插入 —— 顺序查找到末尾再接入
+func (l *SinglyList) InsertAtTail(v interface{}) {
+    n := &Node{Value: v}
+    cur := l.head
+    for cur.Next != nil {
+        cur = cur.Next
     }
+    cur.Next = n
+    l.Length++
+}
 
-##### 定义链表及基本方法：
-
-    // 定义单链表结构体
-    type LinkedList struct {
-        Head *Node
+// 删除指定值 —— 通过 prev.Next 查找并跳过目标节点
+func (l *SinglyList) Remove(v interface{}) bool {
+    prev := l.head
+    for prev.Next != nil && prev.Next.Value != v {
+        prev = prev.Next
     }
-
-    // 在链表头部插入新节点
-    func (l *LinkedList) PushFront(data int) {
-        newNode := &Node{
-            Data: data,
-            Next: l.Head,
-        }
-        l.Head = newNode
+    if prev.Next == nil {
+        return false
     }
+    prev.Next = prev.Next.Next
+    l.Length--
+    return true
+}
 
-    // 删除头节点
-    func (l *LinkedList) PopFront() {
-        if l.Head != nil {
-            l.Head = l.Head.Next
-        }
+// 遍历打印
+func (l *SinglyList) Traverse() {
+    for cur := l.head.Next; cur != nil; cur = cur.Next {
+        fmt.Printf("%v → ", cur.Value)
     }
-
-    // 打印链表
-    func (l *LinkedList) Print() {
-        current := l.Head
-        for current != nil {
-            fmt.Printf("%d ", current.Data)
-            current = current.Next
-        }
-        fmt.Println()
-    }
-
-    func main() {
-        list := LinkedList{}
-        list.PushFront(10)
-        list.PushFront(20)
-        list.PushFront(30)
-
-        fmt.Print("链表内容: ")
-        list.Print() // 输出: 30 20 10
-
-        list.PopFront()
-        fmt.Print("删除头节点后: ")
-        list.Print() // 输出: 20 10
-    }
-
-##### 说明
-这里我们定义了一个 `Node` 结构体表示单链表节点，每个节点存储一个整数数据和指向下一个节点的指针
-
-`LinkedList` 结构体保存一个指向头结点的指针，并提供了插入（`PushFront`）、删除（`PopFront`）和打印方法
-
-这种写法直观简单，适合作为学习链表实现的入门示例；实际生产中可根据需要扩展功能（如查找、删除指定节点等）
+    fmt.Println("nil")
+}
+```
 
 ### 总结与对比
 ##### 链表概念：
