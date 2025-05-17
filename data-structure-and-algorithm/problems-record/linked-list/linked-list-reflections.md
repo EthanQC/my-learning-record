@@ -31,5 +31,16 @@
   * cur 指针表示当前节点，pre 指针表示当前节点的前一个节点
   * 要注意 pre 的初始化方式
 * 递归法
-  * 有点绕，晚点再看看，顺便把链表数据结构和双向链表的记录补一下
+  * 等涉及到分治、二叉树、图论什么的用递归比较方便的再学
 
+### 24. 两两交换链表中的节点
+#### 题目：https://leetcode.cn/problems/swap-nodes-in-pairs/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/linked-list/24-swap-nodes-in-pairs.md)
+
+这题虽然标的是中等，但其实也并不难，只要学会思路就行了
+
+* 循环外常规的两个指针 `dummy` 和 `cur`，用来遍历整个链表
+* 循环内使用 `first` 和 `second` 两个指针，用来记录 `cur` 在更改前要交换的第一个节点和第二个节点
+
+不要被吓到~
