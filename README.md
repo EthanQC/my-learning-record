@@ -571,6 +571,8 @@
 >[**2025.4.13**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.4.13.md)
 >
 >[**2025.5.7**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.5.7.md)
+>
+>[**2025.5.30**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.5.30.md)
 
 ## 我的其他仓库
 >[基于异步日志系统的 HTTP 框架](https://github.com/EthanQC/HTTP-framework-based-on-asynchronous-logging-system)
@@ -582,7 +584,5 @@
 >[《月华》后端服务器项目](https://github.com/EthanQC/back-end-server-for-Moonlight-Radiance)
 >
 >[《月华》游戏设计与前端项目](https://github.com/EthanQC/Moonlight-Radiance-front-end-design)
->
->[复习学校期末考试](https://github.com/EthanQC/reviewing-school-final)
 >
 >[链接数据库并实现二叉树的可视化](https://github.com/EthanQC/using-cpp-and-MySQL-to-implement-the-visualization-of-a-binary-tree)
