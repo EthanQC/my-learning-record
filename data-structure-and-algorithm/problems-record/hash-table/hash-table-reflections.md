@@ -20,3 +20,24 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/1002-find-common-characters.md)
 
+这道题主要也还是用到了上一题的**哈希法映射方式**，以此来实现对于字符串数组的遍历和对每个字符出现次数的统计，虽然是简单题，但逻辑还是有点绕的，具体思路如下：
+
+* 声明一个含有 26 个元素的空数组，还是对应字母 `a - z`，将这个空数组用已给数组的第一个字符串来初始化，记录初始的映射，也同样还是用 `counts[ch - 'a']++` 来记录字符出现次数
+* 使用一个循环，**循环内**声明另一个 `temp` 来记录其他字符串中字符的出现次数
+  * 再嵌套一个循环遍历这个字符串，记录次数
+  * 再使用另一个循环，用来**比较 `counts` 和 `temp` 中的所有元素，如果同一索引下 `counts` 的元素更大，就将 `temp` 赋给 `counts`**
+* 最后再声明一个空数组来记录要返回的结果，也是循环里再嵌套一个循环，内层循环里直接用 `append` 来为这个空数组追加值
+
+注意事项：
+
+* 这道题的**时间复杂度是 `O(n * m)`**，而不是 `O(n ^ 2)`，其中 `n` 是字符串数组的长度，`m` 是每个字符串的长度，这两个是有本质区别的
+  * **并不是所有嵌套循环的时间复杂度都是 `O(n ^ 2)`**，这里内层循环的次数 `m` 和 `n` 是无关的，代表的意义也不一样
+* **`temp` 一定要在循环内声明**，如果在循环外声明，在遇到下一个新的字符串时，`temp` 的所有元素并不都是 0
+  * 会导致可能某个字母只在两个字符串里出现，但并没有在第三个字符串里出现，却还是返回成结果了
+* 最后记录返回结果时别忘了要**用 `string()` 转成字符串类型**的，否则 `'a' + i` 的底层还是 `rune` 类型的，直接 `append` 会报错
+
+### 349. 两个数组的交集
+#### 题目：https://leetcode.cn/problems/intersection-of-two-arrays/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/349-intersection-of-two-arrays.md)
+
