@@ -41,3 +41,23 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/349-intersection-of-two-arrays.md)
 
+这题主要是要对 **go 语言中如何用 `map` 模拟集合**的方法比较熟练，主要考察的还是对语言的掌控能力，本质并不难，具体思路如下：
+
+* 先**比较两个数组的长度**，保证是对更短的那个切片建哈希，节省空间
+  * 递归一下，就是在 if 里重新调用这个函数，把两个数组的位置颠倒一下就行
+* **用 `make(map[int]struct{}, len(nums1))` 来模拟集合**，其中 `int` 表示键是整型，`struct{}` 表示值为空的结构体类型，这样通过遍历第一个数组来给键赋值即可，不用关心值，值的赋值方式直接**用 `struct{}{}` 表示是一个空的结构体来为键占位**就行
+* 再模拟另一个集合并遍历另一个数组，这次遍历是为了**比较第二个数组中的值是否在第一个数组中出现过**，判断条件是 **`if _, ok := set1[v]; ok {}`**，这里要对如何通过已知的键来获取值的方式比较熟悉（顺便校验键是否存在），`ok` 是一个布尔类型的变量，如果出现过就把同样的值赋给这个新的集合的键
+  * 另一种获得键值对的方式是用 `range`
+* 最后创建一个切片，将第二个集合的键用 `append` 追加到这个切片中，返回即可
+
+注意事项：
+
+* 对于如何用 `map` 模拟集合一定要熟悉，特别是如何赋空值，要能看懂
+* 对于如何获取键值，相关操作要熟悉
+* 最后的**切片初始化时，长度要为 0，容量才是第二个集合的长度**，否则在追加时切片中会额外多出来几个零（如果只指定长度为第二个集合的长度的话）
+
+### 202. 快乐数
+#### 题目：https://leetcode.cn/problems/happy-number/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/202-happy-number.md)
+
