@@ -61,3 +61,25 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/202-happy-number.md)
 
+这题同样要用到上一题的哈希法，利用 `map` 来模拟集合，从而实现对于已经出现数的检测，具体思路如下：
+
+* 首先初始化一个 `visited` 集合，方法是一样的，集合用来存放已经出现过的数字
+* 用一个循环实现快乐数的遍历过程，条件是 `n != 1`，因为是以 `n` 为条件，所以主要的逻辑都写在循环内部
+  * 首先**检测当前 `n` 是否已经在 `visited` 里出现过**，这里也是用到上一题的判断方式，考察对于 `map` 的键值对的基本操作，通过 `_, seen := visited[n]; seen` 实现，`seen` 这里是布尔类型
+  * 然后将键存入集合中，值也是一样用空结构体即可 `{}{}`
+  * 声明两个新变量，**`sum` 用来记录新数的和**，将 `n` 赋给 `t` 用来操作当前的整数
+  * 进入一个新循环，当 `t > 0` 时，拆分当前整数并累加
+    * **对 `t` 取 10 的模能得到最后一位数字 `t % 10`**，用另一个新变量 `d` 接收，平方后再赋给 `sum`
+    * **对 `t` 除 10 能去除其最后一位数字 `t /= 10`**
+  * 最后将 `sum` 赋给 `n` 即可，循环外正常返回 `true`
+
+注意事项：
+
+* 别忘了初始化集合，也别忘了给集合的键值赋值
+* 对于如何拆分整数的操作要熟悉
+
+### 1. 两数之和
+#### 题目：https://leetcode.cn/problems/two-sum/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/1-two-sum.md)
+
