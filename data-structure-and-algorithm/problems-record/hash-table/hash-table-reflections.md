@@ -83,3 +83,22 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/1-two-sum.md)
 
+这道题就是经典的两数之和了，其实还是**哈希法**，但能识别出哈希法的前提还是要能想到，**先把已经遍历过的数存进一个 `map` 里，在遍历下一个数的时候再回 `map` 里索引有没有需要的数**，具体思路如下：
+
+* 跟前面两题一样，还是使用 `map` 来模拟集合，我们叫它 seen
+* 进入一个循环，遍历给的数组，新声明一个变量 **`need = target - v`**，`v` 是当前正在遍历的数
+* 循环内判断一下 `seen` 里面有没有跟 `need` 相等的数，如果有的话，我们就找到了这两个数，返回两个索引即可
+* 循环最后将已经遍历的数赋给 `seen`
+* 默认返回 `nil`
+
+注意事项：
+
+* 对于 `map` 的索引操作还是要熟练，一共就两种方式，要牢记
+* 我们将数组赋给 `seen` 的时候，是**将数组的索引当作值，将数组内的数字当作键，来赋给它的**，不要搞反了
+  * 因为**题目要求返回数组的索引**，所以我们才这样操作的，也刚好方便我们的操作思路
+
+### 454. 四数相加 II
+#### 题目：https://leetcode.cn/problems/4sum-ii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/454-4sum-ii.md)
+
