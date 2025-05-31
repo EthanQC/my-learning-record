@@ -102,3 +102,40 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/454-4sum-ii.md)
 
+这道题要我们找四个数组中一共有几个能满足 `nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0` 这样的四元组 `i, j, k, l`，其实还是用到哈希法，思路也是从这个等式出发的，因为**如果想让那个等式成立，那 `nums1[i] + nums2[j] == -(nums3[k] + nums4[l])` 也肯定会成立，所以我们可以将暴力法的四层循环拆成两个两层循环，从而找到所有符合条件的四元组**，具体思路如下：
+
+* 还是用 `map` 来模拟集合，这个集合用来记录第一个数组和第二个数组所有元素和的可能的情况，方便我们后面查询
+* 用一个双层循环将前两个数组所有元素和可能的情况写入集合，和写入键，频率写入值，合起来就是 `sum12[x + y]++`
+* 声明一个 `count` 变量，用来记录可能的四元组
+* 再用另一个双重循环，声明 `target` 这个变量，并将第三四个数组元素和的负值赋给它，它就是我们要索引的键
+  * 在循环内部，还是用 `freq, ok := sum12[target]; ok` 这种方式来操作集合，作为判断条件
+  * 如果找到了符合的，就 `count++`，刚好我们的值是出现频率
+
+本题是中等题，但掌握基本思路、对 go 中集合的操作有一定熟练度后并不难，下面是注意事项：
+
+* 思路是从题目给的等式出发的，也就是说这样操作等式，我们**肯定能得到所有可能的四元组**，不会漏
+* 要注意我们是**将两个数组的元素和当作集合的键，将频率当作值**，所以才会直接用 `++` 递增值
+
+### 383. 赎金信
+#### 题目：https://leetcode.cn/problems/ransom-note/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/383-ransom-note.md)
+
+这道题要用到前面几题的映射法，从而实现对于已有字母的出现次数的统计，下面是具体思路：
+
+* 先比较，如果 magazine 比 ransomNote 的长度还小，就直接返回 false
+* 用一个数组来映射（具体方法见题目 242）26 个字母，使用一个循环，将 magazine 里有的字母存到数组中
+* 用另一个循环，先判断当前字母还有没有使用次数，如果是 0 次的话就可以直接返回 false
+  * 再正常索引
+* 默认返回 true
+
+注意事项：
+
+* 还是要将当前字母存成键，剩余的使用次数存成值
+* 如果要使用 map 的话，值也要存可使用次数，而不能什么都不存
+
+### 15. 三数之和
+#### 题目：https://leetcode.cn/problems/3sum/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/15-3sum.md)
+
