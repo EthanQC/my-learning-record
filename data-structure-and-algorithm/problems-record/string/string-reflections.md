@@ -1,5 +1,38 @@
+### 344. 反转字符串
+#### 题目：https://leetcode.cn/problems/reverse-string/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/344-reverse-string.md)
+
+这道题太简单了，用双指针法可以很轻易地解决，也没有什么边界条件细节要注意，别忘了移动指针就行
+
+### 541. 反转字符串 II
+#### 题目：https://leetcode.cn/problems/reverse-string-ii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/541-reverse-string-ii.md)
+
+这题非常非常非常恶心，**题目描述得也一点都不清晰，十分容易被误导**，本质其实就是一个简单的反转字符串，却非要表述得绕来绕去的恶心人🤯
+
+* 首先注意到**题目给的是 `string` 字符串类型的，它底层是只读的，所以不能直接索引，要用 `[]byte(s)` 转成 `byte` 类型才能正常索引**
+* 所以我们要额外自己写一个反转函数 `reverse`，方便我们调用，正常用双指针法反转即可
+* 题目的意思是**将给出的字符串每 `2k` 个一组，分成多个数量为 `2k` 的组，然后由于最后一组可能包含的字母数量不足以 `2k`，所以给了分条件判断，按照不同条件来对每 `2k` 个字母进行反转，而不是以 `2k` 为界限前后分别操作**
+* 所以我们的 **`i` 每次就跳 `2k` 个，来保证每次都刚好指向新的一组的第一个字母**，然后进入循环后先算一下剩下还有几个字母，**这里的剩余字符指的是从当前的 i 索引到的字母一直到最后一个字母，而不是 `2k + 1` 到最后一个**
+* 所以分好组之后直接进入判断然后反转就可以了，这里用 go 的切片传递给 `reverse` 的时候要注意，**切片的区间是左闭右开的，中间用冒号连接，所以右边界是不用额外 `-1` 的**
+* 最后将 `byte` 类型的结果用 `string()` 转回去再返回即可
+
+### 151. 反转字符串中的单词
+#### 题目：https://leetcode.cn/problems/reverse-words-in-a-string/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/151-reverse-words-in-a-string.md)
+
+
+
+
+
+
+
+## 以下为补充题，刷完代码随想录和 hot100 后会重新整理
 ### 844.比较含退格的字符串
-#### [题目](https://leetcode.cn/problems/backspace-string-compare/description/)：给定 s 和 t 两个字符串，当它们分别被输入到空白的文本编辑器后，如果两者相等，返回 true 。# 代表退格字符。注意：如果对空文本输入退格字符，文本继续为空。
+#### 题目：https://leetcode.cn/problems/backspace-string-compare/description/
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/leetcode/844-compare-strings-having-backspace.md)，本题为简单题（但我感觉还是挺难的，毕竟第一次做字符串的题目👉👈）
 

@@ -299,9 +299,9 @@
 
 [**`<数组>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/array-reflections.md)
 
-[**`<链表（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/linked-list/linked-list-reflections.md)
+[**`<链表>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/linked-list/linked-list-reflections.md)
 
-[**`<哈希表（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/hash-table-reflections.md)
+[**`<哈希表>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/hash-table-reflections.md)
 
 [**`<字符串（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/string-reflections.md)
 
