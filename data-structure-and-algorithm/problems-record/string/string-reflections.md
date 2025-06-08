@@ -43,6 +43,13 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/151-reverse-words-in-a-string.md)
 
+这道题虽然是简单题，暴力法遍历起来时间复杂度也只是 O(n * m)，但如果是第一次接触 KMP 算法的话，会比较折磨，感觉这题其实就是用来学 KMP 算法的，详情可以见我的[算法学习记录](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/common-methods.md#kmp-算法)
+
+### 459. 重复的子字符串
+#### 题目：https://leetcode.cn/problems/repeated-substring-pattern/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/151-reverse-words-in-a-string.md)
+
 
 
 ## 以下为补充题，刷完代码随想录和 hot100 后会重新整理
