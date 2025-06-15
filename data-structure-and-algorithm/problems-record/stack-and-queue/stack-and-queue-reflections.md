@@ -3,14 +3,14 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/232-implement-queue-using-stacks.md)
 
-太简单了没什么好说的，用数组自己实现一个栈，然后用两个栈，一个 inStack，一个 outStack，in 就用来放，out 就用来出，出之前如果 out 是空的话就把 in 里的先全部 Pop 到 out 里，这样出来的顺序刚好就是先进先出
+太简单了没什么好说的，用数组自己实现一个栈，然后用两个栈，一个 `inStack`，一个 `outStack`，`in` 就用来放，`out` 就用来出，**出之前如果 `out` 是空的话就把 `in` 里的先全部 `Pop` 到 `out` 里**，这样出来的顺序刚好就是先进先出
 
 ### 225. 用队列实现栈
 #### 题目：https://leetcode.cn/problems/implement-stack-using-queues/description/
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/225-implement-stack-using-queues.md)
 
-这道题也比较简单，虽然题目说用两个队列，但其实用一个队列就可以实现栈的一系列操作，只要我们在 Push 元素进队列之后，再对队列里有的元素旋转一下就行，就从队首开始，让除了最后一个元素以外的所有元素都重新出队再入队一次，就是栈的顺序了，例子如下：
+这道题也比较简单，虽然题目说用两个队列，但其实**用一个队列就可以实现栈的一系列操作，只要我们在 `Push` 元素进队列之后，再对队列里有的元素旋转一下就行，就从队首开始，让除了最后一个元素以外的所有元素都重新出队再入队一次，就是栈的顺序了**，例子如下：
 
 * Push(1)
   * append 1 → [1]
@@ -35,7 +35,7 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/20-valid-parentheses.md)
 
-这道题也不难，主要是学方法，思路是使用栈，因为栈是后进先出，如果我们把左括号压到栈里，就会发现左括号的出栈顺序和右括号的匹配顺序刚好是一样的
+这道题也不难，主要是学方法，思路是使用栈，因为栈是后进先出，**如果我们把左括号压到栈里，就会发现左括号的出栈顺序和右括号的匹配顺序刚好是一样的**
 
 * 用一个 `map` 来先做好映射
   * 由于要入栈出栈所以是对单个字符操作，就用 `byte` 类型，而不是 `string`
@@ -49,4 +49,27 @@
 #### 题目：https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/description/
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/1047-remove-all-adjacent-duplicates-in-string.md)
+
+这道题跟上一题一样，也是一道经典的用栈来解决的题目，比较简单，逻辑也不复杂，就是**用栈后进先出的特性，然后拿当前循环拿到的字母跟栈顶的比，如果一样就把栈顶弹出，不一样就入栈**，学会思路就行
+
+### 150. 逆波兰表达式求值
+#### 题目：https://leetcode.cn/problems/evaluate-reverse-polish-notation/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/150-evaluate-reverse-polish-notation.md)
+
+这道题虽然标的是中等题，但其实并不难，也是用栈来模拟，主要还是要理解什么是逆波兰表示法，由于题目说了只有四个运算符号，所以我们在遍历题目给的字符串的时候可以用 `switch` 来列这四种情况，然后把数字放到默认情况就好了，思路其实就是**遇到数字就入栈，遇到运算符就拿出栈最上方的两个数进行对应的运算**，见过学会即可
+
+哦对然后还要知道 go 里面有 `strconv` 这个标准包，然后里面的 `Atoi` 函数可以将字符串类型转换为整型
+
+### 239. 滑动窗口最大值
+#### 题目：https://leetcode.cn/problems/sliding-window-maximum/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/239-sliding-window-maximum.md)
+
+
+
+### 347. 前 K 个高频元素
+#### 题目：https://leetcode.cn/problems/top-k-frequent-elements/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/347-top-k-frequent-elements.md)
 
