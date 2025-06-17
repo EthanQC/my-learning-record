@@ -66,7 +66,7 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/239-sliding-window-maximum.md)
 
-
+这道滑动窗口还是有一定难度的，主要是要学会用切片来模拟双向单调队列从而实现滑动窗口的方法，以及对于一些边界条件的处理要足够仔细，这题整体来说还是比较经典的，就不过多赘述了，其实很多东西背下来就行，比较老套的，等后续二刷/复习再整理
 
 ### 347. 前 K 个高频元素
 #### 题目：https://leetcode.cn/problems/top-k-frequent-elements/description/
