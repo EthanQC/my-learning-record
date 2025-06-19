@@ -73,3 +73,4 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/347-top-k-frequent-elements.md)
 
+这道题我个人感觉其实跟栈和队列没什么关系，因为用哈希法也能很好地解决，时间复杂度也很不错，具体思路就先不赘述了，以后再来补充吧
