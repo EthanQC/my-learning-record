@@ -1,4 +1,4 @@
-## 144. 二叉树的前序遍历
+## 145. 二叉树的后序遍历
 ### go：
 递归法
 ```go
@@ -10,14 +10,15 @@
  *     Right *TreeNode
  * }
  */
-func preorderTraversal(root *TreeNode) []int {
+func postorderTraversal(root *TreeNode) []int {
     if root == nil {
         return nil
     }
-    
-    results := []int{root.Val}
-    results = append(results, preorderTraversal(root.Left)...)
-    results = append(results, preorderTraversal(root.Right)...)
+
+    var results []int
+    results = append(results, postorderTraversal(root.Left)...)
+    results = append(results, postorderTraversal(root.Right)...)
+    results = append(results, root.Val)
 
     return results
 }
@@ -39,11 +40,11 @@ type frame struct {
     visited bool
 }
 
-func preorderTraversal(root *TreeNode) []int {
+func postorderTraversal(root *TreeNode) []int {
     if root == nil {
         return nil
     }
-    
+
     var results []int
     stack := []frame{{root, false}}
 
@@ -59,9 +60,9 @@ func preorderTraversal(root *TreeNode) []int {
             results = append(results, f.node.Val)
         } else {
             stack = append(stack,
+                frame{f.node, true},
                 frame{f.node.Right, false},
                 frame{f.node.Left, false},
-                frame{f.node, true},
             )
         }
     }
