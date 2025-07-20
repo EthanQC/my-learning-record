@@ -57,3 +57,81 @@
 
 这道题也是层序遍历的变种，其实就是把每层的值加起来然后求个平均就行，只是要注意这道题是对精度有要求的，所以平均值不能直接求，要先把 `sum` 和 `levelSize` 转成 `float64` 类型的再求平均
 
+### 429. N 叉树的层序遍历
+#### 题目：https://leetcode.cn/problems/n-ary-tree-level-order-traversal/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/429-n-ary-tree-level-order-traversal.md)
+
+这道题也是层序遍历的变种，很简单，由于现在有多个子节点了，我们只需要将原本的分别判断左右子节点**改成用一个循环来遍历所有的子节点**，然后在循环内如果当前子节点不为空就放到队列里就行，其他都不用改
+
+### 515. 在每个树行中找最大值
+#### 题目：https://leetcode.cn/problems/find-largest-value-in-each-tree-row/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/515-find-largest-value-in-each-tree-row.md)
+
+嗯这道题也是层序遍历的变种，只要加个比较就可以了，需要注意的是 **`max` 变量的初始化**，要用本层的第一个节点的值来初始化，这样就不会产生负数的影响了
+
+### 116. 填充每个节点的下一个右侧节点指针
+#### 题目：https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/116-populating-next-right-pointers-in-each-node.md)
+
+这道题比较有意思，有两种方法，一种还是原本的层序遍历的变种，另一种是比较独特的**指针法**，首先要注意题目给的是一颗**完美二叉树**，所以如果一个节点存在，那它的左右子节点都是肯定会存在的
+
+第一种方法其实就是**多声明一个空指针，然后在内层循环判断这个指针是否为空，是的话就把它的 `Next` 指向当前节点，在判断外就把这个空指针直接指向当前节点**，这样就能很好地解决这道题了，主要是这种对于指针记录节点的处理方式要熟悉，可以很好地**避免越界访问**的问题
+
+第二种方法是空间开销为 `O(1)` 的指针法，它就是**针对完美二叉树**的，其实是很好理解的，见过之后学会就行，**思路**也是用两层循环，外层是指向每层的最左节点，每次都往下指最左的节点，内层就遍历当前层的所有节点，先串联左右子节点，然后如果当前节点的下一个节点非空，再把当前的右子节点跟下一个节点的左子节点连接起来即可
+
+### 117. 填充每个节点的下一个右侧节点指针 II
+#### 题目：https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/117-populating-next-right-pointers-in-each-node-ii.md)
+
+这道题跟上道题是完全一样的，只是二叉树不是完美二叉树了，所以就没有指针法了，直接用层序遍历就可以很好地解决了
+
+### 104. 二叉树的最大深度
+#### 题目：https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/104-maximum-depth-of-binary-tree.md)
+
+这道题很简单，记录下一共有多少层即可
+
+### 111. 二叉树的最小深度
+#### 题目：https://leetcode.cn/problems/minimum-depth-of-binary-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/111-minimum-depth-of-binary-tree.md)
+
+这道题也很简单，也是层序遍历的变种，只需要注意**只有左右子节点都为空时才是最短**，这个时候返回即可
+
+### 226. 翻转二叉树
+#### 题目：https://leetcode.cn/problems/invert-binary-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/226-invert-binary-tree.md)
+
+这道题可以用的方法非常多，前中后序的迭代、遍历和层序遍历都可以用，但要注意的是中序遍历由于会导致某颗子树被处理两遍或跳过（如果不特殊调整顺序的话），所以这题我们就不用中序遍历了
+
+最本质的还是要知道**翻转二叉树只需要把每个节点的左右子节点交换就可以实现**，如果使用层序遍历就直接加个交换就好，使用前序或者后序遍历的话要注意这道题的写法，不过写多了就会发现其实各种遍历的代码都差不多，熟练运用即可
+
+### 101. 对称二叉树
+#### 题目：https://leetcode.cn/problems/symmetric-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/101-symmetric-tree.md)
+
+这道题其实不难，也不涉及之前用到的各种遍历（由于用递归是最简单的，所以这里不讨论其他解法），它本身强调的是对于**一棵树拆分成左右子树后，对左右子树这两棵树的遍历并判断它们是否是镜像的**，用**递归**会很方便地完成这一点，只要注意只有两个子节点都为空时才代表对称，否则都是不对称
+
+### 222. 完全二叉树的节点个数
+#### 题目：https://leetcode.cn/problems/count-complete-tree-nodes/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/222-count-complete-tree-nodes.md)
+
+能用层序遍历很快地解决这道题目，但如果想进一步优化的话，可以**利用完全二叉树的特性配合递归**解决，思路是先求一下左右子树的深度（直接左边一路走下去就行），然后判断，**如果左右子树深度相同，那左子树就是满二叉树，我们要递归求右子树的节点数，否则右子树就是满二叉树，递归求左子树的节点数**
+
+用左子树举例，注意左子树是满二叉树时的节点数是 `2^d - 1`，我们用 `1 << l` 来求，表示把整数 `1` 左移 `l` 位，也就是 `2` 的 `l` 次方，再加上根节点，再加上用递归去求右子树的节点个数，这样全加起来就是整棵完全二叉树的节点个数了
+
+### 110. 平衡二叉树
+#### 题目：https://leetcode.cn/problems/balanced-binary-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/110-balanced-binary-tree.md)
+
+这道题还是有点意思的，并不是模板题，主要是用递归来解决的，其实还是把二叉树不断拆分成左子树和右子树，思路是以 -1 为标识，对每个节点都检查一次它左右子树的高度差，如果不平衡就返回 -1，如果平衡就返回子树的高度，学会思路即可
+
