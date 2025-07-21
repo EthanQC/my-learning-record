@@ -135,3 +135,59 @@
 
 这道题还是有点意思的，并不是模板题，主要是用递归来解决的，其实还是把二叉树不断拆分成左子树和右子树，思路是以 -1 为标识，对每个节点都检查一次它左右子树的高度差，如果不平衡就返回 -1，如果平衡就返回子树的高度，学会思路即可
 
+### 257. 二叉树的所有路径
+#### 题目：https://leetcode.cn/problems/binary-tree-paths/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/257-binary-tree-paths.md)
+
+这道题直接用**递归**就行了，不用管那些莫名其妙的什么回溯，后面会涉及的，而且迭代法这题是比较麻烦的，还是递归方便，其实就是普通的遍历，如果遇到叶子节点那就只返回当前节点，如果不是叶子节点就把路径拼起来，只需要注意是用 `strconv` 这个包的 `Itoa` 函数来转换类型，然后用 `+` 连接
+
+### 404. 左叶子之和
+#### 题目：https://leetcode.cn/problems/sum-of-left-leaves/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/404-sum-of-left-leaves.md)
+
+简单的递归即可解决，只是别忘了要接收内层调用的值，要不然累加的结果是不对的
+
+### 513. 找树左下角的值
+#### 题目：https://leetcode.cn/problems/find-bottom-left-tree-value/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/513-find-bottom-left-tree-value.md)
+
+层序遍历轻松解决
+
+### 112. 路径总和
+#### 题目：https://leetcode.cn/problems/path-sum/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/112-path-sum.md)
+
+只要用目标值减去每次迭代经过节点的值，然后在到叶子节点的时候判断是否刚好为 0 就可以了，这种写法很优雅也很高效，要好好理解
+
+### 113. 路径总和 II
+#### 题目：https://leetcode.cn/problems/path-sum-ii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/113-path-sum-ii.md)
+
+这道题还是用递归，但要自己传新的参数，其实就是 112 和 257 这两道题结合起来，只需要注意在处理结果时要先拷贝一个临时切片，要不然直接值传递只是传递了指针，实际上指的还是原本的同一个切片，会导致结果中的值被修改
+
+### 106. 从中序与后序遍历序列构造二叉树
+#### 题目：https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/106-construct-binary-tree-from-inorder-and-postorder-traversal.md)
+
+这道题还是挺恶心的我觉得，因为它虽然用的主要还是递归，但对于两个数组的边界情况的处理真的很繁琐，且无法避免，可能在面试的时候遇到一紧张就容易写不出来，属于只能增加熟练度硬磕记方法的题
+
+主要思路就是先用一个 map 记录一下中序遍历的数组索引，然后写个递归，后序遍历的最后一个元素就是根节点，再根据这个元素找到根节点在中序中的位置，这样位置的左边就是左子树，右边就是右子树，记录一下就可以根据边界条件来递归了
+
+### 105. 从前序与中序遍历序列构造二叉树
+#### 题目：https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/105.construct-binary-tree-from-preorder-and-inorder-traversal.md)
+
+这道题也是跟上一题可以说是几乎完全一样的，思路完全相同，只是要注意边界情况的处理，因为前序遍历和后序遍历的数组中根节点的位置不同，所以对数组的划分也会产生相应的变化，要分清楚
+
+### 654. 最大二叉树
+#### 题目：https://leetcode.cn/problems/maximum-binary-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/105.construct-binary-tree-from-preorder-and-inorder-traversal.md)
+
