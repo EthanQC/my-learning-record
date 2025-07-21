@@ -1,0 +1,42 @@
+## 654. 最大二叉树
+### go：
+```go
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func buildTree(preorder []int, inorder []int) *TreeNode {
+    n := len(inorder)
+    if n == 0 {
+        return nil
+    }
+
+    idxMap := make(map[int]int, n)
+    for i, v := range inorder {
+        idxMap[v] = i
+    }
+
+    return buildSubTree(preorder, inorder, 0, n - 1, 0, n - 1, idxMap)
+}
+
+func buildSubTree(preorder, inorder []int, inL, inR, preL, preR int, idxMap map[int]int) *TreeNode {
+    if inL > inR || preL > preR {
+        return nil
+    }
+
+    rootVal := preorder[preL]
+    root := &TreeNode{Val: rootVal}
+
+    mid := idxMap[rootVal]
+    leftCount := mid - inL
+
+    root.Left = buildSubTree(preorder, inorder, inL, mid - 1, preL + 1, preL + leftCount, idxMap,)
+    root.Right = buildSubTree(preorder, inorder, mid + 1, inR, preL + leftCount + 1, preR, idxMap,)
+
+    return root
+}
+```
