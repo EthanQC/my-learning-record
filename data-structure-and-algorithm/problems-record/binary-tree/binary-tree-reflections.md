@@ -189,5 +189,33 @@
 ### 654. 最大二叉树
 #### 题目：https://leetcode.cn/problems/maximum-binary-tree/description/
 
-[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/105.construct-binary-tree-from-preorder-and-inorder-traversal.md)
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/654-maximum-binary-tree.md)
+
+这道题其实不难，就是不要想复杂了，题目已经告诉了我们思路以及如何递归了，跟着做就好，只是要对切片这个操作本身比较熟悉才行
+
+### 617. 合并二叉树
+#### 题目：https://leetcode.cn/problems/merge-two-binary-trees/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/617-merge-two-binary-trees.md)
+
+这道题还是用递归，说实话其实层序遍历也可以，但在可以选的时候，递归总是要更方便的，其实也不用新搞一个树，直接把其中一个树当成合并后的树来操作就可以了，这样也会更方便，递归一定要熟练啊啊啊
+
+### 700. 二叉搜索树中的搜索
+#### 题目：https://leetcode.cn/problems/search-in-a-binary-search-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/700-search-in-a-binary-search-tree.md)
+
+这道题其实非常简单，因为二叉搜索树的特点其实就是**左子树比根小，右子树比根大**，只要记住这十二个字就能轻松解救，使用递归和迭代都非常简单
+
+### 98. 验证二叉搜索树
+#### 题目：https://leetcode.cn/problems/validate-binary-search-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/98-validate-binary-search-tree.md)
+
+讨厌这道题，这题主要还是要用到二叉搜索树的性质，就是中序遍历的二叉搜索树，结果的数组一定会是升序的，所以要通过这个来验证，递归或者迭代都可以，但要注意的是要先声明一个全局的 prev 变量，来方便我们比较是否是升序，并且要把迭代单独搞个函数出来，还要在原函数本身每次都把 prev 置成 nil，防止多次调用时被前面的其他数据影响，迭代法这里现在就先不讨论了，本质还是一样的
+
+### 98. 验证二叉搜索树
+#### 题目：https://leetcode.cn/problems/validate-binary-search-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/98-validate-binary-search-tree.md)
 

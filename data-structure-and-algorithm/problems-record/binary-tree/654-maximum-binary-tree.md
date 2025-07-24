@@ -9,34 +9,22 @@
  *     Right *TreeNode
  * }
  */
-func buildTree(preorder []int, inorder []int) *TreeNode {
-    n := len(inorder)
-    if n == 0 {
+func constructMaximumBinaryTree(nums []int) *TreeNode {
+    if len(nums) == 0 {
         return nil
     }
 
-    idxMap := make(map[int]int, n)
-    for i, v := range inorder {
-        idxMap[v] = i
+    maxIdx := 0
+    for i, _ := range nums {
+        if nums[maxIdx] < nums[i] {
+            maxIdx = i
+        }
     }
 
-    return buildSubTree(preorder, inorder, 0, n - 1, 0, n - 1, idxMap)
-}
+    root := &TreeNode{Val: nums[maxIdx]}
+    root.Left = constructMaximumBinaryTree(nums[: maxIdx])
+    root.Right = constructMaximumBinaryTree(nums[maxIdx + 1 :])
 
-func buildSubTree(preorder, inorder []int, inL, inR, preL, preR int, idxMap map[int]int) *TreeNode {
-    if inL > inR || preL > preR {
-        return nil
-    }
-
-    rootVal := preorder[preL]
-    root := &TreeNode{Val: rootVal}
-
-    mid := idxMap[rootVal]
-    leftCount := mid - inL
-
-    root.Left = buildSubTree(preorder, inorder, inL, mid - 1, preL + 1, preL + leftCount, idxMap,)
-    root.Right = buildSubTree(preorder, inorder, mid + 1, inR, preL + leftCount + 1, preR, idxMap,)
-
-    return root
+    return root    
 }
 ```
