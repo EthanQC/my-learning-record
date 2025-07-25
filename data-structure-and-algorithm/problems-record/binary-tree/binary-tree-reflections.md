@@ -214,8 +214,31 @@
 
 讨厌这道题，这题主要还是要用到二叉搜索树的性质，就是中序遍历的二叉搜索树，结果的数组一定会是升序的，所以要通过这个来验证，递归或者迭代都可以，但要注意的是要先声明一个全局的 prev 变量，来方便我们比较是否是升序，并且要把迭代单独搞个函数出来，还要在原函数本身每次都把 prev 置成 nil，防止多次调用时被前面的其他数据影响，迭代法这里现在就先不讨论了，本质还是一样的
 
-### 98. 验证二叉搜索树
-#### 题目：https://leetcode.cn/problems/validate-binary-search-tree/description/
+### 530. 二叉搜索树的最小绝对差
+#### 题目：https://leetcode.cn/problems/minimum-absolute-difference-in-bst/description/
 
-[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/98-validate-binary-search-tree.md)
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/530-minimum-absolute-difference-in-bst.md)
+
+这道题其实也不难，主要是要对二叉搜索树的题目的模板要熟悉，还是用中序遍历递归，遍历完之后其实就是相当于在一个有序的数组中找最小的差值，就很简单啦
+
+### 501. 二叉搜索树中的众数
+#### 题目：https://leetcode.cn/problems/find-mode-in-binary-search-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/501-find-mode-in-binary-search-tree.md)
+
+嗯我不喜欢这道题，主要是在一个有序数组中找众数本身就是一件比较麻烦的事情，其实这题就是拆分成了这件事和一个中序遍历，没什么好说的，只要学会如何找众数就好了，还是不喜欢闭包的写法所以分成了几个函数
+
+### 236. 二叉树的最近公共祖先
+#### 题目：https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/236-lowest-common-ancestor-of-a-binary-tree.md)
+
+这道题要用后序遍历递归，见过了学会思路即可，主要是如果左右都不为空的话就返回当前节点，如果只有一边非空那就返回非空的那边，这样就能找到了
+
+### 235. 二叉搜索树的最近公共祖先
+#### 题目：https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/235-lowest-common-ancestor-of-a-binary-search-tree.md)
+
+这道题就是上一题的普通二叉树变成二叉搜索树了，就更简单了，只要分别判断 `p`、`q` 的值跟 `root` 的大小，如果都大就去右边，如果都小就去左边，如果都不是就返回当前节点，都不用递归了，直接循环即可解决
 
