@@ -242,3 +242,37 @@
 
 这道题就是上一题的普通二叉树变成二叉搜索树了，就更简单了，只要分别判断 `p`、`q` 的值跟 `root` 的大小，如果都大就去右边，如果都小就去左边，如果都不是就返回当前节点，都不用递归了，直接循环即可解决
 
+### 701. 二叉搜索树中的插入操作
+#### 题目：https://leetcode.cn/problems/insert-into-a-binary-search-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/701-insert-into-a-binary-search-tree.md)
+
+递归轻松解决，就正常遍历就好啦，如果小于就往左走，大于就往又走，其实这道题很简单
+
+### 450. 删除二叉搜索树中的节点
+#### 题目：https://leetcode.cn/problems/delete-node-in-a-bst/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/450-delete-node-in-a-bst.md)
+
+还是要用递归，思路就是**先用递归来找要删的值在哪，找到之后先把这个节点的右子树最左边的节点找到，然后把当前节点的左子树嫁接到右子树最左边节点的左子树上**，但要注意不要把多个 `if-else` 嵌套一起，这是违反 go 的代码规范和习惯的，并且在递归时就要返回，返回的是根节点，但找到删除的地方之后返回的是右子树，而不是根节点
+
+### 669. 修剪二叉搜索树
+#### 题目：https://leetcode.cn/problems/trim-a-binary-search-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/669-trim-a-binary-search-tree.md)
+
+这题其实不难，毕竟修剪的是二叉搜索树，也是正常递归，然后先用两个条件判断判断一下如果超出上下界就直接扔掉对应的子树就可以了
+
+### 108. 将有序数组转换为二叉搜索树
+#### 题目：https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/108-convert-sorted-array-to-binary-search-tree.md)
+
+这题也很简单，还是递归，只是要对如何使用数组来构建二叉树有一定熟练度才行，对于二叉搜索树其实就是取数组中间的值然后一直递归左右半边数组
+
+### 538. 把二叉搜索树转换为累加树
+#### 题目：https://leetcode.cn/problems/convert-bst-to-greater-tree/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/538-convert-bst-to-greater-tree.md)
+
+这题也不难，也是用递归就好了，只需要注意到累加是反中序进行的，所以我们要对二叉搜索树进行反中序遍历，然后用一个全局变量方便我们记录节点累加的值和给节点赋值
