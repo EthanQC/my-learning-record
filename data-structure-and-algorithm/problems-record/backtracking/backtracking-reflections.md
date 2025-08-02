@@ -37,3 +37,71 @@
 
 这道题跟上一题差不多，只是不能重复用了，所以我们只需要在上一题代码的基础上改两处代码，一处是要把在递归时传递的 `start` 变量从 `i` 变成 `i + 1`，另一处是要**增加一下去重的逻辑**，因为题目说解集不能包含重复的组合，所以直接从第二个数开始，如果当前 `i` 对应的数跟前一个相同，直接 `continue` 跳过本次循环即可
 
+### 131. 分割回文串
+#### 题目：https://leetcode.cn/problems/palindrome-partitioning/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/131-palindrome-partitioning.md)
+
+正常回溯即可，判断回文只需要用双指针法就能轻松实现，题目本身并不难，也不涉及剪枝什么的，只是在选择时要注意添加的应该是一个串，而不是某个字母
+
+### 93. 复原 IP 地址
+#### 题目：https://leetcode.cn/problems/restore-ip-addresses/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/93-restore-ip-addresses.md)
+
+这题比较麻烦，要注意两处剪枝，还要用到两个包函数，先不多说了
+
+### 78. 子集
+#### 题目：https://leetcode.cn/problems/subsets/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/78-subsets.md)
+
+正常回溯，不过跟前面几题都不一样，感觉回溯难就是难在分割的方式和剪枝
+
+### 90. 子集 II
+#### 题目：https://leetcode.cn/problems/subsets-ii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/90-subsets-ii.md)
+
+跟上一题一样的，加个排序和去重就行
+
+### 491. 非递减子序列
+#### 题目：https://leetcode.cn/problems/non-decreasing-subsequences/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/491-non-decreasing-subsequences.md)
+
+也是正常递归，但要注意不用排序，而且收集结果时的条件和去重的方式要注意，同时还要注意保证非递减的方式，不是跟前一个比，而是跟当前的最新的元素比
+
+### 46. 全排列
+#### 题目：https://leetcode.cn/problems/permutations/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/46-permutations.md)
+
+也是回溯，但逻辑跟组合的不太一样了，挺烦人的反正，记住吧
+
+### 47. 全排列 II
+#### 题目：https://leetcode.cn/problems/permutations-ii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/47-permutations-ii.md)
+
+记住吧，这个去重太绕了
+
+### 332. 重新安排行程
+#### 题目：https://leetcode.cn/problems/reconstruct-itinerary/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/332-reconstruct-itinerary.md)
+
+用到了图论，且是困难级别的题目，先跳过
+
+### 51. N 皇后
+#### 题目：https://leetcode.cn/problems/n-queens/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/332-reconstruct-itinerary.md)
+
+
+
+### 37. 解数独
+#### 题目：https://leetcode.cn/problems/sudoku-solver/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/37-sudoku-solver.md)
+
