@@ -452,3 +452,158 @@ void InsertSort(RandomIt first, RandomIt last, Compare comp = Compare{}) {
     }
 }
 可处理任何支持随机迭代器的容器，且可以自定义比较器实现降序或多关键字排序。
+
+
+
+
+下面我们从算法分类、时间／空间／稳定性、以及在 Go 里常见的内置与手写实现三个维度，来系统地回顾一下对一个数组排序可以用哪些方法。
+
+一、排序算法大类
+比较排序（Comparison Sort）
+
+通过两两元素比较、交换或移动来达到有序。
+
+下界：平均／最坏都无法突破 O(n log n)。
+
+代表：冒泡、选择、插入、希尔、归并、快速、堆排序等。
+
+非比较排序（Non-Comparison Sort）
+
+利用元素的数值特性（计数、基数、桶）直接“分布”到正确位置。
+
+可以做到线性时间 O(n + k)。
+
+代表：计数排序、桶排序、基数排序。
+
+二、主要算法比较
+算法	时间复杂度	空间复杂度	稳定性	适用场景
+冒泡排序	O(n²)	O(1)	稳定	小规模、教学演示
+选择排序	O(n²)	O(1)	不稳定	内存极度受限时
+插入排序	O(n²)（最好 O(n)）	O(1)	稳定	部分有序、小规模数据
+希尔排序	O(n¹·³–n¹·⁵)	O(1)	不稳定	中等规模，比插入排序更快
+归并排序	O(n log n)	O(n)	稳定	稳定排序、大数据外部排序
+快速排序	平均 O(n log n)，最坏 O(n²)	O(log n)	不稳定	一般用途、内存敏感时（Go、C++ STL）
+堆排序	O(n log n)	O(1)	不稳定	内存受限、要 O(n log n) 保证
+计数排序	O(n + k)	O(n + k)	稳定	值域不大且整数
+桶排序	平均 O(n + k)	O(n + k)	稳定	浮点数、分布均匀
+基数排序	O(d·(n + k))	O(n + k)	稳定	固定位数整数或字符串
+
+k 是值域大小（计数／桶），d 是最大位数（基数排序）。
+
+一般实战中常用快速排序（C++、Go sort 都是变种 IntelliSort/IntroSort）、归并排序（需要稳定）、堆排序（空间受限）；非比较排序常在特定场景（计数、基数、桶）使用。
+
+三、Go 语言中的排序
+1. 内置接口式排序
+Go 标准库提供了 sort 包，最常用的是：
+
+go
+Copy
+Edit
+import "sort"
+
+// 对 int 切片排序
+sort.Ints(a []int)
+
+// 对任意切片按照自定义比较排序
+sort.Slice(data, func(i, j int) bool {
+    return data[i].Key < data[j].Key
+})
+sort.Ints 底层用的是 Heapsort + InsertionSort 的混合实现，平均 O(n log n)，额外空间 O(1)。
+
+2. 手写常见算法示例
+下面给出两个经典算法的 Go 实现骨架：快速排序 和 归并排序。
+
+快速排序（双路划分）
+go
+Copy
+Edit
+func quickSort(a []int, lo, hi int) {
+    if lo >= hi {
+        return
+    }
+    // 1. 随机选一个基准，放到 lo 位置
+    pivotIdx := lo + rand.Intn(hi-lo+1)
+    a[lo], a[pivotIdx] = a[pivotIdx], a[lo]
+    pivot := a[lo]
+
+    // 2. 双路扫描
+    i, j := lo+1, hi
+    for i <= j {
+        for i <= j && a[i] <= pivot {
+            i++
+        }
+        for i <= j && a[j] >= pivot {
+            j--
+        }
+        if i < j {
+            a[i], a[j] = a[j], a[i]
+        }
+    }
+    // 3. 把 pivot 放到 j
+    a[lo], a[j] = a[j], a[lo]
+
+    // 4. 递归左右子区间
+    quickSort(a, lo, j-1)
+    quickSort(a, j+1, hi)
+}
+归并排序
+go
+Copy
+Edit
+func mergeSort(a []int) []int {
+    n := len(a)
+    if n <= 1 {
+        return a
+    }
+    mid := n / 2
+    left  := mergeSort(a[:mid])
+    right := mergeSort(a[mid:])
+
+    // 合并两有序切片
+    merged := make([]int, 0, n)
+    i, j := 0, 0
+    for i < len(left) && j < len(right) {
+        if left[i] <= right[j] {
+            merged = append(merged, left[i])
+            i++
+        } else {
+            merged = append(merged, right[j])
+            j++
+        }
+    }
+    merged = append(merged, left[i:]...)
+    merged = append(merged, right[j:]...)
+    return merged
+}
+四、非比较排序简要示例
+计数排序（整数且值域小）
+
+go
+Copy
+Edit
+func countingSort(a []int, maxVal int) []int {
+    cnt := make([]int, maxVal+1)
+    for _, v := range a {
+        cnt[v]++
+    }
+    for i := 1; i <= maxVal; i++ {
+        cnt[i] += cnt[i-1]
+    }
+    out := make([]int, len(a))
+    for i := len(a)-1; i >= 0; i-- {
+        v := a[i]
+        cnt[v]--
+        out[cnt[v]] = v
+    }
+    return out
+}
+基数排序、桶排序思路与此类似，可根据具体数据结构补充。
+
+五、面试及实践建议
+先说分类：内／外部排序、比较／非比较、稳定／不稳定。
+
+再陈述复杂度：突出最好／平均／最坏场景。
+
+补充 Go 实现：内置 sort、手写 Quick／MergeSkeleton。
+
+举例：对齐面试官场景，说明为什么选这个算法，比如「数据接近有序选插入」「内存受限选堆排序」「要稳定选归并」。
