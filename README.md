@@ -1,5 +1,4 @@
 # My learning record
-
 ## 这是一个学习记录仓库！
 
 我会在这里记录我每天（perhaps🤪）的学习内容，包括但不限于：
@@ -18,9 +17,9 @@
 
 目前**还在建设中**，正在慢慢完善，我心中它最后的样子应该是一本能**快速索引**的字典，并且知识的记录能尽量**简洁易懂**，同时包含如何**实际应用**，当然，还要有一些**练习**
 
-如果你觉得这个仓库在某个方面帮助到了你，对你来说是有一些作用的，那么不妨给个star吧~💕
+如果你觉得这个仓库在某个方面帮助到了你，对你来说是有一些作用的，那么不妨给个 star 吧~💕
 
-如果你想跟我一起完善这个仓库，添加更多内容（不局限于我自己的技术栈），欢迎发起`pull request`，也欢迎添加我的微信`wkr1835484520`跟我交流~😉
+如果你想跟我一起完善这个仓库，添加更多内容（不局限于我自己的技术栈），欢迎发起 `pull request`，也欢迎添加我的微信 `wkr1835484520` 跟我交流~😉
 （后续我可能会出一个贡献模板）
 
 **从简单的『记录目录』转变为『记录基础知识点 + 个人理解』**
@@ -195,6 +194,8 @@
 ## go
 [**`<常用操作>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-operations.md)
 
+[**`<常见概念>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/common-concepts.md)
+
 #### 基础
 [**`<slice>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/slice.md)
 
@@ -205,6 +206,12 @@
 [**`<map>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/map.md)
 
 [**`<channel>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/channel.md)
+
+[**`<context>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/context.md)
+
+[**`<defer>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/defer.md)
+
+[**`<switch>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/fundamentals/switch.md)
 
 #### 底层原理
 [**`<GMP 模型调度器>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/underlying-principle/GMP-model-scheduler.md)
@@ -563,6 +570,10 @@
 >[**2025.7.9**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.7.9.md)
 >
 >[**2025.7.16**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.7.16.md)
+>
+>[**2025.7.17**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.7.17.md)
+>
+>[**2025.7.31**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.7.31.md)
 
 ## 我的其他仓库
 >[基于异步日志系统的 HTTP 框架](https://github.com/EthanQC/HTTP-framework-based-on-asynchronous-logging-system)
