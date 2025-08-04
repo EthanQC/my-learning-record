@@ -68,8 +68,8 @@
 
 这道题其实很简单，主要是别想复杂了，就分三种情况讨论就是了，只不过别忘了用 `switch`，虽然不怎么常用但也是要会的，并且在用到的时候要能想起来
 
-### 860. 柠檬水找零
-#### 题目：https://leetcode.cn/problems/lemonade-change/description/
+### 406. 根据身高重建队列
+#### 题目：https://leetcode.cn/problems/queue-reconstruction-by-height/description/
 
-[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/860-lemonade-change.md)
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/406-queue-reconstruction-by-height.md)
 
