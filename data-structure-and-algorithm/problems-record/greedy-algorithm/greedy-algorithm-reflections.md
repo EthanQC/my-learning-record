@@ -87,3 +87,32 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/435-non-overlapping-intervals.md)
 
+这道题跟上一题射气球很像，也是要排序，然后用类似于选择比较的方式去遍历数组，然后实时更新位置，学会方法即可
+
+### 763. 划分字母区间
+#### 题目：https://leetcode.cn/problems/partition-labels/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/763-partition-labels.md)
+
+学会方法就行，主要是要学会如何用数组记录字母
+
+### 56. 合并区间
+#### 题目：https://leetcode.cn/problems/merge-intervals/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/56-merge-intervals.md)
+
+这道题还是有点麻烦的，主要是要用开始和结束的双指针法，而不是像 435 那样的方法，没事，学会了就行
+
+### 738. 单调递增的数字
+#### 题目：https://leetcode.cn/problems/monotone-increasing-digits/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/738-monotone-increasing-digits.md)
+
+这道题比较恶心，要先转成字符串类型的，再转成字节类型的，最后返回的时候还要全转回来，而且题目说的单调递增也不是数学里的单调递增，反正学会方法就行
+
+### 968. 监控二叉树
+#### 题目：https://leetcode.cn/problems/binary-tree-cameras/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/968-binary-tree-cameras.md)
+
+这道题其实是树形 dp，也就是树形动态规划，分为三种情况，定义了三种不同的状态，然后通过后序遍历来把三种情况都覆盖到，嗯由于是第一次接触到动态规划所以还是先学思路就好

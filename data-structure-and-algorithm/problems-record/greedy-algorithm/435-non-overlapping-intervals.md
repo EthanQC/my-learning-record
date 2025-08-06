@@ -3,20 +3,21 @@
 ```go
 import "sort"
 
-func findMinArrowShots(points [][]int) int {
-    if len(points) == 0 {
+func eraseOverlapIntervals(intervals [][]int) int {
+    if len(intervals) == 0 {
         return 0
     }
 
-    sort.Slice(points, func(i, j int) bool {
-        return points[i][1] < points[j][1]
+    sort.Slice(intervals, func(i, j int) bool {
+        return intervals[i][1] < intervals[j][1]
     })
 
-    count, arrPos := 1, points[0][1]
-    for i := 1; i < len(points); i++ {
-        if points[i][0] > arrPos {
+    count, pos := 0, intervals[0][1]
+    for i := 1; i < len(intervals); i++ {
+        if pos > intervals[i][0] {
             count++
-            arrPos = points[i][1]
+        } else {
+            pos = intervals[i][1]
         }
     }
 
