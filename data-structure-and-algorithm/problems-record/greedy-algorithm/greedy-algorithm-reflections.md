@@ -73,3 +73,17 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/406-queue-reconstruction-by-height.md)
 
+这道题太难了，实在是太抽象了，记住方法吧
+
+### 452. 用最少数量的箭引爆气球
+#### 题目：https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/452-minimum-number-of-arrows-to-burst-balloons.md)
+
+学会方法就行，本质并不难
+
+### 435. 无重叠区间
+#### 题目：https://leetcode.cn/problems/non-overlapping-intervals/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/435-non-overlapping-intervals.md)
+
