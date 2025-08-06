@@ -1,30 +1,24 @@
 ## 406. 根据身高重建队列
 ### go：
 ```go
-func lemonadeChange(bills []int) bool {
-    five, ten := 0, 0
+import "sort"
 
-    for _, v := range bills {
-        switch v {
-            case 5:
-                five++
-            case 10:
-                if five == 0 {
-                    return false
-                }
-                five--
-                ten++
-            case 20:
-                if ten > 0 && five > 0 {
-                    ten--
-                    five--
-                } else if five > 2 {
-                    five -= 3
-                } else {
-                    return false
-                }
+func reconstructQueue(people [][]int) [][]int {
+    sort.Slice(people, func(i, j int) bool {
+        if people[i][0] != people[j][0] {
+            return people[i][0] > people[j][0]
         }
+        return people[i][1] < people[j][1]
+    })
+
+    queue := make([][]int, 0, len(people))
+    for _, p := range people {
+        k := p[1]
+        front := queue[: k]
+        back := queue[k :]
+        queue = append(front, append([][]int{p}, back...)...)
     }
-    return true
+
+    return queue
 }
 ```
