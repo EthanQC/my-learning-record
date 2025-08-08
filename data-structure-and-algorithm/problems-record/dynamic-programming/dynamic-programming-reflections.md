@@ -111,8 +111,78 @@
 
 这道题也是完全背包，其实已经入门了，想到 `i` 来遍历，`j` 在 `i` 和 `n` 之间之后，就要进一步想到 `j * j` 是最后放进去的数，所以对应的就是 `dp[i - j * j]`，然后再加上这次的 `1` 就是要更新的 `dp` 值，动态规划相关问题的难点就在于找递推式，主要是要通过建模，大胆假设就肯定能推出来
 
-### 279. 完全平方数
-#### 题目：https://leetcode.cn/problems/perfect-squares/description/
+### 139. 单词拆分
+#### 题目：https://leetcode.cn/problems/word-break/description/
 
-[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/279-perfect-squares.md)
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/139-word-break.md)
+
+这道题还是完全背包问题，嗯感觉还是要选定究竟是要遍历谁，像这道题就是因为我们是要拼接 `s` 这个字符串，所以 `dp[i]` 表示的含义自然就是 `s` 中第 `i` 个字母时，刚好能被字典里的词拆分出来，也就是说 `i` 是遍历 `s` 的，所以 `i` 自然就在外层，然后内层直接遍历字典就好，用的思路还是如果前面 `i - lw` 刚好能拆分，那如果当前的也能拆分的话 `dp[i]` 就是 `true`
+
+### 198. 打家劫舍
+#### 题目：https://leetcode.cn/problems/house-robber/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/198-house-robber.md)
+
+这道题就不是背包了，嗯正常动态规划的思路就可以解决，也有数组版和空间优化版（滚动）两种写法，需要注意的是数组版由于原本的数组下标是从 `0` 开始的，所以要写成 `i - 1` 而不是 `i`，思路的话其实就是**如果当前的要偷，那上一间就不能偷，所以是上上间加当前，如果当前不偷，那就是上一间**
+
+### 213. 打家劫舍 II
+#### 题目：https://leetcode.cn/problems/house-robber-ii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/213-house-robber-ii.md)
+
+这道题跟上一题完全一样，只要把上一题的函数重写一遍，然后在主函数里调用两次就行，一次传去掉第一个元素的，一次传去掉最后一个元素的，然后哪个大取哪个就行
+
+### 337. 打家劫舍 III
+#### 题目：https://leetcode.cn/problems/house-robber-iii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/337-house-robber-iii.md)
+
+这道题就跟前两个不太一样了，是树形 dp 了，要用后序遍历，不过也是如果当前拿的话那左右子节点就不拿，再加上当前的，然后如果当前不拿那就是左右子节点拿并且取最大，学会思路就行
+
+### 121. 买卖股票的最佳时机
+#### 题目：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/121-best-time-to-buy-and-sell-stock.md)
+
+这题很简单，都不用 dp 数组，不过还是动态规划的思想，就是只用遍历一遍数组，然后每遍历一个元素实时更新就行，是很朴素的思路
+
+### 122. 买卖股票的最佳时机 II
+#### 题目：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/122-best-time-to-buy-and-sell-stock-ii.md)
+
+这道题之前我们用贪心算法写过一遍了，现在这遍是动态规划的方法，其实就是分成今天卖出/不卖、今天买入/不买这四种情况，嗯也用不到 dp 数组，主要是学会思路
+
+### 123. 买卖股票的最佳时机 III
+#### 题目：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/123-best-time-to-buy-and-sell-stock-iii.md)
+
+嗯这题很难，但也是模板题，学会方法就行，还是动态规划，但形式不同
+
+### 188. 买卖股票的最佳时机 IV
+#### 题目：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/188-best-time-to-buy-and-sell-stock-iv.md)
+
+这个就是最一般的情况了，模板学会记住就行
+
+### 309. 买卖股票的最佳时机含冷冻期
+#### 题目：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/309-best-time-to-buy-and-sell-stock-with-cooldown.md)
+
+这题主要是定义了三种状态，分别对应三个变量，学会方法就行，跟前面几题不太一样
+
+### 714. 买卖股票的最佳时机含手续费
+#### 题目：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/714-best-time-to-buy-and-sell-stock-with-transaction-fee.md)
+
+这道题跟 122 完全一样，就扣个手续费就行了，至此股票题结束，要学会模板并记住
+
+### 714. 买卖股票的最佳时机含手续费
+#### 题目：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/714-best-time-to-buy-and-sell-stock-with-transaction-fee.md)
 
