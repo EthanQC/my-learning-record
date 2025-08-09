@@ -203,7 +203,66 @@
 
 #### Q：HTTP 常见字段有哪些？
 
+##### 请求相关（Client → Server）
+* Host（H1） / :authority（H2/H3）：虚拟主机选择。一定要对齐证书和路由
+* User-Agent：客户端标识；现代浏览器更倾向 Client Hints（Sec-CH-…）
+* Accept / Accept-Language / Accept-Encoding：内容协商（br,gzip 优先）
+* Authorization：Bearer <token>/Basic ...；失败配合服务端返回 WWW-Authenticate
+* Referer（拼写历史错别字）和 Origin：跨站安全判定更看 Origin（更严格）
+* If-None-Match / If-Modified-Since：协商缓存请求（命中回 304）
+* Range / If-Range：断点续传；大文件分块下载
 
+##### 响应相关（Server → Client）
+* Content-Type：MIME + charset（例如 application/json; charset=utf-8）
+* Content-Length：字节长度；H1 分块则用 Transfer-Encoding: chunked（H2/H3 不用 chunked）
+* Content-Encoding：br/gzip 压缩；与 Accept-Encoding 匹配
+* Content-Disposition：attachment; filename*=UTF-8''report.pdf（注意 filename* 处理国际化）
+* Location：201 Created 指向新资源；3xx 重定向目标
+* Retry-After：配 429/503 指导退避
+* ETag / Last-Modified：与条件请求成对使用，降低带宽与 TTFB
+* Cache-Control / Expires / Age / Vary：缓存策略四件套（见下）
+* Accept-Ranges / Content-Range：配 206 返回分段
+
+##### 缓存与协商（高频区）
+* Cache-Control（常见指令）：
+  * 静态：public, max-age=31536000, immutable
+  * 动态：no-store（不落盘）、no-cache（可缓存但回源验证）、must-revalidate、s-maxage（代理缓存）、stale-while-revalidate、stale-if-error
+* ETag：强/弱标记（W/"abc"）。弱 ETag 适合模板渲染的小改动
+* Vary：区分缓存键，如 Vary: Accept-Encoding, Origin, Authorization（注意：带 Authorization 会显著降低共享缓存命中）
+* 304 Not Modified：只有发了条件头才可能拿到；强缓存命中则直接 200(from cache)。
+
+##### CORS（浏览器必问）
+* 预检请求：Origin + Access-Control-Request-Method/Headers（OPTIONS）
+* 响应：Access-Control-Allow-Origin: https://example.com（或 *）、Access-Control-Allow-Methods/Headers、Access-Control-Allow-Credentials: true（有 Credentials 就不能用 *）、Access-Control-Max-Age
+* 若要前端读到自定义头，记得 Access-Control-Expose-Headers。
+
+##### 安全强化（建议默认开启）
+* Strict-Transport-Security（HSTS）：强制 HTTPS，示例：max-age=31536000; includeSubDomains; preload
+* Content-Security-Policy（CSP）：限制资源来源，防 XSS
+* X-Content-Type-Options: nosniff：禁 MIME 嗅探
+* X-Frame-Options: DENY / SAMEORIGIN：防点击劫持（或 CSP frame-ancestors 取代）
+* Referrer-Policy：strict-origin-when-cross-origin 推荐
+* Permissions-Policy：取代老 Feature-Policy，限制传感器/摄像头等权限
+* COOP/COEP/CORP：Cross-Origin-Opener/Embedder/Resource-Policy，加强跨站隔离
+
+##### Cookie（会话常识）
+* Set-Cookie：Secure; HttpOnly; SameSite=Lax|Strict|None; Path=/; Domain=...; Max-Age=...
+* SameSite=None 必须配 Secure（否则被拒收）
+* Cookie：请求携带；体积/数量受限（注意头爆）
+
+##### 代理/网关/可观测
+* Forwarded（标准）或 X-Forwarded-For/Proto/Host（事实标准）：传递真实客户端 IP/协议
+* Via：穿越的代理链
+* Traceparent / Tracestate：W3C 分布式追踪；配合 X-Request-ID 或 trace_id 便于排障
+
+##### 连接/升级（少见但会被问）
+* Connection: keep-alive/close（H1）；H2/H3 不使用 hop-by-hop 连接头
+* Upgrade: websocket + Connection: Upgrade + 一组 Sec-WebSocket-*：握手升级到 WS
+* TE/Transfer-Encoding：H1 的分块传输；H2/H3 不允许 Transfer-Encoding: chunked。
+
+##### HTTP/2 / HTTP/3 特性提示
+* 伪首部（:method, :scheme, :authority, :path）替代 H1 起始行；首部名小写、压缩（HPACK/QPACK）、多路复用
+* Host 在 H2/H3 仍常保留以兼容中间件，但权威以 :authority 为准
 
 #### Q：GET 和 POST 有什么区别？
 
@@ -253,30 +312,334 @@
 
 
 
-* HTTP/1.1 相比 HTTP/1.0 提高了什么性能？
-* HTTP/2 做了什么优化？
-* HTTP/3 做了哪些优化？
-* HTTP/1.1 如何优化？如何避免发送 HTTP 请求？如何减少 HTTP 请求次数？如何减少 HTTP 响应的数据大小？
-* HTTPS RSA 的握手过程是什么？
-* HTTPS ECDHE 的握手过程是什么？
-* HTTPS 如何优化？
-* 既然有 HTTP 协议，为什么还要有 RPC 和 WebSocket 协议？
+#### Q：HTTP/1.1 相比 HTTP/1.0 提高了什么性能？
 
-**Q：HTTPS 为什么安全？**
+
+
+#### Q：HTTP/2 做了什么优化？
+
+
+
+#### Q：HTTP/3 做了哪些优化？
+
+
+
+#### Q：HTTP/1.1 如何优化？如何避免发送 HTTP 请求？如何减少 HTTP 请求次数？如何减少 HTTP 响应的数据大小？
+
+
+
+#### Q：HTTPS RSA 的握手过程是什么？
+
+
+
+#### Q：HTTPS ECDHE 的握手过程是什么？
+
+
+
+#### Q：HTTPS 如何优化？
+
+
+
+#### Q：既然有 HTTP 协议，为什么还要有 RPC 和 WebSocket 协议？
+
+
+
+#### Q：HTTPS 为什么安全？
 
 A：HTTPS 通过 TLS 实现加密、完整性校验和身份认证，支持前向安全，它在握手阶段以服务器证书公钥完成非对称密钥交换，协商会话密钥，随后的业务报文用对称算法加密并附带 MAC 校验，浏览器会对证书链和域名做验证
 
-**Q：一个数字证书上面一般都会有什么内容？**
+#### Q：一个数字证书上面一般都会有什么内容？
 
 A：证书通常含版本、序列号、签名算法、颁发者 Issuer、主体域名/组织、有效期、公钥信息、指纹摘要及扩展、颁发者数字签名等，客户端会验证签名并校验证书链与有效期
 
-**Q：介绍一下 HTTPS**
+#### Q：介绍一下 HTTPS
 
 A：HTTPS 是在 HTTP 的基础上加入了 TLS 或者说 SSL 加密的通信协议，默认走 TCP 443 端口，它的核心在于握手阶段，客户端发 ClientHello，服务器选定加密套件并返回证书，客户端验证证书合法后，用非对称加密协商出对称密钥，最后双方互发 Finished 消息确认；握手完成后，所有数据都通过对称加密和消息认证码进行保护，并用 ECDHD 提供前向安全，保证机密性、完整性和服务器身份认证；相比 HTTP 的明文传输，虽然 HTTPS 增加了握手开销，但一次握手后就能复用会话，还支持 http 2 的多路复用
 
-**Q：为什么要同时使用公钥和私钥，这两个密钥有什么用**
+#### Q：为什么要同时使用公钥和私钥，这两个密钥有什么用
 
 A：公钥和私钥一对是非对称加密的基础，用对方的公钥加密能确保只有拥有对应私钥的那一端才能解密查看，用自己的私钥对数据签名，让对方通过我的公钥来验证，保证消息确实来自我并且没有被篡改，在 HTTPS 中，服务器把公钥打包在 CA 签发的证书里，客户端验证证书无误后，用该公钥校验服务器私钥对握手数据的签名，再用公钥加密，只有服务器私钥能解开，这样既验证了服务器身份，也保证了后续通信的机密性和完整性
+
+## TCP 与 UDP
+#### Q：TCP 头格式有哪些？
+
+
+
+#### Q：为什么需要 TCP 协议？TCP 工作在哪一层？
+
+
+
+#### Q：什么是 TCP？
+
+
+
+#### Q：什么是 TCP 连接？
+
+
+
+#### Q：如何唯一确定一个 TCP 连接呢？
+
+
+
+#### Q：你知道 TCP 和 UDP 吗？它们的区别是什么？分别的应用场景是？
+
+
+
+#### Q：TCP 和 UDP 可以使用同一个端口吗？
+
+
+
+#### Q：TCP 三次握手过程是什么样的？
+
+
+
+#### Q：如何在 Linux 系统中查看 TCP 状态？
+
+
+
+#### Q：为什么 TCP 是三次握手而不是两次或者四次？
+
+
+
+#### Q：为什么每次建立 TCP 连接时，初始化的序列号都要求不一样呢？
+
+
+
+#### Q：初始序列号 ISN 是如何随机产生的？
+
+
+
+#### Q：既然 IP 层会分片，为什么 TCP 层还需要 MSS 呢？
+
+
+
+#### Q：第一次握手如果丢失了，会发生什么？
+
+
+
+#### Q：第二次握手如果丢失了，会发生什么？
+
+
+
+#### Q：第三次握手如果丢失了，会发生什么？
+
+
+
+#### Q：什么是 SYN 攻击？该如何避开？
+
+
+
+#### Q：TCP 四次挥手的过程是什么样的？
+
+
+
+#### Q：为什么挥手需要四次？
+
+
+
+#### Q：第一次挥手丢失了，会发生什么？
+
+
+
+#### Q：第二次挥手丢失了，会发生什么？
+
+
+
+#### Q：第三次挥手丢失了，会发生什么？
+
+
+
+#### Q：第四次挥手丢失了，会发生什么？
+
+
+
+#### Q：为什么 TIME_WAIT 等待的时间是 2 MSL？
+
+
+
+#### Q：为什么需要 TIME_WAIT 状态？
+
+
+
+#### Q：TIME_WAIT 过多有什么危害？
+
+
+
+#### Q：如何优化 TIME_WAIT？
+
+
+
+#### Q：服务器出现大量 TIME_WAIT 状态的原因有哪些？
+
+
+
+#### Q：服务器出现大量 CLOSE_WAIT 状态的原因有哪些？
+
+
+
+#### Q：如果已经建立了连接，但是客户端突然出现故障了怎么办？
+
+
+
+#### Q：如果已经建立了连接，但是服务端的进程崩溃会发生什么？
+
+
+
+#### Q：针对 TCP 应该如何 Socket 编程？
+
+
+
+#### Q：listen 时候参数 backlog 的意义？
+
+
+
+#### Q：accept 发生在三次握手的哪一步？
+
+
+
+#### Q：客户端调用 close 了，连接是断开的流程是什么？
+
+
+
+#### Q：没有 accept，能建立 TCP 连接吗？
+
+
+
+#### Q：没有 listen，能建立 TCP 连接吗？
+
+
+
+#### Q：TCP 的重传、滑动窗口、流量控制和拥塞控制分别是什么？详细说说
+
+
+
+#### Q：TCP 的流量和拥塞控制是什么？
+
+
+
+#### Q：什么是 TCP 队头阻塞问题？
+
+
+
+#### Q：什么是 TCP 半连接队列和全连接队列？
+
+
+
+#### Q：如何优化 TCP？
+
+
+
+#### Q：如何理解 TCP 是面向字节流协议？如何理解字节流？如何解决粘包？
+
+
+
+#### Q：为什么 TCP 每次建立连接时，初始化序列号都要不一样呢？
+
+
+
+#### Q：SYN 报文什么时候情况下会被丢弃？
+
+
+
+#### Q：已建立连接的TCP，收到SYN会发生什么？
+
+
+
+#### Q：如何关闭一个 TCP 连接？
+
+
+
+#### Q：四次挥手中收到乱序的 FIN 包会如何处理？
+
+
+
+#### Q：在 TIME_WAIT 状态的 TCP 连接，收到 SYN 后会发生什么？
+
+
+
+#### Q：在 TIME_WAIT 状态的 TCP 连接，收到 RST 会断开连接吗？
+
+
+
+#### Q：TCP 连接，一端断电和进程崩溃有什么区别？
+
+
+
+#### Q：拔掉网线后， 原本的 TCP 连接还存在吗？
+
+
+
+#### Q：tcp_tw_reuse 为什么默认是关闭的？什么是 TIME_WAIT 状态？为什么要设计 TIME_WAIT 状态？tcptwreuse 是什么？为什么 tcptwreuse 默认是关闭的？
+
+
+
+#### Q：HTTPS 中 TLS 和 TCP 能同时握手吗？
+
+
+
+#### Q：TCP Keepalive 和 HTTP Keep-Alive 是一个东西吗？
+
+
+
+#### Q：TCP 协议有什么缺陷？
+
+
+
+#### Q：如何基于 UDP 协议实现可靠传输？
+
+
+
+#### Q：QUIC 是如何实现可靠传输的？
+
+
+
+#### Q：QUIC 是如何解决 TCP 队头阻塞问题的？
+
+
+
+#### Q：QUIC 是如何做流量控制的？
+
+
+
+#### Q：QUIC 是如何迁移连接的？
+
+
+
+#### Q：TCP 和 UDP 可以使用同一个端口吗？TCP 和 UDP 可以同时绑定相同的端口吗？
+
+
+
+#### Q：多个 TCP 服务进程可以绑定同一个端口吗？
+
+
+
+#### Q：客户端的端口可以重复使用吗？
+
+
+
+#### Q：服务端没有 listen，客户端发起连接建立，会发生什么？
+
+
+
+#### Q：不使用 listen ，可以建立 TCP 连接吗？
+
+
+
+#### Q：没有 accept，能建立 TCP 连接吗？
+
+
+
+#### Q：用了 TCP 协议，数据一定不会丢吗？如果会的话，该怎么解决？
+
+
+
+#### Q：TCP 四次挥手，可以变成三次吗？什么情况会出现三次挥手？
+
+
+
+#### Q：TCP 序列号和确认号是如何变化的？
+
+
 
 ## 同步相关
 **Q：类似抖音直播间，如果有十万人同时在线，该如何做直播间点赞同步操作？**
