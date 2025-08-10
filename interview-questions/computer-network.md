@@ -266,7 +266,29 @@
 
 #### Q：GET 和 POST 有什么区别？
 
+##### 语义与状态码
+GET：读取，常见 200/304/206
+POST：提交/创建/动作，常见 201 Created（最好带 Location）、202 Accepted（异步）、200/204
 
+##### 幂等与重试
+GET：幂等，代理/客户端可自动重试
+POST：非幂等，网络重试可能造成重复下单/重复扣款；可用 Idempotency-Key 或服务端去重表
+
+##### 缓存与协商
+GET：强/协商缓存（Cache-Control/ETag/Last-Modified）配合 304 很常见
+POST：若要缓存，响应需显式 Cache-Control，很多中间层默认不缓存 POST
+
+##### 安全与隐私
+GET 查询串可能进 浏览器历史、服务器访问日志、Referer（HTTPS 仍会进这些位置，除非策略限制）；不要把 Token/密码放 URL
+POST 体不会进 URL，但仍可能被服务端日志或抓包记录，敏感信息也要谨慎
+
+##### 传输与兼容
+GET 可能受 URL 长度上限影响（实现相关）
+POST 体适合大文件（配 multipart/form-data、断点续传用 Range/206 常在 GET 上做下载续传）
+
+##### 表单与重定向
+HTML 表单 method="get" 会把字段编码进查询串；method="post" 进请求体
+支付/登录回跳常见 303 See Other（把后续交互改成 GET），307/ 308 则保持方法
 
 #### Q：GET 和 POST 方法都是安全和幂等的吗？
 
