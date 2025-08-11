@@ -181,8 +181,82 @@
 
 这道题跟 122 完全一样，就扣个手续费就行了，至此股票题结束，要学会模板并记住
 
-### 714. 买卖股票的最佳时机含手续费
-#### 题目：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/
+### 300. 最长递增子序列
+#### 题目：https://leetcode.cn/problems/longest-increasing-subsequence/description/
 
-[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/714-best-time-to-buy-and-sell-stock-with-transaction-fee.md)
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/300-longest-increasing-subsequence.md)
+
+这道题有两种方法，第一种是常规的动态规划，只不过是从 0 开始的，所以写法会有点不一样，但挺好想到的，就还是用两个变量来遍历，然后数组代表结尾在哪个元素结束；另一种方法是贪心 + 二分查找，要用到一个包函数，学会思路即可，也很好理解
+
+### 674. 最长连续递增序列
+#### 题目：https://leetcode.cn/problems/longest-continuous-increasing-subsequence/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/674-longest-continuous-increasing-subsequence.md)
+
+这道题非常简单，不要想复杂了，虽然是上一题加了一个连续的条件，但反而变简单了，只要一次线性扫描就行，甚至都不用动态规划了，主要是考察对代码的熟练度
+
+### 718. 最长重复子数组
+#### 题目：https://leetcode.cn/problems/maximum-length-of-repeated-subarray/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/718-maximum-length-of-repeated-subarray.md)
+
+这道题理论上是用二维 dp 的，但可以滚动成一维的，所以这里只给了一维的写法，嗯关键就是内层变量要倒序遍历，并且断了要清零，最后的答案也是数组里的最大值，而不是最后一个值
+
+### 1143. 最长公共子序列
+#### 题目：https://leetcode.cn/problems/longest-common-subsequence/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/1143-longest-common-subsequence.md)
+
+这题同样是滚动一维 dp，嗯跟上一题的区别就在于不要求连续，遍历顺序无论内外也变成了正序，最后答案是最后一个值，要做好区分，二维变一维的写法还是有点抽象的
+
+### 1035. 不相交的线
+#### 题目：https://leetcode.cn/problems/uncrossed-lines/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/1035-uncrossed-lines.md)
+
+这题就是上一题的数组版，完全一模一样，要能识别出来
+
+### 53. 最大子数组和
+#### 题目：https://leetcode.cn/problems/maximum-subarray/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/53-maximum-subarray.md)
+
+这道题的贪心其实就是动态规划优化空间之后得到的，之前在贪心那里写过了，学会即可，不再重复
+
+### 392. 判断子序列
+#### 题目：https://leetcode.cn/problems/is-subsequence/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/53-maximum-subarray.md)
+
+双指针法秒了，非常非常简单，快慢指针遍历就行，一个指针只有相等才前进，学会思路熟练就好
+
+### 115. 不同的子序列
+#### 题目：https://leetcode.cn/problems/distinct-subsequences/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/115-distinct-subsequences.md)
+
+这道题是经典的子序列一维动态规划问题，其实并没有那么难，学会思路就行
+
+![alt text](115.png)
+
+### 583. 两个字符串的删除操作
+#### 题目：https://leetcode.cn/problems/delete-operation-for-two-strings/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/583-delete-operation-for-two-strings.md)
+
+这道题的把两个串删到相同其实就是 1143. 最长公共子序列，完全一样，只要最后改下返回值就行了，返回要删的步数，也简单
+
+### 72. 编辑距离
+#### 题目：https://leetcode.cn/problems/edit-distance/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/72-edit-distance.md)
+
+这道题相当于把前面几题综合起来了
+
+![alt text](72.png)
+
+### 72. 编辑距离
+#### 题目：https://leetcode.cn/problems/edit-distance/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/72-edit-distance.md)
 
