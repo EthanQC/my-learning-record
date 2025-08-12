@@ -255,8 +255,16 @@
 
 ![alt text](72.png)
 
-### 72. 编辑距离
-#### 题目：https://leetcode.cn/problems/edit-distance/description/
+### 647. 回文子串
+#### 题目：https://leetcode.cn/problems/palindromic-substrings/description/
 
-[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/72-edit-distance.md)
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/647-palindromic-substrings.md)
 
+嗯这道题还是动态规划，但遍历顺序跟常规的不太一样，它是从左下开始的，嗯所以这个遍历方式要记一下，递推式倒是不难
+
+### 516. 最长回文子序列
+#### 题目：https://leetcode.cn/problems/palindromic-substrings/description/
+
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/647-palindromic-substrings.md)
+
+这道题可以等价为最长公共子序列，只要记住**最长回文子序列(LPS) 的长度 = s 与反串 r=reverse(s) 的最长公共子序列(LCS) 的长度**这个结论就行了，所以方法跟最长公共子序列那题是完全一样的，只需要先构造一下原本字符串的反串就行
