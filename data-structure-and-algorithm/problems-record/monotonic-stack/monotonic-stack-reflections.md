@@ -26,10 +26,12 @@
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/monotonic-stack/42-trapping-rain-water.md)
 
-
+嗯这道题非常经典，方法也很多，主要是双指针法、单调栈和前后缀最大值这三种，嗯效率来说都差不多，但双指针法是最简单也是最方便的，所以这里目前只提供了双指针的解法，其实就是只要记住**每根柱子能接的水 = min(左侧最高，右侧最高) − 本柱高度**这个公式就可以了，然后用左右指针头尾分别遍历，哪边的值更小，就用哪边的来计算所接到的雨水
 
 ### 84. 柱状图中最大的矩形
 #### 题目：https://leetcode.cn/problems/largest-rectangle-in-histogram/description/
 
 [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/monotonic-stack/84-largest-rectangle-in-histogram.md)
 
+![alt text](84-1.png)
+![alt text](84-2.png)
