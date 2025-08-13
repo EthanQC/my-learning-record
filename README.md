@@ -11,7 +11,13 @@
 
 记录的初衷还是因为前段时间看到了这样一段话：
 
-“关于如何学习编程，我觉得没啥可分享的技巧。只要自己**有基本的学习能力，会分析抽象问题**，编程（简单粗暴看文档，跟着写）就是一个水到渠成的事情。代码或工具也只是将解决问题的逻辑进行具象化，并没有什么神奇之处。另外，**兴趣**往往更容易推着你去了解学习一些**未知新事物**。所以学编程还是应**以解决问题为出发点**。举个简单例子：我想租房，要找一个最具性价比的房子。这时你就可以写个简单的爬虫来做数据分析，或者你想对文件进行批量化读写操作，也可以写个程序脚本来解决。对不知从什么项目入门的人，我都推荐**搭建一个属于自己的 blog**，因为它是一个可以伴随自己整个编程生涯的东西，可以不断对其进行功能迭代。例如：通过 GitHub 来搭建一个开源 blog，然后不断为其添加新功能。这里面你可以学到很多东西（如 github action、git、markdown、github api，域名绑定等）。**编程的本质：以问题为导向去了解学习所需技术或工具，通过观察分析抽象来建立标准化流程以解决重复性问题。**”
+“关于如何学习编程，我觉得没啥可分享的技巧。只要自己**有基本的学习能力，会分析抽象问题**，编程（简单粗暴看文档，跟着写）就是一个水到渠成的事情。代码或工具也只是将解决问题的逻辑进行具象化，并没有什么神奇之处。
+
+另外，**兴趣**往往更容易推着你去了解学习一些**未知新事物**。所以学编程还是应**以解决问题为出发点**。举个简单例子：我想租房，要找一个最具性价比的房子。这时你就可以写个简单的爬虫来做数据分析，或者你想对文件进行批量化读写操作，也可以写个程序脚本来解决。
+
+对不知从什么项目入门的人，我都推荐**搭建一个属于自己的 blog**，因为它是一个可以伴随自己整个编程生涯的东西，可以不断对其进行功能迭代。例如：通过 GitHub 来搭建一个开源 blog，然后不断为其添加新功能。这里面你可以学到很多东西（如 github action、git、markdown、github api，域名绑定等）。
+
+**编程的本质：以问题为导向去了解学习所需技术或工具，通过观察分析抽象来建立标准化流程以解决重复性问题。**”
 
 最开始胡乱记了两个月之后，我又发现还是要弄一个**方便自己翻阅**的笔记，所以才有了这个仓库现在的样子：**知识，碎碎念，还有一些反思总结**，既能看看自己来时的路，也能及时调整规划什么的
 
@@ -35,7 +41,8 @@
 
 * 找新实习准备
     * 刷、复习算法题
-      * 一刷马上结束，还差贪心的一点和动态规划和单调栈和图论，代码随想录刷完就开始去刷 hot100 和剑指 offer 了，边刷这两个边开始复习，预计八月底能结束所有算法突击
+      * 一刷代码随想录已结束，目前刷题数 148
+      * 准备开始刷剑指 offer、hot 100 和复习
     * 整理、复习八股
       * 目前主要就是计网、数据库、go、云原生微服务分布式、操作系统这五个大模块，是以面试为导向的问题式地整理与学习，在面试前要能全过一遍下来，数据结构与算法这块八股考得相对少一点，但也要会；通过八股来学习使用一些项目中会用到的工具、技术栈
     * 改简历
@@ -215,9 +222,9 @@
 #### 底层原理
 [**`<GMP 模型调度器>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/underlying-principle/GMP-model-scheduler.md)
 
-[**`<GC 垃圾回收（待整理）>`**]()
+[**`<GC 垃圾回收（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/underlying-principle/Garbage-Collector.md)
 
-[**`<内存逃逸（待整理）>`**]()
+[**`<内存逃逸（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/underlying-principle/Escape-Analysis.md)
 
 #### Gin
 （待整理）
@@ -255,17 +262,15 @@
 
 [**`<链表>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/linked-list.md)
 
-[**`<哈希表（待整理）>`**]()
+[**`<哈希表>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/hash-table.md)
 
-[**`<字符串（待整理）>`**]()
+[**`<字符串>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/string.md)
 
-[**`<栈与队列（待整理）>`**]()
+[**`<栈与队列>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/stack-and-queue.md)
 
-[**`<堆与优先队列（待整理）>`**]()
+[**`<堆与优先队列（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/heap-and-priority-queue.md)
 
-[**`<树与二叉树（待整理）>`**]()
-
-[**`<图（待整理）>`**]()
+[**`<树与二叉树>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/binary-tree.md)
 
 #### 算法分析
 [**`<时间复杂度与空间复杂度>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/time-and-space-complexity.md)
@@ -275,14 +280,6 @@
 [**`<排序（待整理）>`**](data-structure-and-algorithm/algorithm-analysis/sort.md)
 
 [**`<查找>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/algorithm-analysis/search.md)
-
-[**`<回溯（待整理）>`**]()
-
-[**`<贪心（待整理）>`**]()
-
-[**`<动态规划（待整理）>`**]()
-
-[**`<寻路（待整理）>`**]()
 
 #### 刷题记录
 题目编号为 leetcode 上的题目编号
@@ -295,29 +292,19 @@
 
 [**`<哈希表>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/hash-table/hash-table-reflections.md)
 
-[**`<字符串（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/string-reflections.md)
+[**`<字符串>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/string/string-reflections.md)
 
-[**`<栈与队列（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/stack-and-queue-reflections.md)
+[**`<栈与队列>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/stack-and-queue/stack-and-queue-reflections.md)
 
-[**`<二叉树（待整理）>`**]()
+[**`<二叉树>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/binary-tree/binary-tree-reflections.md)
 
-[**`<回溯算法（待整理）>`**]()
+[**`<回溯算法>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/backtracking-reflections.md)
 
-[**`<贪心算法（待整理）>`**]()
+[**`<贪心算法>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/greedy-algorithm-reflections.md)
 
-[**`<动态规划基础（待整理）>`**]()
+[**`<动态规划>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/dynamic-programming-reflections.md)
 
-[**`<动态规划背包（待整理）>`**]()
-
-[**`<动态规划打家劫舍（待整理）>`**]()
-
-[**`<动态规划股票（待整理）>`**]()
-
-[**`<动态规划子序列（待整理）>`**]()
-
-[**`<单调栈（待整理）>`**]()
-
-[**`<图论（待整理）>`**]()
+[**`<单调栈>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/monotonic-stack/monotonic-stack-reflections.md)
 
 ## 面试八股问题总结
 [**`<总体与背景>`**](https://github.com/EthanQC/my-learning-record/blob/main/interview-questions/overall.md)
