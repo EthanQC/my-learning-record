@@ -560,6 +560,8 @@
 >[**2025.7.17**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.7.17.md)
 >
 >[**2025.7.31**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.7.31.md)
+>
+>[**2025.8.21**](https://github.com/EthanQC/my-learning-record/blob/main/murmurs-and-reflection/2025.8.21.md)
 
 ## 我的其他仓库
 >[基于异步日志系统的 HTTP 框架](https://github.com/EthanQC/HTTP-framework-based-on-asynchronous-logging-system)
