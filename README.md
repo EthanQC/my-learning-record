@@ -224,8 +224,6 @@
 
 [**`<GC 垃圾回收（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/underlying-principle/Garbage-Collector.md)
 
-[**`<内存逃逸（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/go/underlying-principle/Escape-Analysis.md)
-
 #### Gin
 （待整理）
 
@@ -267,8 +265,6 @@
 [**`<字符串>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/string.md)
 
 [**`<栈与队列>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/stack-and-queue.md)
-
-[**`<堆与优先队列（待整理）>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/heap-and-priority-queue.md)
 
 [**`<树与二叉树>`**](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/data-structure/binary-tree.md)
 
