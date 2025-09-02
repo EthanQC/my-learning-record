@@ -49,9 +49,9 @@
 
 这道题也是折磨了很久gpt才最后做出来的哈哈哈，说白了还是，就，明明有一种更方便、更快速的方式能使用，真的没必要非要钻牛角尖，这道题实际想过之后会发现双指针法并不一定是一个快一个慢，也可以一左一右，遍历的方式有很多，要灵活运用
 
-### 206. 长度最小的子数组
+### 209. 长度最小的子数组
 #### 题目：https://leetcode.cn/problems/minimum-size-subarray-sum/description/
-[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/206-min-len-sub-array.md)
+[我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/array/209-min-len-sub-array.md)
 
 这题的**暴力解法**是两个 for 循环嵌套，通过穷举来求子数组，但实际上我们可以使用**双指针法 - 滑动窗口**来解决这道题目，从而优化时间复杂度
 
