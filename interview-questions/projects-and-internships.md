@@ -199,7 +199,36 @@ A：JWT 可以让服务端不用存储会话状态，验证只靠解析和验证
 
 #### 介绍一下你从 MVC 转型到 DDD 的构思
 
+MVC 里一个接口经常串很多表和外部动作（写消息→推送→更新已读），业务规则散在 Controller/Service/DAO 各处，重复且难以复用；IM 强依赖会话内有序 + 幂等 + 最少一次，MVC 里常见“写库成功后再调用推送”，中间失败就乱序或丢投递，单体里写入与投递绑在一起，高峰时无法只扩“投递”，长连接治理也分散到各处。
 
+Conversation（含 Participants）：成员不能重复；拉人/踢人按角色校验；单聊通过业务键保证唯一会话
+
+Message：会话内 seq 自增且唯一；写入必须幂等
+
+Inbox：每用户每会话一条进度，delivered/read 只单调前进
+
+Outbox：与消息同事务写入，作为对外投递的唯一事实来源
+
+入站端口：gRPC/WS Handler
+
+出站端口：仓储（MySQL/GORM）、队列发布（Kafka）、缓存（Redis）、对象存储
+
+适配器可换，领域层不依赖具体技术
+
+领域边界 = 微服务边界：identity、conversation、message、delivery、presence、media-signal、file；外部统一走网关
+
+MVC 老路：Controller 校验 → Service 写库 → 调 WebSocket 推送 → 出错回滚/重试点很多，顺序与幂等靠代码约定
+
+DDD/六边形新路：
+
+应用层 SendMessage 调领域服务生成 seq；
+
+同事务写 messages + outbox，返回 MessageItem(seq, id)；
+
+Outbox-relay 按 conversation_id 作为 key 写 Kafka；
+
+delivery 消费后依据 presence 找节点推送，失败重试/死信；离线只推进 inbox.delivered，上线按 seq 回放
+结果：顺序有了抓手（seq + 分区），可靠有了抓手（Outbox + 重放），扩展有了抓手（写入/投递各自扩容）
 
 #### 你在做架构转型时遇到的最麻烦的一个点是什么，有没有遇到比较典型的一些困难
 
