@@ -1,3 +1,9 @@
+---
+title: "IEG LightSpeed Game Client Development Daily Internship First Round Failure"
+date: 2024-12-08T16:09:41+08:00
+tags: ["tencent"]
+summary: ""
+---
 ## 光子工作室群-游戏客户端开发日常实习一面凉经
 #### 问题
 **Q：先简单介绍一下自己好吗**

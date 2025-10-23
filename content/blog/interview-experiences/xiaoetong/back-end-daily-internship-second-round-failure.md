@@ -1,3 +1,9 @@
+---
+title: "Back End Daily Internship Second Round Failure"
+date: 2024-12-08T16:09:41+08:00
+tags: ["xiaoetong"]
+summary: ""
+---
 ## 小鹅通-后端开发日常实习二面凉经
 #### 问题
 **Q：你先简单自我介绍一下吧**

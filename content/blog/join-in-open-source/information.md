@@ -1,3 +1,9 @@
+---
+title: "Information"
+date: 2025-01-26T22:26:02+08:00
+tags: ["join-in-open-source"]
+summary: ""
+---
 ## 各种开源活动
 #### LFX（Linux基金会开源活动）
 * [官方文档](https://docs.linuxfoundation.org/lfx/mentorship)

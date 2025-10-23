@@ -1,3 +1,9 @@
+---
+title: "IEG Timi Game Client Development Daily Internship First Round Failure"
+date: 2025-04-09T13:54:41+08:00
+tags: ["tencent"]
+summary: ""
+---
 ## 天美工作室群-游戏客户端开发日常实习一面凉经
 #### 问题
 **Q：先自我介绍一下吧**
