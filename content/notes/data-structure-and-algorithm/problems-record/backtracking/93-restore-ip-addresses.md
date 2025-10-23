@@ -1,3 +1,12 @@
+---
+title: 93 restore ip addresses
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  func restoreIpAddresses(s string) []string { var results []string var path
+  []string backtrack(&results, path, 0, s) return results }
+---
 ## 93. 复原 IP 地址
 ### go：
 ```go

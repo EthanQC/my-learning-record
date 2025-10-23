@@ -1,3 +1,10 @@
+---
+title: 459 repeated substring pattern
+date: '2025-09-03'
+tags:
+  - string
+summary: 'if length < 2 { return false }'
+---
 ## 459. 重复的子字符串
 ### go：
 ```go

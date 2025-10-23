@@ -1,3 +1,12 @@
+---
+title: 322 coin change
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for _, c := range coins { for j := c; j <= amount; j++ { if dp[j] > dp[j - c]
+  + 1 { dp[j] = dp[j - c] + 1 } } }
+---
 ## 322. 零钱兑换
 ### go：
 ```go

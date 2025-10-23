@@ -1,3 +1,10 @@
+---
+title: 503 next greater element ii
+date: '2025-09-03'
+tags:
+  - monotonic-stack
+summary: 'for i := 0; i < n; i++ { ans[i] = -1 }'
+---
 ## 503. 下一个更大元素 II
 ### go：
 ```go

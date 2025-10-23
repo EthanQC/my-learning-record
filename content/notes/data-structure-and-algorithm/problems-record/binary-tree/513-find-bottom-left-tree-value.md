@@ -1,12 +1,25 @@
+---
+title: 513 find bottom left tree value
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'var v int queue := []*TreeNode{root}'
+---
 ## 513. 找树左下角的值
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func findBottomLeftValue(root *TreeNode) int {

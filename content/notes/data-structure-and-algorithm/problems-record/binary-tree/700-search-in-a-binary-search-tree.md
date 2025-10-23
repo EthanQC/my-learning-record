@@ -1,13 +1,28 @@
+---
+title: 700 search in a binary search tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: >-
+  switch { case root.Val == val: return root case root.Val > val : return
+  searchBST(root.Left, val) default: return searchBST(root.Right, val) } } ```
+---
 ## 700. 二叉搜索树中的搜索
 ### go：
 递归
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func searchBST(root *TreeNode, val int) *TreeNode {
@@ -29,11 +44,17 @@ func searchBST(root *TreeNode, val int) *TreeNode {
 迭代
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func searchBST(root *TreeNode, val int) *TreeNode {

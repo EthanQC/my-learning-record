@@ -1,3 +1,10 @@
+---
+title: 28 find the index of the first occurrence in a string
+date: '2025-09-03'
+tags:
+  - string
+summary: 'if m == 0 { return 0 } if n < m { return -1 }'
+---
 ## 28. 找出字符串中第一个匹配项的下标
 ### go：
 ```go

@@ -1,3 +1,12 @@
+---
+title: 40 combination sum ii
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  func combinationSum2(candidates []int, target int) [][]int {
+  sort.Ints(candidates)
+---
 ## 40. 组合总和 II
 ### go：
 ```go

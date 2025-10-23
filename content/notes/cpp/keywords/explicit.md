@@ -1,3 +1,12 @@
+---
+title: explicit
+date: '2025-09-03'
+tags:
+  - keywords
+summary: >-
+  在C++中，explicit关键字用于构造函数或者单参函数声明处，以防止编译器进行隐式类型转换。当我们在类的头文件中声明构造函数时，如果希望该构造函数不能被隐式调用（例如不能用ClassName
+  c = value;这种隐式转换方式来构造对象），就需要在声明时加上explicit。
+---
 ### explicit
 为什么函数声明时使用了explicit，但在函数实现时就不需要再加explicit了？
 

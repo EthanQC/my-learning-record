@@ -1,3 +1,10 @@
+---
+title: 242 valid anagram
+date: '2025-09-03'
+tags:
+  - hash-table
+summary: '```go func isAnagram(s string, t string) bool { counts := make([]int, 26)'
+---
 ## 242. 有效的字母异位词
 ### go：
 

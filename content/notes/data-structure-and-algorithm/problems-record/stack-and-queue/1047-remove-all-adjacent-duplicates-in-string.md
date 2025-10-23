@@ -1,3 +1,10 @@
+---
+title: 1047 remove all adjacent duplicates in string
+date: '2025-09-03'
+tags:
+  - stack-and-queue
+summary: 'for i := 0; i < len(s); i++ { v := s[i]'
+---
 ## 1047. 删除字符串中的所有相邻重复项
 ### go：
 ```go

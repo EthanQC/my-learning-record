@@ -1,3 +1,13 @@
+---
+title: 860 lemonade change
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: >-
+  for _, v := range bills { switch v { case 5: five++ case 10: if five == 0 {
+  return false } five-- ten++ case 20: if ten > 0 && five > 0 { ten-- five-- }
+  else if five > 2 { five -=
+---
 ## 860. 柠檬水找零
 ### go：
 ```go

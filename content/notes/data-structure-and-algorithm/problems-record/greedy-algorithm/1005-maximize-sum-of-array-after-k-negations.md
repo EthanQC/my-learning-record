@@ -1,3 +1,13 @@
+---
+title: 1005 maximize sum of array after k negations
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: >-
+  func largestSumAfterKNegations(nums []int, k int) int { sort.Ints(nums) for i
+  := 0; i < len(nums) && nums[i] < 0 && k > 0; i++ { nums[i] = -nums[i] k-- }
+  sort.Ints(nums) sum := 0 i
+---
 ## 1005. K 次取反后最大化的数组和
 ### go：
 ```go

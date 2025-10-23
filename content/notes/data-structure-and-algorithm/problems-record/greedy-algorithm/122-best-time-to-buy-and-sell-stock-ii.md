@@ -1,3 +1,10 @@
+---
+title: 122 best time to buy and sell stock ii
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: 'return earn } ```'
+---
 ## 122. 买卖股票的最佳时机 II
 ### go：
 ```go

@@ -1,3 +1,12 @@
+---
+title: 135 candy
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: >-
+  sum, right := 0, 1 for i := n - 1; i >= 0; i-- { if i < n - 1 && ratings[i] >
+  ratings[i + 1] { right++ } else { right = 1 }
+---
 ## 135. 分发糖果
 ### go：
 ```go

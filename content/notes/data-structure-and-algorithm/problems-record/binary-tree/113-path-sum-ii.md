@@ -1,12 +1,25 @@
+---
+title: 113 path sum ii
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'return results }'
+---
 ## 113. 路径总和 II
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func pathSum(root *TreeNode, targetSum int) [][]int {

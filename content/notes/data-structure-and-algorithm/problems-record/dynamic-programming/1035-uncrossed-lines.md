@@ -1,3 +1,10 @@
+---
+title: 1035 uncrossed lines
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'for i := 1; i <= n; i++ { pre := 0'
+---
 ## 1035. 不相交的线
 ### go：
 ```go

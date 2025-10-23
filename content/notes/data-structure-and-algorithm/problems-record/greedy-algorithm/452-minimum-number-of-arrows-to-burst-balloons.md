@@ -1,3 +1,10 @@
+---
+title: 452 minimum number of arrows to burst balloons
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: 'func findMinArrowShots(points [][]int) int { if len(points) == 0 { return 0 }'
+---
 ## 452. 用最少数量的箭引爆气球
 ### go：
 ```go

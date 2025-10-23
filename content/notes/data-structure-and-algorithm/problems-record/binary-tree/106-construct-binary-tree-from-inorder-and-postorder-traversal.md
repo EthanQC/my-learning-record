@@ -1,12 +1,25 @@
+---
+title: 106 construct binary tree from inorder and postorder traversal
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'idxMap := make(map[int]int, n) for i, v := range inorder { idxMap[v] = i }'
+---
 ## 106. 从中序与后序遍历序列构造二叉树
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func buildTree(inorder []int, postorder []int) *TreeNode {

@@ -1,3 +1,13 @@
+---
+title: 46 permutations
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  func backtrack(nums, path []int, res *[][]int, used []bool) { if len(path) ==
+  len(nums) { temp := make([]int, len(path)) copy(temp, path) *res =
+  append(*res, temp) }
+---
 ## 46. 全排列
 ### go：
 ```go

@@ -1,3 +1,10 @@
+---
+title: 72 edit distance
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: '// 空串 -> word2[:j]：插 j 次 for j := 0; j <= m; j++ { dp[j] = j }'
+---
 ## 72. 编辑距离
 ### go：
 ```go

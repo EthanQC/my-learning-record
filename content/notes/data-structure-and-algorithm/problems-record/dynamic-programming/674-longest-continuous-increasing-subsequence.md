@@ -1,3 +1,10 @@
+---
+title: 674 longest continuous increasing subsequence
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'return ans } ```'
+---
 ## 674. 最长连续递增序列
 ### go：
 ```go

@@ -1,3 +1,13 @@
+---
+title: 977 square of a sorted array
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: vector<int> sortedSquares(vector<int>& nums) { int i
+  = 0; while (i < nums.size()) { nums[i] = nums[i] * nums[i]; //溢出越界了 } int
+  right = 0, left = 1; while (
+---
 ## 977.有序数组的平方
 ### cpp：
 

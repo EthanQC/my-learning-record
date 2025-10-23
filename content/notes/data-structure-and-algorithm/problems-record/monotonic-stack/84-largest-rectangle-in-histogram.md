@@ -1,3 +1,10 @@
+---
+title: 84 largest rectangle in histogram
+date: '2025-09-03'
+tags:
+  - monotonic-stack
+summary: 'st := []int{} max := 0'
+---
 ## 84. 柱状图中最大的矩形
 ### go：
 ```go

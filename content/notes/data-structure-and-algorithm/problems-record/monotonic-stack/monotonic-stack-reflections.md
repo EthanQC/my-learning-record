@@ -1,3 +1,11 @@
+---
+title: monotonic stack reflections
+date: '2025-09-03'
+tags:
+  - monotonic-stack
+summary: >-
+  [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/monotonic-stack/739-daily-temperatures.md)
+---
 ### 739. 每日温度
 #### 题目：https://leetcode.cn/problems/daily-temperatures/description/
 

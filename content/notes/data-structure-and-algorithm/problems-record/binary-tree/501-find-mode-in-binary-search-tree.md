@@ -1,12 +1,25 @@
+---
+title: 501 find mode in binary search tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'func bfs(node *TreeNode, arr *[]int) { if node == nil { return }'
+---
 ## 501. 二叉搜索树中的众数
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func findMode(root *TreeNode) []int {

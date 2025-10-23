@@ -1,3 +1,10 @@
+---
+title: if
+date: '2025-09-03'
+tags:
+  - keywords
+summary: '// 普通写法： int x = someFunction(); if (x > 0) { // ... }'
+---
     // 普通写法：
     int x = someFunction();
     if (x > 0)

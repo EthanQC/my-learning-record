@@ -1,12 +1,26 @@
+---
+title: 24 swap nodes in pairs
+date: '2025-09-03'
+tags:
+  - linked-list
+summary: >-
+  ```go /** * Definition for singly-linked list. * type ListNode struct { * Val
+  int * Next *ListNode * } */
+---
 ## 24. 两两交换链表中的节点
 ### go：
 
 ```go
 /**
+
  * Definition for singly-linked list.
+
  * type ListNode struct {
+
  *     Val int
+
  *     Next *ListNode
+
  * }
  */
 

@@ -1,3 +1,10 @@
+---
+title: 647 palindromic substrings
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'for i := 0; i < n; i++ { t[i] = s[n - 1 - i] }'
+---
 ## 647. 回文子串
 ### go：
 ```go

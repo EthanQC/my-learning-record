@@ -1,3 +1,12 @@
+---
+title: 377 combination sum iv
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for j := 1; j <= target; j++ { for _, n := range nums { if j >= n { dp[j] +=
+  dp[j - n] } } }
+---
 ## 377. 组合总和 Ⅳ
 ### go：
 ```go

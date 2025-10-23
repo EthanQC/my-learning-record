@@ -1,3 +1,13 @@
+---
+title: 34 find the first and last position of elements in a sorted array
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: vector<int> searchRange(vector<int>& nums, int
+  target) { int Left = findLeftBoundary(nums, target); int Right =
+  findRightBoundary(nums, target); if (Left =
+---
 ## 34. 在排序数组中查找元素的第一个和最后一个位置
 ### cpp：
 #### 正确代码：

@@ -1,3 +1,10 @@
+---
+title: 55 jump game
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: ''
+---
 ## 55. 跳跃游戏
 ### go：
 ```go

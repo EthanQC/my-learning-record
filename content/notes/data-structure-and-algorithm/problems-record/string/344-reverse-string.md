@@ -1,3 +1,10 @@
+---
+title: 344 reverse string
+date: '2025-09-03'
+tags:
+  - string
+summary: '```go func reverseString(s []byte) { left, right := 0, len(s) - 1'
+---
 ## 344. 反转字符串
 ### go：
 

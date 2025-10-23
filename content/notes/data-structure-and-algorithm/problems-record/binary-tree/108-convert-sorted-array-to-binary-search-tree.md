@@ -1,12 +1,25 @@
+---
+title: 108 convert sorted array to binary search tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'func build(nums []int, l, r int) *TreeNode { if l > r { return nil }'
+---
 ## 108. 将有序数组转换为二叉搜索树
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func sortedArrayToBST(nums []int) *TreeNode {

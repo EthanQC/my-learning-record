@@ -1,3 +1,10 @@
+---
+title: 20 valid parentheses
+date: '2025-09-03'
+tags:
+  - stack-and-queue
+summary: 'if length % 2 == 1 { return false }'
+---
 ## 20. 有效的括号
 ### go：
 ```go

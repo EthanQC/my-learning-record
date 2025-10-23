@@ -1,11 +1,23 @@
+---
+title: 429 n ary tree level order traversal
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'func levelOrder(root *Node) [][]int { if root == nil { return nil }'
+---
 ## 429. N 叉树的层序遍历
 ### go：
 ```go
 /**
+
  * Definition for a Node.
+
  * type Node struct {
+
  *     Val int
+
  *     Children []*Node
+
  * }
  */
 

@@ -1,13 +1,26 @@
+---
+title: 144 binary tree preorder traversal
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'return results } ```'
+---
 ## 144. 二叉树的前序遍历
 ### go：
 递归法
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func preorderTraversal(root *TreeNode) []int {
@@ -26,11 +39,17 @@ func preorderTraversal(root *TreeNode) []int {
 迭代法
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 

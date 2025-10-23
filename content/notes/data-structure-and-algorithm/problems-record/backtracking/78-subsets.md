@@ -1,3 +1,12 @@
+---
+title: 78 subsets
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  func backtrack(nums, path []int, res *[][]int, start int) { temp :=
+  make([]int, len(path)) copy(temp, path) *res = append(*res, temp)
+---
 ## 78. 子集
 ### go：
 ```go

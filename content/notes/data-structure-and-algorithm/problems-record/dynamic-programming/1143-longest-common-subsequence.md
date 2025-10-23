@@ -1,3 +1,10 @@
+---
+title: 1143 longest common subsequence
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'for i := 1; i <= n; i++ { pre := 0'
+---
 ## 1143. 最长公共子序列
 ### go：
 ```go

@@ -1,3 +1,12 @@
+---
+title: 115 distinct subsequences
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for i := 0; i < len(s); i++ { for j := m; j >= 1; j-- { if s[i] == t[j - 1] {
+  dp[j] += dp[j - 1] } } }
+---
 ## 115. 不同的子序列
 ### go：
 ```go

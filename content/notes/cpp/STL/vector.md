@@ -1,12 +1,23 @@
+---
+title: vector
+date: '2025-09-03'
+tags:
+  - STL
+summary: 与传统的数组不同，vector 的大小可以**动态调整**，能够根据需要自动扩展或缩小
+---
 ### vector 的基本概念
 vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vector`** 类模板
 
 与传统的数组不同，vector 的大小可以**动态调整**，能够根据需要自动扩展或缩小
 
 ##### 主要特点：
+
 * **动态大小**：vector 会根据需要**自动调整大小**，无需手动管理内存
+
 * **存储连续内存**：像数组一样，vector 中的元素是存储在**连续**的内存区域中的，可以**通过下标直接访问元素**。
+
 * **支持随机访问**：vector 支持高效的随机访问（通过下标访问）
+
 * **支持插入和删除操作**：vector 支持在**尾部**添加元素，但在**中间**插入或删除元素的效率**较低**
 
 ***
@@ -29,7 +40,7 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
 ### vector 的常用操作
 ##### 定义和初始化
 
-    #include <vector>
+    # include <vector>
 
     std::vector<int> v1;  // 创建一个空的vector，类型为int
     std::vector<int> v2(5, 10);  // 创建一个包含5个元素，每个元素的值为10的vector
@@ -39,15 +50,19 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
 `reserve` 函数用于为 `std::vector` **提前分配**足够的存储空间，**防止动态扩容时多次分配内存**，从而提高性能
 
 * 功能：
+
     * 修改 vector 的容量
+
     * 不会改变当前已存储的元素数量
+
 * 使用场景
+
     * 在预先知道将会插入大量元素的情况下，可以使用 `reserve` **提前分配**所需的内存，避免插入时多次重新分配内存，提高程序性能
 
 示例代码：
 
-    #include <iostream>
-    #include <vector>
+    # include <iostream>
+    # include <vector>
 
     int main()
     {
@@ -71,7 +86,9 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
     Size: 1, Capacity: 10
 
 注意事项:
+
 * 如果**小于当前 `capacity()`**，`reserve` 不会减少容量
+
 * 如果**小于当前的元素个数 `size()`**，`reserve` 不会影响现有的元素
 
 ##### 访问元素
@@ -124,8 +141,11 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
 与 `push_back` 相比，`emplace_back` 可以**避免不必要的临时对象创建和拷贝操作**，提高性能
 
 * 参数：接受对象的构造函数参数
+
 * 功能：
+
     * 使用传入的参数在容器尾部直接构造对象
+
     * 避免了临时对象的创建和复制，提升性能
 
 **与 `push_back` 的区别**
@@ -135,9 +155,9 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
 
 示例代码1：`push_back`
 
-    #include <iostream>
-    #include <vector>
-    #include <string>
+    # include <iostream>
+    # include <vector>
+    # include <string>
 
     class MyClass
     {
@@ -164,9 +184,9 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
 
 示例代码2：`emplace_back`
 
-    #include <iostream>
-    #include <vector>
-    #include <string>
+    # include <iostream>
+    # include <vector>
+    # include <string>
 
     class MyClass
     {
@@ -194,6 +214,7 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
 注意事项：
 
 * 如果构造的对象需要**多参数**，则 `emplace_back` 的效率会更高，因为它避免了额外的临时对象
+
 * 对于简单类型（如 int 或 double），`emplace_back` 和 `push_back` 的性能基本相同
 
 ***
@@ -328,6 +349,7 @@ vector 是 C++ 标准库中的一个**动态数组容器**，属于 **`std::vect
 ***
 
 ### 性能和注意事项
+
 * **动态扩展**：当 vector 的容量不足以容纳新元素时，它会**自动扩展**，并且通常会以**2的倍数**增长容量
 
 * **插入和删除的性能**：在 vector 的末尾插入元素是 O(1) 操作，而在中间或前面插入元素则需要**移动元素**，因此是 **O(n)** 操作
@@ -338,13 +360,14 @@ C++ 提供了很多 STL 算法，可以和 vector 结合使用
 比如：
 
 * **`std::sort(v.begin(), v.end())`**：对vector中的元素进行排序
+
 * **`std::reverse(v.begin(), v.end())`**：反转vector中的元素
 
 ### 示例代码
 
-    #include <iostream>
-    #include <vector>
-    #include <algorithm>  // std::sort, std::reverse
+    # include <iostream>
+    # include <vector>
+    # include <algorithm>  // std::sort, std::reverse
 
     int main()
     {

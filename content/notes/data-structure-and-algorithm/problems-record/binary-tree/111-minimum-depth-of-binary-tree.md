@@ -1,12 +1,25 @@
+---
+title: 111 minimum depth of binary tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'queue := []*TreeNode{root} depth := 0 levels := 0'
+---
 ## 111. 二叉树的最小深度
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func minDepth(root *TreeNode) int {

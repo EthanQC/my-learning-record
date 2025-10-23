@@ -1,3 +1,12 @@
+---
+title: 474 ones and zeroes
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for _, s := range strs { zeros, ones := 0, 0 for _, ch := range s{ if ch ==
+  '0' { zeros++ } else { ones++ } }
+---
 ## 474. 一和零
 ### go：
 ```go

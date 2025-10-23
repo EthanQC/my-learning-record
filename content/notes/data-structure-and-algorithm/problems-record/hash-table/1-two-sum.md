@@ -1,3 +1,12 @@
+---
+title: 1 two sum
+date: '2025-09-03'
+tags:
+  - hash-table
+summary: >-
+  ```go func twoSum(nums []int, target int) []int { seen := make(map[int]int,
+  len(nums))
+---
 ## 1. 两数之和
 ### go：
 

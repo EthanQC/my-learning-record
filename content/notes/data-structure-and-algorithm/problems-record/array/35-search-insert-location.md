@@ -1,3 +1,13 @@
+---
+title: 35 search insert location
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: int searchInsert(vector<int>& nums, int target) { int
+  left = 0; //和上一题代码基本没有什么大变化 int right = nums.size() - 1; while (left <= right)
+  { //为了防止int越界，先计算左右边界的
+---
 ## 35. 搜索插入位置
 ### cpp：
 

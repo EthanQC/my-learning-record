@@ -1,3 +1,12 @@
+---
+title: 494 target sum
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  if (target + s) % 2 != 0 || abs(target) > s { return 0 } p := (target + s) / 2
+  dp := make([]int, p + 1) dp[0] = 1
+---
 ## 494. 目标和
 ### go：
 ```go

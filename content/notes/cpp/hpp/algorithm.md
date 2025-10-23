@@ -1,3 +1,10 @@
+---
+title: algorithm
+date: '2025-09-03'
+tags:
+  - hpp
+summary: 对于不能随机访问的数据结构来说，sort算法是不能使用的，此时应使用该种容器自带的排序算法。
+---
 # algorithm
 `<algorithm>`头文件提供了一些标准算法，可直接使用，但推荐加上`std::`
 

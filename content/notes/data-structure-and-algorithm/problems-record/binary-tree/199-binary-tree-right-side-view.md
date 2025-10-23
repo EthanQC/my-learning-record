@@ -1,12 +1,25 @@
+---
+title: 199 binary tree right side view
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'var results []int queue := []*TreeNode{root}'
+---
 ## 199. 二叉树的右视图
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func rightSideView(root *TreeNode) []int {

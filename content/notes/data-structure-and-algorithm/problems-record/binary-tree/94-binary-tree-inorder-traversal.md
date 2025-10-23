@@ -1,13 +1,29 @@
+---
+title: 94 binary tree inorder traversal
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: >-
+  var results []int results = append(results, inorderTraversal(root.Left)...)
+  results = append(results, root.Val) results = append(results,
+  inorderTraversal(root.Right)...)
+---
 ## 94. 二叉树的中序遍历
 ### go：
 递归法
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func inorderTraversal(root *TreeNode) []int {
@@ -27,11 +43,17 @@ func inorderTraversal(root *TreeNode) []int {
 迭代法
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 

@@ -1,3 +1,12 @@
+---
+title: 209 min len sub array
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: int minSubArrayLen(int target, vector<int>& nums) {
+  int slow = 0; int sum = 0; int results = INT_MAX; //宏 int length = 0;
+---
 ## 209. 长度最小的子数组
 ### cpp：
 
