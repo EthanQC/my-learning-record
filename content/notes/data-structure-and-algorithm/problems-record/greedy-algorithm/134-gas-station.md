@@ -1,3 +1,10 @@
+---
+title: 134 gas station
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: 'for i := 0; i < len(gas); i++ { gSum += gas[i] cSum += cost[i]'
+---
 ## 134. 加油站
 ### go：
 ```go

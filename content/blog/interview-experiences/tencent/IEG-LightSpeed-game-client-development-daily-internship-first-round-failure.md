@@ -1,8 +1,11 @@
 ---
-title: "IEG LightSpeed Game Client Development Daily Internship First Round Failure"
-date: 2024-12-08T16:09:41+08:00
-tags: ["tencent"]
-summary: ""
+title: IEG LightSpeed Game Client Development Daily Internship First Round Failure
+date: '2024-12-08'
+tags:
+  - tencent
+summary: >-
+  A：面试官您好，我是来自深圳大学 27
+  届的某某，我的专业是电子信息工程，我目前是大二在读，然后在一家主营业务是海外网文平台的公司做后端开发的实习生，然后我自己也参加了清华大学人机交互实验室的远程实习项目，在里面主要是做心理学和游戏开发相关的东西，然后我自己目前的话也有一个独立游戏正在早期开发阶段，大概情况就是这样
 ---
 ## 光子工作室群-游戏客户端开发日常实习一面凉经
 #### 问题

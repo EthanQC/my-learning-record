@@ -1,3 +1,12 @@
+---
+title: 718 maximum length of repeated subarray
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for i := 1; i <= n; i++ { for j := m; j >= 1; j-- { if nums1[i - 1] == nums2[j
+  - 1] { dp[j] = dp[j - 1] + 1
+---
 ## 718. 最长重复子数组
 ### go：
 ```go

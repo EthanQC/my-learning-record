@@ -1,3 +1,13 @@
+---
+title: 69 x's square root
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: int mySqrt(int x) { if (x < 2) //此时无论什么数都会直接返回1 {
+  return x; } int left = 1; //防止出现0在分母 int right = x / 2; //提前缩小范围，提升效率 int
+  result = 0; while (left <= righ
+---
 ## 69. x的平方根
 ### cpp：
 

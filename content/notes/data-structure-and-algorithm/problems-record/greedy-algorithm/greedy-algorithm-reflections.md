@@ -1,3 +1,11 @@
+---
+title: greedy algorithm reflections
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: >-
+  [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/greedy-algorithm/455-assign-cookies.md)
+---
 ### 455. 分发饼干
 #### 题目：https://leetcode.cn/problems/assign-cookies/description/
 

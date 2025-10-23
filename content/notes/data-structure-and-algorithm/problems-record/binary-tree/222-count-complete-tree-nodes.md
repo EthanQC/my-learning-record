@@ -1,13 +1,26 @@
+---
+title: 222 count complete tree nodes
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'count := 0 queue := []*TreeNode{root}'
+---
 ## 222. 完全二叉树的节点个数
 ### go：
 层序遍历
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func countNodes(root *TreeNode) int {
@@ -44,11 +57,17 @@ func countNodes(root *TreeNode) int {
 利用完全二叉树特性 + 递归
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func countNodes(root *TreeNode) int {

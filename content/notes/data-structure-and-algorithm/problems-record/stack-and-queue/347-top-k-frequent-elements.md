@@ -1,3 +1,10 @@
+---
+title: 347 top k frequent elements
+date: '2025-09-03'
+tags:
+  - stack-and-queue
+summary: 'for _, v := range nums { freq[v]++ }'
+---
 ## 347. 前 K 个高频元素
 ### go：
 ```go

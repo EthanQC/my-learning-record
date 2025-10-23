@@ -1,3 +1,10 @@
+---
+title: mutex
+date: '2025-09-03'
+tags:
+  - hpp
+summary: 互斥锁是
+---
 ### 互斥锁 `<mutex>`
 
 互斥锁是

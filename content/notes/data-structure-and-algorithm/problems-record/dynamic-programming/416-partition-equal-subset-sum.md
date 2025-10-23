@@ -1,3 +1,10 @@
+---
+title: 416 partition equal subset sum
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'dp := make([]bool, target + 1) dp[0] = true'
+---
 ## 416. 分割等和子集
 ### go：
 ```go

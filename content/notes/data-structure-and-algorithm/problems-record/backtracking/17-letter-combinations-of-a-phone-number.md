@@ -1,3 +1,12 @@
+---
+title: 17 letter combinations of a phone number
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  mapping := map[byte]string{ '2': "abc", '3': "def", '4': "ghi", '5': "jkl",
+  '6': "mno", '7': "pqrs", '8': "tuv", '9': "wxyz", }
+---
 ## 17. 电话号码的字母组合
 ### go：
 ```go

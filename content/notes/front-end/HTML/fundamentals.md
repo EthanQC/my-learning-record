@@ -1,3 +1,10 @@
+---
+title: fundamentals
+date: '2025-09-03'
+tags:
+  - HTML
+summary: 它并不是编程性质的语言，所以相对来说上手会很快（即使没有学过cpp之类的），它更多的还是跟CSS和JavaScript一起对整个网页进行排版、布局和美化
+---
 ## 一些知识
 ### HTML
 HTML，全称HyperText Markup Language，是一种用来排版网页的语言

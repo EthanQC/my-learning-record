@@ -1,133 +1,259 @@
+---
+title: 问题列表
+date: '2025-09-03'
+tags:
+  - interview-questions
+summary: 从上到下分为**应用层、传输层、网络层和链路层**共**四层**
+---
 # 问题列表
 #### 网络基础
+
 * TCP/IP 网络模型有哪几层？
+
 * TCP/IP 模型和 OSI 模型分别是什么？它们之间有什么区别？
+
 * 什么是网络分层模型？它在网络通信中有什么作用？
+
 * 在浏览器中从输入 URL 到页面展示发生了什么？
+
 * Linux 系统是如何收发网络包的？
+
 * 什么是网络协议？它在网络通信中有什么作用？
+
 * 什么是 ARP 协议？它在网络通信中有什么作用？
+
 * IP 地址和 MAC 地址有什么区别？它们在网络通信中各自扮演什么角色？
+
 * 什么是 NAT（网络地址转换）？它在网络通信中有什么作用？
+
 * TCP/IP 模型中，数据链路层和网络层各有哪些主要协议？它们的作用是什么？
+
 * OSI 模型中，哪一层负责数据的加密和解密？哪一层负责数据的传输？
+
 * 什么是网络拥塞？TCP 是如何应对网络拥塞的？
+
 * CDN 是什么？它在网络传输中有什么作用？
 
 #### HTTP 与 HTTPS
+
 * HTTP 是什么？
+
 * HTTP 常见的状态码有哪些？
+
 * HTTP 常见字段有哪些？
+
 * GET 和 POST 有什么区别？
+
 * GET 和 POST 方法都是安全和幂等的吗？
+
 * HTTP 缓存有哪些实现方式？
+
 * 什么是强制缓存？
+
 * 什么是协商缓存？
+
 * HTTP/1.1 的优缺点分别有哪些？
+
 * HTTP/1.1 的性能如何？
+
 * HTTP 与 HTTPS 有哪些区别？
+
 * HTTPS 解决了 HTTP 的哪些问题？
+
 * HTTPS 是如何建立连接的？其间交互了什么？
+
 * HTTPS 的应用数据是如何保证完整性的？
+
 * HTTPS 一定安全可靠吗？
+
 * HTTP/1.1 相比 HTTP/1.0 提高了什么性能？
+
 * HTTP/2 做了什么优化？
+
 * HTTP/3 做了哪些优化？
+
 * HTTP/1.1 如何优化？如何避免发送 HTTP 请求？如何减少 HTTP 请求次数？如何减少 HTTP 响应的数据大小？
+
 * HTTPS RSA 的握手过程是什么？
+
 * HTTPS ECDHE 的握手过程是什么？
+
 * HTTPS 如何优化？
+
 * 既然有 HTTP 协议，为什么还要有 RPC 和 WebSocket 协议？
+
 * HTTPS 为什么安全？
+
 * 给你看一个数字证书，说说上面都有什么内容
+
 * 介绍一下 HTTPS
+
 * 为什么要同时使用公钥和私钥，这两个密钥有什么用
 
 #### TCP 与 UDP
+
 * TCP 头格式有哪些？
+
 * 为什么需要 TCP 协议？TCP 工作在哪一层？
+
 * 什么是 TCP？
+
 * 什么是 TCP 连接？
+
 * 如何唯一确定一个 TCP 连接呢？
+
 * 你知道 TCP 和 UDP 吗？它们的区别是什么？分别的应用场景是？
+
 * TCP 和 UDP 可以使用同一个端口吗？
+
 * TCP 三次握手过程是什么样的？
+
 * 如何在 Linux 系统中查看 TCP 状态？
+
 * 为什么 TCP 是三次握手而不是两次或者四次？
+
 * 为什么每次建立 TCP 连接时，初始化的序列号都要求不一样呢？
+
 * 初始序列号 ISN 是如何随机产生的？
+
 * 既然 IP 层会分片，为什么 TCP 层还需要 MSS 呢？
+
 * 第一次握手如果丢失了，会发生什么？
+
 * 第二次握手如果丢失了，会发生什么？
+
 * 第三次握手如果丢失了，会发生什么？
+
 * 什么是 SYN 攻击？该如何避开？
+
 * TCP 四次挥手的过程是什么样的？为什么是四次而不是三次或五次？
+
 * 第一次挥手丢失了，会发生什么？
+
 * 第二次挥手丢失了，会发生什么？
+
 * 第三次挥手丢失了，会发生什么？
+
 * 第四次挥手丢失了，会发生什么？
+
 * 为什么 TIME_WAIT 等待的时间是 2 MSL？
+
 * 为什么需要 TIME_WAIT 状态？
+
 * TIME_WAIT 过多有什么危害？
+
 * 如何优化 TIME_WAIT？
+
 * 服务器出现大量 TIME_WAIT 状态的原因有哪些？
+
 * 服务器出现大量 CLOSE_WAIT 状态的原因有哪些？
+
 * 如果已经建立了连接，但是客户端突然出现故障了怎么办？
+
 * 如果已经建立了连接，但是服务端的进程崩溃会发生什么？
+
 * 针对 TCP 应该如何 Socket 编程？
+
 * listen 时候参数 backlog 的意义？
+
 * accept 发生在三次握手的哪一步？
+
 * 客户端调用 close 了，连接是断开的流程是什么？
+
 * 没有 accept，能建立 TCP 连接吗？
+
 * 没有 listen，能建立 TCP 连接吗？
+
 * TCP 的重传、滑动窗口、流量控制和拥塞控制分别是什么？详细说说
+
 * TCP 的流量和拥塞控制分别是怎么实现的？
+
 * 什么是 TCP 队头阻塞问题？
+
 * 什么是 TCP 半连接队列和全连接队列？
+
 * 如何优化 TCP？
+
 * 如何理解 TCP 是面向字节流协议？如何理解字节流？如何解决粘包？
+
 * 为什么 TCP 每次建立连接时，初始化序列号都要不一样呢？
+
 * SYN 报文什么时候情况下会被丢弃？
+
 * 已建立连接的TCP，收到SYN会发生什么？
+
 * 如何关闭一个 TCP 连接？
+
 * 四次挥手中收到乱序的 FIN 包会如何处理？
+
 * 在 TIME_WAIT 状态的 TCP 连接，收到 SYN 后会发生什么？
+
 * 在 TIME_WAIT 状态的 TCP 连接，收到 RST 会断开连接吗？
+
 * TCP 连接，一端断电和进程崩溃有什么区别？
+
 * 拔掉网线后， 原本的 TCP 连接还存在吗？
+
 * tcp_tw_reuse 为什么默认是关闭的？什么是 TIME_WAIT 状态？为什么要设计 TIME_WAIT 状态？tcptwreuse 是什么？为什么 tcptwreuse 默认是关闭的？
+
 * HTTPS 中 TLS 和 TCP 能同时握手吗？
+
 * TCP Keepalive 和 HTTP Keep-Alive 是一个东西吗？
+
 * TCP 协议有什么缺陷？
+
 * TCP 连接如何确保可靠性？
+
 * 如何基于 UDP 协议实现可靠传输？
+
 * QUIC 是如何实现可靠传输的？
+
 * QUIC 是如何解决 TCP 队头阻塞问题的？
+
 * QUIC 是如何做流量控制的？
+
 * QUIC 是如何迁移连接的？
+
 * TCP 和 UDP 可以使用同一个端口吗？TCP 和 UDP 可以同时绑定相同的端口吗？
+
 * 多个 TCP 服务进程可以绑定同一个端口吗？
+
 * 客户端的端口可以重复使用吗？
+
 * 服务端没有 listen，客户端发起连接建立，会发生什么？
+
 * 不使用 listen ，可以建立 TCP 连接吗？
+
 * 没有 accept，能建立 TCP 连接吗？
+
 * 用了 TCP 协议，数据一定不会丢吗？如果会的话，该怎么解决？
+
 * TCP 四次挥手，可以变成三次吗？什么情况会出现三次挥手？
+
 * TCP 序列号和确认号是如何变化的？
+
 * TCP 滑动窗口机制是如何工作的？它在流量控制中有什么作用？
+
 * TCP 拥塞控制中的慢启动、拥塞避免、快重传和快恢复阶段分别是什么？它们的作用是什么？
+
 * 什么是网络拥塞？TCP 是如何应对网络拥塞的？
 
 #### IP
+
 * 
 
 #### 同步相关情景题
+
 * 类似抖音直播间，如果有十万人同时在线，该如何做直播间点赞同步操作
+
 * 直播间突然有大流量打过来，现有的服务器资源只能维持现状，该怎么办
+
 * 有没有了解过看门狗机制
 
 #### 游戏开发相关
+
 * **在开发游戏的时候 TCP 和 UDP 用哪个比较好？**
+
 * 那比如当前一帧我要发送大量的数据，用 TCP 会有什么问题？或者说 TCP 相较于 UDP 的不足之处是什么？
 
 ## 协议模型与资源传递
@@ -166,12 +292,19 @@
 **发包**：应用 send() → 协议栈组包（拥塞控制、分段、校验）→ 路由与邻居解析（ARP/ND）→ Netfilter（OUTPUT/POSTROUTING）→ qdisc 排队/整形 → NIC TX 队列（TSO/校验 offload）→ DMA 下发到线
 
 * 什么是网络协议？它在网络通信中有什么作用？
+
 * 什么是 ARP 协议？它在网络通信中有什么作用？
+
 * IP 地址和 MAC 地址有什么区别？它们在网络通信中各自扮演什么角色？
+
 * 什么是 NAT（网络地址转换）？它在网络通信中有什么作用？
+
 * TCP/IP 模型中，数据链路层和网络层各有哪些主要协议？它们的作用是什么？
+
 * OSI 模型中，哪一层负责数据的加密和解密？哪一层负责数据的传输？
+
 * 什么是网络拥塞？TCP 是如何应对网络拥塞的？
+
 * CDN 是什么？它在网络传输中有什么作用？
 
 ## HTTP 与 HTTPS
@@ -186,104 +319,175 @@
 #### Q：HTTP 常见的状态码有哪些？
 
 ##### 1xx 信息
+
 * 100 Continue：配合大 Body；服务端允许继续传
+
 * 101 Switching Protocols：WebSocket 升级
+
 * 103 Early Hints：提早下发 Link: rel=preload 加速首屏
 
 ##### 2xx 成功
+
 * 200 OK：常规成功
+
 * 201 Created：创建资源（务必带 Location 指向新资源）
+
 * 202 Accepted：异步受理（排队中，结果稍后）
+
 * 204 No Content：成功但无响应体（删除/幂等更新）
+
 * 206 Partial Content：配合 Range 断点续传
 
 ##### 3xx 重定向 / 缓存
+
 * 301 vs 308：永久重定向；308 保持方法（POST 仍 POST）
+
 * 302/307/303：临时；307 保持方法，303 强制 GET（表单/支付回跳）
+
 * 304 Not Modified：命中协商缓存（ETag/If-None-Match 或 Last-Modified）
 
 ##### 4xx 客户端错误
+
 * 400 Bad Request：参数/格式不对
+
 * 401 Unauthorized：未认证（通常带 WWW-Authenticate），有登录后还不许看是 403
+
 * 403 Forbidden：已认证但无权限/被阻断
+
 * 404 Not Found：资源不存在/隐藏实现细节
+
 * 405 Method Not Allowed：记得回 Allow: GET,POST
+
 * 408 Request Timeout：客户端太慢
+
 * 409 Conflict：版本冲突/资源状态冲突（如并发更新）
+
 * 410 Gone：资源永久移除（SEO 友好）
+
 * 412 Precondition Failed：条件更新失败（配 If-Match 做乐观锁）
+
 * 413/414/415：体积过大/URI 过长/媒体类型不支持
+
 * 422 Unprocessable Entity：语义校验失败（字段合法但不满足业务规则；JSON API/REST 常用）
+
 * 429 Too Many Requests：限流，务必带 Retry-After
 
 ##### 5xx 服务端/网关
+
 * 500 Internal Server Error：兜底，别滥用
+
 * 501 Not Implemented：方法未实现
+
 * 502 Bad Gateway：反向代理收到上游异常
+
 * 503 Service Unavailable：过载/维护，可带 Retry-After
+
 * 504 Gateway Timeout：上游超时（区分应用内超时 vs 网关超时）
 
 #### Q：HTTP 常见字段有哪些？
 
 ##### 请求相关（Client → Server）
+
 * Host（H1） / :authority（H2/H3）：虚拟主机选择。一定要对齐证书和路由
+
 * User-Agent：客户端标识；现代浏览器更倾向 Client Hints（Sec-CH-…）
+
 * Accept / Accept-Language / Accept-Encoding：内容协商（br,gzip 优先）
+
 * Authorization：Bearer <token>/Basic ...；失败配合服务端返回 WWW-Authenticate
+
 * Referer（拼写历史错别字）和 Origin：跨站安全判定更看 Origin（更严格）
+
 * If-None-Match / If-Modified-Since：协商缓存请求（命中回 304）
+
 * Range / If-Range：断点续传；大文件分块下载
 
 ##### 响应相关（Server → Client）
+
 * Content-Type：MIME + charset（例如 application/json; charset=utf-8）
+
 * Content-Length：字节长度；H1 分块则用 Transfer-Encoding: chunked（H2/H3 不用 chunked）
+
 * Content-Encoding：br/gzip 压缩；与 Accept-Encoding 匹配
+
 * Content-Disposition：attachment; filename*=UTF-8''report.pdf（注意 filename* 处理国际化）
+
 * Location：201 Created 指向新资源；3xx 重定向目标
+
 * Retry-After：配 429/503 指导退避
+
 * ETag / Last-Modified：与条件请求成对使用，降低带宽与 TTFB
+
 * Cache-Control / Expires / Age / Vary：缓存策略四件套（见下）
+
 * Accept-Ranges / Content-Range：配 206 返回分段
 
 ##### 缓存与协商（高频区）
+
 * Cache-Control（常见指令）：
+
   * 静态：public, max-age=31536000, immutable
+
   * 动态：no-store（不落盘）、no-cache（可缓存但回源验证）、must-revalidate、s-maxage（代理缓存）、stale-while-revalidate、stale-if-error
+
 * ETag：强/弱标记（W/"abc"）。弱 ETag 适合模板渲染的小改动
+
 * Vary：区分缓存键，如 Vary: Accept-Encoding, Origin, Authorization（注意：带 Authorization 会显著降低共享缓存命中）
+
 * 304 Not Modified：只有发了条件头才可能拿到；强缓存命中则直接 200(from cache)。
 
 ##### CORS（浏览器必问）
+
 * 预检请求：Origin + Access-Control-Request-Method/Headers（OPTIONS）
+
 * 响应：Access-Control-Allow-Origin: https://example.com（或 *）、Access-Control-Allow-Methods/Headers、Access-Control-Allow-Credentials: true（有 Credentials 就不能用 *）、Access-Control-Max-Age
+
 * 若要前端读到自定义头，记得 Access-Control-Expose-Headers。
 
 ##### 安全强化（建议默认开启）
+
 * Strict-Transport-Security（HSTS）：强制 HTTPS，示例：max-age=31536000; includeSubDomains; preload
+
 * Content-Security-Policy（CSP）：限制资源来源，防 XSS
+
 * X-Content-Type-Options: nosniff：禁 MIME 嗅探
+
 * X-Frame-Options: DENY / SAMEORIGIN：防点击劫持（或 CSP frame-ancestors 取代）
+
 * Referrer-Policy：strict-origin-when-cross-origin 推荐
+
 * Permissions-Policy：取代老 Feature-Policy，限制传感器/摄像头等权限
+
 * COOP/COEP/CORP：Cross-Origin-Opener/Embedder/Resource-Policy，加强跨站隔离
 
 ##### Cookie（会话常识）
+
 * Set-Cookie：Secure; HttpOnly; SameSite=Lax|Strict|None; Path=/; Domain=...; Max-Age=...
+
 * SameSite=None 必须配 Secure（否则被拒收）
+
 * Cookie：请求携带；体积/数量受限（注意头爆）
 
 ##### 代理/网关/可观测
+
 * Forwarded（标准）或 X-Forwarded-For/Proto/Host（事实标准）：传递真实客户端 IP/协议
+
 * Via：穿越的代理链
+
 * Traceparent / Tracestate：W3C 分布式追踪；配合 X-Request-ID 或 trace_id 便于排障
 
 ##### 连接/升级（少见但会被问）
+
 * Connection: keep-alive/close（H1）；H2/H3 不使用 hop-by-hop 连接头
+
 * Upgrade: websocket + Connection: Upgrade + 一组 Sec-WebSocket-*：握手升级到 WS
+
 * TE/Transfer-Encoding：H1 的分块传输；H2/H3 不允许 Transfer-Encoding: chunked。
 
 ##### HTTP/2 / HTTP/3 特性提示
+
 * 伪首部（:method, :scheme, :authority, :path）替代 H1 起始行；首部名小写、压缩（HPACK/QPACK）、多路复用
+
 * Host 在 H2/H3 仍常保留以兼容中间件，但权威以 :authority 为准
 
 #### Q：GET 和 POST 有什么区别？
@@ -684,7 +888,9 @@ TCP 连接如何确保可靠性？
 
 
 * TCP 滑动窗口机制是如何工作的？它在流量控制中有什么作用？
+
 * TCP 拥塞控制中的慢启动、拥塞避免、快重传和快恢复阶段分别是什么？它们的作用是什么？
+
 * 什么是网络拥塞？TCP 是如何应对网络拥塞的？
 
 

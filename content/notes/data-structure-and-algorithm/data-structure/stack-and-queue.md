@@ -1,24 +1,45 @@
+---
+title: stack and queue
+date: '2025-09-03'
+tags:
+  - data-structure
+summary: >-
+  int main() { std::stack<int> st; // 底层默认是 deque<int> st.push(10); // 压入元素
+  st.push(20); std::cout << "栈顶元素: " << st.top() << "\n"; // 20 st.pop(); // 弹出
+  20 std::cout << "弹出后栈顶: " <<
+---
 ## 栈（Stack）
 #### 什么是栈？
+
 * 逻辑模型：一种**后进先出**（LIFO，Last In First Out）的线性结构
+
 * 核心操作：
+
   * `Push`：将元素压入栈顶
+
   * `Pop`：将栈顶元素弹出
+
   * `Top` / `Peek`：访问栈顶元素但不删除
+
   * `Empty`：判断栈是否为空
+
   * `Size`：获取当前栈中元素个数
 
 #### 应用场景
+
 * 函数调用栈（保存局部变量、返回地址）
+
 * 表达式求值（中缀转后缀、算术运算）
+
 * 括号匹配（编译原理）
+
 * 深度优先搜索（DFS）
 
 #### C++ 中的栈
 ##### STL 实现：`std::stack`
 ```cpp
-#include <iostream>
-#include <stack>
+# include <iostream>
+# include <stack>
 
 int main()
 {
@@ -229,25 +250,36 @@ func main() {
 
 ## 队列（Queue）
 #### 什么是队列？
+
 * 逻辑模型：一种**先进先出**（FIFO，First In First Out）的线性结构
+
 * 核心操作：
+
   * `Enqueue`（入队）：在队尾插入元素
+
   * `Dequeue`（出队）：从队头移除元素
+
   * `Front` / `Peek`：访问队头元素
+
   * `Empty`：判断队列是否为空
+
   * `Size`：获取元素个数
 
 #### 应用场景
+
 * 广度优先搜索（BFS）
+
 * 任务调度
+
 * 缓冲区（如生产者–消费者模型）
+
 * 消息队列
 
 #### C++ 中的队列
 ##### STL 实现：`std::queue`
 ```cpp
-#include <iostream>
-#include <queue>
+# include <iostream>
+# include <queue>
 
 int main()
 {
@@ -462,11 +494,19 @@ func main() {
 ```
 
 ## 小结
+
 * 栈：
+
   * 后进先出，适合函数调用、表达式处理、DFS 等场景
+
   * C++ 有 `std::stack`
+
   * Go 可用 `slice` 或 `container/list`
+
 * 队列：
+
   * 先进先出，适合 BFS、任务调度、生产者-消费者等
+
   * C++ 有 `std::queue`
+
   * Go 同样可基于 `slice` 或 `container/list` 实现

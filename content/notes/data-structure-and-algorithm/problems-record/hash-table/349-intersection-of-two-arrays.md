@@ -1,3 +1,12 @@
+---
+title: 349 intersection of two arrays
+date: '2025-09-03'
+tags:
+  - hash-table
+summary: >-
+  ```go func intersection(nums1 []int, nums2 []int) []int { if len(nums1) >
+  len(nums2) { return intersection(nums2, nums1) }
+---
 ## 349. 两个数组的交集
 ### go：
 

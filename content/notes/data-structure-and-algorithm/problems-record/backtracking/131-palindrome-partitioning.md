@@ -1,3 +1,13 @@
+---
+title: 131 palindrome partitioning
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  func backtrack(s string, results *[][]string, path []string, start int) { if
+  start == len(s) { temp := make([]string, len(path)) copy(temp, path) *results
+  = append(*results, temp)
+---
 ## 131. 分割回文串
 ### go：
 ```go

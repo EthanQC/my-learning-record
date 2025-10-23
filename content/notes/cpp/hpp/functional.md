@@ -1,3 +1,11 @@
+---
+title: functional
+date: '2025-09-03'
+tags:
+  - hpp
+summary: >-
+  它允许你将**任何可调用对象**（如普通函数、lambda表达式、函数指针、成员函数指针等）存储在一个对象中。`std::function`可以接受多种类型的函数，并提供了**统一的调用接口**。
+---
 ## `<functional>`
 `function`是cpp11中引入的一个通用多态的**函数封装器**，是`functional`头文件中提供的**模板**，用来统一封装具有**同种返回值、参数类型**但**不同的可调用对象**（函数、lambda等）
 
@@ -9,8 +17,8 @@
 
 示例：
 
-    #include <iostream>
-    #include <functional>
+    # include <iostream>
+    # include <functional>
 
     void greet(int x)
     {

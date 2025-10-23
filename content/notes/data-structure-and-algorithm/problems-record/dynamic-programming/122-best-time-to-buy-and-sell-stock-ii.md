@@ -1,3 +1,12 @@
+---
+title: 122 best time to buy and sell stock ii
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for i := 1; i < len(prices); i++ { preCash, preHold := cash, hold cash =
+  max(preCash, preHold + prices[i]) hold = max(preHold, preCash - prices[i]) }
+---
 ## 122. 买卖股票的最佳时机 II
 ### go：
 ```go

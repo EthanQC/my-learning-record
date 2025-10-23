@@ -1,12 +1,27 @@
+---
+title: 160 intersection of two linked lists
+date: '2025-09-03'
+tags:
+  - linked-list
+summary: >-
+  ```go /** * Definition for singly-linked list. * type ListNode struct { * Val
+  int * Next *ListNode * } */ func getIntersectionNode(headA, headB *ListNode)
+  *ListNode { pA, pB := hea
+---
 ## 160. 相交链表
 ### go：
 
 ```go
 /**
+
  * Definition for singly-linked list.
+
  * type ListNode struct {
+
  *     Val int
+
  *     Next *ListNode
+
  * }
  */
 func getIntersectionNode(headA, headB *ListNode) *ListNode {

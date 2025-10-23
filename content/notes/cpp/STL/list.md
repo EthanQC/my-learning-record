@@ -1,3 +1,10 @@
+---
+title: list
+date: '2025-09-03'
+tags:
+  - STL
+summary: 它实现了**双向链表**（Doubly Linked List）的数据结构
+---
 ### `std::list` 的基本概念
 `std::list` 是 C++ 标准模板库（STL）中定义的一个序列容器（Sequence Container）
 
@@ -19,7 +26,9 @@
 每个节点（Node）包含：
 
 * 数据本身 `data`
+
 * 前一个节点的指针 `prev`
+
 * 下一个节点的指针 `next`
 
 `std::list` 内部通常还维护一个**哨兵节点**（sentinel node），用来表示头尾（使操作更统一），从而避免处理 `null` 指针带来的边界问题
@@ -27,7 +36,7 @@
 ### 使用方式和常见操作
 ##### 引入头文件
 
-    #include <list>
+    # include <list>
 
 ##### 创建 `list` 容器
 
@@ -77,14 +86,21 @@
 
 ### 优缺点分析
 ##### 优点
+
 * 任意位置插入和删除的时间复杂度为 `O(1)`
+
 * 插入删除元素不会导致其他元素的地址改变
+
 * 双向链表可以正向和反向遍历
 
 ##### 缺点
+
 * 不支持随机访问（不支持 `list[i]`）
+
 * 相比 `vector`，占用更多内存（每个节点额外的两个指针）
+
 * 遍历性能比不上连续内存结构（如 `vector`），**缓存局部性差**
+
 * 排序效率比不上数组（尽管提供了 `sort()`）
 
 ### 特别说明
@@ -94,8 +110,8 @@
 
 ### 使用示例（完整代码）
 
-    #include <iostream>
-    #include <list>
+    # include <iostream>
+    # include <list>
 
     int main() {
         std::list<int> myList = {1, 2, 3};

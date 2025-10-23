@@ -1,12 +1,25 @@
+---
+title: 515 find largest value in each tree row
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'var results []int queue := []*TreeNode{root}'
+---
 ## 515. 在每个树行中找最大值
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func largestValues(root *TreeNode) []int {

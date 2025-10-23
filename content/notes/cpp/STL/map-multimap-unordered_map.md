@@ -1,3 +1,10 @@
+---
+title: map multimap unordered map
+date: '2025-09-03'
+tags:
+  - STL
+summary: 也是一种关联式容器，有没有multi的机制也跟set相同。
+---
 ## map/multimap（字典）容器
 
 也是一种关联式容器，有没有multi的机制也跟set相同。

@@ -1,3 +1,10 @@
+---
+title: 42 trapping rain water
+date: '2025-09-03'
+tags:
+  - monotonic-stack
+summary: 'l, r := 0, n - 1 lM, rM := 0, 0 water := 0'
+---
 ## 42. 接雨水
 ### go：
 双指针法：

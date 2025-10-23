@@ -1,12 +1,25 @@
+---
+title: 637 average of levels in binary tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'var results []float64 queue := []*TreeNode{root}'
+---
 ## 637. 二叉树的层平均值
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func averageOfLevels(root *TreeNode) []float64 {

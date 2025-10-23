@@ -1,3 +1,12 @@
+---
+title: 1049 last stone weight ii
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  dp := make([]bool, cap + 1) dp[0] = true for _, w := range stones { if w > cap
+  { continue }
+---
 ## 1049. 最后一块石头的重量 II
 ### go：
 ```go

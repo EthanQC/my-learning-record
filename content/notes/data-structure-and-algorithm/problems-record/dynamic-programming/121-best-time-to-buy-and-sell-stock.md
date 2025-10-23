@@ -1,3 +1,12 @@
+---
+title: 121 best time to buy and sell stock
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for i := 1; i < len(prices); i++ { if profit < prices[i] - minPrice { profit =
+  prices[i] - minPrice }
+---
 ## 121. 买卖股票的最佳时机
 ### go：
 ```go

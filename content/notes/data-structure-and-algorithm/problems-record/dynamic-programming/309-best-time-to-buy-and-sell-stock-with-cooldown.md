@@ -1,3 +1,10 @@
+---
+title: 309 best time to buy and sell stock with cooldown
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'hold, sold, rest := -prices[0], -prices[0], 0'
+---
 ## 309. 买卖股票的最佳时机含冷冻期
 ### go：
 ```go

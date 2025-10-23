@@ -1,3 +1,11 @@
+---
+title: backtracking reflections
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/backtracking/77-combinations.md)
+---
 ### 77. 组合
 #### 题目：https://leetcode.cn/problems/combinations/description/
 

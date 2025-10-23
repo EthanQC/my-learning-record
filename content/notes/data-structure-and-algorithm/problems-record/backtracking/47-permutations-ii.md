@@ -1,3 +1,13 @@
+---
+title: 47 permutations ii
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  func permuteUnique(nums []int) [][]int { sort.Ints(nums) var res [][]int var
+  path []int used := make([]bool, len(nums)) backtrack(nums, path, &res, used)
+  return res }
+---
 ## 47. 全排列 II
 ### go：
 ```go

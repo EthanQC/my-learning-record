@@ -1,3 +1,13 @@
+---
+title: 704 binary search
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: int search(vector<int>& nums, int target) { int left
+  = 0; int right = nums.size() - 1; //通过vector自带的size函数得到数组终点位置 while(left <=
+  right) { // (right - left)
+---
 ## 704.二分查找
 ### cpp：
 

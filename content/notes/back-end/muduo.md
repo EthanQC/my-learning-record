@@ -1,3 +1,13 @@
+---
+title: muduo
+date: '2025-09-03'
+tags:
+  - back-end
+summary: >-
+  one loop per thread的含义： one loop per
+  thread是muduo的一个设计理念，即每个EventLoop只在它所属的单独线程中运行。这意味着同一个EventLoop的所有操作都在同一个线程中完成，从而简化了并发问题，不需要锁来保护EventLoop本身的数据结构。
+  主线程（main reactor）只处理新连接事件，然后分发
+---
 ### muduo
 muduo是一个网络库
 

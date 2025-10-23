@@ -1,13 +1,29 @@
+---
+title: 145 binary tree postorder traversal
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: >-
+  var results []int results = append(results, postorderTraversal(root.Left)...)
+  results = append(results, postorderTraversal(root.Right)...) results =
+  append(results, root.Val)
+---
 ## 145. 二叉树的后序遍历
 ### go：
 递归法
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func postorderTraversal(root *TreeNode) []int {
@@ -27,11 +43,17 @@ func postorderTraversal(root *TreeNode) []int {
 迭代法
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 

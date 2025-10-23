@@ -1,3 +1,10 @@
+---
+title: 509 fibonacci number
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'a, b := 0, 1 for i := 2; i <= n; i++ { a, b = b, a + b } return b } ```'
+---
 ## 509. 斐波那契数
 ### go：
 空间优化：

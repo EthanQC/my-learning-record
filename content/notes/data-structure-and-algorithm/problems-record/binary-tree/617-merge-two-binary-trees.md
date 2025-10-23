@@ -1,12 +1,25 @@
+---
+title: 617 merge two binary trees
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'if root2 == nil { return root1 }'
+---
 ## 617. 合并二叉树
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {

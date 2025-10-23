@@ -1,8 +1,11 @@
 ---
-title: "Back End Daily Internship First Round Experience"
-date: 2025-04-26T13:54:03+08:00
-tags: ["xiaoetong"]
-summary: ""
+title: Back End Daily Internship First Round Experience
+date: '2025-04-26'
+tags:
+  - xiaoetong
+summary: >-
+  A：好的，面试官您好，我是来自深圳大学 27
+  届的某某，我目前是大二在读，然后我是在一家主营业务是海外网文平台的公司做后端开发岗位的实习生，我主要是负责公司的几个代码仓的维护和开发一些新接口
 ---
 ## 小鹅通-后端开发日常实习一面面经
 #### 问题

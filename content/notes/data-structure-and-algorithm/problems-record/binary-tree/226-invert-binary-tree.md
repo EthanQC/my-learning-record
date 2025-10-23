@@ -1,13 +1,26 @@
+---
+title: 226 invert binary tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'queue := []*TreeNode{root}'
+---
 ## 226. 翻转二叉树
 ### go：
 层序遍历
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func invertTree(root *TreeNode) *TreeNode {
@@ -43,11 +56,17 @@ func invertTree(root *TreeNode) *TreeNode {
 递归前序遍历
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func invertTree(root *TreeNode) *TreeNode {
@@ -66,11 +85,17 @@ func invertTree(root *TreeNode) *TreeNode {
 迭代前序遍历
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func invertTree(root *TreeNode) *TreeNode {
@@ -102,11 +127,17 @@ func invertTree(root *TreeNode) *TreeNode {
 迭代后序遍历
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func invertTree(root *TreeNode) *TreeNode {

@@ -1,3 +1,12 @@
+---
+title: 714 best time to buy and sell stock with transaction fee
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  cash, hold := 0, -prices[0] for i := 1; i < n; i++{ newCash, newHold := cash,
+  hold
+---
 ## 714. 买卖股票的最佳时机含手续费
 ### go：
 ```go

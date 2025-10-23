@@ -1,12 +1,28 @@
+---
+title: 235 lowest common ancestor of a binary search tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: >-
+  func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode { for root != nil {
+  if p.Val < root.Val && q.Val < root.Val { root = root.Left } else if p.Val >
+  root.Val && q.Val > root.
+---
 ## 236. 二叉树的最近公共祖先
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val   int
+
  *     Left  *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 

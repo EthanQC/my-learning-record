@@ -1,3 +1,13 @@
+---
+title: 376 wiggle subsequence
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: >-
+  count, prediff := 1, 0 for i := 1; i < len(nums); i++ { diff := nums[i] -
+  nums[i - 1] if (diff > 0 && prediff <= 0) || (diff < 0 && prediff >= 0) {
+  count++ prediff = diff } }
+---
 ## 376. 摆动序列
 ### go：
 ```go

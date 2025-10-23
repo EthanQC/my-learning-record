@@ -1,3 +1,10 @@
+---
+title: 123 best time to buy and sell stock iii
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'buy1, sell1 := -prices[0], 0 buy2, sell2 := -prices[0], 0'
+---
 ## 123. 买卖股票的最佳时机 III
 ### go：
 ```go

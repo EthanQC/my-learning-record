@@ -1,3 +1,10 @@
+---
+title: '`noexcept` 详解'
+date: '2025-09-03'
+tags:
+  - keywords
+summary: 如果函数声明为 `noexcept`，它表示函数内部不会抛出异常。
+---
 # `noexcept` 详解
 `noexcept` 是 C++11 引入的一个关键字，用来**明确声明某个函数不会抛出异常**。它的作用不仅是提高代码的可读性和安全性，同时也可以帮助编译器进行优化，从而提升程序的性能。
 
@@ -49,15 +56,18 @@
 >std::is_nothrow_move_constructible<T> 的静态成员，表示模板检测的结果，是一个布尔值（true 或 false）。
 
 ## 3. 为什么要用 `noexcept`
+
 * 性能优化：当函数声明为 `noexcept` 时，编译器会优化异常处理相关的代码（如栈展开等），提高运行效率。
 在 STL 容器中，优先选择 noexcept 的移动构造函数，从而避免不必要的拷贝操作。
+
 * 程序安全性：如果一个函数**本身设计就不应该抛出异常**，使用 `noexcept` 明确这一点，可以防止因误操作导致的意外异常抛出。
+
 * 如果一个 `noexcept` 函数抛出了异常，程序会立即调用 `std::terminate()` 终止运行，避免程序进入不确定状态。
 
 ## 4. 如何判断一个函数是否是 `noexcept`
 可以使用 `noexcept` 运算符来检测一个函数是否被声明为 `noexcept`：
 
-    #include <iostream>
+    # include <iostream>
 
     void func1() noexcept
     {
@@ -95,9 +105,9 @@
 
 示例：
 
-    #include <vector>
-    #include <iostream>
-    #include <utility>
+    # include <vector>
+    # include <iostream>
+    # include <utility>
 
     class MyClass
     {
@@ -162,9 +172,9 @@
 
 8. 示例：综合演示
 
-        #include <iostream>
-        #include <vector>
-        #include <type_traits>
+        # include <iostream>
+        # include <vector>
+        # include <type_traits>
 
         class MyClass
         {
@@ -200,11 +210,19 @@
     MyClass is noexcept move constructible: true
 
 ## 9. 总结
+
 * `noexcept` 的用途：
+
     * 声明函数不会抛出异常。
+
     * 优化性能，帮助 STL 容器更高效地使用移动语义。
+
 * `noexcept` 的安全性：
+
     * 如果抛出异常，程序会终止运行，保证一致性。
+
 * 如何使用：
+
     * 声明 `noexcept` 函数，确保设计的函数不抛异常。
+
     * 在模板中结合类型特性检查条件性 `noexcept`。

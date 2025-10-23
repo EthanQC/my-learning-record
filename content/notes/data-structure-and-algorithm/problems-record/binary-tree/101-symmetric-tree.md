@@ -1,12 +1,25 @@
+---
+title: 101 symmetric tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'return isMirror(root.Left, root.Right) }'
+---
 ## 101. 对称二叉树
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func isSymmetric(root *TreeNode) bool {

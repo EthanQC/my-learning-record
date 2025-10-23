@@ -1,12 +1,27 @@
+---
+title: 450 delete node in a bst
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: >-
+  if key < root.Val { root.Left = deleteNode(root.Left, key) return root } if
+  key > root.Val { root.Right = deleteNode(root.Right, key) return root }
+---
 ## 450. 删除二叉搜索树中的节点
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func deleteNode(root *TreeNode, key int) *TreeNode {

@@ -1,15 +1,33 @@
+---
+title: 203 remove linked list elements
+date: '2025-09-03'
+tags:
+  - linked-list
+summary: >-
+  ```cpp /** * Definition for singly-linked list. * struct ListNode { * int val;
+  * ListNode *next; * ListNode() : val(0), next(nullptr) {} * ListNode(int x) :
+  val(x), next(nullptr) {
+---
 ## 203. 移除链表元素
 ### cpp：
 
 ```cpp
 /**
+
  * Definition for singly-linked list.
+
  * struct ListNode {
+
  *     int val;
+
  *     ListNode *next;
+
  *     ListNode() : val(0), next(nullptr) {}
+
  *     ListNode(int x) : val(x), next(nullptr) {}
+
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+
  * };
  */
 class Solution {
@@ -42,10 +60,15 @@ public:
 
 ```go
 /**
+
  * Definition for singly-linked list.
+
  * type ListNode struct {
+
  *     Val int
+
  *     Next *ListNode
+
  * }
  */
 func removeElements(head *ListNode, val int) *ListNode {

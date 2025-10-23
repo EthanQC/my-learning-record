@@ -1,3 +1,10 @@
+---
+title: 202 happy number
+date: '2025-09-03'
+tags:
+  - hash-table
+summary: '```go func isHappy(n int) bool { visited := make(map[int]struct{})'
+---
 ## 202. 快乐数
 ### go：
 

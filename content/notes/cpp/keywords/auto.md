@@ -1,3 +1,10 @@
+---
+title: auto
+date: '2025-09-03'
+tags:
+  - keywords
+summary: 例如：
+---
 ## **`auto`** 简介
  **`auto`** 是C++11引入的关键字，允许编译器**自动推导变量的类型**
  
@@ -79,7 +86,7 @@
 >
 >例如：
 
-    #include <array>
+    # include <array>
 
     std::array<int, 3> arr = {1, 2, 3};
     auto x = arr;  // x的类型为std::array<int, 3>
@@ -103,8 +110,8 @@
 
 示例：
 
-    #include <functional>
-    #include <iostream>
+    # include <functional>
+    # include <iostream>
     using namespace std;
 
     int add(int a, int b) { return a + b; }
@@ -193,4 +200,5 @@
  **`auto`** 在大多数情况下非常方便，可以让代码更简洁，避免显式声明复杂的类型
 
 * 限制条件： **`auto`** 不能用于未初始化的变量、`void` 类型、数组类型推导、以及推导函数类型等
+
 * 常见用途：最常见的用途是用来推导容器类型（例如 `vector` 的迭代器类型），或避免显式声明复杂的类型，常常需要和 `const`、`&`、`*` 等修饰符一起使用，以确保正确推导类型

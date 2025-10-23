@@ -1,3 +1,10 @@
+---
+title: 1002 find common characters
+date: '2025-09-03'
+tags:
+  - hash-table
+summary: '```go func commonChars(words []string) []string { counts := make([]int, 26)'
+---
 ## 1002. 查找共用字符
 ### go：
 

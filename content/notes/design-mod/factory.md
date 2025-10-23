@@ -1,3 +1,10 @@
+---
+title: factory
+date: '2025-09-03'
+tags:
+  - design-mod
+summary: using namespace std;
+---
 ## 工厂模式是什么
 [推荐阅读](https://github.com/youngyangyang04/kama-DesignPattern/blob/main/DesignPattern/2-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F.md)
 

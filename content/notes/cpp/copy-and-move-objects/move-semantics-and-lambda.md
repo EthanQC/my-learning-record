@@ -1,3 +1,12 @@
+---
+title: move semantics and lambda
+date: '2025-09-03'
+tags:
+  - copy-and-move-objects
+summary: >-
+  >左值和右值都是表达式的属性，通常出现在表达式的左侧和右侧 > >左值：表示**对象的身份**，如变量、函数名 >
+  >右值：表示**对象的值**，如代数运算表达式、匿名的lambda表达式（临时对象）
+---
 ## 对象移动
 在很多情况下都会发生对象拷贝，而如果对象拷贝后就立即被销毁了，那这时**移动而非拷贝对象会大幅度提升性能**，为了支持移动操作，不可避免的就是**右值引用**
 
@@ -18,17 +27,21 @@
 在C++11中，引入了右值引用（Rvalue Reference），使用 `&&` 符号表示。右值引用主要用于实现**移动语义**和**完美转发**，以提高性能和资源管理效率。
 
 右值引用允许我们：
+
 * 实现**移动语义**（Move Semantics）： 通过“移动”资源（如动态分配的内存）而不是“复制”，提高性能。
+
 * 实现**完美转发**（Perfect Forwarding）： 在模板中将参数**精确地**传递给另一个函数，无论参数是左值还是右值。
 
 使用右值引用有以下几个好处：
+
 * 性能优化： 避免不必要的拷贝，特别是对于大型对象或拥有动态资源的对象，如 `std::function`。
+
 * 资源管理： 允许函数“获取”传入对象的资源所有权，确保资源高效利用和避免资源泄漏。
 
 例子：
 
-    #include <iostream>
-    #include <vector>
+    # include <iostream>
+    # include <vector>
 
     class MyClass
     {
@@ -127,8 +140,8 @@
 >
 >例子：
 
-    #include <iostream>
-    #include <utility>
+    # include <iostream>
+    # include <utility>
 
     void process(int& x) {
         std::cout << "Lvalue processed: " << x << std::endl;
@@ -168,7 +181,7 @@
 
 示例：
 
-    #include <iostream>
+    # include <iostream>
 
     int main() {
         int x = 10;
@@ -189,8 +202,8 @@
 
 示例（lambda和std::function）：
 
-    #include <iostream>
-    #include <functional>  // 包含std::function
+    # include <iostream>
+    # include <functional>  // 包含std::function
 
     int main()
     {
@@ -207,11 +220,16 @@
 ## Lambda表达式使用时的注意事项
 Lambda表达式是C++11引入的一个非常强大的特性，可以用来定义匿名函数。以下是使用lambda时需要注意的几个要点：
 
-* [ ]：不捕获任何外部变量。
-* [x]：按值捕获变量x。
+* [ ] ：不捕获任何外部变量。
+
+* [x] ：按值捕获变量x。
+
 * [&]：按引用捕获所有外部变量。
+
 * [this]：捕获当前对象指针。
+
 * [x, &y]：按值捕获x，按引用捕获y。
+
 * **mutable关键字**：如果lambda需要修改捕获的外部变量，必须加上mutable。
 
 

@@ -1,3 +1,10 @@
+---
+title: 150 evaluate reverse polish notation
+date: '2025-09-03'
+tags:
+  - stack-and-queue
+summary: 'func evalRPN(tokens []string) int { stack := make([]int, 0, len(tokens))'
+---
 ## 150. 逆波兰表达式求值
 ### go：
 ```go

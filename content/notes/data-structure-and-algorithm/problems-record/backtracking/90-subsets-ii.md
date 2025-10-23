@@ -1,3 +1,12 @@
+---
+title: 90 subsets ii
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  func subsetsWithDup(nums []int) [][]int { var res [][]int var path []int
+  sort.Ints(nums) backtrack(nums, path, &res, 0) return res }
+---
 ## 90. 子集 II
 ### go：
 ```go
