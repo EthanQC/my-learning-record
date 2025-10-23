@@ -1,3 +1,10 @@
+---
+title: 239 sliding window maximum
+date: '2025-09-03'
+tags:
+  - stack-and-queue
+summary: 'dq := make([]int, 0, k) results := make([]int, 0, length - k + 1)'
+---
 ## 239. 滑动窗口最大值
 ### go：
 ```go

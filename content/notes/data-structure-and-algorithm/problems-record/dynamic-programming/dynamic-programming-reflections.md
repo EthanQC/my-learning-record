@@ -1,3 +1,11 @@
+---
+title: dynamic programming reflections
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  [我的解答](https://github.com/EthanQC/my-learning-record/blob/main/data-structure-and-algorithm/problems-record/dynamic-programming/509-fibonacci-number.md)
+---
 ### 509. 斐波那契数
 #### 题目：https://leetcode.cn/problems/fibonacci-number/description/
 

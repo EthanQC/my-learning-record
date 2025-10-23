@@ -1,3 +1,10 @@
+---
+title: 53 maximum subarray
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'if currSum > maxSum { maxSum = currSum } } return maxSum } ```'
+---
 ## 53. 最大子数组和
 ### go：
 ```go

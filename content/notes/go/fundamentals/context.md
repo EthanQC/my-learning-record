@@ -1,3 +1,10 @@
+---
+title: context
+date: '2025-09-03'
+tags:
+  - fundamentals
+summary: '官方文档：https://pkg.go.dev/context'
+---
 官方文档：https://pkg.go.dev/context
 
 在 Go 语言中，`context` 包提供了一种在 `goroutine` 之间**传递取消信号、超时/截止日期和请求范围内值的标准化机制**，自 Go 1.7 起，它已成为构建**可取消、可超时、可追踪请求**的基础设施
@@ -38,6 +45,7 @@ type Context interface {
 当 `Done()` 通知后，`Err()` 会返回具体原因：
 
 * `context.Canceled`（主动调用 `CancelFunc`）
+
 * `context.DeadlineExceeded`（超时/ `Deadline` 到达）
 
 #### `Value(key interface{}) interface{}`
@@ -133,10 +141,15 @@ func main() {
 ```
 
 * 用途
+
   * 在请求上下文中透传一些元数据，如用户认证信息、TraceID、数据库事务对象等
+
 * 限制
+
   * 不要把大量数据或业务结构体放进 `Context`；只用于轻量级、可选的 `request-scoped` 数据
+
   * key 应该是私有类型，避免与第三方库或其他包冲突
+
   * 读取要做类型断言，并做好类型检查
 
 ## 实际使用示例：HTTP Server
@@ -193,11 +206,15 @@ func loggingMiddleware(next http.Handler) http.Handler {
 常用函数：
 
 * `context.Background()`, `context.TODO()`
+
 * `WithCancel`, `WithTimeout`, `WithDeadline`, `WithValue`
 
 最佳实践：
 
 * 把 `Context` 当作函数的第一个参数：`func fn(ctx context.Context, …)`
+
 * 及时 `defer cancel()`
+
 * 通过 `select` 响应 `<-ctx.Done()`，避免资源泄漏
+
 * 仅在需要时使用 `WithValue`，并使用私有 key 类型

@@ -1,8 +1,13 @@
 ---
-title: "Back End Daily Internship Second Round Failure"
-date: 2024-12-08T16:09:41+08:00
-tags: ["xiaoetong"]
-summary: ""
+title: Back End Daily Internship Second Round Failure
+date: '2024-12-08'
+tags:
+  - xiaoetong
+summary: >-
+  A：面试官您好，我叫某某，我来自深圳大学，我是 27
+  届，我的专业是电子信息工程，目前我是在一家主营业务是海外网文平台的公司做后端开发岗位的实习生，我个人目前的技术栈的话，我是学 C++
+  出身，然后大概在去年十一月十二月的样子接触到 go 语言，我个人主要是想往后端发展，所以开始用 go
+  语言写一些项目，然后我目前实习的这个公司他们的项目主要是用 php 来
 ---
 ## 小鹅通-后端开发日常实习二面凉经
 #### 问题

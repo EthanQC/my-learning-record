@@ -1,14 +1,28 @@
+---
+title: 116 populating next right pointers in each node
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'func connect(root *Node) *Node { if root == nil { return nil }'
+---
 ## 116. 填充每个节点的下一个右侧节点指针
 ### go：
 层序遍历
 ```go
 /**
+
  * Definition for a Node.
+
  * type Node struct {
+
  *     Val int
+
  *     Left *Node
+
  *     Right *Node
+
  *     Next *Node
+
  * }
  */
 
@@ -47,12 +61,19 @@ func connect(root *Node) *Node {
 指针法
 ```go
 /**
+
  * Definition for a Node.
+
  * type Node struct {
+
  *     Val int
+
  *     Left *Node
+
  *     Right *Node
+
  *     Next *Node
+
  * }
  */
 

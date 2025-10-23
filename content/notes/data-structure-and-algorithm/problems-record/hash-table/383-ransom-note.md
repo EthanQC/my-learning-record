@@ -1,3 +1,12 @@
+---
+title: 383 ransom note
+date: '2025-09-03'
+tags:
+  - hash-table
+summary: >-
+  ```go func canConstruct(ransomNote string, magazine string) bool { if
+  len(magazine) < len(ransomNote) { return false }
+---
 ## 383. 赎金信
 ### go：
 

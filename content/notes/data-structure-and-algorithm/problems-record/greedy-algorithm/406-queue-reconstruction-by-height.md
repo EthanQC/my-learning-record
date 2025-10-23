@@ -1,3 +1,13 @@
+---
+title: 406 queue reconstruction by height
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: >-
+  func reconstructQueue(people [][]int) [][]int { sort.Slice(people, func(i, j
+  int) bool { if people[i][0] != people[j][0] { return people[i][0] >
+  people[j][0] } return people[i][1]
+---
 ## 406. 根据身高重建队列
 ### go：
 ```go

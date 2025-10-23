@@ -1,3 +1,12 @@
+---
+title: 151 reverse words in a string
+date: '2025-09-04'
+tags:
+  - string
+summary: >-
+  完全自己实现： ```go func reverseWords(s string) string { length := len(s) left,
+  right := 0, length - 1
+---
 ## 151. 反转字符串中的单词
 ### go：
 简易版：借助库函数

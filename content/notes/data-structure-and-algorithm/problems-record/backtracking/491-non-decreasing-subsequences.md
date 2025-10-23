@@ -1,3 +1,12 @@
+---
+title: 491 non decreasing subsequences
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: >-
+  func backtrack(nums, path []int, res *[][]int, start int) { if len(path) >= 2
+  { temp := make([]int, len(path)) copy(temp, path) *res = append(*res, temp) }
+---
 ## 491. 非递减子序列
 ### go：
 ```go

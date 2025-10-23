@@ -1,3 +1,10 @@
+---
+title: linked list
+date: '2025-09-03'
+tags:
+  - data-structure
+summary: 主要类型有：
+---
 ### 链表基本概念
 #### 什么是链表
 **链表**（Linked List）是一种常用的数据结构，其特点是由一系列**节点**（Node）构成，每个节点包含数据和指向下一个节点（或前后节点）的引用，与数组相比，**链表中元素的内存地址不一定连续**，而是**通过指针链接在一起**
@@ -5,22 +12,30 @@
 主要类型有：
 
 * **单链表**（Singly Linked List）：
+
     * 每个节点只有一个指针，指向下一个节点
+
 * **双链表**（Doubly Linked List）：
+
     * 每个节点包含两个指针，一个指向前一个节点，一个指向下一个节点，可以在两个方向上遍历
+
 * **循环链表**（Circular Linked List）：
+
     * 链表的尾节点指向头节点，形成一个闭环
 
 #### 链表的优缺点
 ##### 优点：
 
 * **动态大小**： 链表可以轻松地在运行时增减元素，内存分配灵活
+
 * **插入和删除操作高效**： 在已知节点位置的情况下，插入和删除操作不需要移动其他元素，时间复杂度通常为 O(1)（不考虑查找时间）
 
 ##### 缺点：
 
 * **随机访问困难**： 链表不支持快速随机访问，要访问第 k 个元素需**从头遍历**，时间复杂度为 O(k)
+
 * **额外内存开销**： 每个节点需要存储指针（单链表一个指针，双链表两个指针）
+
 * **缓存局部性较差**： 由于内存可能**不连续**，遍历时 CPU **缓存命中率较低**
 
 ### C++ 中链表的实现与使用
@@ -31,8 +46,8 @@
 每个节点通常包含**数据**和**指向下一个节点的指针**：
 
     // Node.h
-    #ifndef NODE_H
-    #define NODE_H
+    # ifndef NODE_H
+    # define NODE_H
 
     template<typename T>
     struct Node
@@ -45,17 +60,17 @@
             : data(value), next(nextNode) {}
     };
 
-    #endif // NODE_H
+    # endif // NODE_H
 
 ##### 链表类定义
 利用节点结构定义一个简单的单链表类，包含插入、删除、遍历等基本操作：
 
     // LinkedList.h
-    #ifndef LINKEDLIST_H
-    #define LINKEDLIST_H
+    # ifndef LINKEDLIST_H
+    # define LINKEDLIST_H
 
-    #include "Node.h"
-    #include <iostream>
+    # include "Node.h"
+    # include <iostream>
 
     template<typename T>
     class LinkedList
@@ -111,14 +126,14 @@
         Node<T>* getHead() const { return head; }
     };
 
-    #endif // LINKEDLIST_H
+    # endif // LINKEDLIST_H
 
 ##### 使用示例
 在主函数中使用这个单链表类：
 
     // main.cpp
-    #include "LinkedList.h"
-    #include <iostream>
+    # include "LinkedList.h"
+    # include <iostream>
 
     int main()
     {
@@ -146,8 +161,8 @@ C++ STL 提供了 `std::list` 容器，它就是一个**双向链表**
 
 使用起来非常简单：
 
-    #include <iostream>
-    #include <list>
+    # include <iostream>
+    # include <list>
 
     int main()
     {

@@ -1,3 +1,10 @@
+---
+title: switch
+date: '2025-09-03'
+tags:
+  - fundamentals
+summary: 在 Go 语言中，`switch` 语句是比传统的 `if–else` 更加简洁、灵活、功能丰富的多分支控制结构
+---
 在 Go 语言中，`switch` 语句是比传统的 `if–else` 更加简洁、灵活、功能丰富的多分支控制结构
 
 ## 基本语法
@@ -55,6 +62,7 @@ case 3:
 要点：
 
 * `fallthrough` 只会让控制流继续到下一个紧挨着的 `case`，不会再次做条件判断
+
 * 在最后一个 `case` 使用 `fallthrough` 虽然语法允许，但没有后续分支可执行，一般应避免
 
 ## 无表达式（标签式）`switch`

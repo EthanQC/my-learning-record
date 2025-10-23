@@ -1,3 +1,12 @@
+---
+title: 435 non overlapping intervals
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: >-
+  func eraseOverlapIntervals(intervals [][]int) int { if len(intervals) == 0 {
+  return 0 }
+---
 ## 435. 无重叠区间
 ### go：
 ```go

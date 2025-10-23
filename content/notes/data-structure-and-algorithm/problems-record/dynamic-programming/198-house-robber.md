@@ -1,3 +1,10 @@
+---
+title: 198 house robber
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'return pre1 } ```'
+---
 ## 198. 打家劫舍
 ### go：
 空间优化：

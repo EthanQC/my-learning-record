@@ -1,3 +1,10 @@
+---
+title: 541 reverse string ii
+date: '2025-09-03'
+tags:
+  - string
+summary: '```go func reverse(ch []byte) { left, right := 0, len(ch) - 1'
+---
 ## 541. 反转字符串 II
 ### go：
 

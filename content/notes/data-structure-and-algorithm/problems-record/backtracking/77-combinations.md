@@ -1,3 +1,10 @@
+---
+title: 77 combinations
+date: '2025-09-03'
+tags:
+  - backtracking
+summary: 'return results }'
+---
 ## 77. 组合
 ### go：
 ```go

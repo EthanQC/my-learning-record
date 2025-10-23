@@ -1,12 +1,25 @@
+---
+title: 530 minimum absolute difference in bst
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: import "math"
+---
 ## 530. 二叉搜索树的最小绝对差
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 

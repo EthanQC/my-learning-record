@@ -1,3 +1,10 @@
+---
+title: 300 longest increasing subsequence
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'dp, ans := make([]int, n), 0'
+---
 ## 300. 最长递增子序列
 ### go：
 动态规划：

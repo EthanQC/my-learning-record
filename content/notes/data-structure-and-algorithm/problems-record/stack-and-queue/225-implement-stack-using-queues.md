@@ -1,3 +1,10 @@
+---
+title: 225 implement stack using queues
+date: '2025-09-03'
+tags:
+  - stack-and-queue
+summary: 'func (q *myQueue) Push(v int) { q.data = append(q.data, v) }'
+---
 ## 232. 用栈实现队列
 ### go：
 ```go
@@ -68,11 +75,17 @@ func (this *MyStack) Empty() bool {
 }
 
 /**
+
  * Your MyStack object will be instantiated and called as such:
+
  * obj := Constructor();
+
  * obj.Push(x);
+
  * param_2 := obj.Pop();
+
  * param_3 := obj.Top();
+
  * param_4 := obj.Empty();
  */
 ```

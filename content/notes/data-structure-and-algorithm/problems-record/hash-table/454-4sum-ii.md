@@ -1,3 +1,12 @@
+---
+title: 454 4sum ii
+date: '2025-09-03'
+tags:
+  - hash-table
+summary: >-
+  ```go func fourSumCount(nums1 []int, nums2 []int, nums3 []int, nums4 []int)
+  int { sum12 := make(map[int]int, len(nums1))
+---
 ## 454. 四数相加 II
 ### go：
 

@@ -1,3 +1,10 @@
+---
+title: 70 climbing stairs
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'a, b := 1, 2 for i := 3; i <= n; i++ { a, b = b, a+ b }'
+---
 ## 70. 爬楼梯
 ### go：
 空间优化：

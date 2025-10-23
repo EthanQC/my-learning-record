@@ -1,12 +1,25 @@
+---
+title: 337 house robber iii
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'func dfs(node *TreeNode) (notTake, take int) { if node == nil { return 0, 0 }'
+---
 ## 337. 打家劫舍 III
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func rob(root *TreeNode) int {

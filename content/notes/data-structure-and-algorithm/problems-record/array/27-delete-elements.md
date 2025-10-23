@@ -1,3 +1,13 @@
+---
+title: 27 delete elements
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: int removeElement(vector<int>& nums, int val) { int
+  slow = 0; //创建慢指针 for (int fast = 0; fast < nums.size(); fast++) { if
+  (nums[fast] != val) //快指针先遍历 { nu
+---
 ## 27.移除元素
 ### cpp：
 

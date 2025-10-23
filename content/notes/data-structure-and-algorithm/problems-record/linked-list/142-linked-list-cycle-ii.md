@@ -1,12 +1,27 @@
+---
+title: 142 linked list cycle ii
+date: '2025-09-03'
+tags:
+  - linked-list
+summary: >-
+  ```go /** * Definition for singly-linked list. * type ListNode struct { * Val
+  int * Next *ListNode * } */ func detectCycle(head *ListNode) *ListNode { fast,
+  slow := head, head
+---
 ## 142. 环形链表 II
 ### go：
 
 ```go
 /**
+
  * Definition for singly-linked list.
+
  * type ListNode struct {
+
  *     Val int
+
  *     Next *ListNode
+
  * }
  */
 func detectCycle(head *ListNode) *ListNode {

@@ -1,12 +1,25 @@
+---
+title: 102 binary tree level order traversal
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'var results [][]int queue := []*TreeNode{root} // 由于传入的 root 就是指针类型，这里也要用指针类型'
+---
 ## 102.二叉树的层序遍历
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func levelOrder(root *TreeNode) [][]int {

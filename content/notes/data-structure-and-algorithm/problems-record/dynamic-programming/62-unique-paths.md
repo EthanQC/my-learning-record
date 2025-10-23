@@ -1,3 +1,12 @@
+---
+title: 62 unique paths
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for i := 1; i < m; i++ { for j := 1; j < n; j++ { dp[i][j] = dp[i - 1][j] +
+  dp[i][j - 1] } }
+---
 ## 62. 不同路径
 ### go：
 ```go

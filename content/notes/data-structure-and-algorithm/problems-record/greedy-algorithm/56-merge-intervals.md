@@ -1,3 +1,12 @@
+---
+title: 56 merge intervals
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: >-
+  func merge(intervals [][]int) [][]int { if len(intervals) == 1 { return
+  intervals }
+---
 ## 56. 合并区间
 ### go：
 ```go

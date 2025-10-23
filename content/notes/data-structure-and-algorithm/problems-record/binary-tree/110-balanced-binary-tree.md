@@ -1,12 +1,25 @@
+---
+title: 110 balanced binary tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: 'func checkHeight(node *TreeNode) int { if node == nil { return 0 }'
+---
 ## 110. 平衡二叉树
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func isBalanced(root *TreeNode) bool {

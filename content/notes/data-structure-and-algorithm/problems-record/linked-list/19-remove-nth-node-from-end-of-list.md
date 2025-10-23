@@ -1,12 +1,27 @@
+---
+title: 19 remove nth node from end of list
+date: '2025-09-03'
+tags:
+  - linked-list
+summary: >-
+  ```go /** * Definition for singly-linked list. * type ListNode struct { * Val
+  int * Next *ListNode * } */ func removeNthFromEnd(head *ListNode, n int)
+  *ListNode { dummy := &ListNod
+---
 ## 19. 删除链表的倒数第 N 个结点
 ### go：
 
 ```go
 /**
+
  * Definition for singly-linked list.
+
  * type ListNode struct {
+
  *     Val int
+
  *     Next *ListNode
+
  * }
  */
 func removeNthFromEnd(head *ListNode, n int) *ListNode {

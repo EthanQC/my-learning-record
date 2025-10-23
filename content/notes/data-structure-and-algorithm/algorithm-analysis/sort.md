@@ -1,3 +1,11 @@
+---
+title: sort
+date: '2025-09-03'
+tags:
+  - algorithm-analysis
+summary: >-
+  在一个待排序序列里，元素往往不仅有用来比较大小的“关键字”，还附带其他属性，例如一组学生记录按成绩排序，成绩相同的同学原本在名单中的先后顺序就体现了他们在班级花名册中的位置
+---
 ## 稳定性
 #### 什么是排序算法的“稳定性”
 
@@ -57,9 +65,9 @@ func main() {
 下面是一份手写快排（Hoare 分区），展示它为何天然不稳定
 
 ```cpp
-#include <iostream>
-#include <vector>
-#include <utility>
+# include <iostream>
+# include <vector>
+# include <utility>
 
 int partition(std::vector<int>& a, int low, int high) {
     int pivot = a[low];
@@ -113,10 +121,15 @@ int main() {
 提前终止：有序检测 | 剪枝优化，提升最佳情况性能 | 引入布尔标志 `swapped`，若某一轮中一次交换都没发生，说明序列已全局有序，可立即结束
 
 * 稳定性：冒泡排序只在“ > ”时交换，不会跨过相等元素，因此是稳定排序
+
 * 最佳复杂度：当输入本身已排序时，只需一次扫描即可判定，时间复杂度降到 O(n)
+
 * 升级版：三种常见优化手段
+
 * 早停标志：上文提到的 swapped
+
 * 边界缩减：每完成一轮，最后一次交换的位置往后都必定已排序，下轮比较只需到该位置即可
+
 * 双向冒泡（Cocktail Shaker）：每轮先从左到右“冒大泡”，再从右到左“沉小泡”，适合“局部乱序”数据
 
 #### 使用 Go 实现冒泡排序
@@ -177,9 +190,13 @@ func main() {
 ```
 
 ##### 关键点说明
+
 * 切片复制：用 `copy` 创建副本，避免对原切片就地排序影响后续比较
+
 * 就地交换：利用 Go 的多重赋值 `a, b = b, a` 语法，避免临时变量
+
 * 提前终止条件：若一整轮没交换，将 `swapped` 置为 `false`，直接跳出外层循环
+
 * 边界变量 `n`：动态缩短待比较尾部，提高在“几乎有序”数据上的效率。
 
 #### 小结
@@ -192,9 +209,13 @@ func main() {
 插入排序完全沿用这个思路：
 
 * 把下标 0 视为已排好序的子数组
+
 * 从下标 1 开始逐个读取“待插入元素”，向左扫描已排区
+
 * 扫描过程中，凡是比待插入元素大的，都整体右移一格
+
 * 扫描终止点就是插入位置，把元素放进去
+
 * 重复直到末尾，整个数组就排好序
 
 #### 逐轮演示（升序为例）
@@ -209,13 +230,21 @@ func main() {
 可见，每一轮都让左侧区间保持有序，新元素只是“插缝”进去
 
 #### 复杂度与特性
+
 * 时间复杂度：最坏 & 平均 `O(n²)`；当原数据几乎有序时，只需比较不需移动，最佳 `O(n)`
+
 * 空间复杂度：`O(1)`，原地排序
+
 * 稳定性：只在 `>` 时右移，不会跨越相等元素，因而稳定
+
 * 适用场景：
+
   * 小规模数据（几十个以内）
+
   * 几乎有序的数据
+
   * 作其它排序（如 快排、归并）的小区段优化，或作为 `TimSort` 的关键子步骤
+
 * 改进：可用二分插入排序把比较次数降到 `O(n log n)`，但元素移动仍是 `O(n²)`
 
 #### Go 语言实现
@@ -259,8 +288,8 @@ func main() {
 
 ##### 朴素版
 ```cpp
-#include <iostream>
-#include <vector>
+# include <iostream>
+# include <vector>
 
 void InsertSort(std::vector<int>& v) {
     for (size_t i = 1; i < v.size(); ++i) {
@@ -283,8 +312,8 @@ int main() {
 
 ##### 双随机迭代器模板版
 ```cpp
-#include <iterator>
-#include <functional>
+# include <iterator>
+# include <functional>
 
 template <typename RandomIt,
           typename Compare = std::less<typename std::iterator_traits<RandomIt>::value_type>>
@@ -311,6 +340,7 @@ void InsertSort(RandomIt first, RandomIt last, Compare comp = Compare{}) {
 通过两两元素比较、交换或移动来达到有序
 
 * 下界：平均／最坏都无法突破 O(n log n)
+
 * 代表：冒泡、选择、插入、希尔、归并、快速、堆排序等
 
 ##### 非比较排序（Non-Comparison Sort）

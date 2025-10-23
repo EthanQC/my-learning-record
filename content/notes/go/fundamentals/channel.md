@@ -1,3 +1,10 @@
+---
+title: channel
+date: '2025-09-03'
+tags:
+  - fundamentals
+summary: 在 Go 语言里，`channel`（通道）是核心的并发原语之一，用于在不同的 `goroutine` 之间安全地传递数据
+---
 在 Go 语言里，`channel`（通道）是核心的并发原语之一，用于在不同的 `goroutine` 之间安全地传递数据
 
 它不仅能让你在并发程序中**避免显式的锁和条件变量**，还能让代码更具可读性和可维护性

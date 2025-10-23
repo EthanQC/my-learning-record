@@ -1,3 +1,13 @@
+---
+title: 26 delete reduplicative elements in a sorted array
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: int removeDuplicates(vector<int>& nums) { int slow =
+  0; //没有修改初始值，导致数组索引越界 for (int fast = 0; fast < nums.size(); fast++)
+  //没有修改初始值，导致数组索引越界 { if (nums[fas
+---
 ## 26.删除有序数组中的重复项
 ### cpp：
 #### 错误代码：

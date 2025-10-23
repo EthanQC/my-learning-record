@@ -1,3 +1,13 @@
+---
+title: 367 valid perfect square numbers
+date: '2025-09-03'
+tags:
+  - array
+summary: >-
+  class Solution { public: bool isPerfectSquare(int num) { int square = 0; if
+  (num < 2) { square = num; } int left = 1; int right = num / 2; while (left <=
+  right) { int mid = left +
+---
 ## 367. 有效的完全平方数
 ### cpp：
 #### 正确代码：

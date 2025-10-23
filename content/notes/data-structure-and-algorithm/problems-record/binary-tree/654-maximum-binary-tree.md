@@ -1,12 +1,27 @@
+---
+title: 654 maximum binary tree
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: >-
+  maxIdx := 0 for i, _ := range nums { if nums[maxIdx] < nums[i] { maxIdx = i }
+  }
+---
 ## 654. 最大二叉树
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 func constructMaximumBinaryTree(nums []int) *TreeNode {

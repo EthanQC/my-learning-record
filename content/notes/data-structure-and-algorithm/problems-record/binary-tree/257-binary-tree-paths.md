@@ -1,12 +1,25 @@
+---
+title: 257 binary tree paths
+date: '2025-09-03'
+tags:
+  - binary-tree
+summary: import "strconv"
+---
 ## 257. 二叉树的所有路径
 ### go：
 ```go
 /**
+
  * Definition for a binary tree node.
+
  * type TreeNode struct {
+
  *     Val int
+
  *     Left *TreeNode
+
  *     Right *TreeNode
+
  * }
  */
 

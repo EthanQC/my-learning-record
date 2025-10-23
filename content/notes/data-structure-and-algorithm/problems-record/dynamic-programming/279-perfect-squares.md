@@ -1,3 +1,12 @@
+---
+title: 279 perfect squares
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: >-
+  for i := 1; i <= n; i++ { for j := 1; j * j <= i; j++ { if dp[i] > dp[i - j *
+  j] + 1 { dp[i] = dp[i - j * j] + 1 } } }
+---
 ## 279. 完全平方数
 ### go：
 ```go

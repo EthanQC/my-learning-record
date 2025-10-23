@@ -1,3 +1,10 @@
+---
+title: fundamentals
+date: '2025-09-03'
+tags:
+  - git
+summary: Ubuntu 会自带 git
+---
 ### Git
 #### Git
 简单来说，git 其实就是一个**版本控制和管理项目及其源代码的工具**，它是本地的，运行在你的电脑上，有一系列的指令来帮助你使用这个工具
@@ -14,7 +21,9 @@ Ubuntu 会自带 git
 **效果**：
 
 * 移动 HEAD 指针 到 <目标提交>
+
 * 保留工作区（Working Directory）中的所有改动
+
 * 保留暂存区（Staging Area）中的改动（不清空暂存区）
 
 **适用场景**：
@@ -29,7 +38,9 @@ Ubuntu 会自带 git
 **效果**：
 
 * 移动 HEAD 指针 到 <目标提交>
+
 * 工作区（Working Directory）直接还原到 <目标提交> 时的状态
+
 * 暂存区（Staging Area）也会被清空，丢弃任何未提交的改动
 
 **适用场景**：

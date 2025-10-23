@@ -1,3 +1,10 @@
+---
+title: 583 delete operation for two strings
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'for i := 1; i <= n; i++ { pre := 0'
+---
 ## 583. 两个字符串的删除操作
 ### go：
 ```go

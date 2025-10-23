@@ -1,3 +1,10 @@
+---
+title: function's pointer
+date: '2025-09-03'
+tags:
+  - copy-and-move-objects
+summary: 它保存了函数的地址，并允许**通过指针来调用函数**
+---
 ## 函数指针
 函数指针（Function Pointer）是**指向函数的指针变量**，可以用它来调用函数
 
@@ -11,7 +18,7 @@
 
 示例：
 
-    #include <iostream>
+    # include <iostream>
 
     int add(int a, int b)
     {

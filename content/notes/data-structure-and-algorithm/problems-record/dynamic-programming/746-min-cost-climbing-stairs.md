@@ -1,3 +1,10 @@
+---
+title: 746 min cost climbing stairs
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'for i := 2; i < n; i++{ a, b = b, min(a, b) + cost[i] } return min(a, b) }'
+---
 ## 746. 使用最小花费爬楼梯
 ### go：
 空间优化：

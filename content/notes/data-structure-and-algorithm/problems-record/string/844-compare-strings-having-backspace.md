@@ -1,3 +1,10 @@
+---
+title: 844 compare strings having backspace
+date: '2025-09-03'
+tags:
+  - string
+summary: 错误代码1：
+---
 ## 844.比较含退格的字符串
 
 错误代码1：

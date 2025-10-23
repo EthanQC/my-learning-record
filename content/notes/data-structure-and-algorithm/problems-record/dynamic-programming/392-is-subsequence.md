@@ -1,3 +1,10 @@
+---
+title: 392 is subsequence
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'return i == len(s) } ```'
+---
 ## 53. 最大子数组和
 ### go：
 ```go

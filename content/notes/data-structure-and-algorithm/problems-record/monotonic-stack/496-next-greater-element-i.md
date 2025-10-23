@@ -1,3 +1,13 @@
+---
+title: 496 next greater element i
+date: '2025-09-03'
+tags:
+  - monotonic-stack
+summary: >-
+  for _, x := range nums2 { for len(stack) > 0 && x > stack[len(stack) - 1] { v
+  := stack[len(stack) - 1] stack = stack[: len(stack) - 1] next[v] = x } stack =
+  append(stack, x) } for
+---
 ## 496. 下一个更大元素 I
 ### go：
 ```go

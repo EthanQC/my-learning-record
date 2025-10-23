@@ -1,3 +1,10 @@
+---
+title: 213 house robber ii
+date: '2025-09-03'
+tags:
+  - dynamic-programming
+summary: 'a, b := r(nums[1 :]), r(nums[: n - 1]) if a > b { return a } return b }'
+---
 ## 213. 打家劫舍 II
 ### go：
 ```go

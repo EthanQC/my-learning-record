@@ -1,3 +1,12 @@
+---
+title: 707 design linked list
+date: '2025-09-03'
+tags:
+  - linked-list
+summary: >-
+  ```cpp class MyLinkedList { private: class MyNode { public: int val; MyNode*
+  next;
+---
 ## 707. 设计链表
 
 ### cpp：
@@ -94,12 +103,19 @@ public:
 };
 
 /**
+
  * Your MyLinkedList object will be instantiated and called as such:
+
  * MyLinkedList* obj = new MyLinkedList();
+
  * int param_1 = obj->get(index);
+
  * obj->addAtHead(val);
+
  * obj->addAtTail(val);
+
  * obj->addAtIndex(index,val);
+
  * obj->deleteAtIndex(index);
  */
  ```
@@ -193,12 +209,19 @@ func (this *MyLinkedList) DeleteAtIndex(index int)  {
 
 
 /**
+
  * Your MyLinkedList object will be instantiated and called as such:
+
  * obj := Constructor();
+
  * param_1 := obj.Get(index);
+
  * obj.AddAtHead(val);
+
  * obj.AddAtTail(val);
+
  * obj.AddAtIndex(index,val);
+
  * obj.DeleteAtIndex(index);
  */
  ```

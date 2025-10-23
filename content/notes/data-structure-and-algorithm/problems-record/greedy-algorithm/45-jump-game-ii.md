@@ -1,3 +1,10 @@
+---
+title: 45 jump game ii
+date: '2025-09-03'
+tags:
+  - greedy-algorithm
+summary: 'end, f, count := 0, 0, 0 for i, v := range nums { if f < i + v { f = i + v }'
+---
 ## 45. 跳跃游戏 II
 ### go：
 ```go
