@@ -40,7 +40,7 @@ services:
   web:
     build:
       context: ..
-      dockerfile: Dockerfile
+      dockerfile: apps/web/Dockerfile 
     container_name: qv-web
     restart: unless-stopped
     environment:
