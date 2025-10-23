@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql8
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: qingverse
+      TZ: Asia/Shanghai
+    volumes:
+      - mysql-data:/var/lib/mysql
+      # 首次初始化可自动执行 schema（如果你已有数据卷，就不会触发）
+      - ../apps/api/db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    networks: [app]
+
+  api:
+    build:
+      context: ../apps/api
+      dockerfile: Dockerfile
+    container_name: qv-api
+    restart: unless-stopped
+    environment:
+      # 注意：在容器网络里用服务名访问 mysql
+      MYSQL_DSN: root:pass@tcp(mysql:3306)/qingverse?parseTime=true&charset=utf8mb4
+      CORS_ORIGIN: https://qingverse.com
+      # 可选：启用后台管理列表接口
+      # ADMIN_TOKEN: prod-token-123
+      ADDR: 0.0.0.0:9000
+    depends_on: [mysql]
+    networks: [app]
+
+  web:
+    build:
+      context: ../apps/web
+      dockerfile: Dockerfile
+    container_name: qv-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_BASE_URL: https://qingverse.com
+    networks: [app]
+
+  caddy:
+    image: caddy:2
+    container_name: qv-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on: [web, api]
+    networks: [app]
+
+volumes:
+  mysql-data:
+  caddy-data:
+  caddy-config:
+
+networks:
+  app:
+    driver: bridge
