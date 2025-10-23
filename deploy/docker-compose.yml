@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mysql:
-    image: mysql:8
+    image: m.daocloud.io/library/mysql:8.4
     container_name: mysql8
     restart: unless-stopped
     environment:
@@ -43,7 +43,7 @@ services:
     networks: [app]
 
   caddy:
-    image: caddy:2
+    image: m.daocloud.io/library/caddy:2.8-alpine
     container_name: qv-caddy
     restart: unless-stopped
     ports:
