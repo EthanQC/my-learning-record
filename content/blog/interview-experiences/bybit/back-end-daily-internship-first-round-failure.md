@@ -1,3 +1,9 @@
+---
+title: "Back End Daily Internship First Round Failure"
+date: 2025-10-06T21:42:35+08:00
+tags: ["bybit"]
+summary: ""
+---
 ## bybit-后端开发日常实习一面凉经
 #### 问题
 * 自我介绍

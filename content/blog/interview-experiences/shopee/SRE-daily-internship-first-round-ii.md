@@ -1,3 +1,9 @@
+---
+title: "SRE Daily Internship First Round Ii"
+date: 2025-10-14T22:07:44+08:00
+tags: ["shopee"]
+summary: ""
+---
 ## 虾皮-运维日常实习一面面经
 #### 问题
 * 自我介绍

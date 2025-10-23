@@ -1,3 +1,9 @@
+---
+title: "Back End Daily Internship First Round Experience"
+date: 2025-04-26T13:54:03+08:00
+tags: ["xiaoetong"]
+summary: ""
+---
 ## 小鹅通-后端开发日常实习一面面经
 #### 问题
 **Q：你先做个自我介绍吧**
