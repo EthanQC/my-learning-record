@@ -1,3 +1,9 @@
+---
+title: "How To Prepare For An Interview"
+date: 2025-04-10T18:53:06+08:00
+tags: ["interview-experiences"]
+summary: ""
+---
 ## 如何准备面试
 我个人目前还是**以简历和面经为主**，然后配合 ai 来准备的，优先要做到以下几点：
 

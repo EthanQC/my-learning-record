@@ -1,3 +1,9 @@
+---
+title: "Realmagic"
+date: 2025-10-22T18:54:32+08:00
+tags: ["internship-records"]
+summary: ""
+---
 # 锐盟半导体
 入职时间：2025.9.26
 

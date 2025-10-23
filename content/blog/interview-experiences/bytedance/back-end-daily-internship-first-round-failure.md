@@ -1,3 +1,9 @@
+---
+title: "Back End Daily Internship First Round Failure"
+date: 2025-09-17T23:13:39+08:00
+tags: ["bytedance"]
+summary: ""
+---
 ## 字节跳动剪映-后端开发日常实习一面凉经
 #### 问题
 * 自我介绍
