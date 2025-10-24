@@ -15,6 +15,7 @@ WORKDIR /repo
 COPY . .                                   
 WORKDIR /repo/apps/web
 ENV NEXT_PUBLIC_API_BASE_URL=http://api:9000
+ENV NODE_OPTIONS="--max-old-space-size=512"
 RUN npm run build
 
 # -------- runtime --------
