@@ -15,4 +15,4 @@ RUN apk add --no-cache ca-certificates tzdata && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 COPY --from=build /src/server /app/server
 EXPOSE 9000
-CMD ["/app/server"]
+CMD ["/app/server","-addr","0.0.0.0:9000"]
