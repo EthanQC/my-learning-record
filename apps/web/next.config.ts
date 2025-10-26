@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
   experimental: {
     // 移除 fontLoaders，它已经被废弃
   },
+
+  output: 'standalone',
 };
 
 export default nextConfig;
