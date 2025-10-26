@@ -1,0 +1,40 @@
+### 健康检查
+GET http://localhost:9000/health
+
+### 统计信息
+GET http://localhost:9000/api/stats
+
+### 所有文章(blog + notes)
+GET http://localhost:9000/api/posts
+
+### 只看 blog
+GET http://localhost:9000/api/posts?category=murmurs-and-reflection
+
+### 只看 notes
+GET http://localhost:9000/api/posts?category=go
+
+### blog 文章详情
+GET http://localhost:9000/api/posts/blog/murmurs-and-reflection/2025.5.7
+
+### notes 文章详情
+GET http://localhost:9000/api/posts/notes/cpp/STL/vector
+
+### notes 多级路径
+GET http://localhost:9000/api/posts/notes/go/fundamentals/context
+
+### 分类列表(会包含 cpp, go 等)
+GET http://localhost:9000/api/categories
+
+### 创建留言
+POST http://localhost:9000/api/contact
+Content-Type: application/json
+
+{
+  "name": "测试用户",
+  "email": "test@example.com",
+  "message": "这是一条测试留言"
+}
+
+### 查看留言
+GET http://localhost:9000/api/contact
+X-Admin-Token: wkr
