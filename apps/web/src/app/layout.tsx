@@ -1,14 +1,27 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import "@/styles/globals.css";
+import "../styles/globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  // 添加 fallback，如果 Google Fonts 加载失败会使用系统字体
+  fallback: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'Segoe UI',
+    'Roboto',
+    'Helvetica Neue',
+    'Arial',
+    'sans-serif'
+  ],
+  // 设置较短的超时时间
+  adjustFontFallback: true,
+});
 
 export const metadata: Metadata = {
-  title: "Qingverse - 学习记录与博客",
-  description: "记录我的技术学习与成长之路",
+  title: "我的学习记录",
+  description: "技术博客与学习笔记",
 };
 
 export default function RootLayout({
@@ -18,12 +31,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={inter.className}>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+      <body className={`${inter.className} antialiased`}>
+        {children}
       </body>
     </html>
   );

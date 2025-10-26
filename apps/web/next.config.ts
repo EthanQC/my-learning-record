@@ -1,18 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
+  
+  // 开发模式优化
+  reactStrictMode: true,
+  
+  // Turbopack 配置（Next.js 16 默认使用）
   experimental: {
-    fontLoaders: [
-      {
-        loader: '@next/font/google',
-        options: {
-          // 使用国内镜像
-          googleFontsUrl: 'https://fonts.font.im',
-        },
-      },
-    ],
+    // 移除 fontLoaders，它已经被废弃
   },
 };
 
