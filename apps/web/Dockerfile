@@ -19,6 +19,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY apps/web ./ 
 # COPY content ./content   # 若 generateStaticParams 在构建期读 content，则取消注释
 ENV NEXT_PUBLIC_API_BASE_URL=http://api:9000
+ENV NODE_OPTIONS="--max-old-space-size=512"
 RUN npm run build
 
 # -------- runtime --------
