@@ -20,7 +20,7 @@ COPY . .
 ARG NEXT_PUBLIC_API_BASE_URL=https://qingverse.com
 ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
 
-# 给构建提一点内存余量（本地 32G 其实无所谓）
+# 给构建提一点内存余量
 ENV NODE_OPTIONS=--max-old-space-size=2048
 
 # 使用 BuildKit 缓存 next/.npm
@@ -39,8 +39,7 @@ COPY --from=build /repo/apps/web/.next/standalone ./
 COPY --from=build /repo/apps/web/.next/static ./apps/web/.next/static
 COPY --from=build /repo/apps/web/public       ./apps/web/public
 
-# 如果服务器用卷挂载 content，请保持这个容器内路径：
-# /app/apps/web/content  （compose 我会给你配好）
+# 如果服务器用卷挂载 content，请保持这个容器内路径：/app/apps/web/content
 
 EXPOSE 3000
 CMD ["node", "server.js"]

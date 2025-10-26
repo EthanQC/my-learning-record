@@ -1,0 +1,12 @@
+{$DOMAIN} {
+  encode gzip
+
+  @api path /api/*
+  reverse_proxy @api api:9000
+  reverse_proxy web:3000
+
+  header {
+    X-Frame-Options "SAMEORIGIN"
+    Referrer-Policy "strict-origin-when-cross-origin"
+  }
+}
