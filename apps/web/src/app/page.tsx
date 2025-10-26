@@ -1,75 +1,105 @@
-// apps/web/src/app/page.tsx
-import Link from "next/link";
-import { getCategoriesWithPosts, toDateString } from "@/lib/posts";
+import Link from 'next/link';
+import { getStats, getCategories } from '@/lib/api';
+import { formatDate } from '@/lib/utils';
+import { Card } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
 
-const prettyName: Record<string, string> = {
-  "internship-records": "实习记录",
-  "interview-experiences": "面经",
-  "join-in-open-source": "开源",
-  "murmurs-and-reflection": "碎碎念",
-  notes: "技术笔记",
-};
-
-export default async function Home() {
-  const { byCat, ordered } = getCategoriesWithPosts();
-
-  // 每个分类取最近 3 篇
-  const summaries = (ordered ?? []).map((cat) => ({
-    cat,
-    posts: (byCat?.[cat] ?? []).slice(0, 3),
-  }));
+export default async function HomePage() {
+  const [stats, categories] = await Promise.all([
+    getStats(),
+    getCategories(),
+  ]);
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-10">
-      {/* Hero */}
-      <section className="mb-12">
-        <h1 className="text-3xl font-bold">Qingverse</h1>
-        <p className="text-gray-600 mt-2">
-          这里是我的学习记录与博客，主要聚焦 Go 后端与工程化。
+    <div className="container mx-auto max-w-6xl px-6 py-12">
+      {/* Hero Section */}
+      <section className="text-center mb-16 animate-fade-in">
+        <h1 className="text-5xl font-bold text-gray-900 mb-4">
+          欢迎来到 <span className="text-pink-600">Qingverse</span>
+        </h1>
+        <p className="text-xl text-gray-600 mb-8">
+          这里记录着我的技术学习与成长之路 💖
         </p>
-        <div className="mt-4">
-          <Link
-            href="/blog"
-            className="inline-block rounded-lg px-4 py-2 border hover:bg-gray-50"
-          >
-            进入博客 →
+        <div className="flex gap-4 justify-center">
+          <Link href="/posts">
+            <Button variant="primary" size="lg">
+              开始阅读 →
+            </Button>
+          </Link>
+          <Link href="/about">
+            <Button variant="outline" size="lg">
+              关于我
+            </Button>
           </Link>
         </div>
       </section>
 
-      {/* 每个分类最近 3 篇 */}
-      <section className="space-y-8">
-        {summaries.map(({ cat, posts }) =>
-          posts.length ? (
-            <div key={cat}>
-              <h2 className="text-xl font-semibold mb-3">
-                {prettyName[cat] ?? cat}
-                <Link
-                  href="/blog"
-                  className="ml-3 text-sm text-blue-600 hover:underline"
-                >
-                  更多 →
-                </Link>
-              </h2>
-              <ul className="space-y-2">
-                {posts.map((p) => (
-                  <li key={p.href} className="leading-6">
-                    <Link className="text-blue-600 hover:underline" href={p.href}>
-                      {p.title}
-                    </Link>
-                    <span className="ml-2 text-sm text-gray-500">
-                      {toDateString(p.date)}
-                    </span>
-                    {p.summary && (
-                      <div className="text-sm text-gray-600">{p.summary}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null
-        )}
+      {/* 统计卡片 */}
+      <section className="grid md:grid-cols-3 gap-6 mb-16">
+        <Card className="text-center">
+          <div className="text-4xl font-bold text-pink-600 mb-2">
+            {stats.total_posts}
+          </div>
+          <div className="text-gray-600">篇文章</div>
+        </Card>
+        <Card className="text-center">
+          <div className="text-4xl font-bold text-pink-600 mb-2">
+            {stats.total_categories}
+          </div>
+          <div className="text-gray-600">个分类</div>
+        </Card>
+        <Card className="text-center">
+          <div className="text-4xl font-bold text-pink-600 mb-2">
+            {formatDate(stats.last_update)}
+          </div>
+          <div className="text-gray-600">最后更新</div>
+        </Card>
       </section>
-    </main>
+
+      {/* 最近文章 */}
+      <section className="mb-16">
+        <h2 className="text-3xl font-bold mb-6">最近文章</h2>
+        <div className="space-y-4">
+          {stats.recent_posts.map((post) => (
+            <Card key={post.slug} className="hover:border-pink-200 border border-transparent">
+              <Link href={`/posts/${post.slug}`}>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-pink-600 transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-gray-600 mb-3">{post.summary}</p>
+                <div className="flex items-center gap-3 text-sm text-gray-500">
+                  <span>{formatDate(post.date)}</span>
+                  <span>·</span>
+                  <Badge>{post.category}</Badge>
+                </div>
+              </Link>
+            </Card>
+          ))}
+        </div>
+        <div className="text-center mt-8">
+          <Link href="/posts">
+            <Button variant="outline">查看全部文章 →</Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* 分类卡片 */}
+      <section>
+        <h2 className="text-3xl font-bold mb-6">浏览分类</h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          {categories.map((category) => (
+            <Link key={category.name} href={`/categories/${category.name}`}>
+              <Card className="text-center hover:border-pink-300 border border-transparent">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {category.label}
+                </h3>
+                <p className="text-gray-600">{category.count} 篇文章</p>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
