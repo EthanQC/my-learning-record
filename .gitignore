@@ -2,12 +2,12 @@ node_modules
 .next
 .DS_Store
 dist
-.env*
+.env
 .idea
+*.log
 # Go
 bin/
 
 # 真实生产文件只存在服务器，不要提交
-deploy/.env
 deploy/docker-compose.yml
 deploy/Caddyfile
