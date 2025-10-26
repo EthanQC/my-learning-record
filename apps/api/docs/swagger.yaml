@@ -1,0 +1,248 @@
+basePath: /api
+definitions:
+  model.Category:
+    properties:
+      count:
+        example: 42
+        type: integer
+      label:
+        example: 碎碎念
+        type: string
+      name:
+        example: murmurs-and-reflection
+        type: string
+    type: object
+  model.Contact:
+    properties:
+      created_at:
+        example: "2025-05-07T10:30:00Z"
+        type: string
+      email:
+        example: zhangsan@example.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      message:
+        example: 你好,我想问...
+        type: string
+      name:
+        example: 张三
+        type: string
+    type: object
+  model.ContactInput:
+    properties:
+      email:
+        example: zhangsan@example.com
+        maxLength: 200
+        type: string
+      message:
+        example: 你好,我想问...
+        minLength: 1
+        type: string
+      name:
+        example: 张三
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - email
+    - message
+    - name
+    type: object
+  model.PostMeta:
+    properties:
+      category:
+        example: murmurs-and-reflection
+        type: string
+      date:
+        example: "2025-05-07T00:00:00Z"
+        type: string
+      slug:
+        example: blog/murmurs-and-reflection/2025.5.7
+        type: string
+      summary:
+        example: 今天学习了...
+        type: string
+      tags:
+        example:
+        - 碎碎念
+        - 日常
+        items:
+          type: string
+        type: array
+      title:
+        example: 碎碎念
+        type: string
+    type: object
+  model.Stats:
+    properties:
+      last_update:
+        example: "2025-05-07T00:00:00Z"
+        type: string
+      recent_posts:
+        items:
+          $ref: '#/definitions/model.PostMeta'
+        type: array
+      total_categories:
+        example: 5
+        type: integer
+      total_posts:
+        example: 128
+        type: integer
+    type: object
+host: localhost:9000
+info:
+  contact:
+    email: 2367918546@qq.com
+    name: Ethan
+  description: 个人学习记录网站 API - 支持博客文章、笔记和留言管理
+  title: Qingverse API
+  version: "1.0"
+paths:
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有分类及文章数量统计
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分类列表
+          schema:
+            items:
+              $ref: '#/definitions/model.Category'
+            type: array
+        "500":
+          description: 服务器错误
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 获取分类列表
+      tags:
+      - 文章管理
+  /contact:
+    get:
+      consumes:
+      - application/json
+      description: 管理员查看所有留言(需要 Token)
+      parameters:
+      - description: 管理员 Token
+        in: header
+        name: X-Admin-Token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 留言列表
+          schema:
+            items:
+              $ref: '#/definitions/model.Contact'
+            type: array
+        "401":
+          description: 未授权
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: 服务器错误
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - AdminAuth: []
+      summary: 查看留言列表
+      tags:
+      - 留言管理
+    post:
+      consumes:
+      - application/json
+      description: 用户提交联系留言
+      parameters:
+      - description: 留言内容
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.ContactInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/model.Contact'
+        "400":
+          description: 参数错误
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: 服务器错误
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 提交留言
+      tags:
+      - 留言管理
+  /posts:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有文章元信息,支持分类筛选
+      parameters:
+      - description: '分类筛选(如: murmurs-and-reflection)'
+        in: query
+        name: category
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 文章列表
+          schema:
+            items:
+              $ref: '#/definitions/model.PostMeta'
+            type: array
+        "500":
+          description: 服务器错误
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 获取文章列表
+      tags:
+      - 文章管理
+  /stats:
+    get:
+      consumes:
+      - application/json
+      description: 获取文章总数、分类数、最近更新等统计信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 统计数据
+          schema:
+            $ref: '#/definitions/model.Stats'
+        "500":
+          description: 服务器错误
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: 获取网站统计
+      tags:
+      - 统计
+schemes:
+- http
+- https
+swagger: "2.0"
