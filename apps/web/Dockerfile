@@ -1,34 +1,46 @@
-# -------- deps --------
+# syntax=docker/dockerfile:1.6
+
+######## deps ########
 FROM node:22-alpine AS deps
-WORKDIR /app
-# 只拷贝 web 的包文件
+WORKDIR /repo/apps/web
 COPY apps/web/package*.json ./
-# 有 lockfile 用 ci，避免额外写入；没有就 install
-RUN if [ -f package-lock.json ]; then \
-      npm ci --no-audit --no-fund; \
-    else \
-      npm install --no-audit --no-fund; \
-    fi
+RUN npm ci --no-audit --no-fund
 
-# -------- build --------
+######## build ########
 FROM node:22-alpine AS build
-WORKDIR /app
-# 带上依赖（这一步是你之前缺的）
-COPY --from=deps /app/node_modules ./node_modules
-# 拷贝 web 源码；如果你的构建需要 content 参与（如生成静态路径），一起拷贝
-COPY apps/web ./ 
-# COPY content ./content   # 若 generateStaticParams 在构建期读 content，则取消注释
-ENV NEXT_PUBLIC_API_BASE_URL=http://api:9000
-ENV NODE_OPTIONS="--max-old-space-size=512"
-RUN npm run build
+WORKDIR /repo
 
-# -------- runtime --------
+# 带上依赖
+COPY --from=deps /repo/apps/web/node_modules apps/web/node_modules
+
+# 拷贝整个仓库（构建期可能读取 content 生成静态路由）
+COPY . .
+
+# 通过 build-arg 传入对外 API 地址（默认生产）
+ARG NEXT_PUBLIC_API_BASE_URL=https://qingverse.com
+ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
+
+# 给构建提一点内存余量（本地 32G 其实无所谓）
+ENV NODE_OPTIONS=--max-old-space-size=2048
+
+# 使用 BuildKit 缓存 next/.npm
+RUN --mount=type=cache,target=/root/.npm \
+    --mount=type=cache,target=/repo/apps/web/.next/cache \
+    npm --prefix apps/web run build
+# 构建完成后应得到 apps/web/.next/standalone + .next/static
+
+######## runtime ########
 FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-COPY --from=build /app/.next ./.next
-COPY --from=build /app/public ./public
-COPY --from=deps  /app/node_modules ./node_modules
-COPY apps/web/package.json ./package.json
+
+# 拷贝 standalone 运行产物（不需要 node_modules）
+COPY --from=build /repo/apps/web/.next/standalone ./
+COPY --from=build /repo/apps/web/.next/static ./apps/web/.next/static
+COPY --from=build /repo/apps/web/public       ./apps/web/public
+
+# 如果服务器用卷挂载 content，请保持这个容器内路径：
+# /app/apps/web/content  （compose 我会给你配好）
+
 EXPOSE 3000
-CMD ["npm","run","start","--","-p","3000"]
+CMD ["node", "server.js"]

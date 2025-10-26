@@ -20,9 +20,7 @@ services:
       retries: 20
 
   api:
-    build:
-      context: ../apps/api
-      dockerfile: Dockerfile
+    image: ${DH_USER}/qingverse-api:${TAG}
     container_name: qv-api
     restart: unless-stopped
     environment:
@@ -35,19 +33,19 @@ services:
     networks: [app]
 
   web:
-    build:
-      context: ..
-      dockerfile: apps/web/Dockerfile
+    image: ${DH_USER}/qingverse-web:${TAG}
     container_name: qv-web
     restart: unless-stopped
     environment:
       NODE_ENV: production
+      # 运行时服务端读取时可用，但 Next 公共变量是“构建时注入”的
       NEXT_PUBLIC_API_BASE_URL: https://qingverse.com
     networks: [app]
     ports:
       - "3000:3000"
+    # 挂载内容目录（文章一改即可生效）
     volumes:
-      - ../content:/app/content:ro
+      - ../content:/app/apps/web/content:ro
 
   caddy:
     image: caddy:2
