@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-pink-50 to-white;
+  }
+}
+
+@layer components {
+  /* 粉色按钮 */
+  .btn-pink {
+    @apply bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition-colors duration-200;
+  }
+
+  /* 卡片样式 */
+  .card {
+    @apply bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6;
+  }
+
+  /* 粉色徽章 */
+  .badge-pink {
+    @apply inline-block bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm;
+  }
+}
+
+/* Markdown 内容样式 */
+.prose {
+  @apply max-w-none;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  @apply text-gray-900 font-bold;
+}
+
+.prose a {
+  @apply text-pink-600 hover:text-pink-700 no-underline hover:underline;
+}
+
+.prose code {
+  @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm;
+}
+
+.prose pre {
+  @apply bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-pink-300 pl-4 italic text-gray-600;
+}
