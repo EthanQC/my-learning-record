@@ -19,6 +19,7 @@ const inter = Inter({
   adjustFontFallback: true,
 });
 
+export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: "我的学习记录",
   description: "技术博客与学习笔记",

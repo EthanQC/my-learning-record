@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import { getStats, getCategories } from '@/lib/api';
 import { formatDate } from '@/lib/utils';
