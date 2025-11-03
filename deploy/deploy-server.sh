@@ -28,19 +28,19 @@ fi
 source .env
 
 echo "=== Pulling Images from Docker Hub ==="
-docker-compose pull
+docker compose pull
 
 echo "=== Stopping Old Containers ==="
-docker-compose down
+docker compose down
 
 echo "=== Starting Services ==="
-docker-compose up -d
+docker compose up -d
 
 echo "=== Waiting for services to be healthy ==="
 sleep 10
 
 echo "=== Deployment Completed! ==="
-docker-compose ps
+docker compose ps
 
 echo ""
 echo "Services are running:"
