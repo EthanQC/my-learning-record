@@ -38,8 +38,8 @@ echo "=== Pushing API Image ==="
 docker push ${DH_USER}/qingverse-api:${TAG}
 
 echo "=== Building Web Image ==="
-cd ../web
-docker build -t ${DH_USER}/qingverse-web:${TAG} .
+cd ../..
+docker build -t ${DH_USER}/qingverse-web:${TAG} -f apps/web/Dockerfile .
 
 echo "=== Pushing Web Image ==="
 docker push ${DH_USER}/qingverse-web:${TAG}
