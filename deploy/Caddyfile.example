@@ -1,9 +1,16 @@
 {$DOMAIN} {
-  encode gzip
+  encode zstd gzip
 
-  @api path /api/*
-  reverse_proxy @api api:9000
-  reverse_proxy web:3000
+    # 命中 /api/* 和 /health 走后端
+    @api path /api/* /health
+    handle @api {
+        reverse_proxy api:9000
+    }
+
+    # 其他流量走前端
+    handle {
+        reverse_proxy web:3000
+    }
 
   header {
     X-Frame-Options "SAMEORIGIN"
