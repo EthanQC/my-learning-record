@@ -26,7 +26,7 @@ services:
       retries: 20
 
   api:
-    image: ${DH_USER}/qingverse-api:${TAG}
+    image: ${REGISTRY}/qingverse-api:${TAG}
     container_name: qv-api
     restart: unless-stopped
     environment:
@@ -41,7 +41,7 @@ services:
     networks: [app]
 
   web:
-    image: ${DH_USER}/qingverse-web:${TAG}
+    image: ${REGISTRY}/qingverse-web:${TAG}
     container_name: qv-web
     restart: unless-stopped
     environment:
@@ -51,7 +51,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ../content:/app/apps/web/content:ro
+      - ../content:/app/content:ro
 
   caddy:
     image: caddy:2
