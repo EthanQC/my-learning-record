@@ -1,3 +1,7 @@
+{
+    email admin@qingverse.com   # ← 换成你自己的可用邮箱
+}
+
 {$DOMAIN} {
   encode zstd gzip
 
