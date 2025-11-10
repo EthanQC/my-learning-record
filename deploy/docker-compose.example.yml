@@ -39,6 +39,8 @@ services:
       mysql:
         condition: service_healthy
     networks: [app]
+    mem_limit: 384m
+    cpus: "0.80"
 
   web:
     image: ${REGISTRY}/qingverse-web:${TAG}
@@ -46,12 +48,17 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
+      NEXT_PUBLIC_API_URL: https://qingverse.com/api
       NEXT_PUBLIC_API_BASE_URL: ${PUBLIC_API_BASE_URL}
+      INTERNAL_API_BASE_URL: http://api:9000
+      NODE_OPTIONS: --max_old_space_size=256
     networks: [app]
     ports:
       - "3000:3000"
     volumes:
       - ../content:/app/content:ro
+    mem_limit: 512m
+    cpus: "1.00"
 
   caddy:
     image: caddy:2
