@@ -5,16 +5,20 @@
 {$DOMAIN} {
   encode zstd gzip
 
-    # 命中 /api/* 和 /health 走后端
-    @api path /api/* /health
-    handle @api {
-        reverse_proxy api:9000
-    }
+  # 1) /api/* 剥掉前缀后再转发到后端
+  handle_path /api/* {
+    reverse_proxy http://api:9000
+  }
 
-    # 其他流量走前端
-    handle {
-        reverse_proxy web:3000
-    }
+  # 2) 健康检查直接打到后端 /health
+  handle /health {
+    reverse_proxy http://api:9000
+  }
+
+  # 3) 其余都走前端
+  handle {
+    reverse_proxy http://web:3000
+  }
 
   header {
     X-Frame-Options "SAMEORIGIN"
