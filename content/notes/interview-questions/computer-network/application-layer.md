@@ -1,197 +1,81 @@
-## HTTP 与 HTTPS
-
-可以说一下 gRPC 是一个什么样的协议吗？为什么会产生这样一个协议出来？
-
-* 那 gRPC 相对于 RESTful 那种的接口设计有什么优势吗？
-
-* 你刚刚提到了 RESTful 状态的问题，那你在用 gRPC 和其他的组件其他的服务做协调的时候，其中有可能会遇到有什么样的错误？或者你们在用 gRPC 来做组件的联调的时候会跟 RESTful 有什么不同吗，有没有相关的感受？
-
-
-
-## HTTP 与 HTTPS
+## HTTP
 #### HTTP 是什么？
 
 **HTTP**（HyperText Transfer Protocol） 是一种**应用层、请求-响应式（客户端发请求，服务端回相应）、面向资源**的协议，用于在客户端与服务端之间传输数据
 
-它本身**无连接、无状态（每个请求独立）**（会话靠 Cookie/Token/Session 存在应用层），通过 URL/URI 标识资源，用 方法（GET/POST/PUT/DELETE…）表达意图，用状态码表达结果，配合头部与缓存语义完成内容协商、压缩、鉴权、缓存等
+它本身**无连接、无状态（每个请求独立）**（会话靠 Cookie/Token/Session 存在应用层），通过 URL/URI 标识资源，用方法（GET/POST/PUT/DELETE…）表达意图，用状态码表达结果，配合头部与缓存语义完成内容协商、压缩、鉴权、缓存等
 
 协议在 HTTP/1.1→HTTP/2→HTTP/3(QUIC) 演进中提升性能与可靠性，安全版是 HTTPS（HTTP over TLS）
 
 #### HTTP 常见的状态码有哪些？
 
-##### 1xx 信息
+1xx：提示信息，是协议处理的一种中间状态，实际用到的比较少
 
-* 100 Continue：配合大 Body；服务端允许继续传
+2xx：服务器成功处理了请求
 
-* 101 Switching Protocols：WebSocket 升级
-
-* 103 Early Hints：提早下发 Link: rel=preload 加速首屏
-
-##### 2xx 成功
-
-* 200 OK：常规成功
-
-* 201 Created：创建资源（务必带 Location 指向新资源）
-
-* 202 Accepted：异步受理（排队中，结果稍后）
+* **200 OK：常规成功**
 
 * 204 No Content：成功但无响应体（删除/幂等更新）
 
-* 206 Partial Content：配合 Range 断点续传
+* 206 Partial Content：应用于 HTTP 分块下载或断点续传，表示相应返回的数据并不是资源的全部，而是其中的一部分
 
-##### 3xx 重定向 / 缓存
+**3xx**：重定向，资源位置发生变动，需要重新发送请求
 
-* 301 vs 308：永久重定向；308 保持方法（POST 仍 POST）
+* 301 Moved Permanently：永久重定向
 
-* 302/307/303：临时；307 保持方法，303 强制 GET（表单/支付回跳）
+* 302 Found：临时重定向，资源还在，但暂时需要用另一个 url 访问
 
-* 304 Not Modified：命中协商缓存（ETag/If-None-Match 或 Last-Modified）
+* 304 Not Modified：资源未修改，缓存重定向，重定向已存在的本地缓存文件
 
-##### 4xx 客户端错误
+**4xx**：客户端错误
 
-* 400 Bad Request：参数/格式不对
+* 400 Bad Request：请求格式错误
 
-* 401 Unauthorized：未认证（通常带 WWW-Authenticate），有登录后还不许看是 403
+* 401 Unauthorized：未认证，鉴权相关
 
 * 403 Forbidden：已认证但无权限/被阻断
 
-* 404 Not Found：资源不存在/隐藏实现细节
+* 404 Not Found：资源不存在或未找到
 
-* 405 Method Not Allowed：记得回 Allow: GET,POST
+5xx：服务端/网关内部错误
 
-* 408 Request Timeout：客户端太慢
+* **500 Internal Server Error：跟 400 有点像，是一个笼统通用的错误码**
 
-* 409 Conflict：版本冲突/资源状态冲突（如并发更新）
+* 501 Not Implemented：方法未实现，请求的功能还未支持
 
-* 410 Gone：资源永久移除（SEO 友好）
+* 502 Bad Gateway：网关或代理返回的错误码，表示服务器自身工作正常但在访问后端服务器时发生了错误
 
-* 412 Precondition Failed：条件更新失败（配 If-Match 做乐观锁）
-
-* 413/414/415：体积过大/URI 过长/媒体类型不支持
-
-* 422 Unprocessable Entity：语义校验失败（字段合法但不满足业务规则；JSON API/REST 常用）
-
-* 429 Too Many Requests：限流，务必带 Retry-After
-
-##### 5xx 服务端/网关
-
-* 500 Internal Server Error：兜底，别滥用
-
-* 501 Not Implemented：方法未实现
-
-* 502 Bad Gateway：反向代理收到上游异常
-
-* 503 Service Unavailable：过载/维护，可带 Retry-After
-
-* 504 Gateway Timeout：上游超时（区分应用内超时 vs 网关超时）
+* **503 Service Unavailable：服务器当前很忙，暂时无法响应**
 
 #### HTTP 常见字段有哪些？
 
-##### 请求相关（Client → Server）
+Host：发送请求时指定域名
 
-* Host（H1） / :authority（H2/H3）：虚拟主机选择。一定要对齐证书和路由
+Content-Length：服务器返回的数据长度
 
-* User-Agent：客户端标识；现代浏览器更倾向 Client Hints（Sec-CH-…）
+Connection：客户端要求服务器使用 HTTP 长连接
 
-* Accept / Accept-Language / Accept-Encoding：内容协商（br,gzip 优先）
+Content-Type：服务器返回的数据格式
 
-* Authorization：Bearer <token>/Basic ...；失败配合服务端返回 WWW-Authenticate
+Content-Encoding：服务器返回的数据使用的压缩格式
 
-* Referer（拼写历史错别字）和 Origin：跨站安全判定更看 Origin（更严格）
+#### HTTP 请求报文和响应报文是怎样的？
 
-* If-None-Match / If-Modified-Since：协商缓存请求（命中回 304）
+HTTP请求报文：
 
-* Range / If-Range：断点续传；大文件分块下载
+* 请求行：包含请求方法（GET、POST等）、URL、HTTP版本
+* 请求头：包含客户端信息、请求内容类型、语言、Cookie等
+* 请求体：仅在某些请求方法（如POST）中包含，包含实际的数据内容
 
-##### 响应相关（Server → Client）
+HTTP响应报文：
 
-* Content-Type：MIME + charset（例如 application/json; charset=utf-8）
-
-* Content-Length：字节长度；H1 分块则用 Transfer-Encoding: chunked（H2/H3 不用 chunked）
-
-* Content-Encoding：br/gzip 压缩；与 Accept-Encoding 匹配
-
-* Content-Disposition：attachment; filename*=UTF-8''report.pdf（注意 filename* 处理国际化）
-
-* Location：201 Created 指向新资源；3xx 重定向目标
-
-* Retry-After：配 429/503 指导退避
-
-* ETag / Last-Modified：与条件请求成对使用，降低带宽与 TTFB
-
-* Cache-Control / Expires / Age / Vary：缓存策略四件套（见下）
-
-* Accept-Ranges / Content-Range：配 206 返回分段
-
-##### 缓存与协商（高频区）
-
-* Cache-Control（常见指令）：
-
-  * 静态：public, max-age=31536000, immutable
-
-  * 动态：no-store（不落盘）、no-cache（可缓存但回源验证）、must-revalidate、s-maxage（代理缓存）、stale-while-revalidate、stale-if-error
-
-* ETag：强/弱标记（W/"abc"）。弱 ETag 适合模板渲染的小改动
-
-* Vary：区分缓存键，如 Vary: Accept-Encoding, Origin, Authorization（注意：带 Authorization 会显著降低共享缓存命中）
-
-* 304 Not Modified：只有发了条件头才可能拿到；强缓存命中则直接 200(from cache)。
-
-##### CORS（浏览器必问）
-
-* 预检请求：Origin + Access-Control-Request-Method/Headers（OPTIONS）
-
-* 响应：Access-Control-Allow-Origin: https://example.com（或 *）、Access-Control-Allow-Methods/Headers、Access-Control-Allow-Credentials: true（有 Credentials 就不能用 *）、Access-Control-Max-Age
-
-* 若要前端读到自定义头，记得 Access-Control-Expose-Headers。
-
-##### 安全强化（建议默认开启）
-
-* Strict-Transport-Security（HSTS）：强制 HTTPS，示例：max-age=31536000; includeSubDomains; preload
-
-* Content-Security-Policy（CSP）：限制资源来源，防 XSS
-
-* X-Content-Type-Options: nosniff：禁 MIME 嗅探
-
-* X-Frame-Options: DENY / SAMEORIGIN：防点击劫持（或 CSP frame-ancestors 取代）
-
-* Referrer-Policy：strict-origin-when-cross-origin 推荐
-
-* Permissions-Policy：取代老 Feature-Policy，限制传感器/摄像头等权限
-
-* COOP/COEP/CORP：Cross-Origin-Opener/Embedder/Resource-Policy，加强跨站隔离
-
-##### Cookie（会话常识）
-
-* Set-Cookie：Secure; HttpOnly; SameSite=Lax|Strict|None; Path=/; Domain=...; Max-Age=...
-
-* SameSite=None 必须配 Secure（否则被拒收）
-
-* Cookie：请求携带；体积/数量受限（注意头爆）
-
-##### 代理/网关/可观测
-
-* Forwarded（标准）或 X-Forwarded-For/Proto/Host（事实标准）：传递真实客户端 IP/协议
-
-* Via：穿越的代理链
-
-* Traceparent / Tracestate：W3C 分布式追踪；配合 X-Request-ID 或 trace_id 便于排障
-
-##### 连接/升级（少见但会被问）
-
-* Connection: keep-alive/close（H1）；H2/H3 不使用 hop-by-hop 连接头
-
-* Upgrade: websocket + Connection: Upgrade + 一组 Sec-WebSocket-*：握手升级到 WS
-
-* TE/Transfer-Encoding：H1 的分块传输；H2/H3 不允许 Transfer-Encoding: chunked。
-
-##### HTTP/2 / HTTP/3 特性提示
-
-* 伪首部（:method, :scheme, :authority, :path）替代 H1 起始行；首部名小写、压缩（HPACK/QPACK）、多路复用
-
-* Host 在 H2/H3 仍常保留以兼容中间件，但权威以 :authority 为准
+* 状态行：包含HTTP版本、状态码（如200、404等）、状态描述
+* 响应头：包含服务器信息、缓存策略、内容类型等
+* 响应体：包含返回的实际数据（如HTML页面、JSON等）
 
 #### GET 和 POST 有什么区别？
+
+
 
 ##### 语义与状态码
 GET：读取，常见 200/304/206
@@ -276,7 +160,13 @@ HTML 表单 method="get" 会把字段编码进查询串；method="post" 进请�
 #### HTTP/1.1 如何优化？如何避免发送 HTTP 请求？如何减少 HTTP 请求次数？如何减少 HTTP 响应的数据大小？
 
 
+可以说一下 gRPC 是一个什么样的协议吗？为什么会产生这样一个协议出来？
 
+* 那 gRPC 相对于 RESTful 那种的接口设计有什么优势吗？
+
+* 你刚刚提到了 RESTful 状态的问题，那你在用 gRPC 和其他的组件其他的服务做协调的时候，其中有可能会遇到有什么样的错误？或者你们在用 gRPC 来做组件的联调的时候会跟 RESTful 有什么不同吗，有没有相关的感受？
+
+## HTTPS
 #### HTTPS RSA 的握手过程是什么？
 
 
