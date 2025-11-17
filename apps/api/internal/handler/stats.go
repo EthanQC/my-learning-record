@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"sort"
+	"time"
 
 	"github.com/EthanQC/my-learning-record/apps/api/internal/model"
 	"github.com/EthanQC/my-learning-record/apps/api/internal/service"
@@ -32,25 +33,45 @@ func (h *StatsHandler) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// 分类数（忽略错误也可；如需严格可以加判错）
 	categories, _ := h.mdService.GetCategories()
 
+	// 倒序：新→旧
 	sort.Slice(posts, func(i, j int) bool {
 		return posts[i].Date.After(posts[j].Date)
 	})
 
-	recent := posts
-	if len(recent) > 5 {
-		recent = recent[:5]
+	// 最近 5 篇；且保证空数组返回 []
+	var recent []model.PostMeta
+	switch n := len(posts); {
+	case n == 0:
+		recent = []model.PostMeta{}
+	case n <= 5:
+		recent = append([]model.PostMeta(nil), posts...) // 拷贝一份，避免共享底层数组
+	default:
+		recent = append([]model.PostMeta(nil), posts[:5]...)
 	}
 
-	var lastUpdate = posts[0].Date
+	// 最近更新时间：有文章取首篇时间；无文章给零值或当前时间均可
+	// 如果 model.Stats.LastUpdate 是 time.Time，零值会序列化成 "0001-01-01T00:00:00Z"
+	// 你也可以用 time.Now() 代替，看产品需求。
+	var lastUpdate time.Time
 	if len(posts) > 0 {
 		lastUpdate = posts[0].Date
+	} else {
+		// lastUpdate = time.Time{} // 零值；或：
+		lastUpdate = time.Now().UTC()
+	}
+
+	// categories 只取数量；为空也能正常统计
+	totalCategories := 0
+	if categories != nil {
+		totalCategories = len(categories)
 	}
 
 	stats := model.Stats{
 		TotalPosts:      len(posts),
-		TotalCategories: len(categories),
+		TotalCategories: totalCategories,
 		LastUpdate:      lastUpdate,
 		RecentPosts:     recent,
 	}
