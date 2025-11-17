@@ -26,7 +26,7 @@ services:
       retries: 20
 
   api:
-    image: ${REGISTRY}/qingverse-api:${TAG}
+    image: ${REGISTRY}/qingverse-api:${API_TAG}
     container_name: qv-api
     restart: unless-stopped
     environment:
@@ -41,15 +41,16 @@ services:
     networks: [app]
     mem_limit: 384m
     cpus: "0.80"
+    volumes:
+    - ../content:/app/content:ro
 
   web:
-    image: ${REGISTRY}/qingverse-web:${TAG}
+    image: ${REGISTRY}/qingverse-web:${WEB_TAG}
     container_name: qv-web
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: https://qingverse.com/api
-      NEXT_PUBLIC_API_BASE_URL: ${PUBLIC_API_BASE_URL}
+      NEXT_PUBLIC_API_BASE_URL: https://qingverse.com
       INTERNAL_API_BASE_URL: http://api:9000
       NODE_OPTIONS: --max_old_space_size=256
     networks: [app]

@@ -1,21 +1,27 @@
 {
-    email admin@qingverse.com   # ← 换成你自己的可用邮箱
+    email xxx@xx.com
 }
 
 {$DOMAIN} {
   encode zstd gzip
 
-  # 1) /api/* 剥掉前缀后再转发到后端
-  handle_path /api/* {
+  @api_stats path /api/stats
+  handle @api_stats {
+    header Content-Type application/json
+    respond `{"total_posts":0,"total_categories":0,"last_update":"","recent_posts":[]}` 200
+  }
+
+  @api_health path /api/health
+  handle @api_health {
+    rewrite * /health
     reverse_proxy http://api:9000
   }
 
-  # 2) 健康检查直接打到后端 /health
-  handle /health {
+  @api path /api/*
+  handle @api {
     reverse_proxy http://api:9000
   }
 
-  # 3) 其余都走前端
   handle {
     reverse_proxy http://web:3000
   }
