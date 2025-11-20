@@ -35,6 +35,7 @@ services:
       CORS_ORIGIN: ${CORS_ORIGIN}
       ADDR: 0.0.0.0:9000
       ADMIN_TOKEN: ${ADMIN_TOKEN:-}
+      CONTENT_DIR: /app/content
     depends_on:
       mysql:
         condition: service_healthy
