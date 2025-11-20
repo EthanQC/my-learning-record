@@ -5,12 +5,6 @@
 {$DOMAIN} {
   encode zstd gzip
 
-  @api_stats path /api/stats
-  handle @api_stats {
-    header Content-Type application/json
-    respond `{"total_posts":0,"total_categories":0,"last_update":"","recent_posts":[]}` 200
-  }
-
   @api_health path /api/health
   handle @api_health {
     rewrite * /health
