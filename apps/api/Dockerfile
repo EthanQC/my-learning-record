@@ -6,6 +6,9 @@
 FROM golang:1.24-alpine AS build
 WORKDIR /src
 
+ARG GOPROXY=https://proxy.golang.com.cn,https://goproxy.cn,https://goproxy.io,direct
+ENV GOPROXY=$GOPROXY
+
 # 证书 + git（go mod 取包需要）
 RUN apk add --no-cache ca-certificates git tzdata
 
