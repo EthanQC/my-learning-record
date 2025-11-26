@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const socialLinks = [
   { name: 'GitHub', url: 'https://github.com/EthanQC' },
-  { name: 'Email', url: 'mailto:wkr1835484520@qq.com' },
+  { name: 'Email', url: 'mailto:2367918546@qq.com' },
 ];
 
 export function Footer() {
@@ -27,6 +27,18 @@ export function Footer() {
               </Link>
             ))}
           </div>
+        </div>
+
+        {/* ICP 备案信息 */}
+        <div className="mt-4 pt-4 border-t border-pink-100 text-center">
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-pink-600 transition-colors text-xs"
+          >
+            粤ICP备2025487305号
+          </a>
         </div>
       </div>
     </footer>
