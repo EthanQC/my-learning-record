@@ -2,7 +2,7 @@ name: Build & Deploy Qingverse
 
 on:
   push:
-    branches: [ "dev/wkr" ]
+    branches: [ "main" ]
     paths:
       - "apps/api/**"
       - "apps/web/**"
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: dev/wkr
+          ref: main
 
       - name: Set tag
         id: vars
