@@ -1,14 +1,141 @@
-# My learning record
-本项目
-
-
+# My Learning Record
 ![Build Status](https://img.shields.io/github/actions/workflow/status/EthanQC/my-learning-record/deploy.yml?label=Build&logo=github)
 ![Go Version](https://img.shields.io/github/go-mod/go-version/EthanQC/my-learning-record?filename=apps%2Fapi%2Fgo.mod)
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
 ![License](https://img.shields.io/github/license/EthanQC/my-learning-record)
 
+本项目是一个学习记录仓库，主要内容包括面试相关八股/算法、面经、实习记录、前后端项目、计算机基础知识和我个人的碎碎念/反思总结
 
-## 这是一个学习记录仓库！
+可访问 [https://qingverse.com](https://qingverse.com) 获得更佳阅读体验
+
+---
+## 项目架构
+- 前端：Next.js 15（App Router、Tailwind），输出 standalone 运行产物
+- 后端：Go + chi，Swagger 文档 /health /api/* 接口
+- 数据：MySQL 8（容器）
+- 反代：Caddy（容器），将 `/api` 转发到 API，静态资源由 web 容器提供
+- 部署：Docker Compose（deploy/），GitHub Actions 自动构建推送镜像并 SSH 部署
+
+## 技术栈
+- Node 22、npm workspaces
+- Go 1.24
+- Docker / Docker Compose v2
+- Caddy 2
+- GitHub Actions、ACR（或任意容器仓库）
+
+## 环境要求
+- 已安装并运行 Docker / Docker Desktop，带 Compose v2
+- Node 22 + npm 10（根目录 `npm install`）
+- Go 1.24（本地开发 API 用）
+- 可用的 3306 端口（本地 MySQL 容器）
+
+## 目录结构
+```
+.
+├ apps/
+│  ├ api/   # Go API
+│  └ web/   # Next.js 前端
+├ content/  # Markdown 笔记/文章
+├ deploy/   # 服务器部署用 compose + Caddy
+└ scripts/  # 辅助脚本
+```
+
+---
+## 快速开始（本地开发）
+#### 拉取代码并安装依赖
+```bash
+git clone git@github.com:EthanQC/my-learning-record.git
+
+cd my-learning-record
+
+npm install
+```
+
+#### 准备 MySQL
+若本地 docker 无镜像/已运行容器，会自动新建，默认用户密码为 root:pass
+
+详见 `apps/api/makefile`
+
+```bash
+cd apps/api
+
+make docker-up
+```
+
+#### 配置环境变量
+按需修改密码/端口等，默认直连 127.0.0.1:3306 的 mysql8
+
+   ```bash
+   cp apps/api/.env.example apps/api/.env
+
+   cp apps/web/.env.local.example apps/web/.env.local
+   ```
+
+#### 启动服务
+后端：
+
+```bash
+cd apps/api
+
+go run cmd/server/main.go # 或 make dev
+```
+
+前端：
+
+```bash
+cd apps/web
+
+npm run dev
+```
+
+#### 访问
+- 前端：http://localhost:3000  
+- API health：http://localhost:9000/health  
+- Swagger：http://localhost:9000/swagger/index.html（若 CORS 报错，确保 `CORS_ORIGINS` 含 `http://localhost:9000`）
+
+---
+## 部署 / CI-CD（服务器）
+服务器仅使用 `deploy/` 目录，请先安装 Docker 与 Compose v2
+
+推荐使用阿里云 ACR 作为镜像仓库
+
+#### 配置服务器环境变量
+修改镜像仓库、实际域名和数据库等信息
+
+```bash
+cd ~/workspace/my-learning-record/deploy
+
+cp .env.example .env
+```
+
+#### GitHub Actions CI/CD
+GitHub 仓库中 Secrets 配置路径：
+
+Settings —— Security —— Secrets and variables —— Actions —— Repository secrets
+
+点击 New repository secret，逐个添加变量名和内容，推荐在 vs code 中安装 GitHub Actions 官方扩展
+
+- Workflow: `.github/workflows/deploy.yml`
+- 需要的 Secrets
+  - ACR：
+    - `ACR_REGISTRY`
+    - `ACR_NAMESPACE`
+    - `ACR_USERNAME`
+    - `ACR_PASSWORD`
+  - SERVER：
+    - `SERVER_HOST`
+    - `SERVER_USER`
+    - `SERVER_PORT`
+    - `SERVER_SSH_KEY`
+- 流程：
+  - 构建并推送镜像
+  - SSH 到服务器写入 `.env` 的 `API_TAG/WEB_TAG`
+  - `docker compose pull/up`
+  - 重启 caddy
+
+---
+
+
 
 我会在这里记录我每天（perhaps🤪）的学习内容，包括但不限于：
 
@@ -34,14 +161,8 @@
 
 如果你觉得这个仓库在某个方面帮助到了你，对你来说是有一些作用的，那么不妨给个 star 吧~💕
 
-如果你想跟我一起完善这个仓库，添加更多内容（不局限于我自己的技术栈），欢迎发起 `pull request`，也欢迎添加我的微信 `wkr1835484520` 跟我交流~😉
+如果你想跟我一起完善这个仓库，添加更多内容（不局限于我自己的技术栈），欢迎发起 `pull request`，也欢迎添加我的微信 `13537821092` 跟我交流~😉
 （后续我可能会出一个贡献模板）
-
-**从简单的『记录目录』转变为『记录基础知识点 + 个人理解』**
-
-**每次学习完，哪怕只用 10 分钟，也稍微写一点自己对知识点的简单理解或关键注意点**
-
-**每周末花一点时间快速扫一遍这周学过的内容，每月初复盘一次，并再把这一个月学的东西回忆一遍**
 
 ## 计划
 整体的职业规划还是主 go 后端、副 cpp / ue5 客户端
