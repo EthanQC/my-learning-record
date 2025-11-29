@@ -32,7 +32,7 @@ services:
     environment:
       # 使用应用用户，不用 root
       MYSQL_DSN: ${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(mysql:3306)/${MYSQL_DATABASE}?parseTime=true&charset=utf8mb4
-      CORS_ORIGIN: ${CORS_ORIGIN}
+      CORS_ORIGINS: ${CORS_ORIGINS}
       ADDR: 0.0.0.0:9000
       ADMIN_TOKEN: ${ADMIN_TOKEN:-}
       CONTENT_DIR: /app/content
@@ -51,7 +51,7 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_BASE_URL: https://qingverse.com
+      NEXT_PUBLIC_API_BASE_URL: ${PUBLIC_API_BASE_URL}
       INTERNAL_API_BASE_URL: http://api:9000
       NODE_OPTIONS: --max_old_space_size=256
     networks: [app]

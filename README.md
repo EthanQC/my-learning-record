@@ -1,4 +1,13 @@
 # My learning record
+本项目
+
+
+![Build Status](https://img.shields.io/github/actions/workflow/status/EthanQC/my-learning-record/deploy.yml?label=Build&logo=github)
+![Go Version](https://img.shields.io/github/go-mod/go-version/EthanQC/my-learning-record?filename=apps%2Fapi%2Fgo.mod)
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
+![License](https://img.shields.io/github/license/EthanQC/my-learning-record)
+
+
 ## 这是一个学习记录仓库！
 
 我会在这里记录我每天（perhaps🤪）的学习内容，包括但不限于：
