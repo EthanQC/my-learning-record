@@ -1,29 +1,26 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import { Footer } from "@/components/layout/Footer";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  // 添加 fallback，如果 Google Fonts 加载失败会使用系统字体
-  fallback: [
-    '-apple-system',
-    'BlinkMacSystemFont',
-    'Segoe UI',
-    'Roboto',
-    'Helvetica Neue',
-    'Arial',
-    'sans-serif'
-  ],
-  // 设置较短的超时时间
-  adjustFontFallback: true,
-});
-
 export const dynamic = 'force-dynamic';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qingverse.com";
 export const metadata: Metadata = {
   title: "我的学习记录",
   description: "技术博客与学习笔记",
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: "我的学习记录 - Qingverse",
+    description: "记录技术成长的博客与笔记，涵盖 Go、C++、前端与算法",
+    url: siteUrl,
+    siteName: "Qingverse",
+    locale: "zh_CN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "我的学习记录 - Qingverse",
+    description: "记录技术成长的博客与笔记",
+  },
 };
 
 export default function RootLayout({
@@ -33,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={`${inter.className} antialiased flex flex-col min-h-screen`}>
+      <body className="font-sans antialiased flex flex-col min-h-screen">
         <div className="flex-1">
           {children}
         </div>

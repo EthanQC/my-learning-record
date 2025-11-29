@@ -226,18 +226,28 @@ func getStringField(fm map[string]interface{}, key, fallback string) string {
 
 func getTagsField(fm map[string]interface{}) []string {
 	if fm == nil {
-		return nil
+		return []string{}
 	}
-	if v, ok := fm["tags"].([]interface{}); ok {
-		tags := make([]string, len(v))
-		for i, t := range v {
-			if str, ok := t.(string); ok {
-				tags[i] = str
+
+	// 支持 YAML 被解析成 []interface{} 或 []string，兜底空切片而不是 nil
+	if raw, ok := fm["tags"]; ok {
+		switch v := raw.(type) {
+		case []interface{}:
+			tags := make([]string, 0, len(v))
+			for _, t := range v {
+				if str, ok := t.(string); ok {
+					tags = append(tags, str)
+				}
 			}
+			return tags
+		case []string:
+			return append([]string{}, v...)
+		case string:
+			return []string{v}
 		}
-		return tags
 	}
-	return nil
+
+	return []string{}
 }
 
 func getDateField(fm map[string]interface{}, key string, fallback time.Time) time.Time {

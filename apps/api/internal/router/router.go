@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"net/url"
 
 	"github.com/EthanQC/my-learning-record/apps/api/internal/config"
 	"github.com/EthanQC/my-learning-record/apps/api/internal/handler"
@@ -54,18 +55,20 @@ func Setup(db *sql.DB, cfg *config.Config) *chi.Mux {
 		// 文章详情路由
 		r.Get("/posts/*", func(w http.ResponseWriter, req *http.Request) {
 			// 获取完整路径,去掉 /api/posts/ 前缀
-			fullPath := chi.URLParam(req, "*")
-
-			// 调试日志
-			log.Printf("[DEBUG] 请求路径: %s", req.URL.Path)
-			log.Printf("[DEBUG] 提取的slug: %s", fullPath)
+			rawSlug := chi.URLParam(req, "*")
+			decodedSlug, err := url.PathUnescape(rawSlug)
+			if err != nil {
+				log.Printf("[ERROR] slug 解码失败: %v, raw=%s", err, rawSlug)
+				handler.WriteError(w, http.StatusBadRequest, "invalid slug")
+				return
+			}
 
 			// 直接使用完整路径作为 slug
 			// 例如: blog/murmurs-and-reflection/2025.5.7
-			post, err := mdSvc.GetPost(fullPath)
+			post, err := mdSvc.GetPost(decodedSlug)
 			if err != nil {
-				log.Printf("[ERROR] 查找文章失败: %v, slug=%s", err, fullPath)
-				handler.WriteError(w, http.StatusNotFound, "post not found: "+fullPath)
+				log.Printf("[ERROR] 查找文章失败: %v, slug=%s", err, decodedSlug)
+				handler.WriteError(w, http.StatusNotFound, "post not found: "+decodedSlug)
 				return
 			}
 			handler.WriteJSON(w, http.StatusOK, post)
