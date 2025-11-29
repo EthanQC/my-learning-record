@@ -13,6 +13,12 @@ export default async function HomePage() {
     getCategories(),
   ]);
 
+  const statsUnavailable =
+    stats.total_posts === 0 &&
+    stats.total_categories === 0 &&
+    (!stats.last_update || stats.last_update.startsWith('0001-01-01'));
+  const lastUpdateText = statsUnavailable ? '尚无数据' : formatDate(stats.last_update);
+
   return (
     <div className="container mx-auto max-w-6xl px-6 py-12">
       {/* Hero Section */}
@@ -53,7 +59,7 @@ export default async function HomePage() {
         </Card>
         <Card className="text-center">
           <div className="text-4xl font-bold text-pink-600 mb-2">
-            {formatDate(stats.last_update)}
+            {lastUpdateText}
           </div>
           <div className="text-gray-600">最后更新</div>
         </Card>
@@ -62,6 +68,9 @@ export default async function HomePage() {
       {/* 最近文章 */}
       <section className="mb-16">
         <h2 className="text-3xl font-bold mb-6">最近文章</h2>
+        {statsUnavailable && (
+          <p className="text-gray-600 mb-4">暂时没有获取到文章数据，请稍后再试。</p>
+        )}
         <div className="space-y-4">
           {stats.recent_posts.map((post) => (
             <Card key={post.slug} className="hover:border-pink-200 border border-transparent">

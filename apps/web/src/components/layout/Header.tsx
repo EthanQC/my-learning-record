@@ -9,6 +9,7 @@ const navItems = [
   { name: '博客', href: '/posts' },
   { name: '分类', href: '/categories' },
   { name: '关于', href: '/about' },
+  { name: '留言', href: '/contact' },
 ];
 
 export function Header() {

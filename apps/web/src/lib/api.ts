@@ -14,7 +14,7 @@ function ensureApiBase(u?: string): string {
 const clientOrigin =
   process.env.NEXT_PUBLIC_API_BASE_URL || // e.g. https://qingverse.com
   process.env.NEXT_PUBLIC_API_URL ||      // 兼容旧变量
-  '';
+  (process.env.NODE_ENV === 'development' ? 'http://localhost:9000' : ''); // 开发环境兜底到本地 API
 
 // SSR/Node 端走容器内网（不出网，稳定快速）
 const serverOrigin =
@@ -132,6 +132,7 @@ export async function submitContact(data: {
   name: string;
   email: string;
   message: string;
+  _honey?: string;
 }) {
   return await fetchJSON(`${API_BASE}/contact`, {
     method: 'POST',

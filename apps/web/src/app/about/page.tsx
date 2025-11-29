@@ -8,10 +8,10 @@ export default function AboutPage() {
       <Card>
         <h2 className="text-2xl font-semibold mb-4">👋 你好!</h2>
         <p className="text-gray-700 leading-relaxed mb-4">
-          我是一名热爱技术的开发者,专注于 Go 后端开发和全栈工程。
+          我是一名热爱技术的开发者,专注于 Go 后端开发和全栈工程
         </p>
         <p className="text-gray-700 leading-relaxed mb-4">
-          这个博客记录了我的学习历程、技术笔记和碎碎念。
+          这个博客记录了我的学习历程、技术笔记和碎碎念
         </p>
         
         <h3 className="text-xl font-semibold mt-6 mb-3">📚 技术栈</h3>
@@ -24,7 +24,7 @@ export default function AboutPage() {
         <h3 className="text-xl font-semibold mt-6 mb-3">📫 联系方式</h3>
         <ul className="text-gray-700 space-y-2">
           <li>GitHub: <a href="https://github.com/EthanQC" className="text-pink-600 hover:underline">@EthanQC</a></li>
-          <li>Email: <a href="mailto:wkr1835484520@qq.com" className="text-pink-600 hover:underline">wkr1835484520@qq.com</a></li>
+          <li>Email: <a href="mailto:wkr1835484520@qq.com" className="text-pink-600 hover:underline">2367918546@qq.com</a></li>
         </ul>
       </Card>
     </div>

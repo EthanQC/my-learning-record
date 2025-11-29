@@ -5,6 +5,7 @@
 @layer base {
   body {
     @apply bg-gradient-to-br from-pink-50 to-white;
+    font-family: 'Inter', 'SF Pro Text', 'SF Pro Display', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   }
 }
 
@@ -50,4 +51,25 @@
 
 .prose blockquote {
   @apply border-l-4 border-pink-300 pl-4 italic text-gray-600;
+}
+
+.prose table {
+  @apply w-full border border-gray-200 rounded-lg overflow-hidden text-sm;
+}
+
+.prose thead {
+  @apply bg-gray-50;
+}
+
+.prose th,
+.prose td {
+  @apply border border-gray-200 px-3 py-2;
+}
+
+.prose img {
+  @apply rounded-xl shadow-sm;
+}
+
+.prose hr {
+  @apply border-pink-100;
 }
