@@ -91,7 +91,8 @@ npm run dev
 #### 访问
 - 前端：http://localhost:3000  
 - API health：http://localhost:9000/health  
-- Swagger：http://localhost:9000/swagger/index.html（若 CORS 报错，确保 `CORS_ORIGINS` 含 `http://localhost:9000`）
+- Swagger：http://localhost:9000/swagger/index.html
+  - 若 CORS 报错，确保 `CORS_ORIGINS` 含 `http://localhost:9000`
 
 ---
 ## 部署 / CI-CD（服务器）
