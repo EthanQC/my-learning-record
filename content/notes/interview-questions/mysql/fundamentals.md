@@ -85,16 +85,35 @@ MySQL 的连接跟 HTTP 一样也有短连接和长连接两种模式，短连�
 
 如果是**表本身很大**，可以**分表**，比如只保留最近几个月的数据在主表，旧数据定期迁移到历史表，也可以**分区**，比如按时间范围分区，让大部分查询只扫描少量分区，另外还可以把读多写少的查询放到 redis **缓存**中
 
-#### 文件排序 filesort是什么？
+#### 文件排序 filesort 是什么？
+
+filesort 是 MySQL为了满足 ORDER BY 或 GROUP BY 语句的排序需求，**在不能直接利用索引顺序时，启动的一套额外排序算法的统称**，只要在 EXPLAIN 结果中看到 Extra 列有 filesort 字样，就表示这次排序没能完全靠索引完成
+
+它不一定代表写磁盘，如果 **ORDER BY 的列不在索引里/顺序不匹配，或者使用了表达式/函数**，就会触发 filesort
+
+MySQL 会先把参与排序的列和定位整行需要的信息读取出来，放到一个**排序缓冲区**（sort buffer）中，再在 sort buffer 中按照 ORDER BY 规则排序，如果 buffer 足够大，就会在**内存**里完成，如果不够大，就会**分块排序并写临时文件，再归并**，排完序之后再去按排序后的顺序取出整行数据返回
+
+如果是数据量很小的排序，即使有 filesort，开销也是非常可控的，只有**数据量非常大**时才有可能是性能瓶颈
+
+我们可以直接让 ORDER BY 能复用某个 B+ 树索引的顺序，针对常用的 WHERE + ORDER BY 组合设计联合索引，并**让索引列顺序与条件和排序匹配**，或者**减少参与排序的数据量**，比如加时间/条件过滤，从而避免 filesort，或者**让排序尽量在内存中完成**，而不是频繁落盘
+
+#### SQL 调优你了解吗，比如说你调试的一些 SQL 语句怎么验证它是否命中了一些索引，以及它的性能是否是最优，该通过什么样的方式去验证？
+
+先用慢日志/监控定位是哪条 SQL 有问题，然后用 EXPLAIN/EXPLAIN ANALYZE 来查看执行计划，确认是否命中了预期的索引，扫描行数是否合理，有没有临时表和 filesort 等额外开销，再在接近真实数据量的环境下，对比不同写法/索引设计下的执行时间和扫描行数来判断哪个方案更优
+
+我们可以用 **EXPLAIN** 来查看 SQL 语句的执行计划，关注下面字段：
+
+* type
+  * 访问类型，判断有没有走索引、走得好不好
+  * 大致优劣顺序：`ALL`（全表扫描） < `index`（全索引扫描） < `range` < `ref` < `eq_ref` < `const`
+* 
+
+#### MySQL 跟性能有关的参数你知道哪些？比如说你自己在安装 MySQL 的时候会去做哪些配置，比如说它的默认配置你会去关注哪些参数，你会去改什么？
 
 
 
-#### SQL 调优你了解吗，比如说你调试的一些 SQL 语句怎么验证它是否命中了一些索引，以及它的性能是否是最优，该通过什么样的方式去验证
+#### 使用 MySQL 时有遇到过什么性能方面的问题吗？
 
-
-* MySQL 跟性能有关的参数你知道一些什么呢？比如说你自己在安装 MySQL 的时候会去做哪些配置，比如说它的默认配置你会去关注哪些参数，你会去改哪些吗？
-
-* 使用 MySQL 时有遇到过什么性能方面的问题吗？
 
 
 #### MySQL 一行记录是怎么存储的？
@@ -188,7 +207,32 @@ A：嗯用户信息表是属于读多写少的场景，所以我会优先选择�
 
 #### SQL 中的 JOIN 操作是什么？常见的 JOIN 有哪几种？
 
+JOIN 是指在一条查询中，**把多张表按照某个关联条件拼在一起**的操作，通常是主键和外键的关联，按照要不要保留未匹配上的行来区分，JOIN 有以下几种：
 
+* **INNER JOIN（内连接）**：
+  * SELECT u.id, u.name, o.id AS order_id, o.amount FROM user u INNER JOIN \`order\` o ON u.id = o.user_id;
+  * 只保留左右两边都能匹配的行，即**交集**
+* **LEFT JOIN（LEFT OUTER JOIN，左外连接）**：
+  * SELECT u.id, u.name, o.id AS order_id, o.amount FROM user u LEFT JOIN \`order\` o ON u.id = o.user_id;
+  * **保留左表的所有行，右表匹配不上时用 NULL 填充**
+* RIGHT JOIN（RIGHT OUTER JOIN，右外连接）：
+  * SELECT u.id, u.name, o.id AS order_id, o.amount FROM user u RIGHT JOIN \`order\` o ON u.id = o.user_id;
+  * 保留**右表**的所有行，左表匹配不上时用 NULL 填充
+  * 实际开发时 RIGHT JOIN **很少用**，一般都用 LEFT JOIN 把表顺序调一下
+* **FULL JOIN（FULL OUTER JOIN，全外连接）**：
+  * SELECT u.id, u.name, o.id AS order_id, o.amount FROM user u FULL OUTER JOIN \`order\` o ON u.id = o.user_id;
+  * 保留左右两边的所有行，匹配不上时用 NULL 填充，即**并集**
+  * MySQL 不直接支持 FULL JOIN，可以通过 **UNION** LEFT JOIN 和 RIGHT JOIN 来模拟
+    * SELECT ... FROM A LEFT JOIN B ON ... UNION SELECT ... FROM A RIGHT JOIN B ON ... WHERE A.主键 IS NULL;
+* **CROSS JOIN（笛卡尔积连接）**：
+  * SELECT u.id, u.name, o.id AS order_id, o.amount FROM user u CROSS JOIN \`order\` o;
+  * 等价于：SELECT u.id, u.name, o.id AS order_id, o.amount FROM user u, \`order\` o;
+  * 返回左右两边表的**所有组合**，即笛卡尔积，通常不加 ON 条件，如果 a 表有 100 行，b 表有 200 行，结果就是 100 * 200 = 20000 行
+  * 实际开发中很少用，通常用 INNER JOIN 来代替
+* **SELF JOIN（自连接）**：
+  * SELECT child.id, child.name, parent.name AS parent_name FROM user child LEFT JOIN user parent ON child.parent_id = parent.id;
+  * **把同一张表当成两张表来连接**，通常用于**层级结构**的数据查询，比如树形结构（类别、部门、上下级关系）、评论和回复等
+  * 其实不算新的 JOIN 类型，只是用法特殊
 
 
 
