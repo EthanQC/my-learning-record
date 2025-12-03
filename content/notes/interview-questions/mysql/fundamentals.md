@@ -332,14 +332,92 @@ JOIN 是指在一条查询中，**把多张表按照某个关联条件拼在一�
 
 #### 多级评论的表，你会设计哪几个关键字段？
 
+* **标识和关联类字段**
+  * `id`
+    * 评论主键 ID
+    * BIGINT，AUTO_INCREMENT
+    * 唯一标识一条评论
+  * `target_type`
+    * **被评论的**对象类型，如文章、视频、动态、消息等
+    * TYINYINT 或 ENUM
+  * `target_id`
+    * 被评论对象的 ID
+    * BIGINT
+* **支撑多级的关键结构字段：父子关系 + 根节点 + 层级**
+  * `parent_id`
+    * 父评论 ID，顶级评论为 0 或 NULL
+    * BIGINT
+    * 表示当前评论的直接上级是谁，即**我直接回复的是谁**
+    * 可以用来快速查询某条评论下的直接子评论：`where parent_id = ?`
+    * 前端也可以用来展示被回复的对象
+  * `root_id`
+    * 根评论 ID，是**整棵树的入口**
+    * BIGINT
+    * 对于顶级评论： root_id = id 自己
+    * 对于任意子评论：root_id = 顶级评论的 id
+    * 可以一次性查出某个主楼下所有的楼中楼：`where root_id = :top_comment_id order by created_at asc`
+  * `level`
+    * 评论的**层级**，顶级评论为 1，一级回复为 2，二级回复为 3，以此类推
+    * TINYINT
+    * 可以用于限制评论的最大层级，避免无限递归
+* **用户和内容相关字段**
+  * `user_id`
+    * 评论用户 ID
+    * BIGINT
+    * 指向用户表的**外键**
+  * `reply_to_user_id`
+    * 被回复的用户 ID
+    * BIGINT
+    * 当 A 回复 B 的评论时，reply_to_user_id = B 的 user_id
+    * 可以用来在评论中显示 `回复 @用户名`
+  * `content`
+    * 评论内容
+    * TEXT 或 VARCHAR(500)
+    * 如果有富文本/图片，可以再配一个 extra JSON 字段存储额外信息
+  * `created_at` / `updated_at`
+    * 评论创建和更新时间
+    * DATETIME 或 TIMESTAMP
+    * 用于排序和展示评论时间
+* **状态和统计字段**
+  * `status`
+    * 评论状态，如正常：0、删除：1、审核中：2等
+    * TINYINT
+  * `is_pinned`
+    * 是否置顶评论
+    * BOOLEAN
+  * `is_deleted`
+    * 软删除标志
+    * TINYINT(1)
+    * 真删除会破坏楼中楼结构，一般先逻辑删，再看情况做物理清理
+  * `like_count`
+    * 点赞数
+    * INT
+    * 真正的点赞明细可以放在单独的评论点赞表，这里做缓存计数
+    * 可以定期异步更新，避免频繁写评论表
+  * `reply_count`
+    * 回复数
+    * INT
+    * 统计某条评论下的直接子评论数
 
+target_type + target_id 是**评论所属对象**，让我们知道这条评论是挂在哪个资源上的，还可以做**索引**：`index idx_target (target_type, target_id, root_id, created_at)`，用来查比如**某篇文章下的所有评论树**
 
-A：我会让表里有 comment_id (主键)、post_id (归属资源)、user_id (评论人)、parent_id (父评论，NULL 表示一级)、root_id (根评论，用于快速聚合一级＋二级)、reply_to_user_id (被@用户)、level (层级)、content (内容) 以及 created_at、updated_at 打点时间。
-这样，当我要查询一个帖子下所有一级评论，就 WHERE post_id=? AND level=1；要加载某条一级评论的二级回复，就 WHERE root_id=? AND level=2。reply_to_user_id 让前端能正确显示“回复 @某人”。索引方面，我会针对 (post_id, level, created_at) 做分页，以及 (parent_id, root_id) 做回复聚合，保证高并发场景下也能快速返数据
+like_count 和 reply_count 是常用的冗余统计字段，在点赞或回复成功后可以**先写一条明细记录**，同时对应的评论记录做**增量更新**，避免每次都去 count 点赞表或评论表，提升查询性能
 
 #### MySQL 的缓存池是什么？
 
+就是 InnoDB 存储引擎的 **Buffer Pool**，它是一个**内存区域**，用来缓存**数据页和索引页**，相当于是 InnoDB 自己的**页缓存**，用来减少对磁盘的读写操作，让绝大多数读写操作都优先在 Buffer Pool 里完成，命中率越高，磁盘 I/O 越少，从而提高数据库的性能
 
+缓存池缓存的是按页（一般 16 KB）读取的数据块，除了数据页和索引页以外，也会缓存部分**辅助数据结构的页**，比如 undo 页、插入缓冲页等
+
+在**读**数据时，如果命中了缓存就直接返回，如果没命中就**从磁盘读到缓存池里，再返回给用户**
+
+在**写**数据时，**先把数据写到缓存池里**，然后把这页标记为**脏页**，再由后台线程**异步**把脏页刷到磁盘上
+
+当空间不够时，InnoDB 会根据 **LRU 算法**把长时间没访问的冷门页淘汰掉，**在淘汰前如果是脏页还会先刷盘**，确保数据不丢失
+
+实际开发中，可以通过 **innodb_buffer_pool_size** 参数来调整缓存池的大小，一般设置为物理内存的 60%~80%，确保热点数据能尽量放进缓存池，从而提升性能，可以通过 **innodb_buffer_pool_instances** 参数来设置缓存池的实例数，减少并发访问时的锁竞争，另外也可以通过 **Innodb_buffer_pool_read_requests（逻辑读）和 Innodb_buffer_pool_reads（物理读）**来查看命中率，如果**物理读的比例很高**就说明缓存池不够大，或者访问模式太离散
+
+虽然操作系统也会缓存文件页，但那是**整个文件系统维度**的，InnoDB Buffer Pool 则是存储引擎自己管理的缓存，可以做**更细粒度的策略**
 
 #### 有了解过 SQL 注入等安全问题吗？
 
