@@ -330,79 +330,6 @@ JOIN 是指在一条查询中，**把多张表按照某个关联条件拼在一�
   * **把同一张表当成两张表来连接**，通常用于**层级结构**的数据查询，比如树形结构（类别、部门、上下级关系）、评论和回复等
   * 其实不算新的 JOIN 类型，只是用法特殊
 
-#### 多级评论的表，你会设计哪几个关键字段？
-
-* **标识和关联类字段**
-  * `id`
-    * 评论主键 ID
-    * BIGINT，AUTO_INCREMENT
-    * 唯一标识一条评论
-  * `target_type`
-    * **被评论的**对象类型，如文章、视频、动态、消息等
-    * TYINYINT 或 ENUM
-  * `target_id`
-    * 被评论对象的 ID
-    * BIGINT
-* **支撑多级的关键结构字段：父子关系 + 根节点 + 层级**
-  * `parent_id`
-    * 父评论 ID，顶级评论为 0 或 NULL
-    * BIGINT
-    * 表示当前评论的直接上级是谁，即**我直接回复的是谁**
-    * 可以用来快速查询某条评论下的直接子评论：`where parent_id = ?`
-    * 前端也可以用来展示被回复的对象
-  * `root_id`
-    * 根评论 ID，是**整棵树的入口**
-    * BIGINT
-    * 对于顶级评论： root_id = id 自己
-    * 对于任意子评论：root_id = 顶级评论的 id
-    * 可以一次性查出某个主楼下所有的楼中楼：`where root_id = :top_comment_id order by created_at asc`
-  * `level`
-    * 评论的**层级**，顶级评论为 1，一级回复为 2，二级回复为 3，以此类推
-    * TINYINT
-    * 可以用于限制评论的最大层级，避免无限递归
-* **用户和内容相关字段**
-  * `user_id`
-    * 评论用户 ID
-    * BIGINT
-    * 指向用户表的**外键**
-  * `reply_to_user_id`
-    * 被回复的用户 ID
-    * BIGINT
-    * 当 A 回复 B 的评论时，reply_to_user_id = B 的 user_id
-    * 可以用来在评论中显示 `回复 @用户名`
-  * `content`
-    * 评论内容
-    * TEXT 或 VARCHAR(500)
-    * 如果有富文本/图片，可以再配一个 extra JSON 字段存储额外信息
-  * `created_at` / `updated_at`
-    * 评论创建和更新时间
-    * DATETIME 或 TIMESTAMP
-    * 用于排序和展示评论时间
-* **状态和统计字段**
-  * `status`
-    * 评论状态，如正常：0、删除：1、审核中：2等
-    * TINYINT
-  * `is_pinned`
-    * 是否置顶评论
-    * BOOLEAN
-  * `is_deleted`
-    * 软删除标志
-    * TINYINT(1)
-    * 真删除会破坏楼中楼结构，一般先逻辑删，再看情况做物理清理
-  * `like_count`
-    * 点赞数
-    * INT
-    * 真正的点赞明细可以放在单独的评论点赞表，这里做缓存计数
-    * 可以定期异步更新，避免频繁写评论表
-  * `reply_count`
-    * 回复数
-    * INT
-    * 统计某条评论下的直接子评论数
-
-target_type + target_id 是**评论所属对象**，让我们知道这条评论是挂在哪个资源上的，还可以做**索引**：`index idx_target (target_type, target_id, root_id, created_at)`，用来查比如**某篇文章下的所有评论树**
-
-like_count 和 reply_count 是常用的冗余统计字段，在点赞或回复成功后可以**先写一条明细记录**，同时对应的评论记录做**增量更新**，避免每次都去 count 点赞表或评论表，提升查询性能
-
 #### MySQL 的缓存池是什么？
 
 就是 InnoDB 存储引擎的 **Buffer Pool**，它是一个**内存区域**，用来缓存**数据页和索引页**，相当于是 InnoDB 自己的**页缓存**，用来减少对磁盘的读写操作，让绝大多数读写操作都优先在 Buffer Pool 里完成，命中率越高，磁盘 I/O 越少，从而提高数据库的性能
@@ -421,7 +348,50 @@ like_count 和 reply_count 是常用的冗余统计字段，在点赞或回复�
 
 #### 有了解过 SQL 注入等安全问题吗？
 
+SQL 注入就是**把用户输入当成 SQL 语句的一部分去拼接执行**，导致攻击者可以通过**构造特殊的输入**，**把原本只是数据的内容变成指令**，从而绕过认证、越权查询甚至修改、删除数据
 
+例如：
+
+```sql
+-- 伪代码
+query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
+
+username = admin
+password = ' OR '1'='1
+
+-- 最终拼接成的 SQL 语句
+SELECT * FROM users
+WHERE username = 'admin'
+  AND password = '' OR '1'='1';
+-- 由于 '1'='1' 永远为真，导致绕过密码验证
+```
+
+本质原因就是**用字符串拼接 SQL 语句**，导致用户输入的内容被当成了 SQL 语句的一部分，数据库分不清哪里是数据哪里是指令
+
+可以从代码层、数据库层和运维/框架层来防止 SQL 注入
+
+* **代码层**
+  * **使用参数化查询 / Prepared Statement**
+    * 不使用字符串拼接，而是用占位符和参数绑定
+    * 例如：`SELECT * FROM users WHERE username = ? AND password = ?`
+    * Go: `db.Query("SELECT ... WHERE username = ? AND password = ?", name, pwd)`
+    * 这样**让数据库明确知道 SQL 模板是什么**，让用户输入的只是值，不会被当作 SQL 语法来执行
+    * 所有对数据库的访问都走**预编译 / ORM 的参数绑定**
+  * 严格禁止动态拼接敏感部分
+    * 不允许前端直接传 `orderBy = "xxx; DROP TABLE users;"` 这种字符串
+    * 如果确实需要动态拼接，比如排序字段，只允许传字段名，然后在后端做**白名单校验**，确保只能是合法字段
+* **数据库层**
+  * 最小权限原则
+    * 应用连接数据库时只用**最小权限**的账号，避免有 DROP、DELETE 等高危权限
+  * **读写分离**
+    * 把读请求和写请求分开，读请求走只读账号，避免读请求被注入写操作
+* **运维/框架层**
+  * 慢查询 / 审计日志
+    * 发现异常的 SQL 模式
+    * 比如大量 `OR 1 = 1`，恶意 `union select` 等
+  * 反向代理
+    * 使用 WAF（Web 应用防火墙）等中间件
+    * 过滤和阻断常见的 SQL 注入攻击模式
 
 #### 解释一下数据库的三大范式？
 
