@@ -30,15 +30,32 @@ export function Footer() {
         </div>
 
         {/* ICP 备案信息 */}
-        <div className="mt-4 pt-4 border-t border-pink-100 text-center">
-          <a
-            href="https://beian.miit.gov.cn/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-500 hover:text-pink-600 transition-colors text-xs"
-          >
-            粤ICP备2025487305号
-          </a>
+        <div className="mt-4 pt-4 border-t border-pink-100">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-xs text-gray-500">
+            <a
+              href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002008906"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-pink-600 transition-colors"
+            >
+              <img
+                src="/beian-gongan.png"
+                alt="公安备案图标"
+                className="h-4 w-4"
+                loading="lazy"
+              />
+              粤公网安备44030002008906号
+            </a>
+
+            <a
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-pink-600 transition-colors"
+            >
+              粤ICP备2025487305号
+            </a>
+          </div>
         </div>
       </div>
     </footer>
