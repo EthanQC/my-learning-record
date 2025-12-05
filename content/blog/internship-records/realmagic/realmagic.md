@@ -18,7 +18,8 @@ summary: 离职时间：
 ## 实习产出
 ---
 ### 1. 主 agent 重构 —— 编排器 + Workflow
-#### 业务场景与需求
+#### 1.1 原始架构和痛点
+##### 1.1.1 原始架构
 当前后端的技术架构相对简单：
 
 客户端发送请求 —— 解析音频/图片 —— 主 agent 创建主任务并识别意图 / 处理逻辑 / 调用子 agent 并修改状态 —— 子 agent 创建子任务 / 执行逻辑 / 返回结果 / 修改状态
@@ -45,29 +46,354 @@ summary: 离职时间：
 
 任务管理器主要通过异步方式调用子 agent 的接口来完成任务的创建和执行
 
+项目采用的是 FastAPI，业务模块都在 modules 目录下，包括 agents、asr、user 等，shared 作为公共模块，存放了配置管理、数据库、api 和中间件等目录，每个 agent 都有自己的服务逻辑和路由接口，具体分层为 api、service、repository、prompt、utils 和 errors
+
+主 agent 和子 agent 都在 agents 目录下，每个 agent 都有自己的路由和服务逻辑，agent 列表：
+
+* chat_companion —— 聊天 agent
+* homework_correct —— 作业批改 agent
+* homework_solver —— 作业解题 agent
+* homework_summary —— 作业总结 agent
+* homework_tutor —— 作业辅导 agent
+* learning_companion —— 主 agent
+* learning_progress —— 学习进度 agent
+* learning_scheduler —— 学习计划 agent
+* learning_status_supervisor —— 学习状态监督 agent1
+* recitation —— 背诵 agent
+
+主 agent 通过 ACP（Agent Calling Protocol）协议来管理子 agent
+
+```json
+// agent_calling_protocol.json
+{
+  "agent_calling_protocol": [
+    {
+      "agent_name": "homework_correct",
+      "agent_description": "作业批改Agent",
+      "capabilities": ["图像识别", "错题分析", "辅导建议"],
+      "input_requirements": {
+        "required": ["desktop_perspective_image_url"],
+        "optional": ["content_page_image_url"]
+      },
+      "output_format": {
+        "question_analyses": "题目分析列表",
+        "overall_score": "总体评分"
+      },
+      "trigger_conditions": [
+        "用户明确要求批改作业",
+        "检测到作业完成图片",
+        "当前状态为correct_homework"
+      ]
+    }
+    // ... 其他Agent定义
+  ]
+}
+```
+
+几个业务流程示例：
+
+```
+用户: "帮我批改作业"
+  ↓
+[主Agent决策]
+  → 识别意图: 作业批改
+  → 状态切换: idle → pre_correct_homework
+  → 触发WebSocket: alignment_photo_upload_send_chain
+  ↓
+[客户端响应]
+  → 启动摄像头对齐拍照
+  → 上传桌面视角 + 作业内容图片
+  ↓
+[主Agent再次决策]
+  → 状态切换: pre_correct_homework → correct_homework
+  → 调用Agent: homework_correct, learning_progress
+  ↓
+[homework_correct执行]
+  1. VL模型识别题目内容
+     - Prompt: "识别图片中的数学题目..."
+     - 返回: [{"number": 1, "content": "3+5=?", "answer": "8"}]
+
+  2. 分析对错
+     - 对比标准答案
+     - 判断: is_correct = true/false
+
+  3. 生成辅导建议
+     - 错误类型分类: 计算错误/理解错误/粗心
+     - 针对性建议: "建议复习加法口诀"
+
+  4. 保存批改历史
+     - 表: homework_correct_history
+     - 记录错题模式
+  ↓
+[learning_progress执行]
+  1. 统计完成进度
+     - 计划: 10道题
+     - 完成: 8道
+     - 正确: 6道
+
+  2. 分析进度状态
+     - 进度: 80%
+     - 准确率: 75%
+     - 评估: "进度良好,准确率需提高"
+  ↓
+[返回用户]
+  WebSocket推送:
+  {
+    "agent_name": "homework_correct",
+    "message_type": "RESULT",
+    "message": {
+      "overall_score": 75,
+      "correct_count": 6,
+      "error_questions": [
+        {
+          "number": 2,
+          "error_type": "计算错误",
+          "suggestion": "..."
+        }
+      ]
+    }
+  }
+```
+
+```
+[定时触发] 每 30 秒自动拍照
+  ↓
+[learning_status_supervisor执行]
+  1. 图像分析
+     - 孩子视角图片
+     - VL模型推理
+
+  2. 多维度评估
+     a. 坐姿健康度 (posture_health)
+        - 检测点: 头部位置、背部角度、眼睛距离
+        - 评分: 0-100
+        - 判断: ≥80为良好, <60为不良
+
+     b. 专注度 (focus_concentration)
+        - 检测点: 视线方向、面部表情
+        - 评分: 0-100
+        - 判断: ≥70专注, <50分心
+
+     c. 情绪状态 (emotional_state)
+        - 检测: 高兴/沮丧/专注/困倦
+        - 强度: 0-100
+
+  3. 决策MCP工具调用
+     IF posture_health < 60:
+       → call_tool("robot_dance") # 提醒休息
+
+     IF emotional_state == "frustrated":
+       → call_tool("express_happy") # 鼓励加油
+
+     IF focus_concentration < 50:
+       → call_tool("nod") # 提醒专注
+
+  4. 保存监督历史
+     - 表: learning_status_history
+     - 字段:
+       {
+         "posture_health": 65,
+         "focus_concentration": 80,
+         "emotional_state": "focused",
+         "tool_calls": ["nod"],
+         "timestamp": "2024-01-01T10:05:00"
+       }
+  ↓
+[MCP工具执行]
+  POST http://localhost:8888/mcp/robot_dance
+  {
+    "duration": 3,
+    "intensity": "medium"
+  }
+  → 机器人跳舞3秒
+  ↓
+[WebSocket通知前端]
+  {
+    "agent_name": "learning_status_supervisor",
+    "message_type": "TOOL_CALL",
+    "message": {
+      "tool": "robot_dance",
+      "reason": "坐姿不良,提醒休息"
+    }
+  }
+```
+
+```
+用户: "我要背诵古诗"
+  ↓
+[主Agent决策]
+  → 识别意图: 背诵练习
+  → 调用Agent: recitation
+  ↓
+[recitation执行]
+  1. 获取背诵内容
+     - 从学习计划中获取今日背诵任务
+     - 标准答案: "床前明月光,疑是地上霜..."
+
+  2. 录音转文本
+     - 用户朗读音频
+     - ASR识别: "床前明月光,移是地上霜..."
+
+  3. 对比分析
+     - 标准: "疑是"
+     - 实际: "移是"
+     - 错误类型: 同音字混淆
+
+  4. 错误模式识别
+     - 查询历史: error_pattern表
+     - 发现: "疑是"已错2次
+     - 判断: 重复错误,需强化记忆
+
+  5. 生成记忆方法
+     IF occurrence_count >= 2:
+       → 调用VL模型生成记忆技巧
+       → "疑惑的'疑',表示不确定"
+
+  6. 反馈生成
+     - 首次错误: "加油,再试一次!"
+     - 重复错误: "这个字已经错2次了,记忆方法: ..."
+  ↓
+[保存记录]
+  - 表: recitation_history
+  - 表: recitation_error_pattern
+  - 用于周报、月报分析
+  ↓
+[返回用户]
+  {
+    "accuracy": 95,
+    "errors": [
+      {
+        "position": "第2句",
+        "expected": "疑是",
+        "actual": "移是",
+        "tip": "记忆方法..."
+      }
+    ]
+  }
+```
+
+##### 1.1.2 痛点分析
 由于主 agent 直接负责路由决策和状态管理，导致了主 agent 和整体架构存在以下问题：
 
-* 可维护性差，主 agent 代码臃肿，逻辑复杂，难以维护和扩展
-* 实际体验时延较高，简单的输入也需要主 agent 对不同场景做判断决策，响应等待时间长
-* 状态与上下文管理混乱，主 agent 和子 agent 都需要修改状态，容易出现状态不一致的问题，且上下文信息分散在 shortMemory 和各个 agent 中，难以统一管理，状态的定义也未能满足复杂场景需求
-* 主 agent 路由决策准确度难以保障和调优，由于主 agent 需要同时处理路由决策和业务逻辑，导致模型负担过重，难以专注于路由决策，且缺乏置信度和 guardrails 机制
-* 业务场景逻辑不清晰，各个子 agent 的功能边界模糊、职责未工具化，难以对新需求进行快速迭代
-* 难以灵活编排不同场景下的细分逻辑，即没有有向无环图编排，无法根据不同场景灵活调整子 agent 调用顺序和条件，无法并行调用多个子 agent
-* 缺乏可观测性，prompt 管理原始化，基本都是硬编码拼接，也没有优化追踪
+* 性能差
+  * 实际体验时延较高，简单的输入也需要主 agent 对不同场景做判断决策，响应等待时间长
+  * agent 之间互相 HTTP 自调用，无微服务、部署相关准备
+* 可维护性差
+  * 主 agent 代码臃肿，逻辑复杂，难以维护和扩展
+  * 主 agent 某个文件上千行，新增一个场景要在同一个函数里加好几段逻辑
+* 扩展性
+  * 新增一个 agent / 新的业务流程时，需要改主 agent和多个子 agent 的调用逻辑
+  * 很难做到配置一个 workflow 就上线一个新场景
+  * 业务场景逻辑不清晰，各个子 agent 的功能边界模糊、职责未工具化，难以对新需求进行快速迭代
+  * 难以灵活编排不同场景下的细分逻辑，即没有有向无环图编排，无法根据不同场景灵活调整子 agent 调用顺序和条件，无法并行调用多个子 agent
+* 状态与上下文管理混乱
+  * 主 agent 和子 agent 都需要修改状态，容易出现状态不一致的问题
+  * 上下文信息分散在 shortMemory 和各个 agent 中，难以统一管理，状态的定义也未能满足复杂场景需求
+  * 会话状态、学习进度、task_id 分散在本地缓存、数据库多个地方，出了 bug 很难排查
+  * 主 agent 路由决策准确度难以保障和调优，由于主 agent 需要同时处理路由决策和业务逻辑，导致模型负担过重，难以专注于路由决策，且缺乏置信度和 guardrails 机制
+* 可观测性差
+  * 一次完整学习流程涉及多个接口，很难一眼看出某个孩子从开始写作业到生成报告中间经过了哪些步骤
+  * 日志管理混乱，难以追踪和分析问题，错误处理不统一，有的场景超时重试，有的直接抛 500
 
-#### 技术方案
+#### 1.2 重构目标和整体方案
+##### 1.2.1 重构目标
+* 解耦：
+  * 把决策/调度/业务实现都分开，主 agent 只做决策，不再硬编码流程
+* 可编排：
+  * 每个业务场景变成一个 workflow，支持配置化
+  * 新增场景尽量不改代码，而是新增 workflow 定义 + 少量 glue code
+  * 业务功能工具化，子 agent 不同功能、机械臂动作、表情等均拆分成独立的工具，每个工具都是在某个节点上做的一次原子操作
+* 统一治理：
+  * 超时 / 重试 / 降级 / 日志 / trace 在编排器层统一处理
+* 可观测：
+  * 一条学习链路从入口到各个 agent 的调用都有统一链路 id 和可视化
+
+##### 1.2.2 整体方案
 引入编排器（Orchestrator）和工作流（Workflow）概念，将主 agent 的路由决策和状态管理职责拆分出来，形成一个独立的编排层，负责根据用户输入和上下文信息，动态选择和调用不同的子 agent，并管理整体的状态和上下文
 
 扩充状态定义，支持更复杂的状态管理和转换，针对不同业务场景拆分出不同的工作流，明确各个子 agent 的职责和调用顺序
+
+客户端发送请求 —— 解析音频/图片 —— 编排器读取当前状态 —— 编排器调用主 agent 识别意图 —— 编排器将主 agent 结果给 Guardrails，Guardrails 执行真正路由决策 —— 编排器根据决策调用不同业务场景下工作流 —— 工作流按业务顺序调用不同子 agent 的工具，执行业务逻辑 —— 编排器接收结果，更新状态和上下文 —— 返回结果给客户端
 
 重构后完整架构图：
 
 ![reconstruction](reconstruction.png)
 
-#### 实现细节
+#### 1.3 关键设计和实现细节
+##### 1.3.1 组件拆分与职责
 
+* orchestrator_service：
+  * 输入：session_id、用户输入、当前业务上下文
+  * 职责：选 workflow、按节点执行、写状态、处理错误
+  * 输出：本轮响应 + 下一步状态
+* workflow_registry：
+  * 维护各个 workflow 配置
+    *  homework_flow
+    *  recitation_flow
+    *  chat_flow
+  * 可以是 Python 配置 / JSON / YAML
+* agent_client 层：
+  * 封装对下游各个 agent 的调用（HTTP/内部函数），统一超时、重试、降级
+* session_state_store：
+  * Redis，记录当前孩子处在哪个步骤、上一次输出是什么等
 
-#### 评估复盘
+![orchestrator-contains](orchestrator-contains.png)
+
+##### 1.3.2 工作流建模与状态存储
+Workflow 基本元素：
+
+* node（phase）
+  * 工作流中的一个具体节点，调用某个子 agent 的某个工具
+* step(event, state)
+  * 这张图在当前 phase 下，用这次用户输入推进一步的执行函数
+* edge
+  * 转移条件，连接不同节点
+
+状态定义：
+
+```json
+SessionState { 
+  "active_scene": "chat | recite | homework",   // 当前大场景
+  "scene_state": {                              // 当前场景内部子状态
+     "...": "..."
+  },
+  "pending_switch": null | { "target": "..."} , // 是否正在等待用户确认切场景
+  "ttl_deadline": 1732456789,                   // 场景粘滞到期时间（可选）
+  "last_intent": { "intent": "...", "confidence": "HIGH/MID/LOW" }
+} 
+```
+
+active_scene 只能由编排器改（聊天 agent 不能改），scene_state 只由对应 workflow 改，TTL：粘滞（连续 N 轮都是 HIGH 指向别的场景）就自动切换
+
+```json
+pending_switch: { 
+target:"recite", 
+slots:{material:"静夜思"}, 
+asked_at:... 
+}
+```
+
+##### 1.3.3 典型调用链和超时/重试策略
+用户：“我要背古诗”
+
+Router: recite HIGH
+
+Guardrails: 切 active_scene=recite，phase=select_material
+
+Recite step: 问/选材料
+
+用户下一句：“对了老师今天布置啥？”
+
+Router: chat HIGH
+
+Guardrails: HIGH 允许切回 chat（recite 状态保存）
+
+Chat step: 正常聊
+
+##### 1.3.4 渐进式迁移策略
+重构的难点之一是要边跑业务边改架构，我先选了背诵作为试点
+
+#### 1.4 推进过程和效果复盘
 
 
 ---
