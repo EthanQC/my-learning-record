@@ -482,6 +482,6 @@ WHERE LOWER(email) = 'abc@test.com';
     * 添加索引的本质是全表扫描 + 建一棵新的 B+ 树
     * 如果没有使用 INPLACE 或 INSTANT 的 DDL，可能会锁表，阻塞读写，影响业务可用性
 
-#### 
+#### 为什么 MySQL 采用 B+ 树作为索引？
 
 
