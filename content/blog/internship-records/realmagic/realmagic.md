@@ -8,25 +8,25 @@ summary: 离职时间：
 # 锐盟半导体
 入职时间：2025.9.26
 
-离职时间：
+离职时间：2025.12.22
 
 上班时间：周一到周五
 
 ## 公司介绍
-公司是一家初创企业，依托于锐盟半导体（类似于子公司），主要做的是面向小学 1 - 3 年级辅导相关的具身智能产品，产品形态是一个台灯，内置了摄像头、麦克风、扬声器等硬件，可以通过语音和图像识别技术与学生进行互动，帮助学生完成作业和背诵课文等任务
+公司是一家初创企业，依托于锐盟半导体（类似于子公司），主要做的是面向小学 1 - 3 年级辅导相关的具身智能产品，产品形态是一个台灯，内置了摄像头、麦克风、扬声器、投影仪等硬件，可以通过语音和图像识别技术与学生进行互动，帮助学生完成作业和背诵课文等任务
 
 ## 实习产出
 ---
-### 1. 主 agent 重构 —— 编排器 + Workflow
+### 1. 主 agent 重构 —— 编排器 + Workflow + 工具化
 #### 1.1 原始架构和痛点
 ##### 1.1.1 原始架构
-当前后端的技术架构相对简单：
+原本的完整链路：
 
-客户端发送请求 —— 解析音频/图片 —— 主 agent 创建主任务并识别意图 / 处理逻辑 / 调用子 agent 并修改状态 —— 子 agent 创建子任务 / 执行逻辑 / 返回结果 / 修改状态
+客户端通过 websocket 发送请求到主 agent 对应接口 —— 后端解析音频或图片 —— 主 agent 创建主任务并识别意图处理逻辑 —— 根据意图通过 http 自调用对应的子 agent 并修改状态 —— 子 agent 创建子任务执行逻辑 —— 子 agent 通过 websocket 直接返回执行结果并修改状态
 
-主 agent 直接全权负责路由的决策，它会从 shortMemory 读取用户上下文，获得当前的状态，状态包括 idle / pre_agent_name / doing_agent_name，主 agent 不负责子 agent 执行完逻辑后的状态修改，需要子 agent 自行将状态修改回聊天 agent 的 idle
+**主 agent 直接全权负责路由的决策**，它会从 shortMemory（未引入 redis）读取用户上下文，获得当前的状态，状态包括 `idle`、`pre_agent_name`、`doing_agent_name`，主 agent 不负责子 agent 执行完逻辑后的状态修改，需要子 agent 自行将状态修改回聊天 agent 的 idle
 
-主 agent 调用 qwen3-max 模型，输出 JSON 格式如下：
+主 agent 调用 qwen3-max 模型，以批改作业为例，输出的 JSON 格式如下：
 
 ```json
 {
@@ -48,7 +48,7 @@ summary: 离职时间：
 
 项目采用的是 FastAPI，业务模块都在 modules 目录下，包括 agents、asr、user 等，shared 作为公共模块，存放了配置管理、数据库、api 和中间件等目录，每个 agent 都有自己的服务逻辑和路由接口，具体分层为 api、service、repository、prompt、utils 和 errors
 
-主 agent 和子 agent 都在 agents 目录下，每个 agent 都有自己的路由和服务逻辑，agent 列表：
+主 agent 和子 agent 都在 src/modules/agents 目录下，每个 agent 都有自己的路由和服务逻辑，agent 列表：
 
 * chat_companion —— 聊天 agent
 * homework_correct —— 作业批改 agent
@@ -63,193 +63,35 @@ summary: 离职时间：
 
 主 agent 通过 ACP（Agent Calling Protocol）协议来管理子 agent
 
-```json
-// agent_calling_protocol.json
-{
-  "agent_calling_protocol": [
-    {
-      "agent_name": "homework_correct",
-      "agent_description": "作业批改Agent",
-      "capabilities": ["图像识别", "错题分析", "辅导建议"],
-      "input_requirements": {
-        "required": ["desktop_perspective_image_url"],
-        "optional": ["content_page_image_url"]
-      },
-      "output_format": {
-        "question_analyses": "题目分析列表",
-        "overall_score": "总体评分"
-      },
-      "trigger_conditions": [
-        "用户明确要求批改作业",
-        "检测到作业完成图片",
-        "当前状态为correct_homework"
-      ]
-    }
-    // ... 其他Agent定义
-  ]
-}
-```
+背诵业务流程示例：
 
-几个业务流程示例：
-
-```
-用户: "帮我批改作业"
+```bash
+用户: "我要开始背古诗了"
   ↓
 [主Agent决策]
-  → 识别意图: 作业批改
-  → 状态切换: idle → pre_correct_homework
-  → 触发WebSocket: alignment_photo_upload_send_chain
-  ↓
-[客户端响应]
-  → 启动摄像头对齐拍照
-  → 上传桌面视角 + 作业内容图片
-  ↓
-[主Agent再次决策]
-  → 状态切换: pre_correct_homework → correct_homework
-  → 调用Agent: homework_correct, learning_progress
-  ↓
-[homework_correct执行]
-  1. VL模型识别题目内容
-     - Prompt: "识别图片中的数学题目..."
-     - 返回: [{"number": 1, "content": "3+5=?", "answer": "8"}]
-
-  2. 分析对错
-     - 对比标准答案
-     - 判断: is_correct = true/false
-
-  3. 生成辅导建议
-     - 错误类型分类: 计算错误/理解错误/粗心
-     - 针对性建议: "建议复习加法口诀"
-
-  4. 保存批改历史
-     - 表: homework_correct_history
-     - 记录错题模式
-  ↓
-[learning_progress执行]
-  1. 统计完成进度
-     - 计划: 10道题
-     - 完成: 8道
-     - 正确: 6道
-
-  2. 分析进度状态
-     - 进度: 80%
-     - 准确率: 75%
-     - 评估: "进度良好,准确率需提高"
-  ↓
-[返回用户]
-  WebSocket推送:
-  {
-    "agent_name": "homework_correct",
-    "message_type": "RESULT",
-    "message": {
-      "overall_score": 75,
-      "correct_count": 6,
-      "error_questions": [
-        {
-          "number": 2,
-          "error_type": "计算错误",
-          "suggestion": "..."
-        }
-      ]
-    }
-  }
-```
-
-```
-[定时触发] 每 30 秒自动拍照
-  ↓
-[learning_status_supervisor执行]
-  1. 图像分析
-     - 孩子视角图片
-     - VL模型推理
-
-  2. 多维度评估
-     a. 坐姿健康度 (posture_health)
-        - 检测点: 头部位置、背部角度、眼睛距离
-        - 评分: 0-100
-        - 判断: ≥80为良好, <60为不良
-
-     b. 专注度 (focus_concentration)
-        - 检测点: 视线方向、面部表情
-        - 评分: 0-100
-        - 判断: ≥70专注, <50分心
-
-     c. 情绪状态 (emotional_state)
-        - 检测: 高兴/沮丧/专注/困倦
-        - 强度: 0-100
-
-  3. 决策MCP工具调用
-     IF posture_health < 60:
-       → call_tool("robot_dance") # 提醒休息
-
-     IF emotional_state == "frustrated":
-       → call_tool("express_happy") # 鼓励加油
-
-     IF focus_concentration < 50:
-       → call_tool("nod") # 提醒专注
-
-  4. 保存监督历史
-     - 表: learning_status_history
-     - 字段:
-       {
-         "posture_health": 65,
-         "focus_concentration": 80,
-         "emotional_state": "focused",
-         "tool_calls": ["nod"],
-         "timestamp": "2024-01-01T10:05:00"
-       }
-  ↓
-[MCP工具执行]
-  POST http://localhost:8888/mcp/robot_dance
-  {
-    "duration": 3,
-    "intensity": "medium"
-  }
-  → 机器人跳舞3秒
-  ↓
-[WebSocket通知前端]
-  {
-    "agent_name": "learning_status_supervisor",
-    "message_type": "TOOL_CALL",
-    "message": {
-      "tool": "robot_dance",
-      "reason": "坐姿不良,提醒休息"
-    }
-  }
-```
-
-```
-用户: "我要背诵古诗"
-  ↓
-[主Agent决策]
-  → 识别意图: 背诵练习
+  → 识别意图: 背诵古诗
   → 调用Agent: recitation
   ↓
 [recitation执行]
   1. 获取背诵内容
      - 从学习计划中获取今日背诵任务
-     - 标准答案: "床前明月光,疑是地上霜..."
+     - 生成标准答案
 
-  2. 录音转文本
-     - 用户朗读音频
-     - ASR识别: "床前明月光,移是地上霜..."
+  2. 对比分析
+     - 将用户输入与标准答案进行对比
+     - 计算背诵正确率
+     - 识别错误位置和类型
 
-  3. 对比分析
-     - 标准: "疑是"
-     - 实际: "移是"
-     - 错误类型: 同音字混淆
+  3. 错误模式识别
+     - 查询历史: error_pattern 表
+     - 判断某个错误是否重复犯
+     - 更新错误频次
 
-  4. 错误模式识别
-     - 查询历史: error_pattern表
-     - 发现: "疑是"已错2次
-     - 判断: 重复错误,需强化记忆
-
-  5. 生成记忆方法
+  4. 生成记忆方法
      IF occurrence_count >= 2:
-       → 调用VL模型生成记忆技巧
-       → "疑惑的'疑',表示不确定"
+       → 调用 VL 模型生成记忆技巧
 
-  6. 反馈生成
+  5. 反馈生成
      - 首次错误: "加油,再试一次!"
      - 重复错误: "这个字已经错2次了,记忆方法: ..."
   ↓
