@@ -17,9 +17,9 @@ summary: 离职时间：
 
 ## 实习产出
 ---
-### 1. 主 agent 重构 —— 编排器 + Workflow + 工具化
-#### 1.1 原始架构和痛点
-##### 1.1.1 原始架构
+### 主 agent 重构 —— 编排器 + Workflow + 工具化
+#### 原始架构和痛点
+
 原本的完整链路：
 
 客户端通过 websocket 发送请求到主 agent 对应接口 —— 后端解析音频或图片 —— 主 agent 创建主任务并识别意图处理逻辑 —— 根据意图通过 http 自调用对应的子 agent 并修改状态 —— 子 agent 创建子任务执行逻辑 —— 子 agent 通过 websocket 直接返回执行结果并修改状态
@@ -114,7 +114,6 @@ summary: 离职时间：
   }
 ```
 
-##### 1.1.2 痛点分析
 由于主 agent 直接负责路由决策和状态管理，导致了主 agent 和整体架构存在以下问题：
 
 * 性能差
@@ -137,51 +136,96 @@ summary: 离职时间：
   * 一次完整学习流程涉及多个接口，很难一眼看出某个孩子从开始写作业到生成报告中间经过了哪些步骤
   * 日志管理混乱，难以追踪和分析问题，错误处理不统一，有的场景超时重试，有的直接抛 500
 
-#### 1.2 重构目标和整体方案
-##### 1.2.1 重构目标
-* 解耦：
-  * 把决策/调度/业务实现都分开，主 agent 只做决策，不再硬编码流程
-* 可编排：
-  * 每个业务场景变成一个 workflow，支持配置化
-  * 新增场景尽量不改代码，而是新增 workflow 定义 + 少量 glue code
-  * 业务功能工具化，子 agent 不同功能、机械臂动作、表情等均拆分成独立的工具，每个工具都是在某个节点上做的一次原子操作
-* 统一治理：
-  * 超时 / 重试 / 降级 / 日志 / trace 在编排器层统一处理
-* 可观测：
-  * 一条学习链路从入口到各个 agent 的调用都有统一链路 id 和可视化
+重构前：
 
-##### 1.2.2 整体方案
-引入编排器（Orchestrator）和工作流（Workflow）概念，将主 agent 的路由决策和状态管理职责拆分出来，形成一个独立的编排层，负责根据用户输入和上下文信息，动态选择和调用不同的子 agent，并管理整体的状态和上下文
 
-扩充状态定义，支持更复杂的状态管理和转换，针对不同业务场景拆分出不同的工作流，明确各个子 agent 的职责和调用顺序
 
-客户端发送请求 —— 解析音频/图片 —— 编排器读取当前状态 —— 编排器调用主 agent 识别意图 —— 编排器将主 agent 结果给 Guardrails，Guardrails 执行真正路由决策 —— 编排器根据决策调用不同业务场景下工作流 —— 工作流按业务顺序调用不同子 agent 的工具，执行业务逻辑 —— 编排器接收结果，更新状态和上下文 —— 返回结果给客户端
 
-重构后完整架构图：
+
+当前：
+
+* 引入编排器
+  * 对外作为后台统一的入口，由 /api/orchestrator/process 作为系统唯一入口接收客户端通过 websocket 发起的请求，并通过编排器统一返回 websocket 响应
+  * 对内负责路由决策和业务逻辑编排，调用工作流
+
+#### 重构目标和整体方案
+
+**路由决策、业务逻辑调度和具体业务实现彻底解耦**，意图识别和路由决策分离，增加置信度，降低模型不确定性对路由的影响，**重新定义状态模型**，建立统一会话状态模型与状态存储，支持跨轮对话、场景切换与恢复，**统一响应结构、日志与 trace_id**，提升可观测性与问题定位效率，可扩展的**工作流**将业务流程从 agent 内部抽离，新增业务场景时只需定义工作流状态机和节点调用，**业务功能工具化**，子 agent 不同功能、机械臂动作、表情等均拆分成独立的工具，每个工具都是在某个节点上做的一次原子操作
+
+* 引入编排器（Orchestrator）
+  * 编排器对外暴露 /api/orchestrator/process 接口作为系统唯一入口，接收客户端通过 websocket 发起的请求
+  * 对内负责状态管理（引入 Redis）、路由决策（引入 Guardrails）和工作流调用
+* 引入工作流（Workflow）
+  * 面向业务，不同场景内部有子状态，通过状态机推进逻辑流程
+  * 进行具体的业务流程编排和细节处理，通过 tools 层调用不同工具
+* 工具化
+  * 各个 agent 只暴露工具化的 API 接口，一个接口只负责某个细分的业务功能，如 LLM 具体调用与原子工具执行
+  * tools 层是对于 agent 暴露的接口和硬件相关工具的统一封装
+
+**调用链路：**
+
+客户端通过 websocket 调用编排器的 process 接口 —— 编排器调用输入解析器解析音频和图片 —— 编排器读取当前状态 —— 编排器调用主 agent 识别意图 —— 编排器将主 agent 返回结果给 Guardrails 执行真正路由决策 —— 编排器根据决策调用不同业务场景下工作流 —— 工作流按业务状态机调用不同子 agent 的工具执行业务逻辑 —— 编排器接收结果更新状态和上下文 —— 编排器返回结果给客户端
+
+```bash
+Client
+  -> /orchestrator/process (src/core/orchestrator/api/orchestrator_router.py)
+    -> OrchestratorService.process (src/core/orchestrator/orchestrator_service.py)
+      -> InputParser (src/shared/input/input_parser.py)
+      -> StateStore (Redis) (src/core/orchestrator/state/state_store.py)
+      -> AgentCaller.classify_intent -> learning-companion (src/modules/agents/learning_companion/...)
+      -> GuardrailsEngine.decide (src/core/orchestrator/guardrails/guardrails_engine.py)
+      -> WorkflowExecutor.execute_scene_workflow (src/core/workflow/workflow_executor.py)
+        -> ChatWorkflow / RecitationWorkflow (src/core/workflow/*.py)
+          -> AgentCaller (src/core/tools/agent_caller.py)
+            -> chat-companion / recitation Agent API
+          -> StateStore.update_phase / update_scene
+      -> ResponseBuilder (src/core/orchestrator/response_builder.py)
+      -> WebSocket push (src/modules/agents/shared/websocket/websocket_repository.py)
+```
+
+**预期重构后完整架构图：**
 
 ![reconstruction](reconstruction.png)
 
-#### 1.3 关键设计和实现细节
-##### 1.3.1 组件拆分与职责
+#### 关键设计和实现细节
 
-* orchestrator_service：
-  * 输入：session_id、用户输入、当前业务上下文
-  * 职责：选 workflow、按节点执行、写状态、处理错误
-  * 输出：本轮响应 + 下一步状态
-* workflow_registry：
-  * 维护各个 workflow 配置
-    *  homework_flow
-    *  recitation_flow
-    *  chat_flow
-  * 可以是 Python 配置 / JSON / YAML
-* agent_client 层：
-  * 封装对下游各个 agent 的调用（HTTP/内部函数），统一超时、重试、降级
-* session_state_store：
-  * Redis，记录当前孩子处在哪个步骤、上一次输出是什么等
+编排器包含了 Guardrails（`src/core/orchestrator/guardrails/guardrails_engine.py`）和状态管理（`src/core/orchestrator/state/*`）这两大工具，而 `src/core/orchestrator/orchestrator_service.py` 作为编排器的核心，包含了 `process` 作为统一处理输入输出、`_handle_scene_switch` 处理场景切换、`_process_in_scene` 委派具体场景工作流，这三个最主要的函数
+
+##### Guardrails
+
+Guardrails 主要负责基于主 agent 的评分（信任主 agent 职责拆分后的评分）做校验和路由决策，在场景切换时会有 pending 机制二次确认，一共有 chat、recite、homework、continue_current 和 exit_current 这五大意图，置信度则分为 HIGH、MID 和 LOW 这三种，`AgentIntent` 和 `GuardDecision` 两个类做结果分类（意图映射、评分置信度映射）与路由决策结构化（包含 action、scene、target_scene、reason、confidence、message、slots 等字段）
+
+GuardrailsEngine 作为核心类，包含了 `decide` 函数进行输入合法性检查、，内部调用 `_handle_pending_switch` 处理场景切换确认逻辑，调用 `_make_decision` 做最终路由决策
+
+
+  - ：；支持 `pending_switch` TTL
+- 
+  - `SessionState`：`active_scene / scene_state.phase / pending_switch / last_intent` 等字段统一规范
+  - `StateStore`：Redis 存取 + 重置策略（跨天/超时）
+  - `StateValidator`：旧状态兼容与重置策略
+
+
+
+`process` 会先通过 InputParser 解析输入，通过 StateStore 、主 Agent、Guardrails、Workflow
+
+- Orchestrator API：`src/core/orchestrator/api/orchestrator_router.py`
+  - `process_request` 作为统一入口，注入 `OrchestratorService`
+- 
+  - 
+- 
+- Workflow 层：`src/core/workflow/*`
+  - `WorkflowExecutor` 按 `scene` 分发到 `ChatWorkflow` / `RecitationWorkflow`
+  - `ChatWorkflow` 负责 idle/clarify/handoff_wait 状态机（`src/core/workflow/chat_workflow.py`）
+  - `RecitationWorkflow` 负责 idle/listening/done 状态机与业务编排（`src/core/workflow/recitation_workflow.py`）
+- Agent 调用封装：`src/core/tools/agent_caller.py`
+  - 统一 HTTP 调用 `/api/agents/{agent}/{action}`，屏蔽调用细节
+- 各 Agent 的原子工具
+  - Chat：`src/modules/agents/chat_companion/service/chat_companion_service.py`
+  - Recitation：`src/modules/agents/recitation/service/recitation_service.py`
+  - Learning Companion（主 Agent）：`src/modules/agents/learning_companion/service/learning_companion_service.py`
 
 ![orchestrator-contains](orchestrator-contains.png)
 
-##### 1.3.2 工作流建模与状态存储
 Workflow 基本元素：
 
 * node（phase）
@@ -214,6 +258,10 @@ slots:{material:"静夜思"},
 asked_at:... 
 }
 ```
+
+当前已有进度重构后架构图：
+
+
 
 ##### 1.3.3 典型调用链和超时/重试策略
 用户：“我要背古诗”
