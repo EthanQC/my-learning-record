@@ -191,6 +191,353 @@ Client
 
 编排器包含了 Guardrails（`src/core/orchestrator/guardrails/guardrails_engine.py`）和状态管理（`src/core/orchestrator/state/*`）这两大工具，而 `src/core/orchestrator/orchestrator_service.py` 作为编排器的核心，包含了 `process` 作为统一处理输入输出、`_handle_scene_switch` 处理场景切换、`_process_in_scene` 委派具体场景工作流，这三个最主要的函数
 
+"""
+OrchestratorService - 编排器服务
+
+统一的用户请求处理入口，负责：
+1. 解析输入（通过共享 InputParser）
+2. 管理会话状态（通过 StateStore）
+3. 调用主 Agent 进行意图分类（快速，低时延）
+4. 通过 Guardrails 独立评估置信度并做路由决策
+5. 调用工作流执行器执行业务逻辑
+6. 返回响应
+
+架构原则（参考 Anthropic Building Effective Agents）：
+- Router (主 Agent): 只做分类，不做决策，低时延
+- Guardrails: 独立计算置信度 + 做路由决策
+- Orchestrator: 执行决策，调用工作流
+- 不把所有决策都丢给大模型
+"""
+
+"""
+StateStore - 状态存储服务
+
+职责：
+1. 管理 SessionState 的 Redis 存取
+2. 提供状态更新的原子操作
+3. 在获取状态时自动验证状态合理性
+
+架构原则：
+- 状态验证在获取时自动执行
+- 跨天或程序重启后的非 chat 状态会被重置
+"""
+
+"""
+StateValidator - 状态验证器
+
+职责：
+1. 程序启动时检查状态合理性
+2. 确保状态处于正确的初始状态
+3. 清理无效或过期的场景状态
+"""
+
+{
+  "user_id": 123,
+  "session_id": "user_123",
+  "active_scene": "chat | recite | homework",
+  "scene_state": {
+     "phase": "...",                    # 场景内部工作流阶段
+     "learning_schedule": {...},        # 学习计划
+     "context": {...}                   # 场景上下文数据
+  },
+  "pending_switch": {                   # 待确认的场景切换
+     "target": "recite",
+     "slots": {...},
+     "age_turns": 0
+  },
+  "ttl_deadline": 1732456789,           # 场景粘滞截止时间
+  "last_intent": {                      # 上一次意图
+     "intent": "...",
+     "confidence": "HIGH/MID/LOW"
+  },
+  "last_activity": "2025-12-22T10:00:00",  # 最后活动时间
+  "created_at": "...",
+  "updated_at": "..."
+}
+
+"""
+Guardrails Engine - 护栏引擎（决策中心）
+
+设计原则：
+1. 主 Agent 负责分类 + 评分
+2. Guardrails 基于模型评分做校验和决策
+3. 场景切换需要谨慎，用 pending 机制二次确认
+
+职责分离：
+- 主 Agent: 分类意图 + 给出置信度评分
+- Guardrails: 校验评分 + 做出路由决策
+- Orchestrator: 执行决策，调用工作流
+"""
+
+{
+    "action": "continue | switch | exit | reject",
+    "scene": "本轮交给哪个 workflow 处理",
+    "target_scene": "最终的 active_scene",
+    "reason": "决策原因",
+    "confidence": "HIGH | MID | LOW",
+    "message": "给用户的消息（可选）",
+    "slots": {...}
+}
+
+"""
+Response Builder - 响应构建器
+
+负责统一构建 Orchestrator 的输出响应
+"""
+
+{
+    "success": True,
+    "content": {
+        "type": "text",
+        "text": "...",
+        "voice_url": None,
+        "card_data": None
+    },
+    "trace_id": "...",
+    "session_id": "...",
+    "scene": "chat",
+    "phase": "idle",
+    "suggested_actions": [],
+    "need_tts": False,
+    "error": None,
+    "processing_time_ms": 150,
+    "timestamp": "2025-12-22T10:00:00",
+    "debug_info": {...}
+}
+
+"""
+Orchestrator Router - 编排器路由
+
+所有用户请求统一入口
+"""
+
+"""
+工作流执行器 - Workflow Executor
+
+根据场景和决策结果执行对应的工作流
+委托给各场景的独立工作流
+
+架构原则：
+- 工作流执行器接收 Orchestrator 传入的上下文（含学习计划）
+- 委托给具体场景工作流执行
+- 学习计划由 Orchestrator 统一管理，通过此执行器传递给工作流
+"""
+
+scene: str                          # 场景名称
+user_id: int
+session_id: str
+input_data: Dict[str, Any]
+intent_result: Dict[str, Any]
+trace_id: str
+learning_schedule: Optional[Dict]   # 由 Orchestrator 传入
+pending_switch: Optional[Dict]      # 待确认切换
+
+"""
+聊天场景工作流 - Chat Workflow
+
+状态机：
+- idle: 空闲状态，正常对话
+- clarify: 需要澄清用户意图
+- handoff_wait: 等待场景切换确认
+
+工作流职责：
+1. 根据当前阶段调用对应的 Agent 工具
+2. 管理状态转换
+3. 加载并传递工具定义给LLM
+4. 返回响应给 Orchestrator
+
+架构原则：
+- 学习计划由 Orchestrator 统一管理传入
+- 工具定义由工作流加载并传递给Agent
+- 工作流只是使用学习计划，不负责获取
+"""
+
+"""
+Agent Caller - Agent 通用调用器
+
+通过 HTTP API 调用各个 Agent 的工具化接口
+这是工作流调用 Agent 的统一入口
+
+架构原则：
+- Agent = 纯原子工具，无业务逻辑
+- Workflow = 业务编排，组装工具
+- Agent Caller = 工作流调用 Agent 的统一入口
+
+使用示例：
+    from src.core.tools.agent_caller import agent_caller
+
+    # 聊天场景
+    result = await agent_caller.chat(user_id, session_id, "你好")
+    result = await agent_caller.clarify(user_id, session_id, "背诵")
+    result = await agent_caller.confirm_handoff(user_id, session_id, True, "recite")
+
+    # 背诵场景 - 原子工具
+    result = await agent_caller.compare_text(expected_text, user_text)
+    result = await agent_caller.generate_feedback(accuracy, passed, round_num)
+    result = await agent_caller.generate_memory_tips(errors)
+    result = await agent_caller.generate_summary(material_id, ...)
+    result = await agent_caller.save_recitation_history(user_id, material_id, ...)
+"""
+
+"""
+Chat Companion Agent Router - 聊天Agent路由
+
+聊天场景状态机：
+- idle: 空闲状态，正常对话
+- clarify: 需要澄清用户意图
+- handoff_wait: 等待场景切换确认
+
+工具化接口：
+- POST /chat: 对话
+- POST /clarify: 意图澄清
+- POST /confirm-handoff: 确认场景切换
+"""
+
+"""
+Chat Companion Service - 聊天Agent服务
+
+聊天场景状态机：
+- idle: 空闲状态，正常对话
+- clarify: 需要澄清用户意图  
+- handoff_wait: 等待场景切换确认
+
+职责：
+1. 处理用户对话
+2. 管理对话历史
+3. 处理意图澄清
+4. 处理场景切换确认
+"""
+
+"""
+Recitation Agent Router - 背诵Agent路由
+
+**重构后的设计原则**：
+- 只提供原子化工具接口
+- 工具内部调用大模型完成实际工作
+- 不包含任何业务逻辑编排
+- 所有需要的数据由调用方（工作流）传入
+
+工具化接口：
+- POST /compare-and-evaluate: 调用大模型对比文本并生成评估
+- POST /generate-memory-tips: 调用大模型生成记忆技巧
+- POST /save-history: 保存背诵历史
+"""
+
+"""
+Recitation Service - 背诵Agent服务
+
+**重构后的设计原则**：
+- Agent 提供原子化工具接口
+- 工具内部调用大模型完成实际工作（文本比对、反馈生成、记忆技巧）
+- 不在内部调用其他 Agent 或查询学习计划
+- 所有需要的数据由工作流传入
+
+工具列表：
+- compare_and_evaluate: 调用大模型对比文本并生成评估（核心工具）
+- generate_memory_tips: 调用大模型生成记忆技巧
+- save_history: 保存背诵历史
+"""
+
+"""
+背诵场景工作流 - Recitation Workflow
+
+架构原则：
+- 编排器持有场景的子状态，主agent和guardrails只负责场景决策（调用哪个工作流）
+- 工作流内部管理自己的状态机，编排器不对子状态做路由
+- Workflow = 业务编排层，组装原子工具  
+- Agent = 原子工具，内部调用大模型完成实际工作
+
+状态机设计（三个状态）：
+- idle: 初始化和模糊输入的统一处理
+  * 调用模型判断用户输入意图
+  * 如果是背诵意图：phase更新到listening，生成背诵鼓励内容
+  * 如果不是背诵意图：生成对用户输入的响应（如建议接下来做什么）
+
+- listening: 执行背诵业务逻辑（核心阶段）
+  * 调用模型判断输入是否是实际背诵内容
+  * 如果是：走正常的正确率比对、错误分类、记忆技巧生成等流程
+  * 如果不是：phase切回idle，让idle处理后再决定phase
+  * 正常完成后：phase更新到done
+
+- done: 完成处理
+  * 背诵记录写库
+  * 根据正确率生成背诵复习计划
+  * phase更新回idle
+
+工作流职责：
+1. 从 Orchestrator 获取学习计划中的背诵任务
+2. 调用 Agent 的原子工具（工具内部调用大模型）
+3. 管理状态转换和业务流程
+4. 控制硬件（机械臂、LCD）
+5. 返回响应给 Orchestrator
+"""
+
+用户请求
+    ↓
+[OrchestratorRouter] /orchestrator/process
+    ↓
+[OrchestratorService.process()]
+    ↓
+1. InputParser.parse() ─────────────→ 解析输入
+    ↓
+2. StateStore.get() ────────────────→ 获取状态（自动验证、重置）
+    ↓
+3. agent_caller.classify_intent() ──→ 意图分类（主 Agent）
+    ↓
+4. GuardrailsEngine.decide() ───────→ 路由决策
+    ↓                                   ├─ 输入合法性检查
+    ↓                                   ├─ pending TTL 维护
+    ↓                                   ├─ 处理 exit
+    ↓                                   ├─ 处理 pending
+    ↓                                   └─ 基础决策
+    ↓
+5. 执行决策
+    ├─ switch  → 切换场景 → 在新场景处理
+    ├─ exit    → 退出到 chat
+    ├─ continue → 在当前场景处理
+    └─ reject  → 拒绝请求
+    ↓
+6. WorkflowExecutor.execute_scene_workflow()
+    ├─ ChatWorkflow
+    │   ├─ idle: 正常对话（支持工具调用）
+    │   ├─ clarify: 澄清意图
+    │   └─ handoff_wait: 确认切换
+    │
+    └─ RecitationWorkflow
+        ├─ idle: 获取材料 + 判断意图
+        ├─ listening: 执行背诵（比对、反馈、记忆技巧）
+        └─ done: 保存记录 + 生成总结
+    ↓
+7. ResponseBuilder.text/voice/card() ─→ 构建响应
+    ↓
+8. WebSocket 推送 + HTTP 返回
+
+"""
+Orchestrator Dependencies - 依赖注入
+
+提供 OrchestratorService 及相关依赖的注入
+
+Dependencies 说明：
+这是 FastAPI 的依赖注入模块，用于：
+1. 创建和管理服务实例的生命周期
+2. 提供单例缓存（使用 @lru_cache）
+3. 解耦组件依赖关系，便于测试和替换
+
+什么是 @lru_cache 和单例？
+- @lru_cache 装饰的函数会缓存返回值
+- 第一次调用会真正执行函数，后续调用直接返回缓存的结果
+- 这样保证整个应用共享同一个实例（单例模式）
+
+编排器API的角色：
+- 对外暴露唯一入口 `/orchestrate`，接收用户输入
+- 负责协调意图识别、状态管理、工作流执行
+
+工具调用方式（重要）：
+- 工作流直接导入使用 tools 模块（如 chat_tools, recitation_tools）
+- 不再通过依赖注入传递 AgentToolCaller
+- 工具调用额外封装在 tools 层 
+"""
+
 ##### Guardrails
 
 Guardrails 主要负责基于主 agent 的评分（信任主 agent 职责拆分后的评分）做校验和路由决策，在场景切换时会有 pending 机制二次确认，一共有 chat、recite、homework、continue_current 和 exit_current 这五大意图，置信度则分为 HIGH、MID 和 LOW 这三种，`AgentIntent` 和 `GuardDecision` 两个类做结果分类（意图映射、评分置信度映射）与路由决策结构化（包含 action、scene、target_scene、reason、confidence、message、slots 等字段）
