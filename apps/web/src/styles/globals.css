@@ -79,8 +79,16 @@
   @apply text-lg sm:text-xl font-semibold text-gray-800 mt-6 mb-3;
 }
 
-.prose h4, .prose h5, .prose h6 {
-  @apply text-base font-semibold text-gray-800 mt-4 mb-2;
+.prose h4 {
+  @apply text-base sm:text-lg font-semibold text-gray-800 mt-5 mb-2 pl-3 border-l-4 border-pink-300;
+}
+
+.prose h5 {
+  @apply text-base font-semibold text-gray-700 mt-4 mb-2 pl-2 border-l-2 border-pink-200;
+}
+
+.prose h6 {
+  @apply text-sm font-semibold text-gray-600 mt-4 mb-2 uppercase tracking-wide;
 }
 
 .prose p {

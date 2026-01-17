@@ -99,7 +99,7 @@ export default async function PostPage({ params }: Props) {
   }
   
   const tags = post?.tags ?? [];
-  const { html, headings } = await renderMarkdown(post.content);
+  const { html, headings } = await renderMarkdown(post.content, fullSlug);
   const breadcrumbs = generateBreadcrumbs(fullSlug);
   
   // 计算字数和阅读时间

@@ -80,7 +80,13 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             set -e
-            cd ~/workspace/my-learning-record/deploy
+            cd ~/workspace/my-learning-record
+
+            # 拉取最新代码
+            git fetch origin main
+            git reset --hard origin/main
+
+            cd deploy
 
             # 更新 API_TAG / WEB_TAG 为本次构建的 tag
             sed -i "s/^API_TAG=.*/API_TAG=${{ needs.build.outputs.tag }}/" .env
