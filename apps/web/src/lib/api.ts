@@ -14,12 +14,12 @@ function ensureApiBase(u?: string): string {
 const clientOrigin =
   process.env.NEXT_PUBLIC_API_BASE_URL || // e.g. https://qingverse.com
   process.env.NEXT_PUBLIC_API_URL ||      // 兼容旧变量
-  (process.env.NODE_ENV === 'development' ? 'http://localhost:9000' : ''); // 开发环境兜底到本地 API
+  (process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : ''); // 开发环境兜底到本地 API
 
 // SSR/Node 端走容器内网（不出网，稳定快速）
 const serverOrigin =
-  process.env.INTERNAL_API_BASE_URL ||    // e.g. http://api:9000
-  'http://api:9000';
+  process.env.INTERNAL_API_BASE_URL ||    // e.g. http://api:8080
+  'http://api:8080';
 
 export const API_BASE = isServer
   ? ensureApiBase(serverOrigin)           // => http://api:9000/api

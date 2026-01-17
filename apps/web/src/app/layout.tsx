@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
+import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 export const dynamic = 'force-dynamic';
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qingverse.com";
 export const metadata: Metadata = {
-  title: "我的学习记录",
-  description: "技术博客与学习笔记",
+  title: "Qingverse - 技术学习与成长记录",
+  description: "记录技术成长的个人博客",
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "我的学习记录 - Qingverse",
-    description: "记录技术成长的博客与笔记，涵盖 Go、C++、前端与算法",
+    title: "Qingverse - 技术学习与成长记录",
+    description: "记录技术成长的博客与笔记",
     url: siteUrl,
     siteName: "Qingverse",
     locale: "zh_CN",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "我的学习记录 - Qingverse",
+    title: "Qingverse - 技术学习与成长记录",
     description: "记录技术成长的博客与笔记",
   },
 };
@@ -30,10 +31,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className="font-sans antialiased flex flex-col min-h-screen">
-        <div className="flex-1">
+      <body className="font-sans antialiased flex flex-col min-h-screen bg-gradient-to-br from-pink-50/30 via-white to-pink-50/20">
+        <Header />
+        <main className="flex-1">
           {children}
-        </div>
+        </main>
         <Footer />
       </body>
     </html>

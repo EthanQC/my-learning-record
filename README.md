@@ -9,6 +9,7 @@
 可访问 [https://qingverse.com](https://qingverse.com) 获得更佳阅读体验
 
 ---
+
 ## 项目架构
 - 前端：Next.js 15（App Router、Tailwind），输出 standalone 运行产物
 - 后端：Go + chi，Swagger 文档 /health /api/* 接口
@@ -40,61 +41,95 @@
 └ scripts/  # 辅助脚本
 ```
 
----
 ## 快速开始（本地开发）
-#### 拉取代码并安装依赖
-```bash
-git clone git@github.com:EthanQC/my-learning-record.git
+#### 安装开发环境（MacOS 示例）
 
+如果你的 Mac 还没有安装开发工具，按以下步骤操作：
+
+##### 安装 Homebrew
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+安装完成后，按提示运行：
+```bash
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+```
+
+##### 安装 Node.js 和 Go
+```bash
+# 安装 Node.js 22（包含 npm）
+brew install node@22
+
+# 添加到 PATH（如果需要）
+echo 'export PATH="/opt/homebrew/opt/node@22/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+
+# 验证安装
+node -v  # 应显示 v22.x.x
+npm -v   # 应显示 10.x.x
+
+# 安装 Go
+brew install go
+
+# 验证
+go version  # 应显示 go1.24.x
+```
+
+##### 安装 Docker Desktop
+从 [Docker 官网](https://www.docker.com/products/docker-desktop/) 下载并安装 Docker Desktop for Mac。
+
+#### 克隆项目并安装依赖
+
+```bash
+# 克隆项目
+git clone git@github.com:EthanQC/my-learning-record.git
 cd my-learning-record
 
+# 安装前端依赖（在项目根目录）
 npm install
 ```
 
-#### 准备 MySQL
+#### 启动数据库
 若本地 docker 无镜像/已运行容器，会自动新建，默认用户密码为 root:pass
 
-详见 `apps/api/makefile`
-
 ```bash
 cd apps/api
-
-make docker-up
+make docker-up  # 启动 MySQL 容器
+cd ../..
 ```
 
-#### 配置环境变量
-按需修改密码/端口等，默认直连 127.0.0.1:3306 的 mysql8
-
-   ```bash
-   cp apps/api/.env.example apps/api/.env
-
-   cp apps/web/.env.local.example apps/web/.env.local
-   ```
-
-#### 启动服务
-后端：
+### 配置环境变量
 
 ```bash
-cd apps/api
+# 复制环境变量示例文件
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.local.example apps/web/.env.local
+```
 
-go run cmd/server/main.go # 或 make dev
+#### 启动开发服务器
+
+后端：
+```bash
+cd apps/api
+go run cmd/server/main.go
 ```
 
 前端：
-
 ```bash
 cd apps/web
-
 npm run dev
 ```
 
-#### 访问
+#### 访问地址
 - 前端：http://localhost:3000  
-- API health：http://localhost:9000/health  
-- Swagger：http://localhost:9000/swagger/index.html
-  - 若 CORS 报错，确保 `CORS_ORIGINS` 含 `http://localhost:9000`
+- 后端健康检查：http://localhost:9000/health  
+- Swagger 文档：http://localhost:9000/swagger/index.html
 
 ---
+
 ## 部署 / CI-CD（服务器）
 服务器仅使用 `deploy/` 目录，请先安装 Docker 与 Compose v2
 

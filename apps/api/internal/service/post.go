@@ -1,10 +1,12 @@
 package service
 
 import (
+	"fmt"
 	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -131,6 +133,12 @@ func (s *PostService) parsePost(path string, content []byte) (*model.Post, error
 	// 计算 slug
 	rel, _ := filepath.Rel(s.contentDir, path)
 	slug := filepath.ToSlash(strings.TrimSuffix(rel, ".md"))
+
+	// 计算文章所在目录（用于处理相对路径图片）
+	articleDir := filepath.ToSlash(filepath.Dir(rel))
+
+	// 处理 markdown 中的相对路径图片，转换为绝对路径
+	body = processImagePaths(body, articleDir)
 
 	parts := strings.Split(slug, "/")
 	category := ""
@@ -268,4 +276,48 @@ func getDateField(fm map[string]interface{}, key string, fallback time.Time) tim
 		}
 	}
 	return fallback
+}
+
+// processImagePaths 处理 markdown 中的图片路径
+// 将相对路径转换为 /images/ 开头的绝对路径
+func processImagePaths(content string, articleDir string) string {
+	// 匹配 markdown 图片语法: ![alt](path) 或 ![alt](<path with spaces>)
+	// 支持带尖括号包裹路径（用于包含空格的路径）
+	imgRegex := regexp.MustCompile(`!\[([^\]]*)\]\((<[^>]+>|[^)]+)\)`)
+
+	return imgRegex.ReplaceAllStringFunc(content, func(match string) string {
+		submatches := imgRegex.FindStringSubmatch(match)
+		if len(submatches) < 3 {
+			return match
+		}
+
+		alt := submatches[1]
+		imgPath := submatches[2]
+
+		// 处理尖括号包裹的路径
+		if strings.HasPrefix(imgPath, "<") && strings.HasSuffix(imgPath, ">") {
+			imgPath = imgPath[1 : len(imgPath)-1]
+		}
+
+		// 跳过已经是绝对路径或外部链接的图片
+		if strings.HasPrefix(imgPath, "http://") ||
+			strings.HasPrefix(imgPath, "https://") ||
+			strings.HasPrefix(imgPath, "/images/") ||
+			strings.HasPrefix(imgPath, "/") {
+			return match
+		}
+
+		// 解析相对路径（处理 ../ 等）
+		var absolutePath string
+		if strings.HasPrefix(imgPath, "../") || strings.HasPrefix(imgPath, "./") {
+			// 计算相对于 content 目录的绝对路径
+			absolutePath = filepath.ToSlash(filepath.Clean(filepath.Join(articleDir, imgPath)))
+		} else {
+			// 直接拼接目录
+			absolutePath = filepath.ToSlash(filepath.Join(articleDir, imgPath))
+		}
+
+		// 返回转换后的图片语法
+		return fmt.Sprintf("![%s](/images/%s)", alt, absolutePath)
+	})
 }
