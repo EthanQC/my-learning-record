@@ -5,6 +5,9 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/EthanQC/my-learning-record/apps/api/internal/config"
 	"github.com/EthanQC/my-learning-record/apps/api/internal/handler"
@@ -43,6 +46,34 @@ func Setup(db *sql.DB, cfg *config.Config) *chi.Mux {
 	})
 
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
+
+	// 静态图片服务 - 服务 content 目录下的所有图片
+	r.Get("/images/*", func(w http.ResponseWriter, req *http.Request) {
+		imagePath := chi.URLParam(req, "*")
+		decodedPath, err := url.PathUnescape(imagePath)
+		if err != nil {
+			http.Error(w, "invalid path", http.StatusBadRequest)
+			return
+		}
+
+		// 安全检查：防止路径遍历攻击
+		if strings.Contains(decodedPath, "..") {
+			http.Error(w, "forbidden", http.StatusForbidden)
+			return
+		}
+
+		fullPath := filepath.Join(cfg.ContentDir, decodedPath)
+
+		// 检查文件是否存在
+		if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+			http.Error(w, "not found", http.StatusNotFound)
+			return
+		}
+
+		// 设置缓存头
+		w.Header().Set("Cache-Control", "public, max-age=31536000")
+		http.ServeFile(w, req, fullPath)
+	})
 
 	r.Route("/api", func(r chi.Router) {
 		r.Post("/contact", contactHandler.Create)

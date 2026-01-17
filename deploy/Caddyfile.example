@@ -16,6 +16,15 @@
     reverse_proxy http://api:9000
   }
 
+  # 静态图片服务 - 直接从 content 目录提供图片
+  # 需要在 docker-compose 中挂载 content 目录到 caddy
+  @images path /images/*
+  handle @images {
+    root * /srv
+    uri strip_prefix /images
+    file_server
+  }
+
   handle {
     reverse_proxy http://web:3000
   }
@@ -23,5 +32,9 @@
   header {
     X-Frame-Options "SAMEORIGIN"
     Referrer-Policy "strict-origin-when-cross-origin"
+    # 图片缓存
+    Cache-Control "public, max-age=31536000" {
+      path /images/*
+    }
   }
 }

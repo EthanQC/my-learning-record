@@ -14,21 +14,21 @@ help:
 
 # 启动 MySQL(如果没运行)
 docker-up:
-	@docker ps | grep -q mysql8 || \
-    (docker start mysql8 2>/dev/null || \
-    docker run -d --name mysql8 \
+	@docker ps | grep -q qv-mysql || \
+    (docker start qv-mysql 2>/dev/null || \
+    docker run -d --name qv-mysql \
         -e MYSQL_ROOT_PASSWORD=pass \
         -e MYSQL_DATABASE=qingverse \
-        -p 3306:3306 \
-        -v mysql-data:/var/lib/mysql \
+        -p 3307:3306 \
+        -v qv-mysql-data:/var/lib/mysql \
         mysql:8.0 \
         --character-set-server=utf8mb4 \
         --collation-server=utf8mb4_0900_ai_ci)
 	@echo "⏳ 等待 MySQL 启动..."
 	@sleep 3
-	@docker exec -i mysql8 mysql -uroot -ppass -e "CREATE DATABASE IF NOT EXISTS qingverse CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;" 2>/dev/null || true
-	@docker exec -i mysql8 mysql -uroot -ppass qingverse < db/schema.sql 2>/dev/null || echo "✅ 表结构已存在"
-	@echo "✅ MySQL 就绪"
+	@docker exec -i qv-mysql mysql -uroot -ppass -e "CREATE DATABASE IF NOT EXISTS qingverse CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;" 2>/dev/null || true
+	@docker exec -i qv-mysql mysql -uroot -ppass qingverse < db/schema.sql 2>/dev/null || echo "✅ 表结构已存在"
+	@echo "✅ MySQL 就绪 (port 3307)"
 
 # 生成 Swagger 文档
 swagger:
@@ -56,15 +56,15 @@ test:
 
 # 查看 MySQL 日志
 logs:
-	@docker logs -f mysql8
+	@docker logs -f qv-mysql
 
 # 停止 MySQL
 docker-down:
-	@docker stop mysql8 2>/dev/null || true
+	@docker stop qv-mysql 2>/dev/null || true
 	@echo "✅ MySQL 已停止"
 
 # 清理
 clean:
 	@rm -rf bin/ docs/
-	@docker rm -f mysql8 2>/dev/null || true
+	@docker rm -f qv-mysql 2>/dev/null || true
 	@echo "✅ 清理完成"

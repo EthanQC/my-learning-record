@@ -73,6 +73,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config
+      - ../content:/srv:ro  # 挂载 content 目录用于图片服务
     depends_on: [web, api]
     networks: [app]
 
