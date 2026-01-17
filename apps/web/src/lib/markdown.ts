@@ -11,8 +11,56 @@ export interface HeadingItem {
   depth: number;
 }
 
+// 图片路径转换函数
+function transformImagePath(src: string, slug: string): string {
+  // 如果是外部链接，直接返回
+  if (src.startsWith('http://') || src.startsWith('https://')) {
+    return src;
+  }
+  
+  // 如果是后端已处理的 /images/ 路径，转换为 /api/images/
+  if (src.startsWith('/images/')) {
+    return `/api${src}`;
+  }
+  
+  // 如果是其他绝对路径，直接返回
+  if (src.startsWith('/')) {
+    return src;
+  }
+  
+  // 获取文章所在目录路径
+  const slugParts = slug.split('/');
+  slugParts.pop(); // 移除文件名部分
+  const basePath = slugParts.join('/');
+  
+  // 处理相对路径中的 ../ 和 ./
+  let imagePath = src;
+  if (src.startsWith('../')) {
+    // 向上一级目录
+    const pathParts = basePath.split('/');
+    const srcParts = src.split('/');
+    let upCount = 0;
+    for (const part of srcParts) {
+      if (part === '..') {
+        upCount++;
+      } else {
+        break;
+      }
+    }
+    pathParts.splice(-upCount);
+    imagePath = [...pathParts, ...srcParts.slice(upCount)].join('/');
+  } else if (src.startsWith('./')) {
+    imagePath = `${basePath}/${src.slice(2)}`;
+  } else {
+    imagePath = `${basePath}/${src}`;
+  }
+  
+  // 返回通过 API 访问的路径
+  return `/api/images/${imagePath}`;
+}
+
 // 将 Markdown 渲染为 HTML，并提取 h1-h3 生成目录
-export async function renderMarkdown(markdown: string): Promise<{
+export async function renderMarkdown(markdown: string, slug?: string): Promise<{
   html: string;
   headings: HeadingItem[];
 }> {
@@ -22,6 +70,18 @@ export async function renderMarkdown(markdown: string): Promise<{
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
+    // 转换图片路径
+    .use(() => (tree: any) => {
+      const walk = (node: any) => {
+        if (node.type === 'image' && node.url && slug) {
+          node.url = transformImagePath(node.url, slug);
+        }
+        if (node.children) {
+          node.children.forEach(walk);
+        }
+      };
+      walk(tree);
+    })
     // 收集标题 & 添加 id
     .use(() => (tree: any) => {
       const walk = (node: any) => {
