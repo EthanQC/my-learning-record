@@ -126,17 +126,3 @@ export async function getCategories(): Promise<Category[]> {
     return [];
   }
 }
-
-// 提交留言
-export async function submitContact(data: {
-  name: string;
-  email: string;
-  message: string;
-  _honey?: string;
-}) {
-  return await fetchJSON(`${API_BASE}/contact`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  });
-}

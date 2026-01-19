@@ -80,7 +80,7 @@ export default async function PostsPage() {
           <Link href="/notes" className="px-4 py-2 bg-pink-50 text-pink-600 rounded-xl text-sm font-medium hover:bg-pink-100 transition-colors">
             学习记录
           </Link>
-          <Link href="/notes/interview-questions" className="px-4 py-2 bg-pink-50 text-pink-600 rounded-xl text-sm font-medium hover:bg-pink-100 transition-colors">
+          <Link href="/interview-questions" className="px-4 py-2 bg-pink-50 text-pink-600 rounded-xl text-sm font-medium hover:bg-pink-100 transition-colors">
             八股
           </Link>
           <Link href="/about" className="px-4 py-2 bg-pink-50 text-pink-600 rounded-xl text-sm font-medium hover:bg-pink-100 transition-colors">

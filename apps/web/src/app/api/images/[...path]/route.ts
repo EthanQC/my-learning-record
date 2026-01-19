@@ -32,7 +32,14 @@ export async function GET(
   }
 
   // 尝试在 content 目录中查找图片
-  const contentDir = process.env.CONTENT_DIR || path.join(process.cwd(), '..', '..', 'content');
+  // 本地开发时: process.cwd() = apps/web, content 在 ../../content
+  // Docker 运行时: process.cwd() = /app, content 在 ./content
+  const isProduction = process.env.NODE_ENV === 'production';
+  const contentDir = process.env.CONTENT_DIR || (
+    isProduction 
+      ? path.join(process.cwd(), 'content')
+      : path.join(process.cwd(), '..', '..', 'content')
+  );
   
   // 可能的图片位置
   const possiblePaths = [

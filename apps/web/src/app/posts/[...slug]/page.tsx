@@ -40,7 +40,7 @@ function generateBreadcrumbs(slug: string) {
   if (parts[0] === 'notes') {
     breadcrumbs.push({ label: '学习记录', href: '/notes' });
     if (parts[1] === 'interview-questions') {
-      breadcrumbs.push({ label: '八股', href: '/notes/interview-questions' });
+      breadcrumbs.push({ label: '八股', href: '/interview-questions' });
       if (parts[2]) {
         const categoryLabels: Record<string, string> = {
           'computer-network': '计算机网络',
@@ -53,7 +53,7 @@ function generateBreadcrumbs(slug: string) {
         };
         breadcrumbs.push({ 
           label: categoryLabels[parts[2]] || parts[2], 
-          href: `/notes/interview-questions/${parts[2]}` 
+          href: `/interview-questions/${parts[2]}` 
         });
       }
     } else if (parts[1]) {
