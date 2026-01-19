@@ -4,16 +4,27 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"strings"
 
+	"github.com/EthanQC/my-learning-record/apps/api/docs"
 	"github.com/EthanQC/my-learning-record/apps/api/internal/config"
 	"github.com/EthanQC/my-learning-record/apps/api/internal/router"
 	_ "github.com/go-sql-driver/mysql"
-
-	_ "github.com/EthanQC/my-learning-record/apps/api/docs"
 )
+
+func resolveSwaggerHost(addr string) string {
+	if addr == "" {
+		return ""
+	}
+	if strings.HasPrefix(addr, "0.0.0.0") || strings.HasPrefix(addr, ":") {
+		return ""
+	}
+	return addr
+}
 
 func main() {
 	cfg := config.Load()
+	docs.SwaggerInfo.Host = resolveSwaggerHost(cfg.Addr)
 
 	db, err := sql.Open("mysql", cfg.MySQLDSN)
 	if err != nil {

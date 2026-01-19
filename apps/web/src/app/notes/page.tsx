@@ -4,14 +4,8 @@ import Link from 'next/link';
 import { getPosts, getCategories } from '@/lib/api';
 import { Card } from '@/components/ui/Card';
 
-// 笔记分类配置
+// 笔记分类配置（不包含八股，八股已独立）
 const noteCategories = [
-  {
-    name: 'interview-questions',
-    label: '八股文',
-    description: '面试必备知识点整理',
-    href: '/notes/interview-questions',
-  },
   {
     name: 'data-structure-and-algorithm',
     label: '算法笔记',
@@ -67,7 +61,7 @@ export default async function NotesPage() {
           学习记录
         </h1>
         <p className="text-gray-500">
-          系统整理的技术学习笔记，包括八股文、算法、编程语言等
+          系统整理的技术学习笔记，包括算法、编程语言、后端开发等
         </p>
       </div>
 
@@ -93,6 +87,9 @@ export default async function NotesPage() {
       <section className="pt-8 border-t border-pink-100">
         <h2 className="text-lg font-semibold text-gray-800 mb-4">更多内容</h2>
         <div className="flex flex-wrap gap-3">
+          <Link href="/interview-questions" className="text-pink-500 hover:text-pink-600 text-sm font-medium px-4 py-2 bg-pink-50 rounded-full hover:bg-pink-100 transition-colors">
+            八股文
+          </Link>
           <Link href="/interview-experiences" className="text-pink-500 hover:text-pink-600 text-sm font-medium px-4 py-2 bg-pink-50 rounded-full hover:bg-pink-100 transition-colors">
             面经分享
           </Link>
