@@ -8,7 +8,7 @@
     "dev:web": "npm --prefix apps/web run dev",
     "build:web": "npm --prefix apps/web run build",
     "start:web": "npm run start -w apps/web",
-    "dev:api": "npm --prefix apps/api run dev",
+    "dev:api": "make -C apps/api dev",
     "dev": "npm-run-all -p dev:web dev:api",
     "fix:frontmatter": "node scripts/fix-frontmatter.js",
     "fix:frontmatter:dry": "node scripts/fix-frontmatter.js --dry"

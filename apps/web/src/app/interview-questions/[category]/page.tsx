@@ -33,8 +33,11 @@ export default async function InterviewQuestionsCategoryPage({ params }: Props) 
     notFound();
   }
 
-  // 获取该分类的文章
-  const posts = await getPosts(`notes/interview-questions/${category}`);
+  // 获取该分类的文章（后端 category 只支持第二级目录，这里按 slug 前缀过滤）
+  const allPosts = await getPosts();
+  const posts = allPosts.filter((post) =>
+    post.slug.startsWith(`notes/interview-questions/${category}/`)
+  );
 
   return (
     <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-12">

@@ -1,7 +1,7 @@
 # My Learning Record
 ![Build Status](https://img.shields.io/github/actions/workflow/status/EthanQC/my-learning-record/deploy.yml?label=Build&logo=github)
 ![Go Version](https://img.shields.io/github/go-mod/go-version/EthanQC/my-learning-record?filename=apps%2Fapi%2Fgo.mod)
-![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![License](https://img.shields.io/github/license/EthanQC/my-learning-record)
 
 本项目是一个学习记录仓库，主要内容包括面试相关八股/算法、面经、实习记录、前后端项目、计算机基础知识和我个人的碎碎念/反思总结
@@ -11,7 +11,7 @@
 ---
 
 ## 项目架构
-- 前端：Next.js 15（App Router、Tailwind），输出 standalone 运行产物
+- 前端：Next.js 16（App Router、Tailwind），输出 standalone 运行产物
 - 后端：Go + chi，Swagger 文档 /health /api/* 接口
 - 数据：MySQL 8（容器）
 - 反代：Caddy（容器），将 `/api` 转发到 API，静态资源由 web 容器提供
@@ -121,6 +121,21 @@ go run cmd/server/main.go
 ```bash
 cd apps/web
 npm run dev
+```
+
+#### 常用脚本（根目录）
+```bash
+# 同时启动前端 + 后端（后端会执行 make dev，需要已安装 swag 与 docker）
+npm run dev
+
+# 仅前端
+npm run dev:web
+
+# 仅后端（等价于 make -C apps/api dev）
+npm run dev:api
+
+# 统一修复/补齐 frontmatter
+npm run fix:frontmatter
 ```
 
 #### 访问地址
