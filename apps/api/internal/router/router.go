@@ -48,7 +48,7 @@ func Setup(db *sql.DB, cfg *config.Config) *chi.Mux {
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
 	// 静态图片服务 - 服务 content 目录下的所有图片
-	r.Get("/images/*", func(w http.ResponseWriter, req *http.Request) {
+	imageHandler := func(w http.ResponseWriter, req *http.Request) {
 		imagePath := chi.URLParam(req, "*")
 		decodedPath, err := url.PathUnescape(imagePath)
 		if err != nil {
@@ -73,9 +73,13 @@ func Setup(db *sql.DB, cfg *config.Config) *chi.Mux {
 		// 设置缓存头
 		w.Header().Set("Cache-Control", "public, max-age=31536000")
 		http.ServeFile(w, req, fullPath)
-	})
+	}
+	r.Get("/images/*", imageHandler)
 
 	r.Route("/api", func(r chi.Router) {
+		// 兼容 /api/images 路径（前端 markdown 使用）
+		r.Get("/images/*", imageHandler)
+
 		r.Post("/contact", contactHandler.Create)
 		r.With(middleware.RequireAdmin(cfg.AdminToken)).Get("/contact", contactHandler.List)
 
