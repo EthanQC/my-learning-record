@@ -57,6 +57,8 @@ export interface PostMeta {
   tags: string[];
   summary: string;
   date: string;
+  updated_at?: string;
+  word_count?: number;
 }
 
 export interface Post extends PostMeta {

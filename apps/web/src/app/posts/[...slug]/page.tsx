@@ -123,7 +123,7 @@ export default async function PostPage({ params }: Props) {
                 {breadcrumbs.map((crumb, index) => (
                   <li key={crumb.href} className="flex items-center gap-2">
                     {index > 0 && <span>/</span>}
-                    <Link href={crumb.href} className="hover:text-pink-500 transition-colors">
+                    <Link href={crumb.href} className="hover:text-pink-600 transition-colors">
                       {crumb.label}
                     </Link>
                   </li>
@@ -167,7 +167,7 @@ export default async function PostPage({ params }: Props) {
                 {tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-4">
                     {tags.map((tag) => (
-                      <span key={tag} className="text-sm text-pink-400">
+                      <span key={tag} className="text-sm text-pink-500">
                         #{tag}
                       </span>
                     ))}
@@ -179,11 +179,11 @@ export default async function PostPage({ params }: Props) {
               <div 
                 className="prose prose-lg max-w-none
                   prose-headings:scroll-mt-20
-                  prose-a:text-pink-500 prose-a:no-underline hover:prose-a:text-pink-600
+                  prose-a:text-pink-600 prose-a:no-underline hover:prose-a:text-pink-700
                   prose-img:rounded-xl prose-img:shadow-md prose-img:mx-auto
                   prose-pre:bg-gray-900 prose-pre:shadow-lg
-                  prose-code:text-pink-600 prose-code:bg-pink-50
-                  prose-blockquote:border-pink-300 prose-blockquote:bg-pink-50/50
+                  prose-code:text-pink-700 prose-code:bg-pink-50
+                  prose-blockquote:border-pink-300 prose-blockquote:bg-pink-50/60
                   prose-strong:text-gray-800
                   prose-table:shadow-sm prose-thead:bg-pink-50"
                 dangerouslySetInnerHTML={{ __html: html }}
@@ -197,7 +197,7 @@ export default async function PostPage({ params }: Props) {
                   </p>
                   <Link 
                     href={breadcrumbs.length > 1 ? breadcrumbs[breadcrumbs.length - 1].href : '/'}
-                    className="inline-flex items-center gap-2 text-pink-500 hover:text-pink-600 font-medium text-sm transition-colors"
+                    className="inline-flex items-center gap-2 text-pink-600 hover:text-pink-700 font-medium text-sm transition-colors"
                   >
                     ← 返回
                   </Link>
@@ -212,7 +212,7 @@ export default async function PostPage({ params }: Props) {
       {headings.length > 3 && (
         <div className="lg:hidden fixed bottom-4 right-4 z-40">
           <details className="group">
-            <summary className="list-none cursor-pointer bg-pink-500 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-pink-600 transition-colors">
+            <summary className="list-none cursor-pointer bg-pink-400 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-pink-500 transition-colors">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
               </svg>
