@@ -11,8 +11,8 @@ export function Card({ className, children, hover = true }: CardProps) {
   return (
     <div
       className={cn(
-        'bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm p-6 border border-pink-50',
-        hover && 'hover:shadow-lg hover:border-pink-100 transition-all duration-300',
+        'bg-white/75 backdrop-blur-sm rounded-2xl shadow-sm p-6 border border-pink-50/80',
+        hover && 'hover:shadow-lg hover:border-pink-100/80 transition-all duration-300',
         className
       )}
     >

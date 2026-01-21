@@ -16,12 +16,14 @@ type Post struct {
 
 // PostMeta 文章元信息
 type PostMeta struct {
-	Slug     string    `json:"slug" example:"blog/murmurs-and-reflection/2025.5.7"`
-	Title    string    `json:"title" example:"碎碎念"`
-	Category string    `json:"category" example:"murmurs-and-reflection"`
-	Tags     []string  `json:"tags" example:"碎碎念,日常"`
-	Summary  string    `json:"summary" example:"今天学习了..."`
-	Date     time.Time `json:"date" example:"2025-05-07T00:00:00Z"`
+	Slug      string    `json:"slug" example:"blog/murmurs-and-reflection/2025.5.7"`
+	Title     string    `json:"title" example:"碎碎念"`
+	Category  string    `json:"category" example:"murmurs-and-reflection"`
+	Tags      []string  `json:"tags" example:"碎碎念,日常"`
+	Summary   string    `json:"summary" example:"今天学习了..."`
+	Date      time.Time `json:"date" example:"2025-05-07T00:00:00Z"`
+	UpdatedAt time.Time `json:"updated_at" example:"2025-05-08T10:30:00Z"`
+	WordCount int       `json:"word_count" example:"1024"`
 }
 
 // Category 分类信息

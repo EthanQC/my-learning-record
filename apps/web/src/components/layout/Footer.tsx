@@ -2,13 +2,13 @@ import Link from 'next/link';
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-pink-100/50 bg-white/50">
+    <footer className="mt-auto border-t border-pink-100/60 bg-white/55">
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 py-8">
         {/* 主要内容 */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
           {/* Logo 和描述 */}
           <div className="text-center sm:text-left">
-            <Link href="/" className="text-lg font-bold bg-gradient-to-r from-pink-400 to-pink-300 bg-clip-text text-transparent">
+            <Link href="/" className="text-lg font-display font-bold bg-gradient-to-r from-pink-500 to-pink-300 bg-clip-text text-transparent">
               Qingverse
             </Link>
             <p className="text-gray-500 text-sm mt-1">技术学习与成长记录</p>
@@ -20,7 +20,7 @@ export function Footer() {
               href="https://github.com/EthanQC"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-pink-500 transition-colors"
+              className="text-gray-400 hover:text-pink-600 transition-colors"
               aria-label="GitHub"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -29,7 +29,7 @@ export function Footer() {
             </a>
             <a
               href="mailto:2367918546@qq.com"
-              className="text-gray-400 hover:text-pink-500 transition-colors"
+              className="text-gray-400 hover:text-pink-600 transition-colors"
               aria-label="Email"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,7 +40,7 @@ export function Footer() {
               href="https://www.xiaohongshu.com/user/profile/60f596ce000000000101edb0"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-pink-500 transition-colors"
+              className="text-gray-400 hover:text-pink-600 transition-colors"
               aria-label="小红书"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -52,10 +52,10 @@ export function Footer() {
 
         {/* 快速链接 */}
         <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500 mb-6">
-          <Link href="/interview-questions" className="hover:text-pink-500 transition-colors">八股</Link>
-          <Link href="/interview-experiences" className="hover:text-pink-500 transition-colors">面经</Link>
-          <Link href="/notes" className="hover:text-pink-500 transition-colors">学习记录</Link>
-          <Link href="/murmurs" className="hover:text-pink-500 transition-colors">碎碎念</Link>
+          <Link href="/interview-questions" className="hover:text-pink-600 transition-colors">八股</Link>
+          <Link href="/interview-experiences" className="hover:text-pink-600 transition-colors">面经</Link>
+          <Link href="/notes" className="hover:text-pink-600 transition-colors">学习记录</Link>
+          <Link href="/murmurs" className="hover:text-pink-600 transition-colors">碎碎念</Link>
         </div>
 
         {/* 备案信息 */}
@@ -67,7 +67,7 @@ export function Footer() {
               href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002008906"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 hover:text-pink-500 transition-colors"
+              className="flex items-center gap-1.5 hover:text-pink-600 transition-colors"
             >
               <img
                 src="/beian-gongan.png"
@@ -82,7 +82,7 @@ export function Footer() {
               href="https://beian.miit.gov.cn/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-pink-500 transition-colors"
+              className="hover:text-pink-600 transition-colors"
             >
               粤ICP备2025487305号
             </a>

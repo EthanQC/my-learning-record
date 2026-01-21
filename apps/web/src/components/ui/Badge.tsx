@@ -12,8 +12,8 @@ export function Badge({ className, children, variant = 'default' }: BadgeProps) 
     <span
       className={cn(
         'inline-block px-3 py-1 rounded-full text-sm font-medium transition-colors',
-        variant === 'default' && 'bg-pink-50 text-pink-600',
-        variant === 'outline' && 'bg-transparent text-pink-500 border border-pink-200',
+        variant === 'default' && 'bg-pink-100/80 text-pink-700',
+        variant === 'outline' && 'bg-transparent text-pink-600 border border-pink-200',
         className
       )}
     >
