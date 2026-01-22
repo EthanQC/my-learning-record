@@ -70,61 +70,45 @@ const baguCategories = [
 
 export default async function InterviewQuestionsPage() {
   // 获取八股文章列表
-  const posts = await getPosts('notes/interview-questions');
+  const interviewPosts = await getPosts('interview-questions');
 
   return (
     <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-12">
       {/* 页面标题 */}
       <div className="mb-10">
+        <p className="text-sm uppercase tracking-[0.2em] text-pink-500/70 mb-3">Interview Notes</p>
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
           八股文
         </h1>
-        <p className="text-gray-500">
+        <p className="text-gray-500 max-w-2xl">
           面试必备知识点整理，涵盖语言、操作系统、网络、数据库等核心内容
         </p>
       </div>
 
       {/* 八股分类网格 */}
-      <section className="mb-12">
+      <section>
         <h2 className="text-lg font-semibold text-gray-800 mb-4">按分类浏览</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {baguCategories.map((category) => (
             <Link key={category.name} href={category.href}>
               <Card className="h-full group cursor-pointer hover:shadow-md transition-all duration-300">
-                <h3 className="font-semibold text-gray-800 mb-2 group-hover:text-pink-500 transition-colors">
-                  {category.label}
-                </h3>
-                <p className="text-sm text-gray-500">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-gray-800 group-hover:text-pink-600 transition-colors">
+                    {category.label}
+                  </h3>
+                  <span className="text-xs text-pink-500/70 bg-pink-100/60 px-2 py-0.5 rounded-full">
+                    {interviewPosts.filter((post) => post.slug.startsWith(`notes/interview-questions/${category.name}/`)).length} 篇
+                  </span>
+                </div>
+                <p className="text-sm text-gray-500 leading-relaxed">
                   {category.description}
                 </p>
+                <div className="mt-4 text-sm text-pink-600 font-medium">
+                  进入目录 →
+                </div>
               </Card>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* 综合文章 */}
-      <section className="pt-8 border-t border-pink-100">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">综合内容</h2>
-        <div className="flex flex-wrap gap-3">
-          <Link 
-            href="/posts/notes/interview-questions/overall" 
-            className="text-pink-500 hover:text-pink-600 text-sm font-medium px-4 py-2 bg-pink-50 rounded-full hover:bg-pink-100 transition-colors"
-          >
-            总体与背景
-          </Link>
-          <Link 
-            href="/notes" 
-            className="text-pink-500 hover:text-pink-600 text-sm font-medium px-4 py-2 bg-pink-50 rounded-full hover:bg-pink-100 transition-colors"
-          >
-            学习记录
-          </Link>
-          <Link 
-            href="/interview-experiences" 
-            className="text-pink-500 hover:text-pink-600 text-sm font-medium px-4 py-2 bg-pink-50 rounded-full hover:bg-pink-100 transition-colors"
-          >
-            面经分享
-          </Link>
         </div>
       </section>
     </div>

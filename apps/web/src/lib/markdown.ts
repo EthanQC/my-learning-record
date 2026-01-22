@@ -59,7 +59,7 @@ function transformImagePath(src: string, slug: string): string {
   return `/api/images/${imagePath}`;
 }
 
-// 将 Markdown 渲染为 HTML，并提取 h1-h3 生成目录
+// 将 Markdown 渲染为 HTML，并提取 h1-h4 生成目录
 export async function renderMarkdown(markdown: string, slug?: string): Promise<{
   html: string;
   headings: HeadingItem[];
@@ -85,7 +85,7 @@ export async function renderMarkdown(markdown: string, slug?: string): Promise<{
     // 收集标题 & 添加 id
     .use(() => (tree: any) => {
       const walk = (node: any) => {
-        if (node.type === 'heading' && node.depth >= 1 && node.depth <= 3) {
+        if (node.type === 'heading' && node.depth >= 1 && node.depth <= 4) {
           const text = extractText(node);
           const base = slugify(text);
           const n = slugCount.get(base) || 0;
