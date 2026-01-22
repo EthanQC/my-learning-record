@@ -42,31 +42,37 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
     <aside 
       className={cn(
         'hidden lg:block flex-shrink-0 transition-all duration-300',
-        isCollapsed ? 'w-12' : 'w-64'
+        isCollapsed ? 'w-14' : 'w-64'
       )}
     >
       <div className="sticky top-20 h-[calc(100vh-6rem)]">
         <div 
           className={cn(
-            'h-full bg-white/80 backdrop-blur-sm border-r border-pink-100/50 transition-all duration-300 flex flex-col',
-            isCollapsed ? 'w-12' : 'w-64'
+            'h-full bg-white/80 backdrop-blur-sm border-r border-pink-100/60 transition-all duration-300 flex flex-col',
+            isCollapsed ? 'w-14' : 'w-64'
           )}
         >
           {/* 收起/展开按钮 */}
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="flex items-center justify-center w-full h-12 border-b border-pink-100/50 text-gray-400 hover:text-pink-500 hover:bg-pink-50/50 transition-colors"
-            title={isCollapsed ? '展开目录' : '收起目录'}
-          >
-            <svg 
-              className={cn('w-5 h-5 transition-transform duration-300', isCollapsed && 'rotate-180')} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+          <div className={cn('px-3 pt-3', isCollapsed && 'px-2')}>
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className={cn(
+                'w-full inline-flex items-center justify-center gap-2 rounded-full border border-pink-100/70 bg-white/80 px-3 py-2 text-xs font-medium text-gray-500 shadow-sm hover:text-pink-600 hover:border-pink-200 transition-colors',
+                isCollapsed && 'px-2'
+              )}
+              title={isCollapsed ? '展开目录' : '收起目录'}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-            </svg>
-          </button>
+              <svg 
+                className={cn('w-4 h-4 transition-transform duration-300', isCollapsed && 'rotate-180')} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className={cn(isCollapsed && 'sr-only')}>收起目录</span>
+            </button>
+          </div>
 
           {/* 目录内容 */}
           {!isCollapsed && (
@@ -83,10 +89,10 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                     key={h.id}
                     href={`#${h.id}`}
                     className={cn(
-                      'block py-1.5 transition-colors truncate border-l-2',
+                      'block py-1.5 transition-colors truncate border-l-2 rounded-r-md',
                       activeId === h.id
-                        ? 'text-pink-600 border-pink-500 bg-pink-50/50 font-medium'
-                        : 'text-gray-500 border-transparent hover:text-pink-500 hover:border-pink-200'
+                        ? 'text-pink-700 border-pink-400 bg-pink-50/70 font-medium'
+                        : 'text-gray-500 border-transparent hover:text-pink-600 hover:border-pink-200'
                     )}
                     style={{ paddingLeft: `${(h.depth - 1) * 12 + 8}px` }}
                   >

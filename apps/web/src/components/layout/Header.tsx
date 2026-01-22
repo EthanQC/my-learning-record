@@ -50,7 +50,6 @@ const socialLinks: SocialLinkItem[] = [
 
 export function Header() {
   const pathname = usePathname() || '';
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const isInterviewQuestionsPath =
@@ -100,7 +99,7 @@ export function Header() {
   return (
     <header 
       className={cn(
-        'sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-pink-100/50 shadow-sm transition-transform duration-300',
+        'sticky top-0 z-50 w-full bg-white/85 backdrop-blur-md border-b border-pink-100/70 shadow-sm transition-transform duration-300',
         isHidden ? '-translate-y-full' : 'translate-y-0'
       )}
     >
@@ -109,7 +108,7 @@ export function Header() {
           {/* Logo - 贴到最左边 */}
           <Link 
             href="/" 
-            className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-pink-400 to-pink-300 bg-clip-text text-transparent hover:from-pink-500 hover:to-pink-400 transition-all flex-shrink-0"
+            className="text-xl sm:text-2xl font-bold tracking-tight font-display bg-gradient-to-r from-pink-500 to-pink-300 bg-clip-text text-transparent hover:from-pink-600 hover:to-pink-400 transition-all flex-shrink-0"
           >
             Qingverse
           </Link>
@@ -123,8 +122,8 @@ export function Header() {
                   className={cn(
                     'px-3 lg:px-4 py-2 rounded-full text-sm lg:text-base font-medium transition-all duration-200',
                     isActive(item.href) 
-                      ? 'bg-pink-50 text-pink-600' 
-                      : 'text-gray-600 hover:text-pink-500 hover:bg-pink-50/50'
+                      ? 'bg-pink-100/70 text-pink-700' 
+                      : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50/70'
                   )}
                 >
                   {item.name}
@@ -141,70 +140,34 @@ export function Header() {
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
                 rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="p-2 rounded-full text-gray-400 hover:text-pink-500 hover:bg-pink-50 transition-all"
+                className="p-2 rounded-full text-gray-400 hover:text-pink-600 hover:bg-pink-50 transition-all"
                 title={link.name}
               >
                 {link.icon}
               </a>
             ))}
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-pink-50 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
         </div>
 
         {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-pink-100/50 animate-fade-in">
-            <ul className="flex flex-col gap-1 mb-4">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={cn(
-                      'block px-4 py-3 rounded-xl text-base font-medium transition-all',
-                      isActive(item.href)
-                        ? 'bg-pink-50 text-pink-600'
-                        : 'text-gray-600 hover:text-pink-500 hover:bg-pink-50/50'
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            {/* Mobile Social Links */}
-            <div className="flex items-center gap-3 px-4 pt-4 border-t border-pink-100/50">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target={link.href.startsWith('http') ? '_blank' : undefined}
-                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="p-2 rounded-full text-gray-400 hover:text-pink-500 hover:bg-pink-50 transition-all"
-                  title={link.name}
-                >
-                  {link.icon}
-                </a>
-              ))}
-            </div>
+        <div className="md:hidden -mx-4 px-4 pb-3 pt-3 mt-2 border-t border-pink-100/60">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+                  isActive(item.href)
+                    ? 'bg-pink-100/80 text-pink-700'
+                    : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50/70'
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
-        )}
+        </div>
       </nav>
     </header>
   );

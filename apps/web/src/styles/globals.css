@@ -1,5 +1,5 @@
-/* 引入更好的中文字体 - @import 必须在最顶部 */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* 引入字体 - @import 必须在最顶部 */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,13 +7,13 @@
 
 @layer base {
   :root {
-    /* 柔和粉色系配色 - 不偏红 */
-    --color-pink-50: #fdf2f8;
-    --color-pink-100: #fce7f3;
-    --color-pink-200: #fbcfe8;
-    --color-pink-300: #f9a8d4;
-    --color-pink-400: #f472b6;
-    --color-pink-500: #ec4899;
+    /* 柔和粉色系配色 - 更淡、更温和 */
+    --color-pink-50: #fff7fa;
+    --color-pink-100: #ffeef4;
+    --color-pink-200: #ffd7e6;
+    --color-pink-300: #f7b9d2;
+    --color-pink-400: #ee9fbe;
+    --color-pink-500: #e389ad;
   }
 
   html {
@@ -21,8 +21,8 @@
   }
 
   body {
-    @apply text-gray-700 leading-relaxed bg-gradient-to-br from-pink-50/30 via-white to-pink-50/20;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    @apply text-gray-700 leading-relaxed bg-gradient-to-br from-pink-50/40 via-white to-rose-50/20;
+    font-family: 'Space Grotesk', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
@@ -37,26 +37,26 @@
 @layer components {
   /* 柔和的按钮样式 */
   .btn-primary {
-    @apply bg-gradient-to-r from-pink-400 to-pink-500 text-white px-6 py-2.5 rounded-xl 
-           hover:from-pink-500 hover:to-pink-600 transition-all duration-300 
+    @apply bg-gradient-to-r from-pink-300 to-pink-400 text-white px-6 py-2.5 rounded-xl 
+           hover:from-pink-400 hover:to-pink-500 transition-all duration-300 
            shadow-sm hover:shadow-md font-medium;
   }
 
   .btn-secondary {
-    @apply bg-white text-pink-500 border border-pink-200 px-6 py-2.5 rounded-xl 
+    @apply bg-white text-pink-600 border border-pink-200 px-6 py-2.5 rounded-xl 
            hover:bg-pink-50 hover:border-pink-300 transition-all duration-300 font-medium;
   }
 
   /* 卡片样式 */
   .card {
-    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm 
+    @apply bg-white/75 backdrop-blur-sm rounded-2xl shadow-sm 
            hover:shadow-lg transition-all duration-300 p-6 
            border border-pink-50 hover:border-pink-100;
   }
 
   /* 徽章样式 */
   .badge {
-    @apply inline-block bg-pink-50 text-pink-600 px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-block bg-pink-100/70 text-pink-700 px-3 py-1 rounded-full text-sm font-medium;
   }
 }
 
@@ -68,11 +68,11 @@
 }
 
 .prose h1 {
-  @apply text-2xl sm:text-3xl font-bold text-gray-800 mt-10 mb-6 pb-3 border-b border-pink-100;
+  @apply text-2xl sm:text-3xl font-bold font-display text-gray-800 mt-10 mb-6 pb-3 border-b border-pink-100;
 }
 
 .prose h2 {
-  @apply text-xl sm:text-2xl font-semibold text-gray-800 mt-8 mb-4;
+  @apply text-xl sm:text-2xl font-semibold font-display text-gray-800 mt-8 mb-4;
 }
 
 .prose h3 {
@@ -249,6 +249,16 @@
 
 ::-webkit-scrollbar-thumb {
   @apply bg-pink-200/60 rounded-full hover:bg-pink-300;
+}
+
+/* 隐藏水平滚动条但保留滚动 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* 卡片悬停效果 */

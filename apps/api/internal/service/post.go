@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"unicode/utf8"
 
 	"github.com/EthanQC/my-learning-record/apps/api/internal/model"
 	"gopkg.in/yaml.v3"
@@ -92,6 +93,7 @@ func (s *PostService) parsePostMeta(path string) (*model.PostMeta, error) {
 		return nil, err
 	}
 
+	body := stripFrontmatter(string(content))
 	fm := extractFrontmatter(string(content))
 
 	// 计算 slug (相对于 content 目录)
@@ -106,14 +108,20 @@ func (s *PostService) parsePostMeta(path string) (*model.PostMeta, error) {
 	}
 
 	stat, _ := os.Stat(path)
+	fallbackTitle := filepath.Base(path)
+	if derived := extractTitleFromContent(body); derived != "" {
+		fallbackTitle = derived
+	}
 
 	return &model.PostMeta{
-		Slug:     slug,
-		Title:    getStringField(fm, "title", filepath.Base(path)),
-		Category: category,
-		Tags:     getTagsField(fm),
-		Summary:  getStringField(fm, "summary", ""),
-		Date:     getDateField(fm, "date", stat.ModTime()),
+		Slug:      slug,
+		Title:     getStringField(fm, "title", fallbackTitle),
+		Category:  category,
+		Tags:      getTagsField(fm),
+		Summary:   getStringField(fm, "summary", ""),
+		Date:      getDateField(fm, "date", stat.ModTime()),
+		UpdatedAt: stat.ModTime(),
+		WordCount: countWords(body),
 	}, nil
 }
 
@@ -121,14 +129,7 @@ func (s *PostService) parsePostMeta(path string) (*model.PostMeta, error) {
 func (s *PostService) parsePost(path string, content []byte) (*model.Post, error) {
 	text := string(content)
 	fm := extractFrontmatter(text)
-
-	// 移除 frontmatter 得到正文
-	body := text
-	if idx := strings.Index(text, "---"); idx >= 0 {
-		if idx2 := strings.Index(text[idx+3:], "---"); idx2 >= 0 {
-			body = strings.TrimSpace(text[idx+idx2+6:])
-		}
-	}
+	body := stripFrontmatter(text)
 
 	// 计算 slug
 	rel, _ := filepath.Rel(s.contentDir, path)
@@ -147,10 +148,14 @@ func (s *PostService) parsePost(path string, content []byte) (*model.Post, error
 	}
 
 	stat, _ := os.Stat(path)
+	fallbackTitle := filepath.Base(path)
+	if derived := extractTitleFromContent(body); derived != "" {
+		fallbackTitle = derived
+	}
 
 	return &model.Post{
 		Slug:      slug,
-		Title:     getStringField(fm, "title", filepath.Base(path)),
+		Title:     getStringField(fm, "title", fallbackTitle),
 		Category:  category,
 		Tags:      getTagsField(fm),
 		Summary:   getStringField(fm, "summary", ""),
@@ -220,6 +225,75 @@ func extractFrontmatter(content string) map[string]interface{} {
 	var fm map[string]interface{}
 	yaml.Unmarshal([]byte(content[3:3+end]), &fm)
 	return fm
+}
+
+func stripFrontmatter(content string) string {
+	if !strings.HasPrefix(content, "---") {
+		return strings.TrimSpace(content)
+	}
+	end := strings.Index(content[3:], "---")
+	if end < 0 {
+		return strings.TrimSpace(content)
+	}
+	return strings.TrimSpace(content[3+end+3:])
+}
+
+func extractTitleFromContent(content string) string {
+	lines := strings.Split(content, "\n")
+	inCodeBlock := false
+
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "" {
+			continue
+		}
+		if strings.HasPrefix(trimmed, "```") {
+			inCodeBlock = !inCodeBlock
+			continue
+		}
+		if inCodeBlock {
+			continue
+		}
+		if strings.HasPrefix(trimmed, "#") {
+			hashes := 0
+			for hashes < len(trimmed) && trimmed[hashes] == '#' {
+				hashes++
+			}
+			if hashes >= 1 && hashes <= 4 {
+				title := strings.TrimSpace(trimmed[hashes:])
+				if title != "" {
+					return title
+				}
+			}
+		}
+	}
+
+	return ""
+}
+
+var (
+	wordCountCodeBlock = regexp.MustCompile("(?s)```.*?```")
+	wordCountInline    = regexp.MustCompile("`[^`]*`")
+	wordCountImage     = regexp.MustCompile(`!\[[^\]]*\]\([^)]+\)`)
+	wordCountLink      = regexp.MustCompile(`\[[^\]]+\]\([^)]+\)`)
+	wordCountHTML      = regexp.MustCompile(`<[^>]+>`)
+	wordCountSymbols   = regexp.MustCompile(`[>#*_~\-\[\]\(\)]`)
+	wordCountSpace     = regexp.MustCompile(`\s+`)
+)
+
+func countWords(content string) int {
+	body := stripFrontmatter(content)
+	body = wordCountCodeBlock.ReplaceAllString(body, "")
+	body = wordCountInline.ReplaceAllString(body, "")
+	body = wordCountImage.ReplaceAllString(body, "")
+	body = wordCountLink.ReplaceAllString(body, "")
+	body = wordCountHTML.ReplaceAllString(body, "")
+	body = wordCountSymbols.ReplaceAllString(body, "")
+	body = wordCountSpace.ReplaceAllString(body, "")
+	if body == "" {
+		return 0
+	}
+	return utf8.RuneCountInString(body)
 }
 
 func getStringField(fm map[string]interface{}, key, fallback string) string {
