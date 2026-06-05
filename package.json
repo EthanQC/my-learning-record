@@ -1,7 +1,7 @@
 {
   "name": "my-learning-record",
   "version": "1.0.0",
-  "description": "我会在这里记录我每天（perhaps🤪）的学习内容，包括但不限于：",
+  "description": "个人学习记录与技术博客（Next.js + Go + MySQL），上线于 qingverse.com",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,7 +18,7 @@
     "url": "git+https://github.com/EthanQC/my-learning-record.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "EthanQC",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/EthanQC/my-learning-record/issues"

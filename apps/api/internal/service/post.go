@@ -188,6 +188,13 @@ func (s *PostService) GetCategories() ([]model.Category, error) {
 		"go":                           "Go",
 		"data-structure-and-algorithm": "算法",
 		"interview-questions":          "八股",
+		"database":                     "数据库",
+		"redis":                        "Redis",
+		"elasticsearch":                "Elasticsearch",
+		"Linux":                        "Linux",
+		"git":                          "Git",
+		"design-mod":                   "设计模式",
+		"other":                        "其他",
 	}
 
 	var categories []model.Category
