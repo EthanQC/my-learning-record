@@ -1,9 +1,9 @@
 # Devline 改版设计文档
 
 日期：2026-07-03
-状态：待用户审阅（v2，经五视角评审修订）
+状态：v3，用户已确认进入实施计划阶段
 前置调研：5 路并行仓库审计（前端 / Go API / 内容资产 / 仓库健康 / 部署 CI），截图分析断言全部核实属实。
-修订记录：v2 于 2026-07-03 经五视角评审（视觉设计系统 / UX 无障碍 / 前端工程 / 性能 SEO / 规格一致性，52 条发现→26 条修订），新增《设计系统规格》章，修正 WCAG AA 缺陷、字体策略、rail-tab 规格、迁移顺序竞态等。
+修订记录：v2 于 2026-07-03 经五视角评审（视觉设计系统 / UX 无障碍 / 前端工程 / 性能 SEO / 规格一致性，52 条发现→26 条修订），新增《设计系统规格》章，修正 WCAG AA 缺陷、字体策略、rail-tab 规格、迁移顺序竞态等。v3 同日按用户指示：「情长」从站点彻底移除（不保留起源故事）、新增流量统计页 `/stats`、域名候选调研中（devline 系）。
 
 ## 1. 背景与目标
 
@@ -20,8 +20,8 @@
 ## 2. 品牌
 
 - **站名/主标识：Devline**（用户的平台品牌名）。品牌梗：Dev + line，双线内容战略——一条线给工程师（深度线），一条线给所有人（科普线）。
-- **域名：qingverse.com 不变**。
-- **「情长」退居 About 页**：作为站点起源故事保留（"为什么域名叫 qingverse"），老读者情感联结不丢，前台不再出现。
+- **「情长」彻底移除**（v3 用户决定）：站点任何页面、文案、页脚不出现「情长」及起源故事；它只存在于 git 历史与迁出的私有仓库。
+- **域名**：暂沿用 qingverse.com 切流上线；devline 系域名调研中（注册状态/价格/**大陆服务器备案约束**），若购得合适域名，切换作为上线后的独立步骤（Caddy 加新域 + 旧域 301 + GSC 变更地址），不阻塞本次改版。
 - **粉色保留但升级**：从满屏粉底改为品牌点缀色（rail、标签、强调、选中态），用法分级见《设计系统规格》D2。
 
 ## 3. 内容策略
@@ -176,7 +176,7 @@
 
 ## 5. 页面与布局
 
-页面：`/`（首页）、`/articles`（全部）、`/articles/deep`、`/articles/intro`（**筛选用 URL 承载而非客户端状态**，与详情页 `/articles/<track>/<slug>` 天然嵌套，三个列表页都是 SSG、可分享、后退正常）、`/projects`、`/about`、404、RSS（`/feed.xml`）、`sitemap.xml`、`robots.txt`。
+页面：`/`（首页）、`/articles`（全部）、`/articles/deep`、`/articles/intro`（**筛选用 URL 承载而非客户端状态**，与详情页 `/articles/<track>/<slug>` 天然嵌套，三个列表页都是 SSG、可分享、后退正常）、`/projects`、`/about`、`/stats`（流量统计页，见下方规格）、404、RSS（`/feed.xml`）、`sitemap.xml`、`robots.txt`。
 
 入口语义：首页「沿深度线看全部 →」链接到 `/articles/deep`（把当前轨道带过去）；导航「文章」永远指向 `/articles` 全部。**单向传递**：首页 rail-tab 的 localStorage 只作用于首页，/articles 上的切换不写回首页状态，避免「文章页点了科普、回首页 tab 自己变了」的隐式状态穿越。
 
@@ -194,9 +194,9 @@
    - **动效**：见 D6。
 5. 当前轨道文章列表 + "沿 X 线看全部 →"（链接到 `/articles/<track>`）；
 6. 项目区：3 卡（移动端单列），case-study 卡片（memory-system、OpenClaw、SystemWright、本站改造本身……），v1 先放 2-3 个，格式：问题 → 方案 → 结果；
-7. 页脚：半墨半粉双色顶线（仅 B，见 D5）+ 情长起源链接 + RSS/GitHub/小红书。
+7. 页脚：半墨半粉双色顶线（仅 B，见 D5）+ 「© Devline」+ RSS/GitHub/小红书/统计（链 /stats）。不出现「情长」。
 
-**关于页**：个人介绍 + 技术栈 + **「情长」起源故事**（为什么域名叫 qingverse）+ 联系方式（邮箱、GitHub、小红书直链，**不做表单**——现有半成品 ContactForm 直接删除）。
+**关于页**：个人介绍 + 技术栈 + Devline 双线理念一段 + 联系方式（邮箱、GitHub、小红书直链，**不做表单**——现有半成品 ContactForm 直接删除）。不含站点起源故事（v3 决定）。
 
 **响应式（硬要求：PC 与手机体验对等）**：
 
@@ -210,7 +210,13 @@
 - 轨道空态精确文案：深度线空 =「深度线首篇打磨中 · 先沿科普线逛逛 →」（带跨轨 CTA，点击即切 tab），科普线空为对称文案；`/articles/deep`（或 intro）空态复用同文案。
 - 两者均需三主题各自验收；§8 的页面渲染验收明确包含 404 与两轨道空态。
 
-**SEO 资产规格**：
+**流量统计页 `/stats`（v3 新增）**：
+
+- 展示内容：全站累计 PV / UV、近 30 天访问趋势（折线或柱状，纯 SVG/CSS 实现，不引图表库）、文章浏览榜 Top 10（标题 + 浏览数 + 轨道标记）、当前在线粗略数。页面自身遵守三主题 token（图表颜色用 `--track-deep` / `--track-intro` / `--accent`，禁止图表库自带配色）。
+- 数据源：**自托管 GoatCounter**（单二进制 + SQLite，Go 技术栈与用户匹配；不是 umami——umami 需再养一个 Postgres，违背做减法）。部署为 compose 第三个容器 `goatcounter`，子域 `stats.<域名>` 由 Caddy 反代并自动签证书（需加一条 DNS A 记录）。
+- 采集：全站 layout 注入 GoatCounter count.js（异步、~3KB、无 cookie、GDPR 友好；`data-allow-local` 关闭，本地开发不计数）；SPA 场景无需额外处理（全静态多页）。
+- `/stats` 页取数：GoatCounter 开启 public dashboard 后，站点前端直接 fetch 其公开 JSON 端点（总量/趋势/热门路径），客户端渲染；页面骨架与空态（「统计服务暂不可用」）SSG 预渲染，statsAPI 失败时不破版式。
+- 隐私说明一行放页脚：「统计自托管、无 cookie、不追踪个人」——这本身是技术品牌加分项。
 
 1. OG image：v1 一张静态品牌图 `apps/web/src/app/opengraph-image.png`（1200×630，≤150KB，双线视觉母体，Next 约定式自动注入 og:image/twitter:image）；per-article 动态 OG 图列入 §9 未来另议；删除未被引用的旧 `public/og-image.jpg`。
 2. favicon 套件：`src/app/icon.svg`（双线标，SVG 内嵌 prefers-color-scheme media 适配暗色标签栏）+ `favicon.ico`（32×32 兜底）+ `apple-icon.png`（180×180）；删除冗余 `src/app/favicon1.ico`。
@@ -231,7 +237,8 @@
   2. `tailwind.config.ts` 整体重写（现硬编码 rose/pink 色板废弃）：`colors: { bg:'rgb(var(--c-bg)/<alpha-value>)', surface:…, ink:…, accent:…, track-deep:…, … }`；`darkMode: ['selector','[data-theme="night"]']`（Tailwind 3.4 语法）；plugin 加三个主题变体 `addVariant('theme-duo','[data-theme="duo"] &')` 等——**变体仅限装饰差异（阴影/圆角/伪元素装饰），组件配色一律走 token，禁止按主题复制组件类**。
   3. 非颜色 token 化：`--font-display`（duo=重磅无衬线，editorial/night=Noto Serif SC）、`--shadow-card`（duo=4px 4px 0 硬阴影 / editorial=无 / night=粉色辉光），Tailwind 侧 `fontFamily.display` / `boxShadow.card` 引用。
   4. 体积预算：三主题编进同一份 CSS（不按主题拆文件懒加载，否则切换闪白）；全站 CSS gzip ≤ 50KB，三主题增量（token 块 + 装饰规则）合计 ≤ 10KB gzip，CI build 门禁附带 size check。
-- **Go API + MySQL 退役**：compose 从 4 容器减为 2（web/caddy）；`apps/api` 代码保留仓库归档；Caddy 移除 `/api/*` 反代；**同步移除 Caddyfile 的 `@images path /images/*` file_server 块及对应 Cache-Control 规则**——该块经 `../content:/srv:ro` 挂载直接服务整个 content 目录且不限扩展名，面经/实习记录/notes 的全部 .md 源文件（乃至 murmurs 的 md 和照片）都能通过 `https://qingverse.com/images/blog/...` 直接下载，不移除则「旧内容保留源文件、不接入站点」形同虚设；compose 同步移除 caddy 的 `../content:/srv:ro` 与 web 的 `../content:/app/content:ro` 挂载（全静态生成后运行时不再读 content）；caddy 的 depends_on 从 [web, api] 改为 [web]。待决事项：mysql-data 卷（含旧文章数据副本）保留归档还是删除，切流前定。ContactForm 组件与 `/api/contact` 链路整体删除，联系方式 = mailto + 社交直链。静态资产缓存：Caddy 开启 `encode zstd gzip`；`/_next/static/*` 与字体分片响应 `Cache-Control: public, max-age=31536000, immutable`，HTML 保持默认短缓存。
+- **流量统计（GoatCounter）**：compose 增 `goatcounter` 服务（官方镜像或源码构建，SQLite 数据落独立 volume `goatcounter-data`，内存限制 128M）；Caddy 增 `stats.<域名>` 站点块反代 :8081；首次部署后创建站点与 API 免登录公开读；备份策略：SQLite 单文件，随服务器现有备份走。该容器与 web 互不依赖，统计挂了不影响主站。
+- **Go API + MySQL 退役**：compose 从 4 容器减为 **3**（web/caddy/goatcounter）；`apps/api` 代码保留仓库归档；Caddy 移除 `/api/*` 反代；**同步移除 Caddyfile 的 `@images path /images/*` file_server 块及对应 Cache-Control 规则**——该块经 `../content:/srv:ro` 挂载直接服务整个 content 目录且不限扩展名，面经/实习记录/notes 的全部 .md 源文件（乃至 murmurs 的 md 和照片）都能通过 `https://qingverse.com/images/blog/...` 直接下载，不移除则「旧内容保留源文件、不接入站点」形同虚设；compose 同步移除 caddy 的 `../content:/srv:ro` 与 web 的 `../content:/app/content:ro` 挂载（全静态生成后运行时不再读 content）；caddy 的 depends_on 从 [web, api] 改为 [web]。待决事项：mysql-data 卷（含旧文章数据副本）保留归档还是删除，切流前定。ContactForm 组件与 `/api/contact` 链路整体删除，联系方式 = mailto + 社交直链。静态资产缓存：Caddy 开启 `encode zstd gzip`；`/_next/static/*` 与字体分片响应 `Cache-Control: public, max-age=31536000, immutable`，HTML 保持默认短缓存。
 - **旧 URL：显式前缀清单统一返回 410 Gone（Caddy 路径匹配 + `respond 410`），不做 301**。清单：`/posts/*`、`/notes/*`、`/murmurs*`、`/interview-questions/*`、`/interview-experiences*`、`/internship-records*`、`/categories/*`、`/images/*`。理由：现 sitemap 从未输出真实域名（`NEXT_PUBLIC_SITE_URL` 未配置），收录近零、无权重可迁，大批量 301→首页会被判定 soft-404 反而延缓出索引；**`/murmurs*` 必须是 410**——配合 git 历史抹除，这是让搜索引擎缓存最快清掉情感内容的方式，上线后在 Google Search Console 用「移除网址」工具对 /murmurs 前缀加速清缓存。410 响应体指向品牌化的 404/410 页面（见 §5），人类访客体验不受损。**除清单外的未知路径透传给 Next.js 渲染 404 页**（否则 catch-all 会让 404 页永远不被渲染）。若上线前发现个别页面确有外链，仅白名单保留 301，不做全量。
 - **metadata 基建清单**：
   1. `metadataBase` 兜底改为硬编码 `https://qingverse.com`（`NEXT_PUBLIC_SITE_URL` 仅用于覆盖），sitemap.ts / robots.ts 同步去掉 `localhost:3000` fallback——从机制上杜绝 localhost URL 再进 sitemap；
@@ -269,13 +276,14 @@
 
 - CI 全绿（lint + tsc + build + CSS size check）仅为必要条件；
 - 上线后 MCP Playwright 实测**线上** qingverse.com：
-  - **五类页面 × 3 主题 × 2 视口（PC / 375px）的截图矩阵作为验收产物（30 张）**，逐张确认无结构错乱、无未覆盖的硬编码颜色；404 页与两轨道空态一并截图验收；
+  - **六类页面（首页/列表/详情/项目/关于/统计）× 3 主题 × 2 视口（PC / 375px）的截图矩阵作为验收产物（36 张）**，逐张确认无结构错乱、无未覆盖的硬编码颜色；404 页与两轨道空态一并截图验收；
   - 三主题切换与持久化、`prefers-color-scheme: dark` 落夜航、rail-tab 切换与键盘操作（↑/↓ 方向键、focus ring 可见）；
   - RSS/sitemap 输出正确域名；**旧 URL 前缀返回 410**、未知路径渲染 404 页；
   - 断言首页默认主题下无任何字体网络请求（无 fonts.googleapis / 无 woff2），切到编辑刊/夜航后才出现衬线字体分片请求；
   - Lighthouse 移动端（375px）Performance ≥ 90、LCP ≤ 2.5s；
   - 三主题全部文字色对过 WCAG AA（正文 4.5:1、大字/组件 3:1），axe 或自动化对比度检查进 CI 或实测清单；
   - curl 检查文章页输出 canonical、og:image 绝对 URL、JSON-LD Article 可被 Rich Results Test 解析；
+  - **统计链路**：访问任意页面后在 GoatCounter 后台看到计数增长；`/stats` 页在统计服务正常与手动停掉 goatcounter 容器两种状态下分别截图（数据渲染 / 优雅降级不破版）；全站页面不出现「情长」二字（`grep` 构建产物断言）；
 - **隐私验收**：force push 后从 GitHub 全新 clone，执行 `git log --all --oneline -- content/blog/murmurs-and-reflection/` 及全历史 grep murmurs 均为零结果；GitHub 网页端访问任一旧 murmurs 文件路径与旧 commit SHA 直链，记录返回结果（404 或悬挂对象仍可达）写入交付说明；确认 `https://qingverse.com/images/blog/...` 旧源文件路径返回 410；
 - 部署状态实时确认：镜像 tag、容器版本、`git log` 服务器工作区一致；
 - 任何未实测项在交付说明中如实点名。
