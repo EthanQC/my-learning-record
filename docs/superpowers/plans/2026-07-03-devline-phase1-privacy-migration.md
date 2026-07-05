@@ -2,7 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 把全部本地领先 commit 推上远端防丢，然后用 git-filter-repo 把碎碎念（murmurs）内容的完整历史迁出到私有仓库 `EthanQC/qingchang-private`，从公开仓库全部历史中抹除并 force push，重建服务器仓库清除旧对象，最后完成规格 §8 的隐私验收。
+**Goal:** 把全部本地领先 commit 推上远端防丢，然后用 git-filter-repo 把碎碎念（murmurs）内容的完整历史迁出到私有仓库 `<PRIVATE_REPO>`（真实仓库名由用户执行时确定并记入仓库外的 `phase1-log.md`，不写入本计划——见「隐私脱敏约定」），从公开仓库全部历史中抹除并 force push，重建服务器仓库清除旧对象，最后完成规格 §8 的隐私验收。
+
+> **隐私脱敏约定**：本计划会随 Task 1 提交进**公开**仓库。因此本文件正文**不含**任何 force-push 后可用于访问悬挂对象（即被抹除的私密内容）的凭据——具体的旧 commit 完整 SHA、站外照片真实文件名、私有仓库真实名，全部只写入仓库外的 `/Users/abble/backup-devline/phase1-log.md`（Task 2 Step 4 生成），正文用 `<PRIVATE_REPO>`、`<旧tip-SHA>`、`<迁入-SHA>`、`<照片N文件名>` 占位，执行时从 `phase1-log.md` 代入。
 
 **Architecture:** 本阶段不写任何业务代码，操作对象是 git 历史（本地 + GitHub + 服务器三份拷贝）与部署链（GitHub Actions + 阿里云 VPS Docker Compose）。核心顺序不可打乱：先 push 止血 → mirror 冷备 → 提取入私仓并核对 → 停 CI → 抹历史 force push → 服务器删仓重建 → 恢复 CI 并实测 → 隐私验收。所有不可逆操作前有 ⚠️ 用户确认检查点，唯一恢复途径是 mirror 冷备。
 
@@ -19,7 +21,7 @@
 - 「迁移形态：用 `git filter-repo --path` 提取 murmurs 子目录历史推入私有仓库（保留写作时间线）；完整性核对：68 篇 .md + 1 张 .jpg 逐一清点通过后才允许执行下一步」（§7 步骤 2.2）
 - 「**停用部署工作流**（`gh workflow disable` 或 GitHub UI）——filter-repo 后 force push 的 diff 是删除 content/blog/murmurs-and-reflection/**，命中 content/** 路径过滤，否则 CI 会在重建服务器仓库的同时 SSH 上去 `git reset --hard` + compose 重启，产生竞态」（§7 步骤 2.3）
 - 「`git-filter-repo` 抹除本仓库全部历史 → force push」（§7 步骤 2.4）
-- 「服务器重建（此窗口站点短暂停机，属预期）：`docker compose down`→ 备份 `deploy/.env` 与 `deploy/Caddyfile` 到仓库外……→ 删除 ~/workspace/my-learning-record 并重新 clone（**目的是清除服务器 .git 对象库里 murmurs 的旧对象**；`git reset --hard` 本身兼容重写历史但不清对象）→ 恢复 .env 与 Caddyfile → `docker compose up -d` 并确认站点恢复」（§7 步骤 2.5）
+- 「服务器重建（此窗口站点短暂停机，属预期）：`docker compose down`→ 备份 `deploy/.env` 与 `deploy/Caddyfile` 到仓库外……→ 删除 ~/workspace/my-learning-record 并重新 clone（**目的是清除服务器 .git 对象库里 murmurs 的旧对象**；`git reset --hard` 本身兼容重写历史但不清对象）→ 恢复 .env 与 Caddyfile → `docker compose up -d` 并确认站点恢复」（§7 步骤 2.5。**勘误注**：规格此处遗漏了同样只存在于服务器的未跟踪生产文件 `deploy/docker-compose.yml`——`.gitignore` 把它列为「生产配置（只在服务器）」，仓库内只有 `docker-compose.example.yml`，`deploy.yml` 在服务器裸执行 `docker compose` 证明真实 compose 文件必在服务器上。Task 6 已按「deploy/ 全部未跟踪生产文件」口径备份/恢复，规格待同步修订）
 - 「重新启用工作流并用 workflow_dispatch 手动触发一次完整部署，作为『重写历史后部署链完好』的实测」（§7 步骤 2.6）
 - 「GitHub 侧残留：force push 后旧 commit 经 SHA 直链仍可访问悬挂对象，联系 GitHub Support 请求 gc，或在交付说明中书面接受该残留风险」（§7 步骤 2.7）
 - 「此步必须在大规模改造提交之前完成」（§7 步骤 2）
@@ -47,18 +49,16 @@
 
 - 本地 `main` 领先 `origin/main` **31 个 commit**（截至 2026-07-04，含 tech-intro 内容、apps/api 分类标签、设计文档 v1–v3）；另有未跟踪的 `docs/superpowers/plans/*.md` 计划文件需先提交。
 - murmurs 内容在**全部历史**中出现过 3 个路径（重构前在仓库根）：
-  1. `content/blog/murmurs-and-reflection/`（现行，2025-10-23 重构 commit 0915a7f 迁入）
+  1. `content/blog/murmurs-and-reflection/`（现行，2025-10-23 重构 commit「迁入」，完整 SHA 见 phase1-log.md）
   2. `murmurs-and-reflection/`（旧根路径，R100 重命名而来）
   3. `murmurs/`（最早期路径，acffb95 起）
   **三个路径必须同时提取、同时抹除**，只滤现行路径会在旧根路径留下全部情感内容。
-- 当前 HEAD 下 `content/blog/murmurs-and-reflection/` = **68 个 .md + 1 个 .jpg（situationship.jpg）= 69 文件**，与规格清点数一致；历史中另有 1 个已删除文件 `2025.12.28.md`（提取的私仓历史里会保留，属预期）。
+- 当前 HEAD 下 `content/blog/murmurs-and-reflection/` = **68 个 .md + 1 个 .jpg（文件名脱敏，见 phase1-log.md）= 69 文件**，与规格清点数一致；历史中另有 1 个已删除文件 `2025.12.28.md`（提取的私仓历史里会保留，属预期）。
 - 历史中路径名含 "murmurs" 的**代码**文件：`apps/web/src/app/murmurs/page.tsx`（纯渲染代码，非隐私内容）。抹除后它仍在历史中，因此 §8 的「全历史 grep murmurs 零结果」按**内容路径**口径执行（见 Task 8 断言），代码残留在交付说明点名。
-- 碎碎念 md 内引用了 2 张个人照片，位于 murmurs 目录**之外**：`content/blog/images/old-friends-reunion.jpg`、`content/blog/images/2024-summary.png`（历史上还存在于根 `images/` 路径），全仓库仅 murmurs 文章引用它们。规格清点范围（68+1）不含它们——Task 3 有专门 ⚠️ 决策步骤。
+- 碎碎念 md 内引用了 2 张个人照片，位于 murmurs 目录**之外**：2 张站外照片（`content/blog/images/<照片1文件名>`、`content/blog/images/<照片2文件名>`，真实文件名脱敏记入 phase1-log.md；历史上还存在于根 `images/` 路径），全仓库仅 murmurs 文章引用它们。规格清点范围（68+1）不含它们——Task 3 有专门 ⚠️ 决策步骤。
 - 部署工作流：`.github/workflows/deploy.yml`，workflow 名 `Build & Deploy Qingverse`（id 210524041，注意 yml 里名字带尾随空格，gh 命令一律用文件名 `deploy.yml` 定位）。
 - 本机 `git-filter-repo` **未安装**（Task 2 安装）；`gh` 已登录 EthanQC；origin = `git@github.com:EthanQC/my-learning-record.git`；仓库公开、无 tag、远端仅 main 分支；全历史 643 commit，.git 约 44MB。
-- 用于 §8 SHA 直链检查的两个真实旧 commit（force push 后它们将不在新历史中）：
-  - `ed6783b62b07e81dbd6b9cb8d9a9fe9c519ea36a`（2026-03-02 更新今天的碎碎念，最后一个 murmurs commit）
-  - `0915a7fa58abd5c504f7a9ca285ac33330bafa98`（2025-10-23 重构迁入 commit）
+- 用于 §8 SHA 直链检查的两个真实旧 commit（force push 后它们将不在新历史中）：`<旧tip-SHA>`（最后一个 murmurs commit）与 `<迁入-SHA>`（2025-10-23 重构迁入 commit）。**这两个完整 SHA 属脱敏项**——它们是 force-push 后访问悬挂对象的凭据，不写入本公开计划，由 Task 2 Step 4 记入仓库外 `phase1-log.md`，Task 8 从该文件代入。（勘察时可用 `git -C /Users/abble/my-learning-record log --oneline --all -- content/blog/murmurs-and-reflection/ | tail -1` 与 `git log -1 --format=%H origin/main` 现取，不必写死在这里。）
 
 ---
 
@@ -185,13 +185,19 @@ git -C /Users/abble/backup-devline/my-learning-record-mirror.git rev-list --coun
 写入文件 `/Users/abble/backup-devline/phase1-log.md`，初始内容如下（`<...>` 处填 Step 3 实测值）：
 
 ```markdown
-# Devline 阶段一过程记录（隐私迁移）
+# Devline 阶段一过程记录（隐私迁移）—— 仓库外文件，禁止入库
 
 - 执行日期：<YYYY-MM-DD>
 - 止血 push 后 origin/main SHA（重写前旧历史基线）：<SHA>
 - 冷备路径：/Users/abble/backup-devline/my-learning-record-mirror.git
 - 重写前全历史 commit 总数 N_total：<N>
 - CI 止血部署 run 结论：success
+
+## 脱敏凭据（仅存此处，force-push 后是访问悬挂对象的钥匙，切勿入公开仓库）
+- 私有仓库真实名 <PRIVATE_REPO>：<owner/repo>（Task 3 定名；建议不含 qingchang/murmurs 等可猜词）
+- 旧 tip SHA <旧tip-SHA>（最后一个 murmurs commit，§8 直链检查用）：<40位SHA>
+- 迁入 SHA <迁入-SHA>（2025-10-23 重构迁入 commit）：<40位SHA>
+- 站外照片真实文件名 <照片1文件名>/<照片2文件名>（Task 3 勘察填）：<name1> / <name2>
 ```
 
 **验收标准：**
@@ -203,34 +209,57 @@ git -C /Users/abble/backup-devline/my-learning-record-mirror.git rev-list --coun
 
 ---
 
-### Task 3: 提取 murmurs 全历史到私有仓库 EthanQC/qingchang-private
+### Task 3: 提取 murmurs 全历史到私有仓库 <PRIVATE_REPO>
 
 **Files:**
 - Create: `/Users/abble/devline-phase1-work/murmurs-extract/`（提取用临时克隆）
-- Create: GitHub 私有仓库 `EthanQC/qingchang-private`
+- Create: GitHub 私有仓库 `<PRIVATE_REPO>`
 - Test: 无（验收为文件清点 + 树哈希断言）
 
 **Interfaces:**
 - Consumes: Task 2 冷备存在（安全网）；GitHub 上完整的旧历史
-- Produces: 私仓 `git@github.com:EthanQC/qingchang-private.git` 的 `main` 含 murmurs 三路径全历史；确定的抹除路径集合 `$FILTER_PATHS`（Task 5 逐字复用）
+- Produces: 私仓 `git@github.com:<PRIVATE_REPO>.git` 的 `main` 含 murmurs 三路径全历史；仓库外路径文件 `/Users/abble/backup-devline/filter-paths.txt`（Task 5 抹除复用同一文件）
 
 - [ ] **Step 1: ⚠️ 等待用户确认后才可执行——决策两张站外个人照片是否纳入迁移**
 
-向用户呈现勘察事实并要求二选一：碎碎念文章引用的 2 张个人照片位于 murmurs 目录之外——`content/blog/images/old-friends-reunion.jpg` 与 `content/blog/images/2024-summary.png`（历史上还在根 `images/` 下），全仓库仅 murmurs 文章引用。规格清点范围（68 md + 1 jpg）不含它们，但仓库公开意味着它们的历史同样公开。
+向用户呈现勘察事实并要求二选一：碎碎念文章引用的 2 张个人照片位于 murmurs 目录之外——2 张站外照片（`content/blog/images/<照片1文件名>`、`content/blog/images/<照片2文件名>`，真实名脱敏见 phase1-log.md；历史上还在根 `images/` 下），全仓库仅 murmurs 文章引用。规格清点范围（68 md + 1 jpg）不含它们，但仓库公开意味着它们的历史同样公开。
 
-- **选项 A（保持规格字面范围）**：只迁移/抹除 murmurs 三路径。后续命令使用：
+用户二选一后，把选定的路径集合**写入仓库外的一个文件** `/Users/abble/backup-devline/filter-paths.txt`（每行一个路径，`git filter-repo --paths-from-file` 消费）。**Task 3 提取与 Task 5 抹除引用同一个文件**——这从机制上保证提取范围和抹除范围逐字一致（两处不一致 = 提取和抹除范围错位，是本计划最严重的可犯错误；用同一文件即杜绝该风险）；且该文件在仓库外，站外照片的真实文件名不会写进公开仓库的计划正文。
 
-  ```bash
-  FILTER_PATHS="--path content/blog/murmurs-and-reflection --path murmurs-and-reflection --path murmurs"
-  ```
-
-- **选项 B（照片一并迁移抹除，推荐）**：追加 4 个照片历史路径。后续命令使用：
+- **选项 A（保持规格字面范围）**：只迁移/抹除 murmurs 三路径：
 
   ```bash
-  FILTER_PATHS="--path content/blog/murmurs-and-reflection --path murmurs-and-reflection --path murmurs --path content/blog/images/old-friends-reunion.jpg --path content/blog/images/2024-summary.png --path images/old-friends-reunion.jpg --path images/2024-summary.png"
+  cat > /Users/abble/backup-devline/filter-paths.txt <<'EOF'
+  content/blog/murmurs-and-reflection
+  murmurs-and-reflection
+  murmurs
+  EOF
   ```
 
-把用户选择与对应 `$FILTER_PATHS` 逐字记入 `/Users/abble/backup-devline/phase1-log.md`。本任务与 Task 5 的所有后续命令共用这一个 `$FILTER_PATHS`（两处不一致 = 提取和抹除范围错位，是本计划最严重的可犯错误）。下文期望值按选项 A 书写；若选 B，清点数按「69 → 71 文件、68 md → 68 md + 3 图」相应调整，并在日志中记录调整后的实测值。
+- **选项 B（照片一并迁移抹除，推荐）**：在选项 A 三行之外，再追加 4 个站外照片的历史路径（真实文件名来自本 Step 的勘察，只落进这个仓库外文件）：
+
+  ```bash
+  cat > /Users/abble/backup-devline/filter-paths.txt <<'EOF'
+  content/blog/murmurs-and-reflection
+  murmurs-and-reflection
+  murmurs
+  content/blog/images/<照片1文件名>
+  content/blog/images/<照片2文件名>
+  images/<照片1文件名>
+  images/<照片2文件名>
+  EOF
+  ```
+  （`<照片N文件名>` = 勘察发现的两张站外照片实际文件名，同步记入 `phase1-log.md`；因涉隐私，不写入本公开计划正文。）
+
+把用户选择记入 `/Users/abble/backup-devline/phase1-log.md`。下文期望值按选项 A 书写；若选 B，清点数按「69 → 71 文件、68 md → 68 md + 3 图」相应调整，并在日志中记录调整后的实测值。
+
+- [ ] **Step 1b: 断言路径文件已生成**
+
+```bash
+test -s /Users/abble/backup-devline/filter-paths.txt && cat /Users/abble/backup-devline/filter-paths.txt
+```
+
+期望：非空，逐行打印选定路径（选项 A 为 3 行、选项 B 为 7 行）。为空则停止（后续 filter-repo 会因无路径过滤器而"什么都不删"）。
 
 - [ ] **Step 2: 全新克隆（filter-repo 要求 fresh clone）**
 
@@ -245,10 +274,11 @@ git clone git@github.com:EthanQC/my-learning-record.git /Users/abble/devline-pha
 
 ```bash
 cd /Users/abble/devline-phase1-work/murmurs-extract
-git filter-repo $FILTER_PATHS
+test -s /Users/abble/backup-devline/filter-paths.txt || { echo "路径文件缺失，停止"; exit 1; }
+git filter-repo --paths-from-file /Users/abble/backup-devline/filter-paths.txt
 ```
 
-期望：filter-repo 正常结束（输出 `Completely finished after ... seconds`）。注意：filter-repo 会自动移除 origin remote，这在本任务是期望行为（防止误推回公开仓库）。
+期望：filter-repo 正常结束（输出 `Completely finished after ... seconds`）。说明：用 `--paths-from-file` 而非命令行变量，规避 zsh 不对未加引号变量做词切分导致 filter-repo 收到单个畸形参数的问题，同时保证提取/抹除两处逐字一致。注意：filter-repo 会自动移除 origin remote，这在本任务是期望行为（防止误推回公开仓库）。
 
 - [ ] **Step 4: 完整性核对（规格 §7 步骤 2.2：逐一清点通过才允许进入下一任务）**
 
@@ -270,22 +300,30 @@ git log --all --diff-filter=A --oneline -- content/blog/murmurs-and-reflection/2
 git log --oneline | wc -l
 ```
 
-期望：4a 输出 `69`、`68`、`content/blog/murmurs-and-reflection/situationship.jpg`；4b 输出 `FILELIST_OK`；4c 两条输出**相同**树哈希；4d 头两行为「测试效果」「完成了仓库初步的框架搭建、些许内容填充排版和今天的记录」（2024-12-08 两个建仓 commit 的重写版），`2025.12.28.md` 有添加记录，总 commit 数约 76（记录实际值入日志）。任何一项不符，**停止**，不得进入 Step 5。
+期望：4a 输出 `69`、`68`、以及那张 `.jpg` 的完整路径（文件名脱敏，见 phase1-log.md）；4b 输出 `FILELIST_OK`；4c 两条输出**相同**树哈希；4d 头两行为「测试效果」「完成了仓库初步的框架搭建、些许内容填充排版和今天的记录」（2024-12-08 两个建仓 commit 的重写版），`2025.12.28.md` 有添加记录，总 commit 数约 76（记录实际值入日志）。任何一项不符，**停止**，不得进入 Step 5。
 
 - [ ] **Step 5: 创建私有仓库并在 push 前断言其确为 private**
 
+先把私仓真实名设为 shell 变量（用户此时定名，建议中性、不含 qingchang/murmurs 等可猜词，如 `EthanQC/ec-archive`），并同步记入仓库外 `phase1-log.md` 的「私有仓库真实名」字段——本公开计划不写死真实名：
+
 ```bash
-gh repo create EthanQC/qingchang-private --private --description "qingchang murmurs private archive"
-gh repo view EthanQC/qingchang-private --json isPrivate -q '.isPrivate'
+PRIVATE_REPO=<用户此时定的 owner/repo>   # 记入 phase1-log.md，不回填本计划
+# 幂等：若此前误建过同名仓库，先确认为空再复用，否则换名——不盲目复用
+if gh repo view "$PRIVATE_REPO" >/dev/null 2>&1; then
+  echo "仓库已存在，停下人工确认是否可复用（是否空仓、可见性是否 private）"; 
+else
+  gh repo create "$PRIVATE_REPO" --private --description "private archive"
+fi
+gh repo view "$PRIVATE_REPO" --json isPrivate -q '.isPrivate'
 ```
 
-期望：第二条输出 `true`。**若输出不是 `true`，绝对不得执行 Step 6 的 push。**
+期望：最后一条输出 `true`。**若输出不是 `true`，绝对不得执行 Step 6 的 push。**
 
 - [ ] **Step 6: 推入私仓**
 
 ```bash
 cd /Users/abble/devline-phase1-work/murmurs-extract
-git remote add origin git@github.com:EthanQC/qingchang-private.git
+git remote add origin "git@github.com:$PRIVATE_REPO.git"
 git push -u origin main
 ```
 
@@ -294,8 +332,8 @@ git push -u origin main
 - [ ] **Step 7: 远端复核**
 
 ```bash
-gh api repos/EthanQC/qingchang-private --jq '{private: .private, default_branch: .default_branch}'
-gh api "repos/EthanQC/qingchang-private/contents/content/blog/murmurs-and-reflection" --jq 'length'
+gh api "repos/$PRIVATE_REPO" --jq '{private: .private, default_branch: .default_branch}'
+gh api "repos/$PRIVATE_REPO/contents/content/blog/murmurs-and-reflection" --jq 'length'
 ```
 
 期望：第一条输出 `{"private":true,"default_branch":"main"}`；第二条输出 `69`（选项 B 时该目录仍为 69，另核 `repos/.../contents/content/blog/images` 含 2 张照片）。
@@ -306,15 +344,15 @@ gh api "repos/EthanQC/qingchang-private/contents/content/blog/murmurs-and-reflec
 
 ```markdown
 ## Task 3 提取记录
-- $FILTER_PATHS：<逐字记录>
-- 私仓：git@github.com:EthanQC/qingchang-private.git（isPrivate=true 已核）
-- 清点：69 文件 = 68 md + 1 jpg（situationship.jpg）；树哈希与源仓库一致：<树哈希>
+- filter-paths.txt 内容（选定的路径集）：<逐行记录>
+- 私仓：git@github.com:<PRIVATE_REPO>.git（isPrivate=true 已核）
+- 清点：69 文件 = 68 md + 1 jpg（文件名见 phase1-log.md）；树哈希与源仓库一致：<树哈希>
 - 提取历史 commit 数：<实际值>
 ```
 
 **验收标准：**
 1. Step 4 四组断言全部通过（69/68/jpg、FILELIST_OK、树哈希相同、时间线存在）；
-2. `gh repo view EthanQC/qingchang-private --json isPrivate -q '.isPrivate'` 输出 `true`；
+2. `gh repo view "$PRIVATE_REPO" --json isPrivate -q '.isPrivate'` 输出 `true`（`$PRIVATE_REPO` 为 Step 5 定名的真实私仓，见 phase1-log.md）；
 3. Step 7 远端目录清点 `69`。
 
 **Git commit：** 私仓 push 即本任务的提交动作；公开仓库无变更，无 commit，属预期。
@@ -365,7 +403,7 @@ gh workflow list --all --json name,state,path -q '.[] | select(.path==".github/w
 - Test: 无（验收为历史断言）
 
 **Interfaces:**
-- Consumes: Task 3 确定的 `$FILTER_PATHS`（逐字复用，见 phase1-log.md）；Task 4 已停用 CI；Task 2 冷备（唯一回退途径）
+- Consumes: Task 3 生成的 `/Users/abble/backup-devline/filter-paths.txt`（同一文件复用，保证抹除范围 = 提取范围）；Task 4 已停用 CI；Task 2 冷备（唯一回退途径）
 - Produces: 重写后的 `origin/main` 新 SHA（记入日志，Task 6/7/8 均以它为基准）；本地工作仓库处于新历史
 
 - [ ] **Step 1: 全新克隆用于重写**
@@ -381,10 +419,11 @@ git -C /Users/abble/devline-phase1-work/rewrite rev-parse main
 
 ```bash
 cd /Users/abble/devline-phase1-work/rewrite
-git filter-repo --invert-paths $FILTER_PATHS
+test -s /Users/abble/backup-devline/filter-paths.txt || { echo "路径文件缺失，停止"; exit 1; }
+git filter-repo --invert-paths --paths-from-file /Users/abble/backup-devline/filter-paths.txt
 ```
 
-期望：`Completely finished after ... seconds`。此命令只影响本地克隆，尚未触碰远端。
+期望：`Completely finished after ... seconds`。抹除引用的正是 Task 3 提取用的同一个 `filter-paths.txt`（同文件保证范围逐字一致）；`--invert-paths` 表示"删除这些路径而非保留"。此命令只影响本地克隆，尚未触碰远端。
 
 - [ ] **Step 3: 重写结果断言（force push 前的最后防线）**
 
@@ -401,7 +440,7 @@ ls content/blog/
 git rev-list --count HEAD
 ```
 
-期望：3a 输出 `0`；3b 输出**恰好**两行——`apps/web/src/app/murmurs` 与 `apps/web/src/app/murmurs/page.tsx`（勘察时已预判，为纯渲染代码；若选项 B，另断言 `git rev-list --all --objects | awk '{print $2}' | grep -E "old-friends-reunion|2024-summary"` 无输出）；3c 输出 `TREE_CLEAN` 且列表仍含 `images internship-records interview-experiences join-in-open-source`；3d 输出小于 N_total（filter-repo 会剪除变空的 commit，记实际值入日志）。任何一项不符，**停止并删除 rewrite 目录重来**，不得 push。
+期望：3a 输出 `0`；3b 输出**恰好**两行——`apps/web/src/app/murmurs` 与 `apps/web/src/app/murmurs/page.tsx`（勘察时已预判，为纯渲染代码；若选项 B，另断言 `git rev-list --all --objects | awk '{print $2}' | grep -Ef <(sed -E "s#.*/##" /Users/abble/backup-devline/filter-paths.txt | grep -E "\.(jpg|png)$")` 无输出（照片名来自仓库外 filter-paths.txt））；3c 输出 `TREE_CLEAN` 且列表仍含 `images internship-records interview-experiences join-in-open-source`；3d 输出小于 N_total（filter-repo 会剪除变空的 commit，记实际值入日志）。任何一项不符，**停止并删除 rewrite 目录重来**，不得 push。
 
 - [ ] **Step 4: 恢复 origin remote（filter-repo 会自动拆除 remote，必须重新添加）**
 
@@ -502,26 +541,28 @@ ssh -p $VPS_PORT $VPS_USER@$VPS_HOST '
 '
 ```
 
-期望：remote 为 `git@github.com:EthanQC/my-learning-record.git`（若是 https 变体，记录实际 URL，Step 5 clone 用同一 URL）；`ls-remote` 输出的 SHA = Task 5 的新 main SHA（证明服务器侧看到的远端已重写）；`git status` 列出的 deploy/ 未跟踪文件应为 `.env` 与 `Caddyfile` 两个（若有其它未跟踪文件，Step 4 一并备份）；记录 API_TAG/WEB_TAG 当前值入日志（重建后 up -d 用同一 tag 恢复原版本）。
+期望：remote 为 `git@github.com:EthanQC/my-learning-record.git`（若是 https 变体，记录实际 URL，Step 5 clone 用同一 URL）；`ls-remote` 输出的 SHA = Task 5 的新 main SHA（证明服务器侧看到的远端已重写）；`git status --ignored` 列出的 deploy/ 未跟踪/忽略生产文件预期为**三个**——`.env`、`Caddyfile`、`docker-compose.yml`（`.gitignore` 把这三个都标为「生产配置（只在服务器）」，仓库内只有 `*.example.yml`；`deploy.yml` 在服务器裸执行 `docker compose` 证明真实 `docker-compose.yml` 必在服务器上）。**记录这份完整清单**——Step 4 按此清单全量备份、Step 6 按此清单全量恢复，任一遗漏都会在 `rm -rf` 后无法恢复。同时记录 API_TAG/WEB_TAG 当前值入日志（重建后 up -d 用同一 tag 恢复原版本）。
 
 - [ ] **Step 3: ⚠️ 等待用户确认后才可执行——进入停机窗口**
 
 向用户确认：接下来 compose down + 删目录重 clone 会造成站点短暂停机（规格 §7 步骤 2.5 预期，§7A.3 要求选低流量时段），请用户确认现在执行。记录停机开始时间。
 
-- [ ] **Step 4: 七步之 1–2——compose down 并备份 .env / Caddyfile 到仓库外**
+- [ ] **Step 4: 七步之 1–2——compose down 并全量备份 deploy/ 生产文件到仓库外**
 
 ```bash
 ssh -p $VPS_PORT $VPS_USER@$VPS_HOST '
   cd ~/workspace/my-learning-record/deploy &&
   docker compose down &&
   mkdir -p ~/backup-devline &&
-  cp .env ~/backup-devline/.env &&
-  cp Caddyfile ~/backup-devline/Caddyfile &&
-  ls -la ~/backup-devline/
+  # 全量备份 deploy/ 下所有未跟踪+忽略的生产文件（.env / Caddyfile / docker-compose.yml），不硬编码文件名
+  git -C ~/workspace/my-learning-record ls-files --others --ignored --exclude-standard -- deploy/ \
+    | while read f; do cp --parents "$f" ~/backup-devline/ 2>/dev/null || cp "$f" ~/backup-devline/; done &&
+  cp .env Caddyfile docker-compose.yml ~/backup-devline/ 2>/dev/null;
+  ls -la ~/backup-devline/ ~/backup-devline/deploy/ 2>/dev/null
 '
 ```
 
-期望：down 输出各容器 Removed；`ls -la` 列出 `.env` 与 `Caddyfile`（以及 Step 2 发现的其它未跟踪文件，若有则补一条 cp）。说明：`docker compose down` 不带 `-v`，命名卷 mysql-data / caddy-data / caddy-config 全部保留（caddy-data 里的 TLS 证书不丢）。
+期望：down 输出各容器 Removed；备份目录里出现 `.env`、`Caddyfile`、`docker-compose.yml` 三个文件（无论落在 `~/backup-devline/` 还是 `~/backup-devline/deploy/`，Step 6 两处都查）。若三者有任一缺失，**停止**，不得进入 Step 5（`rm -rf` 会永久删除它们）。说明：`docker compose down` 不带 `-v`，命名卷 mysql-data / caddy-data / caddy-config 全部保留（caddy-data 里的 TLS 证书不丢）。
 
 - [ ] **Step 5: 七步之 3–4——删除仓库目录并重新 clone（清除 .git 旧对象）**
 
@@ -538,26 +579,33 @@ ssh -p $VPS_PORT $VPS_USER@$VPS_HOST '
 
 期望：`rev-parse HEAD` = Task 5 新 main SHA；wc -l 输出 `0`；输出 `SERVER_TREE_CLEAN`。（clone URL 以 Step 2 记录的实际 remote URL 为准。）
 
-- [ ] **Step 6: 七步之 5–6——恢复配置并启动**
+- [ ] **Step 6: 七步之 5–6——全量恢复配置并启动（先断言 compose 文件到位）**
 
 ```bash
 ssh -p $VPS_PORT $VPS_USER@$VPS_HOST '
-  cp ~/backup-devline/.env ~/workspace/my-learning-record/deploy/.env &&
-  cp ~/backup-devline/Caddyfile ~/workspace/my-learning-record/deploy/Caddyfile &&
-  cd ~/workspace/my-learning-record/deploy &&
+  D=~/workspace/my-learning-record/deploy &&
+  # 从备份全量恢复三个生产文件（兼容 Step 4 两种落点）
+  for f in .env Caddyfile docker-compose.yml; do
+    if [ -f ~/backup-devline/deploy/$f ]; then cp ~/backup-devline/deploy/$f $D/$f;
+    elif [ -f ~/backup-devline/$f ]; then cp ~/backup-devline/$f $D/$f; fi
+  done &&
+  # 硬断言：三个文件必须都在，否则 up -d 会以 no configuration file provided 失败
+  test -f $D/.env && test -f $D/Caddyfile && test -f $D/docker-compose.yml && echo CONFIG_RESTORED &&
+  cd $D &&
   docker compose up -d &&
   sleep 20 &&
   docker compose ps --format "table {{.Name}}\t{{.Status}}"
 '
 ```
 
-期望：4 个容器（mysql8 / qv-api / qv-web / qv-caddy）状态均 Up（mysql 需 healthy 后 api 才起，20 秒不够就再等再查）。
+期望：先输出 `CONFIG_RESTORED`（三个生产文件均已恢复；若此断言失败则停止，从 `~/backup-devline/` 手工确认备份内容，切勿在缺文件时跑 up -d）；随后 4 个容器（mysql8 / qv-api / qv-web / qv-caddy）状态均 Up（mysql 需 healthy 后 api 才起，20 秒不够就再等再查）。
 
 - [ ] **Step 7: 七步之 7——验证站点恢复**
 
 ```bash
+PHOTO=<从 phase1-log.md 取 murmurs 图片文件名>   # 脱敏：真实名不写入本公开计划
 curl -s -o /dev/null -w '%{http_code}\n' https://qingverse.com
-curl -s -o /dev/null -w '%{http_code}\n' https://qingverse.com/images/blog/murmurs-and-reflection/situationship.jpg
+curl -s -o /dev/null -w '%{http_code}\n' "https://qingverse.com/images/blog/murmurs-and-reflection/$PHOTO"
 curl -s -o /dev/null -w '%{http_code}\n' https://qingverse.com/images/blog/images/explaining-atomic.png
 ```
 
@@ -572,7 +620,7 @@ curl -s -o /dev/null -w '%{http_code}\n' https://qingverse.com/images/blog/image
 - 停机窗口：<开始> ~ <结束>（时长 <分钟>）
 - 重建前 API_TAG/WEB_TAG：<值>（重建后未变，容器恢复原版本）
 - 服务器新 HEAD：<SHA>（= 新 main SHA）
-- murmurs 源文件 URL 现状：/images/blog/murmurs-and-reflection/situationship.jpg → 404
+- murmurs 源文件 URL 现状：/images/blog/murmurs-and-reflection/$PHOTO → 404（$PHOTO 见 phase1-log.md）
 ```
 
 **验收标准：**
@@ -666,25 +714,31 @@ git log --all --oneline -- murmurs-and-reflection/ murmurs/ | wc -l
 git rev-list --all --objects | awk '{print $2}' | grep -i murmur | sort -u
 ```
 
-期望：前两条输出 `0`、`0`；第三条输出恰好两行 `apps/web/src/app/murmurs` 与 `apps/web/src/app/murmurs/page.tsx`（历史中的路由代码，非隐私内容——这是 §8「全历史 grep murmurs 零结果」按内容路径口径的既定偏差，写入交付说明点名；该代码会在阶段三新前台落地时从 HEAD 消失）。若选项 B，另断言 `git rev-list --all --objects | awk '{print $2}' | grep -E "old-friends-reunion|2024-summary" | wc -l` 输出 `0`。
+期望：前两条输出 `0`、`0`；第三条输出恰好两行 `apps/web/src/app/murmurs` 与 `apps/web/src/app/murmurs/page.tsx`（历史中的路由代码，非隐私内容——这是 §8「全历史 grep murmurs 零结果」按内容路径口径的既定偏差，写入交付说明点名；该代码会在阶段三新前台落地时从 HEAD 消失）。若选项 B，另断言 同法用仓库外 filter-paths.txt 里的照片名 grep，`wc -l` 输出 `0`。
 
 - [ ] **Step 3: GitHub 网页端残留检查（§8 第二组：直链实测并记录）**
 
+先从仓库外 `phase1-log.md` 取脱敏凭据到 shell 变量（不在本公开计划里写死）：
+
 ```bash
+# 从 phase1-log.md 读回真实值（人工填过的四个脱敏项）
+OLD_TIP=<从 phase1-log.md 取「旧 tip SHA」的 40 位值>
+MIGR_SHA=<从 phase1-log.md 取「迁入 SHA」的 40 位值>
+PHOTO=<从 phase1-log.md 取那张 murmurs 图片的文件名>
 # 旧文件路径（main 分支视角，应 404）
 curl -s -o /dev/null -w 'blob_main: %{http_code}\n' \
-  "https://github.com/EthanQC/my-learning-record/blob/main/content/blog/murmurs-and-reflection/situationship.jpg"
+  "https://github.com/EthanQC/my-learning-record/blob/main/content/blog/murmurs-and-reflection/$PHOTO"
 # 旧 commit SHA 直链（悬挂对象，可能 404 也可能仍可达，如实记录）
-curl -s -o /dev/null -w 'commit_ed6783b: %{http_code}\n' \
-  "https://github.com/EthanQC/my-learning-record/commit/ed6783b62b07e81dbd6b9cb8d9a9fe9c519ea36a"
-curl -s -o /dev/null -w 'commit_0915a7f: %{http_code}\n' \
-  "https://github.com/EthanQC/my-learning-record/commit/0915a7fa58abd5c504f7a9ca285ac33330bafa98"
+curl -s -o /dev/null -w 'commit_oldtip: %{http_code}\n' \
+  "https://github.com/EthanQC/my-learning-record/commit/$OLD_TIP"
+curl -s -o /dev/null -w 'commit_migr: %{http_code}\n' \
+  "https://github.com/EthanQC/my-learning-record/commit/$MIGR_SHA"
 # 悬挂对象上的原始文件内容直链
 curl -s -o /dev/null -w 'raw_old_sha: %{http_code}\n' \
-  "https://raw.githubusercontent.com/EthanQC/my-learning-record/ed6783b62b07e81dbd6b9cb8d9a9fe9c519ea36a/content/blog/murmurs-and-reflection/situationship.jpg"
+  "https://raw.githubusercontent.com/EthanQC/my-learning-record/$OLD_TIP/content/blog/murmurs-and-reflection/$PHOTO"
 ```
 
-期望：`blob_main` 为 `404`；后三条**如实记录实际返回码**（GitHub 悬挂对象通常仍返回 200，直到 GitHub 侧 gc）——这正是 §7 步骤 2.7 描述的残留，返回码原样写入交付说明。
+期望：`blob_main` 为 `404`；后三条**如实记录实际返回码**（GitHub 悬挂对象通常仍返回 200，直到 GitHub 侧 gc）——这正是 §7 步骤 2.7 描述的残留，返回码原样写入交付说明。**注意**：交付说明也进公开仓库，记录时同样用「旧 tip / 迁入」代称，不粘贴完整 SHA 与真实照片名（详见 Step 6）。
 
 - [ ] **Step 4: ⚠️ 等待用户确认后才可执行——GitHub Support gc 请求 or 书面接受残留**
 
@@ -717,7 +771,7 @@ curl -s -o /dev/null -w 'raw_old_sha: %{http_code}\n' \
 ## 已完成并实测
 - 止血 push：<N> 个 commit，CI run success，线上仅分类标签变化（预期）
 - 冷备：/Users/abble/backup-devline/my-learning-record-mirror.git（新站稳定前不得删除，§7A.2）
-- murmurs 全历史（3 个历史路径）已提取至私仓 EthanQC/qingchang-private（isPrivate=true）；
+- murmurs 全历史（3 个历史路径）已提取至私仓 <PRIVATE_REPO>（isPrivate=true）；
   清点 68 md + 1 jpg 通过，子目录树哈希与原历史一致
 - 公开仓库历史重写：旧 main <旧SHA> → 新 main <新SHA>，commit 数 <N_total> → <N_new>
 - 服务器重建：停机 <时长>，服务器 .git 无 murmurs 对象，站点恢复 200
@@ -727,7 +781,7 @@ curl -s -o /dev/null -w 'raw_old_sha: %{http_code}\n' \
 
 ## GitHub 侧残留（§7 步骤 2.7，实测记录）
 - blob/main 旧文件路径：404
-- 旧 commit SHA 直链返回码：ed6783b6…=<code>、0915a7fa…=<code>、raw=<code>
+- 旧 commit SHA 直链返回码（用代称，完整 SHA 只在 phase1-log.md）：旧tip=<code>、迁入=<code>、raw=<code>
 - 处置：<选项 A 工单编号/日期 或 选项 B 书面接受残留>
 
 ## GSC

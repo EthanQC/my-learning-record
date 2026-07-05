@@ -130,7 +130,9 @@ services:
     cpus: "1.00"
 
   goatcounter:
-    image: arp242/goatcounter:latest
+    # 固定版本，禁用 :latest 漂移；实际 tag 由 Task 8 预检步骤解析当前稳定版后写入 deploy/.env 的 GOATCOUNTER_TAG，
+    # 并记录镜像 digest（升级需手动改 tag 重新预拉、重测）。
+    image: arp242/goatcounter:${GOATCOUNTER_TAG}
     container_name: goatcounter
     restart: unless-stopped
     environment:
@@ -570,9 +572,10 @@ git push origin redesign/devline
 向用户逐条确认后才继续：
 
 1. Task 1–6 验收标准全部通过（逐条列出证据）；
-2. 现在处于约定的低流量执行窗口；
-3. 合并后 CI 会立即把 Devline 部署到 qingverse.com，且在 Task 8 完成前存在一个「新前台 + 旧 Caddy 配置」的过渡窗口（约几分钟：/api 反代与 /images file_server 仍在、410 未生效）；
-4. 用户明确回复「确认切流」。
+2. **夹具文章处置已按阶段三 Task 20 Step 0 的用户决定执行**（保留上线 / 全部置 draft 走空态 / 换真实首发文）——确认线上首发内容就是用户想要的状态，而非三篇占位夹具意外成为首发；
+3. 现在处于约定的低流量执行窗口；
+4. 合并后 CI 会立即把 Devline 部署到 qingverse.com，且在 Task 8 完成前存在一个「新前台 + 旧 Caddy 配置」的过渡窗口（约几分钟：/api 反代与 /images file_server 仍在、410 未生效）；
+5. 用户明确回复「确认切流」。
 
 - [ ] **Step 2: 合并并推送**
 
@@ -618,9 +621,32 @@ curl -s -o /dev/null -w '%{http_code}\n' https://qingverse.com/
 - Consumes: Task 2/3 的 example 文件（CI 部署时 `git reset --hard` 已同步到服务器工作区）；Task 5 的 DNS 解析；Task 6 的备份；`$GC_EMAIL`
 - Produces: 3 容器新栈（qv-web / qv-caddy / goatcounter）运行中；`stats.qingverse.com` 可访问且已建站、public dashboard 开启；410/缓存头/未知路径 404 全部生效——Task 9–13 的验证对象
 
+- [ ] **Step 0: 进停机窗口前预检——预拉 GoatCounter 镜像并固定版本（停机外完成，避免拉取失败卡在停机窗口里）**
+
+阿里云大陆 VPS 拉 Docker Hub 常慢/间歇失败；若把首次拉取留到 `docker compose up` 阶段（已在停机窗口内），一旦失败停机被迫延长。因此在**停机确认之前**先解析当前稳定 tag、预拉、并把 tag/digest 固化进 `.env`：
+
+```bash
+# 1) 解析当前稳定 tag（在服务器上查 Docker Hub；避开 latest。若网络查不到，回退用已知稳定版如 release-2.6 并在下方 pull 处验证其存在）
+ssh $SERVER 'GC_TAG=$(curl -s "https://hub.docker.com/v2/repositories/arp242/goatcounter/tags?page_size=100" \
+  | grep -Eo "\"name\":\"[^\"]+\"" | sed -E "s/\"name\":\"([^\"]+)\"/\1/" \
+  | grep -Ev "^latest$" | sort -V | tail -1); echo "解析到 tag: ${GC_TAG:-<空,手动指定>}"'
+# 2) 预拉该 tag（停机窗口外；失败就先解决镜像源——见下方 ACR 中转兜底——再进 Step 1）
+ssh $SERVER 'docker pull arp242/goatcounter:<上一步解析到的 tag>'
+# 3) 记录 digest 并写入 deploy/.env 的 GOATCOUNTER_TAG（compose 的 image 引用它）
+ssh $SERVER 'docker inspect --format "{{index .RepoDigests 0}}" arp242/goatcounter:<tag>; \
+  grep -q "^GOATCOUNTER_TAG=" ~/workspace/my-learning-record/deploy/.env \
+    && sed -i "s#^GOATCOUNTER_TAG=.*#GOATCOUNTER_TAG=<tag>#" ~/workspace/my-learning-record/deploy/.env \
+    || echo "GOATCOUNTER_TAG=<tag>" >> ~/workspace/my-learning-record/deploy/.env'
+# 4) 核对镜像 entrypoint 确实读 GOATCOUNTER_LISTEN/GOATCOUNTER_TLS 这些 env（否则 Caddy 反代 8081 会连不通——见下方 Step 7 建站命令依赖同一 entrypoint 约定）
+ssh $SERVER 'docker inspect --format "{{json .Config.Entrypoint}} {{json .Config.Cmd}}" arp242/goatcounter:<tag>; \
+  docker run --rm arp242/goatcounter:<tag> help serve 2>&1 | head -20'
+```
+
+期望：解析到一个具体 tag（非 latest）；`docker pull` 成功；`.env` 出现 `GOATCOUNTER_TAG=<tag>`；`help serve` 输出里能看到监听地址/TLS 相关选项（确认 env 或等价 flag 生效）。**镜像源兜底（ACR 中转）**：若服务器直连 Docker Hub 拉取失败——在本机 `docker pull arp242/goatcounter:<tag>` → `docker tag` 成自家 ACR 地址 → `docker push` 到 ACR → 把 compose 的 `image:` 改成 ACR 地址、服务器 `docker pull` ACR。全部在停机窗口外完成。
+
 - [ ] **Step 1: ⚠️ 等待用户确认后才可执行——本步骤将 down 掉全部旧容器（含 mysql/api），站点短暂停机**
 
-向用户确认：「即将执行 `docker compose down` 并替换服务器 compose/Caddyfile/.env，预期停机 1–3 分钟，是否继续？」得到肯定答复后才执行 Step 2。记录停机开始时间。
+向用户确认：「GoatCounter 镜像已在 Step 0 预拉并固定版本；即将执行 `docker compose down` 并替换服务器 compose/Caddyfile/.env，预期停机 1–3 分钟，是否继续？」得到肯定答复后才执行 Step 2。记录停机开始时间。
 
 - [ ] **Step 2: 停旧栈**
 
@@ -993,12 +1019,16 @@ curl -s https://qingverse.com/ https://qingverse.com/about https://qingverse.com
 ```bash
 cd /private/tmp/claude-501/-Users-abble-my-learning-record/3bd41468-2b65-4f49-bd58-591810d16abe/scratchpad
 git clone https://github.com/EthanQC/my-learning-record.git fresh-clone && cd fresh-clone
-git log --all --oneline -- content/blog/murmurs-and-reflection/ | wc -l
-git log --all --oneline | grep -ci murmurs || echo MSG-CLEAN
-git grep -li murmurs $(git rev-list --all) 2>/dev/null | head -5 || echo TREE-CLEAN
+# 口径与阶段一 Task 8 一致：按【内容路径】判定，而非对文件内容 grep "murmurs"
+# （否则会误命中两类预期残留：docs/ 下含 "murmurs" 字样的 spec/计划文档、以及历史里的 apps/web/src/app/murmurs 旧路由代码）
+# 1) murmurs 情感内容的三个历史路径：全历史零文件
+git log --all --format= --name-only -- \
+  'content/blog/murmurs-and-reflection/*' 'murmurs-and-reflection/*' 'murmurs/*' | sort -u | grep . && echo "FOUND-CONTENT!" || echo CONTENT-PATHS-CLEAN
+# 2) 全历史对象里除【已知代码路径】外无 murmurs 路径（apps/web/src/app/murmurs 是纯路由代码、非隐私，属既定偏差）
+git rev-list --all --objects | awk '{print $2}' | grep -i murmur | grep -v '^apps/web/src/app/murmurs' | sort -u && echo "FOUND-UNEXPECTED!" || echo OBJECT-PATHS-CLEAN
 ```
 
-期望：`0`、`MSG-CLEAN`（或计数 0）、`TREE-CLEAN`（全历史树中无文件内容命中；此命令耗时数分钟属正常）。另外：用浏览器访问一个旧 murmurs 文件的 GitHub 网页路径（`https://github.com/EthanQC/my-learning-record/blob/main/content/blog/murmurs-and-reflection/`任意旧文件名）与阶段一交付说明记录的旧 commit SHA 直链，把返回结果（404 或悬挂对象仍可达）**如实记录**进交付说明（§8：悬挂对象残留风险书面化）。`/images/blog/...` 的 410 已在 Task 9 Step 1 覆盖，交叉引用即可。
+期望：`CONTENT-PATHS-CLEAN` 与 `OBJECT-PATHS-CLEAN`（三个情感内容路径在全历史零文件；对象路径除 `apps/web/src/app/murmurs`（旧路由代码，阶段三 HEAD 已删，历史残留属阶段一交付说明既定偏差）外无 murmurs 命中）。**不使用 `git grep murmurs $(git rev-list --all)`**——那会对文件*内容*grep，必然命中 docs/ 里的 spec/计划文档与旧路由代码，与「按内容路径判定」的阶段一口径冲突、永远无法 CLEAN。另外：用浏览器访问一个旧 murmurs 文件的 GitHub 网页路径与阶段一交付说明记录的旧 commit SHA 直链（完整 SHA 见阶段一 `phase1-log.md`，不粘贴于此），把返回结果（404 或悬挂对象仍可达）**如实记录**进交付说明（§8：悬挂对象残留风险书面化）。`/images/blog/...` 的 410 已在 Task 9 Step 1 覆盖，交叉引用即可。
 
 - [ ] **Step 6: 服务器版本一致性（§8：镜像 tag、容器版本、git log 三方一致）**
 
