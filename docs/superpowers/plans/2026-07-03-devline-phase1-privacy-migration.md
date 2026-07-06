@@ -86,7 +86,7 @@ git status --porcelain content/blog/murmurs-and-reflection/
 echo "murmurs tracked=$(git ls-files content/blog/murmurs-and-reflection/*.md | wc -l) worktree=$(ls content/blog/murmurs-and-reflection/*.md 2>/dev/null | wc -l)"
 ```
 
-期望：第一行形如 `## main...origin/main [ahead N]`（N 为实测值）；未跟踪列表里除 `.playwright-mcp/`（本地调试产物，**不提交**）与 `docs/superpowers/plans/*.md`（若尚未提交）外，**若出现未跟踪的新 murmurs 文件（如 `2026.7.5.md`）→ ⚠️ 停下让用户二选一**：(a) 保留归档=先 `git add` 该文件并计入本次提交（这样它才进冷备+私仓提取+历史抹除范围），随后把本计划全篇的 murmurs 基线相应 +1；(b) 不要=`git rm`/删除后再继续。**未提交的新随笔既进不了私有仓库、也不在 filter-repo 抹除范围，必须在 Task 3 之前显式处置，不能放着。** 其它未预期的未跟踪源码文件同样停下确认归属。
+期望：第一行形如 `## main...origin/main [ahead N]`（N 为实测值）；未跟踪列表里除 `.playwright-mcp/`（本地调试产物，**不提交**）与 `docs/superpowers/plans/*.md`（若尚未提交）外，会有未跟踪的新 murmurs 文件 `2026.7.5.md`。**用户已决定（2026-07-06）：保留归档**——因此在本步 `git add content/blog/murmurs-and-reflection/2026.7.5.md` 计入本次提交（这样它才进冷备 + 私仓提取 + 历史抹除范围），并把本计划全篇的 murmurs 基线相应 +1（68 md → 69 md、Task 3/8 的 69/68 → 70/69）。**未提交的新随笔既进不了私有仓库、也不在 filter-repo 抹除范围，故必须先 commit。** 若执行时又出现更多未预期的新 murmurs 或其它未跟踪源码文件，停下确认归属。
 
 - [ ] **Step 2: 提交计划文档（及 Step 1 决定保留的新 murmurs）**
 
