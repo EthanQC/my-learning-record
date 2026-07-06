@@ -23,8 +23,9 @@
 
 ### Context 层
 
-- 唯一校验事实源：`apps/web/src/lib/content-schema.ts`（zod schema，设计文档 v3 §3）——skill 文案不复制 schema 细节，永远以脚本为准。
-- 必读：设计文档 v3 §3（内容策略）、`content/articles/PUBLISH_LOG.md`（历史发布记录与已知坑）。
+- 唯一校验事实源：`apps/web/src/lib/content-schema.ts`（zod schema，设计文档 `docs/superpowers/specs/2026-07-03-devline-redesign-design.md` §3）——skill 文案不复制 schema 细节，永远以脚本为准。
+- 必读：设计文档 §3（内容策略）；`content/articles/PUBLISH_LOG.md`（历史发布记录与已知坑——**首次运行时不存在，由 First task 用交接节模板创建**，之后每次追加）。
+- 相关计划：阶段三 `docs/superpowers/plans/2026-07-03-devline-phase3-frontend.md`（产出 content-schema.ts / content.ts / copy-article-assets.mjs），阶段四 `.../2026-07-03-devline-phase4-cutover.md`（域名与 stats 子域落地）。
 - 环境事实：push main + 命中 `content/articles/**` 路径过滤 = 自动触发 CI 构建部署（deploy.yml）；文章 URL 规则 `/articles/<track>/<slug>`。
 
 ### Harness 层（权限分层 + 验证阶梯）
@@ -39,21 +40,21 @@
 
 验证阶梯（便宜的确定性检查在前，人工在后）：
 
-1. 【确定性】zod frontmatter 校验 + 图片引用存在性检查（`node scripts/validate-article.mjs <path>`）
+1. 【确定性】zod frontmatter 校验 + 图片引用存在性检查（`node scripts/validate-article.mjs <path>`——**此脚本由本系统 First task 创建，非阶段三产出**，见「最小可用版本」）
 2. 【确定性】`npm run build:web` 本地构建通过（MDX 编译 + 全站校验）
 3. 【人工·门①】本地预览目检：`npm run dev:web` 打开文章页，三主题快速切一遍，用户确认排版
 4. 【确定性】push 后 `gh run watch` 至 CI 全绿
-5. 【确定性】线上断言：`curl -s https://qingverse.com/articles/<track>/<slug>?v=<sha>` 返回 200 且含标题；RSS 与 sitemap 含新条目（curl + grep）
+5. 【确定性】线上断言：`curl -s -o /dev/null -w '%{http_code}' "$SITE/articles/<track>/<slug>?v=<sha>"` 得 `200`，再 `curl -s "$SITE/articles/<track>/<slug>" | grep -qF "<标题>"`；RSS 与 sitemap 含新条目（curl + grep）。`$SITE` = 当时生效的正式域名（现为 https://qingverse.com；若已切换 devline 域名则用新域，勿硬编码）
 6. 【规则+抽查】Playwright 实拍线上文章页（默认主题 + 随机另一主题 × PC/375px 各一张）
-7. 【确定性】GoatCounter 收到该路径计数（访问一次后查 counter JSON）
+7. 【确定性】GoatCounter 收到该路径计数：访问一次文章页后，`curl -s "https://stats.<域名>/counter/<url-encoded 文章路径>.json"` 计数 +1（端点形态见 GoatCounter 公开 dashboard；stats 子域由阶段四落地）
 
-guardrails：只允许触碰 `content/articles/**` 与 PUBLISH_LOG.md（git add 白名单路径）；禁 force push；禁改正文文字；CI 失败只允许 1 轮诊断修复，第 2 次同类失败停下升级给人。
+guardrails：只允许触碰 `content/articles/**` 与 `content/articles/PUBLISH_LOG.md`（git add 白名单路径）；禁 force push；禁改正文文字；CI 失败只允许 1 轮诊断修复（这一次修复 push 属正当、计入 Budget 的第 2 次），第 2 次同类失败停下升级给人。
 
 ### Loop 层
 
 - 循环类型：**例行执行循环**（每篇一 run）+ **改进循环**（LOG 累积摩擦，定期反哺 skill）。
 - Stop condition：验证 7 项全绿 → 输出报告收尾；任何一步失败 → 修复一轮，再失败即停并升级（不无限重试）。
-- Budget：单次发布 ≤1 次 CI 往返（禁止靠反复 push 试错）；预览服务器用完即停。
+- Budget：单次发布 ≤2 次 CI 往返（正常 1 次 + 最多 1 次正当修复；禁止靠反复 push 试错刷第 3 次）；预览服务器用完即停。
 - Observability：每 run 向 `content/articles/PUBLISH_LOG.md` 追加——时间 / 源路径 / slug / track / CI run id / 7 项验证矩阵 / 耗时 / 异常与处理。
 - **禁止手段**（防指标游戏）：不许删改必填 frontmatter 以骗过校验；不许用 `draft: true` 先发再翻牌绕过预览门；不许跳过验证阶梯任何确定性步骤宣布完成。
 
@@ -74,11 +75,14 @@ guardrails：只允许触碰 `content/articles/**` 与 PUBLISH_LOG.md（git add 
 
 - **MCP：不需要新增**。Playwright MCP 已在环境中；GoatCounter 走 curl 公开端点；无新外部系统接入。
 - **Orchestrator：不需要**。单角色顺序流水线，无并行分支与多角色评审；CI 是现成的执行器不是编排器。
-- **Skill：是**——沉淀为项目 skill `.claude/skills/publish-article/`（SKILL.md 流程指令 + 复用阶段三产出的校验脚本）。skill 即产品，一句话触发。
+- **Skill：是**——沉淀为项目 skill `.claude/skills/publish-article/`（SKILL.md 流程指令 + 自带的校验脚本 `scripts/validate-article.mjs`，该脚本复用阶段三的 `content-schema.ts` 但由本系统创建）。skill 即产品，一句话触发。
 
 ## 最小可用版本（v1）与扩展路径
 
-- **v1**：intake → 工单确认 → 规范化落位 → 确定性校验 → 预览门① → commit → push 门② → CI watch → 线上全套验证 → LOG 记录。v1 唯一的外部写（push）永远在审批门后。
+- **v1 落地前置（First task 一次性创建，非阶段三产出）**：
+  1. `scripts/validate-article.mjs`——import 阶段三 `apps/web/src/lib/content-schema.ts` 导出的 `frontmatterSchema`，对目标 MDX 的 frontmatter 跑 zod 校验；再解析正文里的图片引用、断言每张都在同名 `<slug>.assets/` 下存在；任一不过 `process.exit(1)` 并打印具体缺失项。
+  2. `content/articles/PUBLISH_LOG.md`——用交接节的单条模板起个表头。
+- **v1 流程**：intake → 工单确认 → 规范化落位 → 确定性校验 → 预览门① → commit → push 门② → CI watch → 线上全套验证 → LOG 记录。v1 唯一的外部写（push）永远在审批门后。
 - **不做**：定时/排期发布、跨平台自动分发、批量发布、正文润色。
 - **扩展路径**：排期发布（draft + 定时 workflow）→ 发布后生成小红书/公众号分发**草稿**（只生成不自动发）→ 批量模式。
 
@@ -87,7 +91,7 @@ guardrails：只允许触碰 `content/articles/**` 与 PUBLISH_LOG.md（git add 
 真实 run 依赖阶段三（content-schema.ts / build 管线）与阶段四（线上环境）落地，当前只能做设计一致性推演：
 
 - 测试输入：假想文件 `~/Notes/优雅停机.md`，正文含两张本地图片引用，无 frontmatter。
-- 推演：① intake 读文件→建议 track=deep、slug=`go-graceful-shutdown`、date=当天，列出 2 张图片→工单确认 ✓；② 落位 `content/articles/deep/go-graceful-shutdown.mdx` + `.assets/`（2 图拷入、引用改写）✓；③ validate 脚本因缺 summary 而 fail →回到工单补 summary（失败路径有出口，不会带病前进）✓；④ build 过→预览门①→commit（白名单路径）→门②→push→CI watch→7 项线上断言→LOG 追加 ✓。
+- 推演：① intake 读文件→建议 track=deep、slug=`go-graceful-shutdown`、date=当天，从正文首段提议 summary、列出 2 张图片→工单确认 ✓；② 落位 `content/articles/deep/go-graceful-shutdown.mdx` + `.assets/`（2 图拷入、引用改写）✓；③ validate 脚本跑：假设作者少拷了一张图（`.assets/` 缺文件）→脚本 fail 指名缺失图→回到 ② 补图重跑（失败路径有出口，不会带病前进）✓；④ build 过→预览门①→commit（白名单路径）→门②→push→CI watch→7 项线上断言→LOG 追加 ✓。（注：summary 缺失不会活到 validate——它在 ① 工单阶段就按 Prompt 层规则补齐并经用户确认；此处用"缺图"演示失败出口，与卡片流程自洽。）
 - Observed capability：流程闭合，两道门位置与不可逆点对齐，每个失败分支都有明确出口（修复/升级），无一步依赖"agent 说好了就是好了"。
 - Observed limitation：干跑无法验证 CI 时长、GoatCounter 计数延迟、Playwright 对线上首屏的实际断言——**首篇真实发布时按本卡逐项对照，偏差记入 LOG 并修订本卡**。
 
@@ -110,5 +114,5 @@ guardrails：只允许触碰 `content/articles/**` 与 PUBLISH_LOG.md（git add 
 - 摩擦点：<下次想改进什么>
 ```
 
-- **First task**：阶段三合并后，创建 `.claude/skills/publish-article/SKILL.md`（按本卡 Prompt 层写指令），用第一篇真实文章（建议科普线）走全流程，把干跑推演与真实表现的差异记入 LOG。
+- **First task**：阶段三合并后，先创建 `scripts/validate-article.mjs` 与 `content/articles/PUBLISH_LOG.md`（见「最小可用版本」前置），再创建 `.claude/skills/publish-article/SKILL.md`（按本卡 Prompt 层写指令）；然后用第一篇真实文章（建议科普线）走全流程，把干跑推演与真实表现的差异记入 LOG。
 - **Review rule**：每发 5 篇复盘一次 LOG 的摩擦点栏，把重复出现的手工环节改进进 skill；首月内每篇发布后抽查一项验证证据的真实性。
