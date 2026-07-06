@@ -154,8 +154,9 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      # Caddyfile 里的 {$DOMAIN} 从这里解析
+      # Caddyfile 里的 {$DOMAIN}（主站块，可逗号多值）与 {$STATS_DOMAIN}（stats 子域，单值）从这里解析
       DOMAIN: ${DOMAIN:-qingverse.com}
+      STATS_DOMAIN: ${STATS_DOMAIN:-stats.qingverse.com}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
@@ -283,7 +284,11 @@ git commit -m "chore(deploy): compose 4 容器减为 3（去 mysql/api，加 goa
   }
 }
 
-stats.{$DOMAIN} {
+# ⚠️ 用独立单值变量 {$STATS_DOMAIN}，不要写 stats.{$DOMAIN}：
+# 服务器 .env 的 DOMAIN 是逗号多值（deploy/.env.example: `DOMAIN=yourdomain.com, www.yourdomain.com`），
+# 主站块 `{$DOMAIN} {` 用逗号多主机名是合法的；但 `stats.{$DOMAIN}` 的 `stats.` 前缀只会贴到第一个主机名，
+# 第二个 www.<域名> 会漏进 stats 块被 goatcounter 劫持。因此 stats 子域用单值 STATS_DOMAIN（Task 8 Step 4 写入）。
+{$STATS_DOMAIN} {
   encode zstd gzip
   reverse_proxy http://goatcounter:8081
 }
@@ -293,12 +298,13 @@ stats.{$DOMAIN} {
 
 ```bash
 cd /Users/abble/my-learning-record
-docker run --rm -e DOMAIN=qingverse.com \
+# 用逗号多值 DOMAIN + 独立 STATS_DOMAIN 校验（复现服务器真实 .env 格式，验证 stats 块不劫持 www）
+docker run --rm -e DOMAIN="qingverse.com, www.qingverse.com" -e STATS_DOMAIN=stats.qingverse.com \
   -v "$PWD/deploy/Caddyfile.example:/etc/caddy/Caddyfile:ro" \
   caddy:2 caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
 ```
 
-期望输出末尾：`Valid configuration`。
+期望输出末尾：`Valid configuration`。同时 `caddy adapt` 出的站点地址应为三个独立主机：`qingverse.com`、`www.qingverse.com`、`stats.qingverse.com`——确认 `www.qingverse.com` 归主站块（web）而非 stats 块（goatcounter）。
 
 - [ ] **Step 3: 断言删除项与新增项**
 
@@ -672,12 +678,20 @@ ssh $SERVER 'cd ~/workspace/my-learning-record/deploy && \
 
 - [ ] **Step 4: 更新服务器 .env（追加新变量，保留旧变量便于回滚）**
 
+关键：`DOMAIN` 在服务器 .env 里很可能是逗号多值（如 `qingverse.com, www.qingverse.com`，见 deploy/.env.example）；主站块用它没问题，但 **stats 子域必须用单值 `STATS_DOMAIN`**（取 DOMAIN 的第一个主机名派生 `stats.<apex>`），否则 www 会漏进 stats 块（见 Task 2 Caddyfile 注释）。
+
 ```bash
 ssh $SERVER 'cd ~/workspace/my-learning-record/deploy && \
   grep -q "^DOMAIN=" .env || echo "DOMAIN=qingverse.com" >> .env; \
   grep -q "^NEXT_PUBLIC_SITE_URL=" .env || echo "NEXT_PUBLIC_SITE_URL=https://qingverse.com" >> .env; \
-  grep -E "^(DOMAIN|NEXT_PUBLIC_SITE_URL|WEB_TAG|REGISTRY)=" .env'
+  # 从 DOMAIN 第一个主机名派生单值 apex，再拼 stats. 前缀，写入 STATS_DOMAIN
+  APEX=$(grep "^DOMAIN=" .env | head -1 | cut -d= -f2- | tr -d " " | cut -d, -f1); \
+  grep -q "^STATS_DOMAIN=" .env || echo "STATS_DOMAIN=stats.$APEX" >> .env; \
+  grep -q "^GOATCOUNTER_TAG=" .env || echo "GOATCOUNTER_TAG=<Step 0 解析的固定 tag>" >> .env; \
+  grep -E "^(DOMAIN|STATS_DOMAIN|NEXT_PUBLIC_SITE_URL|WEB_TAG|REGISTRY|GOATCOUNTER_TAG)=" .env'
 ```
+
+期望输出：`STATS_DOMAIN=stats.qingverse.com`（单值，无逗号/空格）、`GOATCOUNTER_TAG=<具体版本>`，以及既有的 DOMAIN/NEXT_PUBLIC_SITE_URL/WEB_TAG/REGISTRY 全部列出。若 `STATS_DOMAIN` 出现逗号或多主机，说明 APEX 派生失败，停止排查。
 
 期望输出：四个变量各一行，`WEB_TAG` 已是 Task 7 的 `<sha7>`（CI deploy job 的 sed 写入）。
 

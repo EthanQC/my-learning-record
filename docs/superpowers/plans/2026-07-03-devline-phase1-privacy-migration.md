@@ -73,25 +73,32 @@
 - Consumes: 本地 main 领先 origin/main 的全部 commit（勘察时 31 个）
 - Produces: `origin/main` 与本地 main 一致（ahead 0），CI 一次完整构建部署成功；这是 Task 2 冷备与 Task 5 重写的完整历史基线
 
-- [ ] **Step 1: 核对领先状态与未跟踪文件**
+> **执行前必读——快照数字会漂移**：本计划写于 2026-07-04，正文里的绝对数字（领先 31 commit、全历史 643、murmurs 68 md+1 jpg=69）是**当时的勘察快照**。到实际执行时仓库已变（如 2026-07-06 实测已领先 35、全历史 646、且工作树多出 1 篇未跟踪新随笔 `content/blog/murmurs-and-reflection/2026.7.5.md` → murmurs 变 69 md）。**一律以执行时的实际 git 清点为准，按"记录实际值 + 相对关系"断言，不要把写死的数字当硬门禁**；下文 Task 3/Task 8 的 `69/68` 等期望值同理，以实测基线换算。
+
+- [ ] **Step 1: 核对领先状态、未跟踪文件、并处置任何新增 murmurs**
 
 ```bash
 cd /Users/abble/my-learning-record
 git status -sb
 git log --oneline origin/main..HEAD | wc -l
+# 关键：清点工作树里未提交的 murmurs（filter-repo 只搬【已提交历史】，未提交的新随笔会被静默漏抹）
+git status --porcelain content/blog/murmurs-and-reflection/
+echo "murmurs tracked=$(git ls-files content/blog/murmurs-and-reflection/*.md | wc -l) worktree=$(ls content/blog/murmurs-and-reflection/*.md 2>/dev/null | wc -l)"
 ```
 
-期望：第一行形如 `## main...origin/main [ahead 31]`（数字 ≥31）；未跟踪列表里只有 `.playwright-mcp/` 与 `docs/superpowers/plans/*.md`（`.playwright-mcp/` 是本地调试产物，**不提交**）。若出现其它未预期的未跟踪源码文件，先停下向用户确认归属。
+期望：第一行形如 `## main...origin/main [ahead N]`（N 为实测值）；未跟踪列表里除 `.playwright-mcp/`（本地调试产物，**不提交**）与 `docs/superpowers/plans/*.md`（若尚未提交）外，**若出现未跟踪的新 murmurs 文件（如 `2026.7.5.md`）→ ⚠️ 停下让用户二选一**：(a) 保留归档=先 `git add` 该文件并计入本次提交（这样它才进冷备+私仓提取+历史抹除范围），随后把本计划全篇的 murmurs 基线相应 +1；(b) 不要=`git rm`/删除后再继续。**未提交的新随笔既进不了私有仓库、也不在 filter-repo 抹除范围，必须在 Task 3 之前显式处置，不能放着。** 其它未预期的未跟踪源码文件同样停下确认归属。
 
-- [ ] **Step 2: 提交计划文档**
+- [ ] **Step 2: 提交计划文档（及 Step 1 决定保留的新 murmurs）**
 
 ```bash
 cd /Users/abble/my-learning-record
 git add docs/superpowers/plans/
+# 若 Step 1 选择保留新随笔，一并 add（否则跳过）：
+# git add content/blog/murmurs-and-reflection/2026.7.5.md
 git commit -m "docs: Devline 实施计划（阶段一隐私迁移/阶段四切流）"
 ```
 
-期望：commit 成功，`git status` 下 `docs/superpowers/plans/` 不再出现在未跟踪列表。
+期望：commit 成功。**注意**：若这五份计划文件此前已 commit（本会话可能已提交），`git add docs/superpowers/plans/` 无新变更、本步可能只提交新 murmurs 或直接无变更——属正常，以「工作树无待提交的目标文件」为通过，不必强造空提交。
 
 - [ ] **Step 3: ⚠️ 等待用户确认后才可执行——push 全部领先 commit**
 
