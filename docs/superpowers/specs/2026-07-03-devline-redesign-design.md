@@ -286,7 +286,7 @@
   - 三主题全部文字色对过 WCAG AA（正文 4.5:1、大字/组件 3:1），axe 或自动化对比度检查进 CI 或实测清单；
   - curl 检查文章页输出 canonical、og:image 绝对 URL、JSON-LD Article 可被 Rich Results Test 解析；
   - **统计链路**：访问任意页面后在 GoatCounter 后台看到计数增长；`/stats` 页在统计服务正常与手动停掉 goatcounter 容器两种状态下分别截图（数据渲染 / 优雅降级不破版）；全站页面不出现「情长」二字（`grep` 构建产物断言）；
-- **隐私验收**：force push 后从 GitHub 全新 clone，执行 `git log --all --oneline -- content/blog/murmurs-and-reflection/` 及全历史 grep murmurs 均为零结果；GitHub 网页端访问任一旧 murmurs 文件路径与旧 commit SHA 直链，记录返回结果（404 或悬挂对象仍可达）写入交付说明；确认 `https://qingverse.com/images/blog/...` 旧源文件路径返回 410；
+- **隐私验收**：force push 后从 GitHub 全新 clone，执行 `git log --all --oneline -- content/blog/murmurs-and-reflection/` 及全历史 grep murmurs 均为零结果（**按内容路径口径**：docs/ 计划文档与历史中的 `apps/web/src/app/murmurs` 旧路由代码含该字样属既定偏差，见阶段一 Task 8 断言与交付说明）；GitHub 网页端访问任一旧 murmurs 文件路径与旧 commit SHA 直链，记录返回结果（404 或悬挂对象仍可达）写入交付说明；确认 `https://qingverse.com/images/blog/...` 旧源文件路径返回 410；
 - 部署状态实时确认：镜像 tag、容器版本、`git log` 服务器工作区一致；
 - 任何未实测项在交付说明中如实点名。
 

@@ -5143,7 +5143,7 @@ grep -c "remark-gfm\|gray-matter" apps/web/package.json
 grep -c "npm-run-all" package.json apps/web/package.json
 ```
 
-期望输出：卸载成功；第一条 grep 输出 `2`（remark-gfm 与 gray-matter 是新管线依赖，必须还在）；第二条 grep 两个文件均输出 `0`（npm-run-all 在根与 apps/web 都已移除，落实 §6 依赖清理）。
+期望输出：卸载成功；第一条 grep 输出 `2`（remark-gfm 与 gray-matter 是新管线依赖，必须还在）；第二条 grep：`apps/web/package.json` 输出 `0`，**根 `package.json` 此时输出 `1`——是 dev script 字符串 `"dev": "npm-run-all -p dev:web dev:api"` 的残留（npm uninstall 只删依赖条目、不动 scripts），Step 4 改写 scripts 后才归零**；Step 6 的全量回归里复查两文件均为 `0`。
 
 - [ ] **Step 4: 根 package.json scripts 简化（§6：随 API 退役 dev 归一）**
 
@@ -5351,7 +5351,7 @@ lsof -ti:3000 | xargs kill
 2. **prefers-color-scheme**：`localStorage.clear()` 后以 `colorScheme: 'dark'` 上下文重开首页 → `dataset.theme === 'night'`。
 3. **rail-tab**：点「科普线」→ `html[data-track='intro']`、deep 面板隐藏、intro 面板带 stagger 入场、`localStorage['devline-track'] === 'intro'`；键盘：Tab 聚焦到选中 pill → ↑/↓ 在两轨间移动并自动激活 → focus ring 可见（截图）。
 4. **字体请求断言（D3/§8）**：清缓存后加载首页（duo），network 里 **0 个** woff2/字体请求；切到「编辑刊」→ 出现 `/_next/static/media/*.woff2` 分片请求（切片管线生效）。
-5. **截图矩阵（本地版）**：六类页面（/、/articles、/articles/deep/hello-deep、/projects、/about、/stats）× 3 主题 × 2 视口（1280 / 375），共 36 张存档；404 页与（临时把两篇夹具 draft 置 true 后 dev 模式下的）两轨空态补 8 张。完整线上矩阵在阶段四切流后按 §8 重跑。
+5. **截图矩阵（本地版）**：六类页面（/、/articles、/articles/deep/hello-deep、/projects、/about、/stats）× 3 主题 × 2 视口（1280 / 375），共 36 张存档；404 页与两轨空态补 8 张——空态制造方法：**临时把三篇夹具（hello-deep、context-engineering、hello-intro）全部 draft 置 true**（deep 轨有两篇，只置两篇会剩一篇、deep 轨空不出来），截完改回。完整线上矩阵在阶段四切流后按 §8 重跑。
 
 - [ ] **Step 4: 对比度抽查（D2/D7）**
 
@@ -5400,9 +5400,9 @@ git log --oneline main..redesign/devline | head -30
 git status --short
 ```
 
-期望输出：本阶段全部 commit 列表；工作区干净。**明确不做**：不合入 main、不 push 部署（deploy.yml 监听 main，合并与切流属阶段四——§7 步骤 4/5）。把 Step 3 的截图目录路径与本验收输出记入交付说明。
+期望输出：本阶段全部 commit 列表；工作区干净。**明确不做**：不合入 main、不 push 部署（deploy.yml 监听 main，合并与切流属阶段四——§7 步骤 4/5）。交付说明记入：① Step 3 的截图目录路径与本验收输出；② Step 0 的夹具处置决定；③ **规格偏差栏：10KB 主题增量子预算未做独立机器断言（理由与 50KB 总量兜底见 Task 19 Step 7 的偏差说明），需用户认可**。
 
-**验收标准**：Step 1–4 全部命令按期望输出通过；截图矩阵存档；分支未合 main。
+**验收标准**：Step 1–4 全部命令按期望输出通过；截图矩阵存档；分支未合 main；交付说明含规格偏差栏且用户已确认。
 
 ---
 

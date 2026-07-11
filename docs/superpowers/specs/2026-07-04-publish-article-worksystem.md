@@ -48,7 +48,7 @@
 6. 【规则+抽查】Playwright 实拍线上文章页（默认主题 + 随机另一主题 × PC/375px 各一张）
 7. 【确定性】GoatCounter 收到该路径计数：访问一次文章页后，`curl -s "https://stats.<域名>/counter/<url-encoded 文章路径>.json"` 计数 +1（端点形态见 GoatCounter 公开 dashboard；stats 子域由阶段四落地）
 
-guardrails：只允许触碰 `content/articles/**` 与 `content/articles/PUBLISH_LOG.md`（git add 白名单路径）；禁 force push；禁改正文文字；CI 失败只允许 1 轮诊断修复（这一次修复 push 属正当、计入 Budget 的第 2 次），第 2 次同类失败停下升级给人。
+guardrails：只允许触碰 `content/articles/**` 与 `content/articles/PUBLISH_LOG.md`（git add 白名单路径）；禁 force push；禁改正文文字；CI 失败只允许 1 轮诊断修复（这一次修复 push 属正当、计入 Budget 的第 2 次），第 2 次同类失败停下升级给人。**白名单适用范围**：每篇文章的发布 run；First task 的一次性 bootstrap 文件（`scripts/validate-article.mjs`、`.claude/skills/publish-article/SKILL.md`、PUBLISH_LOG 初始化）在白名单外，由人工确认后单独 commit，不经发布流程。
 
 ### Loop 层
 

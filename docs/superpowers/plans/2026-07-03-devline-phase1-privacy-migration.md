@@ -86,16 +86,19 @@ git status --porcelain content/blog/murmurs-and-reflection/
 echo "murmurs tracked=$(git ls-files content/blog/murmurs-and-reflection/*.md | wc -l) worktree=$(ls content/blog/murmurs-and-reflection/*.md 2>/dev/null | wc -l)"
 ```
 
-期望：第一行形如 `## main...origin/main [ahead N]`（N 为实测值）；未跟踪列表里除 `.playwright-mcp/`（本地调试产物，**不提交**）与 `docs/superpowers/plans/*.md`（若尚未提交）外，会有未跟踪的新 murmurs 文件 `2026.7.5.md`。**用户已决定（2026-07-06）：保留归档**——因此在本步 `git add content/blog/murmurs-and-reflection/2026.7.5.md` 计入本次提交（这样它才进冷备 + 私仓提取 + 历史抹除范围），并把本计划全篇的 murmurs 基线相应 +1（68 md → 69 md、Task 3/8 的 69/68 → 70/69）。**未提交的新随笔既进不了私有仓库、也不在 filter-repo 抹除范围，故必须先 commit。** 若执行时又出现更多未预期的新 murmurs 或其它未跟踪源码文件，停下确认归属。
+期望：第一行形如 `## main...origin/main [ahead N]`（N 为实测值，2026-07-11 实测 37）。未跟踪清单（2026-07-11 实况）与处置：
+- `content/blog/murmurs-and-reflection/2026.7.5.md`——**用户已决定（2026-07-06）：保留归档**，本步 `git add` 计入提交（这样它才进冷备 + 私仓提取 + 历史抹除范围），本计划全篇 murmurs 基线相应 +1（68 md → 69 md、Task 3/8 的 69/68 → 70/69）。**未提交的新随笔既进不了私有仓库、也不在 filter-repo 抹除范围，故必须先 commit**；
+- `archive/`（若尚存在）——2026-07-06 另一会话的飞书归档产物（323MB，含谈薪私聊原文等高敏内容），**与本仓库无关、绝不提交**；按 2026-07-11 审计结论应在开工前整体迁出仓库目录（迁出后本条自然消失）。若执行时它仍在，确认已迁出/忽略后再继续；
+- **门禁（放宽措辞）：任何此外未预期的未跟踪文件/目录（不限于源码），一律停下向用户确认归属后再继续。** 本计划所有 git add 均为路径限定，禁止使用 `git add -A`/`git add .`。
 
 - [ ] **Step 2: 提交计划文档（及 Step 1 决定保留的新 murmurs）**
 
 ```bash
 cd /Users/abble/my-learning-record
 git add docs/superpowers/plans/
-# 若 Step 1 选择保留新随笔，一并 add（否则跳过）：
-# git add content/blog/murmurs-and-reflection/2026.7.5.md
-git commit -m "docs: Devline 实施计划（阶段一隐私迁移/阶段四切流）"
+# 用户 2026-07-06 已定：2026.7.5.md 保留归档，必须 add（漏掉它 = 不进冷备/私仓/抹除范围，静默漏抹）
+git add content/blog/murmurs-and-reflection/2026.7.5.md
+git commit -m "docs: Devline 实施计划（阶段一隐私迁移/阶段四切流）+ 归档新随笔"
 ```
 
 期望：commit 成功。**注意**：若这五份计划文件此前已 commit（本会话可能已提交），`git add docs/superpowers/plans/` 无新变更、本步可能只提交新 murmurs 或直接无变更——属正常，以「工作树无待提交的目标文件」为通过，不必强造空提交。
@@ -205,6 +208,7 @@ git -C /Users/abble/backup-devline/my-learning-record-mirror.git rev-list --coun
 - 旧 tip SHA <旧tip-SHA>（最后一个 murmurs commit，§8 直链检查用）：<40位SHA>
 - 迁入 SHA <迁入-SHA>（2025-10-23 重构迁入 commit）：<40位SHA>
 - 站外照片真实文件名 <照片1文件名>/<照片2文件名>（Task 3 勘察填）：<name1> / <name2>
+- murmurs 目录内 .jpg 真实文件名（Task 3 Step 4a 清点时填；Task 6 Step 7/8 与 Task 8 Step 3 的 $PHOTO 取此值）：<name>
 ```
 
 **验收标准：**
@@ -233,32 +237,32 @@ git -C /Users/abble/backup-devline/my-learning-record-mirror.git rev-list --coun
 
 用户二选一后，把选定的路径集合**写入仓库外的一个文件** `/Users/abble/backup-devline/filter-paths.txt`（每行一个路径，`git filter-repo --paths-from-file` 消费）。**Task 3 提取与 Task 5 抹除引用同一个文件**——这从机制上保证提取范围和抹除范围逐字一致（两处不一致 = 提取和抹除范围错位，是本计划最严重的可犯错误；用同一文件即杜绝该风险）；且该文件在仓库外，站外照片的真实文件名不会写进公开仓库的计划正文。
 
-- **选项 A（保持规格字面范围）**：只迁移/抹除 murmurs 三路径：
+- **选项 A（保持规格字面范围）**：只迁移/抹除 murmurs 三路径（用 printf 而非 heredoc——本文件的代码块带列表缩进，heredoc 的 EOF 定界符不容忍前导空格，printf 写法对缩进免疫）：
 
   ```bash
-  cat > /Users/abble/backup-devline/filter-paths.txt <<'EOF'
-  content/blog/murmurs-and-reflection
-  murmurs-and-reflection
-  murmurs
-  EOF
+  printf '%s\n' \
+    'content/blog/murmurs-and-reflection' \
+    'murmurs-and-reflection' \
+    'murmurs' \
+    > /Users/abble/backup-devline/filter-paths.txt
   ```
 
 - **选项 B（照片一并迁移抹除，推荐）**：在选项 A 三行之外，再追加 4 个站外照片的历史路径（真实文件名来自本 Step 的勘察，只落进这个仓库外文件）：
 
   ```bash
-  cat > /Users/abble/backup-devline/filter-paths.txt <<'EOF'
-  content/blog/murmurs-and-reflection
-  murmurs-and-reflection
-  murmurs
-  content/blog/images/<照片1文件名>
-  content/blog/images/<照片2文件名>
-  images/<照片1文件名>
-  images/<照片2文件名>
-  EOF
+  printf '%s\n' \
+    'content/blog/murmurs-and-reflection' \
+    'murmurs-and-reflection' \
+    'murmurs' \
+    'content/blog/images/<照片1文件名>' \
+    'content/blog/images/<照片2文件名>' \
+    'images/<照片1文件名>' \
+    'images/<照片2文件名>' \
+    > /Users/abble/backup-devline/filter-paths.txt
   ```
   （`<照片N文件名>` = 勘察发现的两张站外照片实际文件名，同步记入 `phase1-log.md`；因涉隐私，不写入本公开计划正文。）
 
-把用户选择记入 `/Users/abble/backup-devline/phase1-log.md`。下文期望值按选项 A 书写；若选 B，清点数按「69 → 71 文件、68 md → 68 md + 3 图」相应调整，并在日志中记录调整后的实测值。
+把用户选择记入 `/Users/abble/backup-devline/phase1-log.md`。下文期望值按选项 A 书写；若选 B，清点数按（已含 2026.7.5.md 的新基线）「70 → 72 文件、69 md → 69 md + 3 图」相应调整，并在日志中记录调整后的实测值。
 
 - [ ] **Step 1b: 断言路径文件已生成**
 
@@ -492,7 +496,7 @@ git log --all --oneline -- content/blog/murmurs-and-reflection/ | wc -l
 test ! -e content/blog/murmurs-and-reflection && echo LOCAL_CLEAN
 ```
 
-期望：最后两条输出 `0` 与 `LOCAL_CLEAN`。说明：Task 1 已把全部领先 commit 推上远端，`reset --hard` 无工作丢失；未跟踪的 `.playwright-mcp/` 不受影响。
+期望：最后两条输出 `0` 与 `LOCAL_CLEAN`。说明：Task 1 已把全部领先 commit 推上远端，`reset --hard` 无工作丢失；未跟踪文件/目录（如本地调试产物）不受 reset 影响，但以 Task 1 Step 1 的清单确认为准。
 
 - [ ] **Step 8: 记录日志**
 
@@ -561,15 +565,15 @@ ssh -p $VPS_PORT $VPS_USER@$VPS_HOST '
   cd ~/workspace/my-learning-record/deploy &&
   docker compose down &&
   mkdir -p ~/backup-devline &&
-  # 全量备份 deploy/ 下所有未跟踪+忽略的生产文件（.env / Caddyfile / docker-compose.yml），不硬编码文件名
-  git -C ~/workspace/my-learning-record ls-files --others --ignored --exclude-standard -- deploy/ \
-    | while read f; do cp --parents "$f" ~/backup-devline/ 2>/dev/null || cp "$f" ~/backup-devline/; done &&
-  cp .env Caddyfile docker-compose.yml ~/backup-devline/ 2>/dev/null;
-  ls -la ~/backup-devline/ ~/backup-devline/deploy/ 2>/dev/null
+  # 直接备份三个已知生产文件（.gitignore 固化的就是这三个名字：.env / Caddyfile / docker-compose.yml）。
+  # 若 Step 2 勘察发现了此外的未跟踪文件，在此追加对应 cp（人工补备），不用循环——
+  # git ls-files 输出的是仓库根相对路径，与本处 cwd(deploy/) 不一致，循环写法会静默备份失败。
+  cp .env Caddyfile docker-compose.yml ~/backup-devline/ &&
+  ls -la ~/backup-devline/
 '
 ```
 
-期望：down 输出各容器 Removed；备份目录里出现 `.env`、`Caddyfile`、`docker-compose.yml` 三个文件（无论落在 `~/backup-devline/` 还是 `~/backup-devline/deploy/`，Step 6 两处都查）。若三者有任一缺失，**停止**，不得进入 Step 5（`rm -rf` 会永久删除它们）。说明：`docker compose down` 不带 `-v`，命名卷 mysql-data / caddy-data / caddy-config 全部保留（caddy-data 里的 TLS 证书不丢）。
+期望：down 输出各容器 Removed；`ls -la` 列出 `.env`、`Caddyfile`、`docker-compose.yml` 三个文件（cp 不再静默吞错，任一文件不存在整条命令即失败）。若三者有任一缺失，**停止**，不得进入 Step 5（`rm -rf` 会永久删除它们）。说明：`docker compose down` 不带 `-v`，命名卷 mysql-data / caddy-data / caddy-config 全部保留（caddy-data 里的 TLS 证书不丢）。
 
 - [ ] **Step 5: 七步之 3–4——删除仓库目录并重新 clone（清除 .git 旧对象）**
 

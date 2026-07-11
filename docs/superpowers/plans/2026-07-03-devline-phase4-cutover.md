@@ -691,9 +691,7 @@ ssh $SERVER 'cd ~/workspace/my-learning-record/deploy && \
   grep -E "^(DOMAIN|STATS_DOMAIN|NEXT_PUBLIC_SITE_URL|WEB_TAG|REGISTRY|GOATCOUNTER_TAG)=" .env'
 ```
 
-期望输出：`STATS_DOMAIN=stats.qingverse.com`（单值，无逗号/空格）、`GOATCOUNTER_TAG=<具体版本>`，以及既有的 DOMAIN/NEXT_PUBLIC_SITE_URL/WEB_TAG/REGISTRY 全部列出。若 `STATS_DOMAIN` 出现逗号或多主机，说明 APEX 派生失败，停止排查。
-
-期望输出：四个变量各一行，`WEB_TAG` 已是 Task 7 的 `<sha7>`（CI deploy job 的 sed 写入）。
+期望输出：六个变量各一行——`STATS_DOMAIN=stats.qingverse.com`（单值，无逗号/空格；若出现逗号或多主机说明 APEX 派生失败，停止排查）、`GOATCOUNTER_TAG=<具体版本>`（Step 0 已写入，此处的 `||` 分支只是幂等兜底）、以及既有的 DOMAIN / NEXT_PUBLIC_SITE_URL / REGISTRY，且 `WEB_TAG` 已是 Task 7 的 `<sha7>`（CI deploy job 的 sed 写入）。
 
 - [ ] **Step 5: 启动新栈**
 
@@ -783,7 +781,7 @@ ARTICLE_URL=$(curl -s https://qingverse.com/feed.xml | grep -o '<link>https://qi
 echo $ARTICLE_URL
 ```
 
-期望：形如 `https://qingverse.com/articles/<track>/<slug>` 的 URL。
+期望：形如 `https://qingverse.com/articles/<track>/<slug>` 的 URL。**分支说明**：若 phase3 Task 20 Step 0 的夹具处置选了 B（全部置 draft，线上零文章），feed 无条目、`$ARTICLE_URL` 为空**属预期而非故障**——此时跳过本 Task 的 Step 4（文章页 curl 检查）与 Task 10 截图矩阵中的文章详情项，改为断言：`/articles` 渲染空列表、`/articles/deep` 与 `/articles/intro` 显示两轨空态文案（§5「404 与空态」），并在交付说明记「文章级验证延后到首篇真实发布（publish-article 流程自带全套线上验证）」。
 
 - [ ] **Step 4: 文章页 canonical / og:image / JSON-LD（§8 curl 检查）**
 
