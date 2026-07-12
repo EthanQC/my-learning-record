@@ -11,28 +11,40 @@ export interface HeadingItem {
   depth: number;
 }
 
+// mdast 节点的最小结构类型（只声明本文件用到的字段）
+interface MdNode {
+  type: string;
+  depth?: number;
+  url?: string;
+  value?: string;
+  children?: MdNode[];
+  data?: {
+    hProperties?: Record<string, unknown>;
+  };
+}
+
 // 图片路径转换函数
 function transformImagePath(src: string, slug: string): string {
   // 如果是外部链接，直接返回
   if (src.startsWith('http://') || src.startsWith('https://')) {
     return src;
   }
-  
+
   // 如果是后端已处理的 /images/ 路径，转换为 /api/images/
   if (src.startsWith('/images/')) {
     return `/api${src}`;
   }
-  
+
   // 如果是其他绝对路径，直接返回
   if (src.startsWith('/')) {
     return src;
   }
-  
+
   // 获取文章所在目录路径
   const slugParts = slug.split('/');
   slugParts.pop(); // 移除文件名部分
   const basePath = slugParts.join('/');
-  
+
   // 处理相对路径中的 ../ 和 ./
   let imagePath = src;
   if (src.startsWith('../')) {
@@ -54,7 +66,7 @@ function transformImagePath(src: string, slug: string): string {
   } else {
     imagePath = `${basePath}/${src}`;
   }
-  
+
   // 返回通过 API 访问的路径
   return `/api/images/${imagePath}`;
 }
@@ -71,8 +83,8 @@ export async function renderMarkdown(markdown: string, slug?: string): Promise<{
     .use(remarkParse)
     .use(remarkGfm)
     // 转换图片路径
-    .use(() => (tree: any) => {
-      const walk = (node: any) => {
+    .use(() => (tree: MdNode) => {
+      const walk = (node: MdNode) => {
         if (node.type === 'image' && node.url && slug) {
           node.url = transformImagePath(node.url, slug);
         }
@@ -83,9 +95,14 @@ export async function renderMarkdown(markdown: string, slug?: string): Promise<{
       walk(tree);
     })
     // 收集标题 & 添加 id
-    .use(() => (tree: any) => {
-      const walk = (node: any) => {
-        if (node.type === 'heading' && node.depth >= 1 && node.depth <= 4) {
+    .use(() => (tree: MdNode) => {
+      const walk = (node: MdNode) => {
+        if (
+          node.type === 'heading' &&
+          typeof node.depth === 'number' &&
+          node.depth >= 1 &&
+          node.depth <= 4
+        ) {
           const text = extractText(node);
           const base = slugify(text);
           const n = slugCount.get(base) || 0;
@@ -117,7 +134,7 @@ export async function renderMarkdown(markdown: string, slug?: string): Promise<{
   };
 }
 
-function extractText(node: any): string {
+function extractText(node: MdNode): string {
   if (!node) return '';
   if (node.type === 'text') return node.value || '';
   if (Array.isArray(node.children)) {
