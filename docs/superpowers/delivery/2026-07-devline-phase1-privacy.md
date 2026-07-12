@@ -27,7 +27,21 @@
 | 旧 tip 上原始文件 raw 直链 | **200**（悬挂对象上的文件仍可下载） |
 | 加测：对旧 tip SHA 执行 `git fetch` | **成功**——GitHub gc 前，知道旧 SHA 者可通过普通 fetch 完整取回被抹除历史 |
 
-- **处置（用户 2026-07-12 决策）**：选项 B——**书面接受残留风险**：旧 SHA 直链在 GitHub gc 前仍可达（含按 SHA fetch 可取回完整旧历史）；完整 SHA 清单仅存仓库外 phase1-log.md。不提交 GitHub Support 工单。
+- **处置（用户 2026-07-12 决策）**：选项 B——**书面接受残留风险**：旧 SHA 直链在 GitHub gc 前仍可达（含按 SHA fetch 可取回完整旧历史）。不提交 GitHub Support 工单。
+- **表述修正（终审发现）**：本文档此前的措辞暗示「完整旧 SHA 仅存仓库外 phase1-log.md」，此说法不准确——公开仓库自身的 Actions 页面就留有重写前的 build/deploy run，其元数据（`headSha`）原样带着旧 tip 等重写前 SHA，任何访问者浏览 run 列表即可读到，无需先从别处获知。结合「按 SHA fetch 可完整取回旧历史」，残留的实际可发现性门槛为零，而非「仅内部已知」。此项仍在用户书面接受的选项 B 范围内，这里只是把表述改准确；可选后续动作见文末「阶段二+ 待办」。
+
+## 旧容器镜像残留（终审发现，§7 计划外）
+
+`apps/web/Dockerfile` 构建阶段执行 `COPY content/ ./content/`，把仓库根 `content/` 目录全部内容原样烘焙进镜像层。因此**重写前构建的 qingverse-web 旧 tag 镜像**（阿里云私有 ACR + VPS 本地 docker 存储，对应 `deploy/docker-compose.example.yml` 中的 `${REGISTRY}/qingverse-web:${WEB_TAG}`）内仍完整保留全部 murmurs 文件与照片，未随公开仓库历史重写而清除。
+
+- 暴露面：ACR 仓库私有、VPS 需 SSH 访问，非公开可读，风险低于上文 GitHub 侧残留。
+- **处置**：用户书面接受为现状残留，本阶段不处理；具体后续动作见文末「阶段二+ 待办」第 1 项。
+
+## 私仓名指向（终审发现，用户书面接受）
+
+公开计划文档 `docs/superpowers/plans/2026-07-03-devline-phase1-privacy-migration.md`（Task 3 Step 5）给出的私仓命名建议是一个中性示例名，该示例恰好与用户实际选定的私仓真实名一致。计划文档本身已入公开仓库，读者据此示例可推知敏感归档仓的名字（该私仓本身仍是 private，示例名不授予任何访问权限）。
+
+- **处置（用户 2026-07-12 决策）**：不改名，书面接受该指向风险。
 
 ## GSC
 
@@ -40,3 +54,11 @@
 - GitHub 悬挂对象残留在 GitHub 侧 gc 前**持续存在**（网页 200 且可按 SHA fetch 取回），为选项 B 书面接受项；未提交工单，无法给出消失时间，也未再复测。
 - GSC 资产验证与两组前缀移除请求整体延至阶段四，本阶段未提交、审核结果未实测。
 - `/murmurs` 路由代码仍在 HEAD（`apps/web/src/app/murmurs/page.tsx`），线上 `/murmurs` 页面仍在服务（内容源已清空）；代码阶段三移除，页面阶段四上线 410 后再提交 GSC 移除。
+
+## 阶段二+ 待办（handoff）
+
+1. **阶段二**：新站稳定运行后，清理阿里云 ACR 上重写前的 qingverse-web 旧 tag 镜像，并在服务器本地 `docker rmi` 对应旧镜像。**阶段三**：评估去掉 `apps/web/Dockerfile` 的 `COPY content/ ./content/`（与运行时 bind-mount 内容目录冗余），让新构建的镜像不再烘焙 content。
+2. （可选）清空 GitHub Actions 缓存、删除重写前的旧 run，收窄旧 SHA 经 Actions 元数据 / `git fetch` 的可发现性（不做也已书面接受为现状，见上文「表述修正」）。
+3. `.superpowers/sdd/` 下各任务报告（含完整旧 SHA、真实文件名等敏感值，已 git-ignored）迁出仓库工作目录，不长期留在仓库内。
+4. CI workflow 的 Node 20 弃用告警，随后续 Node 版本升级一并处理。
+5. 阶段三：从 HEAD 移除 `/murmurs` 路由代码（`apps/web/src/app/murmurs/`）；阶段四：完成 GSC 资产验证后，为图片前缀与 `/murmurs` 页面一并提交 410 + 移除请求（沿用原计划，非本次新增）。
