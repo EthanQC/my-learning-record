@@ -105,4 +105,76 @@ pre {
   line-height: 1.7;
 }
 
+/* ---------- ThemeSwitcher（§5 导航条目） ---------- */
+.theme-switcher {
+  position: relative;
+}
+
+.theme-switcher-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-nav);
+  color: rgb(var(--c-text-2));
+  padding: 10px 8px; /* §5 触控规约：热区扩展到 ≥44px */
+  margin: -10px -8px;
+  cursor: pointer;
+}
+
+.theme-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--c-border));
+}
+.theme-dot[data-dot='duo'] {
+  background: rgb(var(--dot-duo));
+}
+.theme-dot[data-dot='editorial'] {
+  background: rgb(var(--dot-editorial));
+}
+.theme-dot[data-dot='night'] {
+  background: rgb(var(--dot-night));
+}
+
+.theme-switcher-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 12px);
+  min-width: 148px;
+  background: rgb(var(--c-surface));
+  border: 1px solid rgb(var(--c-border));
+  padding: 6px;
+  z-index: 50;
+  box-shadow: var(--shadow-card);
+}
+
+.theme-switcher-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px; /* §5：每个选项行高 ≥44px */
+  padding: 0 12px;
+  font-size: var(--fs-nav);
+  color: rgb(var(--c-text));
+  text-align: left;
+  cursor: pointer;
+}
+
+.theme-switcher-option:hover {
+  background: var(--surface-tint);
+}
+
+.theme-switcher-option[aria-checked='true'] {
+  font-weight: 700;
+  color: rgb(var(--c-accent-text));
+}
+
+@media (max-width: 640px) {
+  .theme-switcher-text {
+    display: none; /* §5：移动端仅色点图标 */
+  }
+}
+
 /* ==== 后续任务追加区（保持此注释在文件末尾之前） ==== */
