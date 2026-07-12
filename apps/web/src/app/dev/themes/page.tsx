@@ -4,7 +4,9 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { ArticleCard } from '@/components/ArticleCard';
 import { HeadlineCard } from '@/components/HeadlineCard';
 import { RailTab } from '@/components/RailTab';
+import { ProjectCard } from '@/components/ProjectCard';
 import { getAllArticles, getArticleMDX } from '@/lib/content';
+import { PROJECTS } from '@/lib/projects';
 
 const THEMES = ['duo', 'editorial', 'night'] as const;
 
@@ -20,7 +22,7 @@ async function PreviewSections() {
       ))}
       <RailTab />
       {sample && <div className="prose-devline">{sample.content}</div>}
-      {/* Task 16 追加：项目卡 */}
+      <ProjectCard project={PROJECTS[0]} />
       <SiteFooter />
     </div>
   );
