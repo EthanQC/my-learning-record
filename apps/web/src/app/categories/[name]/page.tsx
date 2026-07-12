@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { getPosts } from '@/lib/api';
 import { formatDate } from '@/lib/utils';
 import { Card } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
 
 // 分类标签映射
 const categoryLabels: Record<string, { label: string; description: string }> = {

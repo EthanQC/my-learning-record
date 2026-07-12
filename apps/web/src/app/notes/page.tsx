@@ -1,7 +1,6 @@
 export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
-import { getPosts, getCategories } from '@/lib/api';
 import { Card } from '@/components/ui/Card';
 
 // 笔记分类配置（不包含八股，八股已独立）
@@ -51,8 +50,6 @@ const noteCategories = [
 ];
 
 export default async function NotesPage() {
-  const categories = await getCategories();
-
   return (
     <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-12">
       {/* 页面标题 */}

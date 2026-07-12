@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export function Footer() {
@@ -69,11 +70,12 @@ export function Footer() {
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 hover:text-pink-600 transition-colors"
             >
-              <img
+              <Image
                 src="/beian-gongan.png"
                 alt=""
+                width={14}
+                height={14}
                 className="h-3.5 w-3.5"
-                loading="lazy"
               />
               粤公网安备44030002008906号
             </a>
