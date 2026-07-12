@@ -3,6 +3,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ArticleCard } from '@/components/ArticleCard';
 import { HeadlineCard } from '@/components/HeadlineCard';
+import { RailTab } from '@/components/RailTab';
 import { getAllArticles } from '@/lib/content';
 
 const THEMES = ['duo', 'editorial', 'night'] as const;
@@ -16,7 +17,7 @@ async function PreviewSections() {
       {articles.map((a) => (
         <ArticleCard key={`${a.track}/${a.slug}`} article={a} />
       ))}
-      {/* Task 12 追加：RailTab */}
+      <RailTab />
       {/* Task 15 追加：prose 样张（含代码块） */}
       {/* Task 16 追加：项目卡 */}
       <SiteFooter />

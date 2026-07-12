@@ -622,4 +622,211 @@ pre {
   box-shadow: var(--glow-hover);
 }
 
+/* ---------- RailTab（§5 签名交互；几何数值取自 final-layout-v2.html，标签右锚定） ---------- */
+.rail-tab {
+  position: relative;
+  height: 96px; /* §5：区域高度桌面 96px */
+}
+
+.rail-line {
+  position: absolute;
+  left: 0;
+  right: 0; /* full-bleed；§5 禁用 100vw 负 margin */
+  pointer-events: none; /* §5：两条横线本身不可点、不响应事件 */
+  transition:
+    height var(--dur-base) var(--ease-standard),
+    background-color var(--dur-base) var(--ease-standard); /* D6：线过渡 250ms */
+}
+
+.rail-line-deep {
+  top: 22px; /* §5：深度线桌面 top 22px */
+  height: 2px; /* 未激活 2px */
+  background: rgb(var(--c-track-deep-dim));
+}
+
+.rail-line-intro {
+  top: 64px; /* §5：科普线桌面 top 64px */
+  height: 2px;
+  background: rgb(var(--c-track-intro-dim));
+}
+
+html[data-track='deep'] .rail-line-deep {
+  height: 4px; /* §5：激活 4px 实色 */
+  background: rgb(var(--c-track-deep));
+}
+
+html[data-track='intro'] .rail-line-intro {
+  height: 4px;
+  background: rgb(var(--c-track-intro));
+}
+
+.rail-tab-labels {
+  position: relative;
+  height: 100%;
+}
+
+.rail-pill {
+  position: absolute;
+  transform: translateY(-50%);
+  font-size: var(--fs-nav);
+  font-weight: 700; /* §5：未激活 700 */
+  padding: 6px 20px; /* §5：激活/未激活同 padding，视觉尺寸不变 */
+  border-radius: 16px;
+  background: rgb(var(--c-bg)); /* §5：未激活 = --bg 底 */
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: var(--shadow-pill); /* D5：B 硬投影 3px 3px 0 / A 无 / C 无 */
+  transition:
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    border-color 200ms ease-out; /* D6：标签填色/描边 200ms ease-out */
+}
+
+/* §5 右锚定：深度标签右缘对齐内容容器右缘（容器侧 padding 48px）；科普标签向左错开约 172px */
+.rail-pill[data-rail-tab='deep'] {
+  top: 24px; /* 深度线(22px) + 激活线一半(2px)，标签骑线居中 */
+  right: 48px;
+}
+
+.rail-pill[data-rail-tab='intro'] {
+  top: 66px;
+  right: calc(48px + 172px);
+}
+
+/* §5 触控规约：视觉尺寸不变，::after 把热区扩到 ≥44px */
+.rail-pill::after {
+  content: '';
+  position: absolute;
+  inset: -10px -6px;
+}
+
+/* 未激活：1.5px --track-* 描边 + 主色文字（§5）；深度描边走 --c-rail-deep-outline（D1 组件修正：
+   B 用该 token 的 AA 修正值达组件 3:1（具体色值见 tokens.css），A/C 下该 token 即轨色）；
+   科普文字走 --accent-text（D2：B 下 <19px 粉字禁用 --accent） */
+.rail-pill[data-rail-tab='deep'] {
+  border: 1.5px solid rgb(var(--c-rail-deep-outline));
+  color: rgb(var(--c-track-deep));
+}
+
+.rail-pill[data-rail-tab='intro'] {
+  border: 1.5px solid rgb(var(--c-track-intro));
+  color: rgb(var(--c-accent-text));
+}
+
+/* 激活：填色 + --on-accent 文字 + 800（§5）。intro 填 --accent-strong：B 下即 AA 修正值（具体色值见 tokens.css），
+   editorial/night 下该 token 与轨色同值（D1），一条规则三主题成立 */
+html[data-track='deep'] .rail-pill[data-rail-tab='deep'] {
+  background: rgb(var(--c-track-deep));
+  border-color: rgb(var(--c-track-deep));
+  color: rgb(var(--c-on-accent));
+  font-weight: 800;
+}
+
+html[data-track='intro'] .rail-pill[data-rail-tab='intro'] {
+  background: rgb(var(--c-accent-strong));
+  border-color: rgb(var(--c-accent-strong));
+  color: rgb(var(--c-on-accent));
+  font-weight: 800;
+}
+
+[data-theme='night'] .rail-pill:hover {
+  box-shadow: var(--glow-hover); /* D5：C hover 辉光 */
+}
+
+/* §5 移动端几何：区域 78px、线 top 16/52px、激活 3px、标签 12px/5px 16px/radius 14px，文字不删减 */
+@media (max-width: 640px) {
+  .rail-tab {
+    height: 78px;
+  }
+  .rail-line-deep {
+    top: 16px;
+  }
+  .rail-line-intro {
+    top: 52px;
+  }
+  html[data-track='deep'] .rail-line-deep,
+  html[data-track='intro'] .rail-line-intro {
+    height: 3px;
+  }
+  .rail-pill {
+    font-size: 12px;
+    padding: 5px 16px;
+    border-radius: 14px;
+  }
+  .rail-pill[data-rail-tab='deep'] {
+    top: 17px;
+    right: 20px;
+  }
+  .rail-pill[data-rail-tab='intro'] {
+    top: 53px;
+    right: calc(20px + 116px);
+  }
+}
+
+/* ---------- 轨道面板显隐（§5 渲染与状态：双面板都在静态 HTML，html[data-track] + CSS 驱动） ---------- */
+html[data-track='deep'] [data-panel='intro'] {
+  display: none;
+}
+
+html[data-track='intro'] [data-panel='deep'] {
+  display: none;
+}
+
+/* D6 列表交换：新列表 opacity 0→1 + translateY(8px→0) 250ms ease-out，卡片逐张 stagger 40ms。
+   仅交互后启用（html.rail-animated 由 applyTrack 挂上），开屏无动画。
+   已知取舍：旧列表经 display:none 即时隐藏，150ms 退场动画在纯 CSS + display 切换机制下不可实现，
+   属 §5 机制（React 只改属性）与 D6 退场动效的交集限制，出场动效完整保留。 */
+html.rail-animated [data-panel] > * {
+  animation: rail-panel-in var(--dur-base) ease-out backwards;
+}
+
+html.rail-animated [data-panel] > *:nth-child(1) { animation-delay: 0ms; }
+html.rail-animated [data-panel] > *:nth-child(2) { animation-delay: 40ms; }
+html.rail-animated [data-panel] > *:nth-child(3) { animation-delay: 80ms; }
+html.rail-animated [data-panel] > *:nth-child(4) { animation-delay: 120ms; }
+html.rail-animated [data-panel] > *:nth-child(5) { animation-delay: 160ms; }
+html.rail-animated [data-panel] > *:nth-child(6) { animation-delay: 200ms; }
+
+@keyframes rail-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* D6 降级：reduce 时列表交换退化为 120ms 纯 opacity */
+@media (prefers-reduced-motion: reduce) {
+  html.rail-animated [data-panel] > * {
+    animation: rail-panel-fade 120ms ease-out backwards;
+    animation-delay: 0ms !important;
+  }
+
+  @keyframes rail-panel-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ---------- 轨道空态（§5：跨轨 CTA） ---------- */
+.empty-track {
+  display: block;
+  width: 100%;
+  padding: 24px;
+  border: 1.5px dashed rgb(var(--c-border));
+  background: rgb(var(--c-surface));
+  color: rgb(var(--c-accent-text));
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
 /* ==== 后续任务追加区（保持此注释在文件末尾之前） ==== */
