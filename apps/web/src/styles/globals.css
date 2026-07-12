@@ -829,4 +829,180 @@ html.rail-animated [data-panel] > *:nth-child(6) { animation-delay: 200ms; }
   cursor: pointer;
 }
 
+/* ---------- Hero（D4 字阶 + D5 hero 强调差异表） ---------- */
+.hero {
+  padding-block: 64px 44px; /* D4：区块垂直间距桌面 44–64px */
+}
+
+.hero-title {
+  max-width: 640px; /* D4：hero 文本 640px */
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-weight: 900;
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-hero);
+  color: rgb(var(--c-text));
+}
+
+.hero-sub {
+  max-width: 640px;
+  margin-top: 16px;
+  font-size: var(--fs-sub);
+  line-height: 1.8; /* D4：--fs-sub lh 1.8 */
+  color: rgb(var(--c-text-2));
+}
+
+/* hero 强调词（D5）：B 直接 --accent 着色（46px 大字，D2 大字标准 3:1 过线）；
+   A 底衬 6px --accent-soft；C --accent + 辉光（辉光放伪元素装饰层，opacity 过渡——§4） */
+.hero-em {
+  position: relative;
+  font-style: normal;
+  color: rgb(var(--c-accent));
+}
+
+[data-theme='editorial'] .hero-em {
+  color: inherit;
+  border-bottom: 6px solid var(--accent-soft);
+}
+
+.hero-em::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  text-shadow: var(--glow-text);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-standard);
+  pointer-events: none;
+}
+
+[data-theme='night'] .hero-em::after {
+  opacity: 1;
+}
+
+/* D5 夜航页角氛围光：radial 420px 定位页面右上角外溢，opacity 门控（§4 辉光层过渡规则） */
+body::before {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  top: -210px;
+  right: -210px;
+  width: 420px;
+  height: 420px;
+  pointer-events: none;
+  background: radial-gradient(circle, rgb(var(--c-accent) / 0.16) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-standard);
+}
+
+[data-theme='night'] body::before {
+  opacity: 1;
+}
+
+/* ---------- 首页区块（D4 间距/宽度节奏） ---------- */
+.home-section {
+  margin-block: 44px;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-block: 40px 26px;
+  }
+  .home-section {
+    margin-block: 26px;
+  }
+}
+
+.home-lists {
+  max-width: calc(856px + 96px); /* D4：列表区 856px + 容器侧 padding */
+}
+
+.home-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* D4：卡片间距 10–12px */
+  max-width: 856px;
+}
+
+.track-more {
+  align-self: flex-end;
+  padding: 10px 0; /* 热区 ≥44px 由 padding 补足 */
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  color: rgb(var(--c-accent-text));
+}
+
+/* ---------- ProjectCard（D5 项目卡差异 + D2 粉-底允许项目卡底） ---------- */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px; /* D4：项目卡 gap 14px */
+  max-width: 856px;
+}
+
+@media (max-width: 640px) {
+  .project-grid {
+    grid-template-columns: 1fr; /* §5：项目移动端单列 */
+  }
+}
+
+.project-card {
+  background: var(--surface-tint);
+  border: 1px solid rgb(var(--c-border));
+  padding: 16px 20px;
+}
+
+[data-theme='duo'] .project-card {
+  border-width: 1.5px;
+  border-radius: 6px; /* D5：B 项目卡 6px */
+}
+
+[data-theme='editorial'] .project-card {
+  background: rgb(var(--c-surface)); /* D1：A 的 tint 仅小面积底衬，项目卡走 surface */
+  border-radius: 0;
+}
+
+[data-theme='night'] .project-card {
+  border-radius: 0 0 8px 8px; /* D5：C 项目卡 0 0 8px 8px + 顶部 2px accent 边 */
+  border-top: 2px solid rgb(var(--c-accent));
+}
+
+.project-card-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-title);
+  font-weight: 800;
+  color: rgb(var(--c-text));
+}
+
+.project-card-body {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-card-body dt {
+  float: left;
+  margin-right: 8px;
+  font-size: var(--fs-meta);
+  font-weight: 800;
+  color: rgb(var(--c-accent-text));
+}
+
+.project-card-body dd {
+  font-size: var(--fs-sub);
+  line-height: 1.8;
+  color: rgb(var(--c-text-2));
+}
+
+.project-card-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 0;
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  color: rgb(var(--c-accent-text));
+}
+
 /* ==== 后续任务追加区（保持此注释在文件末尾之前） ==== */
