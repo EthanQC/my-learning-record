@@ -1,15 +1,21 @@
 import { notFound } from 'next/navigation';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { ArticleCard } from '@/components/ArticleCard';
+import { HeadlineCard } from '@/components/HeadlineCard';
+import { getAllArticles } from '@/lib/content';
 
 const THEMES = ['duo', 'editorial', 'night'] as const;
 
-/** 后续组件任务把新组件实例加进这里，一处添加、三主题同时预览 */
-function PreviewSections() {
+async function PreviewSections() {
+  const articles = await getAllArticles();
   return (
     <div className="space-y-6 p-6">
       <SiteHeader />
-      {/* Task 11 追加：HeadlineCard / ArticleCard */}
+      <HeadlineCard article={articles[0]} />
+      {articles.map((a) => (
+        <ArticleCard key={`${a.track}/${a.slug}`} article={a} />
+      ))}
       {/* Task 12 追加：RailTab */}
       {/* Task 15 追加：prose 样张（含代码块） */}
       {/* Task 16 追加：项目卡 */}
