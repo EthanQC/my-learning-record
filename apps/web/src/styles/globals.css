@@ -1,267 +1,108 @@
-/* 引入字体 - @import 必须在最顶部 */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap');
+@import './tokens.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* 柔和粉色系配色 - 更淡、更温和 */
-    --color-pink-50: #fff7fa;
-    --color-pink-100: #ffeef4;
-    --color-pink-200: #ffd7e6;
-    --color-pink-300: #f7b9d2;
-    --color-pink-400: #ee9fbe;
-    --color-pink-500: #e389ad;
-  }
-
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply text-gray-700 leading-relaxed bg-gradient-to-br from-pink-50/40 via-white to-rose-50/20;
-    font-family: 'Space Grotesk', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-  }
-
-  /* 更好的选中效果 */
-  ::selection {
-    @apply bg-pink-200 text-pink-900;
-  }
-}
-
-@layer components {
-  /* 柔和的按钮样式 */
-  .btn-primary {
-    @apply bg-gradient-to-r from-pink-300 to-pink-400 text-white px-6 py-2.5 rounded-xl 
-           hover:from-pink-400 hover:to-pink-500 transition-all duration-300 
-           shadow-sm hover:shadow-md font-medium;
-  }
-
-  .btn-secondary {
-    @apply bg-white text-pink-600 border border-pink-200 px-6 py-2.5 rounded-xl 
-           hover:bg-pink-50 hover:border-pink-300 transition-all duration-300 font-medium;
-  }
-
-  /* 卡片样式 */
-  .card {
-    @apply bg-white/75 backdrop-blur-sm rounded-2xl shadow-sm 
-           hover:shadow-lg transition-all duration-300 p-6 
-           border border-pink-50 hover:border-pink-100;
-  }
-
-  /* 徽章样式 */
-  .badge {
-    @apply inline-block bg-pink-100/70 text-pink-700 px-3 py-1 rounded-full text-sm font-medium;
-  }
-}
-
-/* Markdown 内容样式 - 更精致的排版 */
-.prose {
-  @apply max-w-none text-gray-700;
-  font-size: 1rem;
-  line-height: 1.85;
-}
-
-.prose h1 {
-  @apply text-2xl sm:text-3xl font-bold font-display text-gray-800 mt-10 mb-6 pb-3 border-b border-pink-100;
-}
-
-.prose h2 {
-  @apply text-xl sm:text-2xl font-semibold font-display text-gray-800 mt-8 mb-4;
-}
-
-.prose h3 {
-  @apply text-lg sm:text-xl font-semibold text-gray-800 mt-6 mb-3;
-}
-
-.prose h4 {
-  @apply text-base sm:text-lg font-semibold text-gray-800 mt-5 mb-2 pl-3 border-l-4 border-pink-300;
-}
-
-.prose h5 {
-  @apply text-base font-semibold text-gray-700 mt-4 mb-2 pl-2 border-l-2 border-pink-200;
-}
-
-.prose h6 {
-  @apply text-sm font-semibold text-gray-600 mt-4 mb-2 uppercase tracking-wide;
-}
-
-.prose p {
-  @apply my-4 text-gray-700;
-}
-
-.prose a {
-  @apply text-pink-500 hover:text-pink-600 no-underline border-b border-pink-200 
-         hover:border-pink-400 transition-colors pb-0.5;
-}
-
-.prose strong {
-  @apply font-semibold text-gray-800;
-}
-
-.prose code {
-  @apply bg-pink-50 text-pink-700 px-1.5 py-0.5 rounded text-sm font-mono
-         before:content-[''] after:content-[''];
-}
-
-.prose pre {
-  @apply bg-gray-900 text-gray-100 rounded-xl p-4 overflow-x-auto my-6
-         shadow-lg text-sm leading-relaxed;
-}
-
-.prose pre code {
-  @apply bg-transparent text-gray-100 p-0 text-sm;
-}
-
-.prose blockquote {
-  @apply border-l-4 border-pink-300 pl-4 my-6 italic text-gray-600 bg-pink-50/50 py-3 pr-4 rounded-r-lg;
-}
-
-.prose ul {
-  @apply my-4 pl-6 space-y-2;
-}
-
-.prose ul li {
-  @apply relative;
-}
-
-.prose ul li::marker {
-  @apply text-pink-400;
-}
-
-.prose ol {
-  @apply my-4 pl-6 space-y-2;
-}
-
-.prose ol li::marker {
-  @apply text-pink-500 font-medium;
-}
-
-.prose table {
-  @apply w-full border-collapse my-6 text-sm overflow-hidden rounded-xl shadow-sm;
-}
-
-.prose thead {
-  @apply bg-pink-50;
-}
-
-.prose th {
-  @apply text-left px-4 py-3 font-semibold text-gray-700 border-b border-pink-100;
-}
-
-.prose td {
-  @apply px-4 py-3 border-b border-gray-100;
-}
-
-.prose tbody tr:hover {
-  @apply bg-pink-50/30;
-}
-
-.prose img {
-  @apply rounded-xl shadow-md my-6 mx-auto max-w-full h-auto;
-}
-
-.prose hr {
-  @apply border-pink-100 my-8;
-}
-
-/* 响应式图片 */
-.prose img {
-  max-width: 100%;
-  height: auto;
-}
-
-@media (max-width: 640px) {
-  .prose {
-    font-size: 0.95rem;
+    @apply bg-bg font-sans text-ink antialiased;
+    font-size: var(--fs-body);
     line-height: 1.75;
   }
 
-  .prose h1 {
-    @apply text-xl;
+  ::selection {
+    background: var(--accent-soft);
+    color: rgb(var(--c-text));
   }
 
-  .prose h2 {
-    @apply text-lg;
-  }
-
-  .prose h3 {
-    @apply text-base;
-  }
-
-  .prose pre {
-    @apply text-xs p-3 -mx-4 rounded-none;
+  /* §5：独立于选中填色的可见 focus ring（2px outline + 2px offset） */
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-focus-ring));
+    outline-offset: 2px;
   }
 }
 
-/* 动画 */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ---------- §4/D6 主题切换动效：临时 .theme-transition 类 ---------- */
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease !important;
 }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition: none !important; /* D6：主题切换零过渡 */
+  }
 }
 
-@keyframes gradient {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+/* ---------- 通用布局（D4 宽度节奏：容器 960px 居中，侧 padding 48/20） ---------- */
+.container-devline {
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: 48px;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+@media (max-width: 640px) {
+  .container-devline {
+    padding-inline: 20px;
+  }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
+/* ---------- 章节引子（D5 差异表：B 字距标签 / A 短红线 / C mono 前缀） ---------- */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-label);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
+  color: rgb(var(--c-text-2));
+  text-transform: uppercase;
 }
 
-.animate-slide-up {
-  animation: slideUp 0.6s ease-out;
+[data-theme='editorial'] .section-label::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: rgb(var(--c-accent)); /* A：22px 短红线 */
 }
 
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 3s ease infinite;
+[data-theme='night'] .section-label::before {
+  content: '// ';
+  color: rgb(var(--c-accent-text)); /* C：等宽注释前缀 */
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+/* ---------- shiki 代码块三主题切换（§6 代码高亮：三行 CSS 按 data-theme 选变量） ---------- */
+pre code span {
+  color: var(--shiki-duo);
+}
+[data-theme='editorial'] pre code span {
+  color: var(--shiki-editorial);
+}
+[data-theme='night'] pre code span {
+  color: var(--shiki-night);
 }
 
-/* 滚动条美化 */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+pre {
+  background: rgb(var(--c-surface));
+  border: 1px solid rgb(var(--c-border));
+  padding: 16px 20px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-pink-200/60 rounded-full hover:bg-pink-300;
-}
-
-/* 隐藏水平滚动条但保留滚动 */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* 卡片悬停效果 */
-.card-hover {
-  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
-}
+/* ==== 后续任务追加区（保持此注释在文件末尾之前） ==== */
