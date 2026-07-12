@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node ../../scripts/copy-article-assets.mjs",
     "dev": "next dev -H 0.0.0.0 -p 3000",
+    "prebuild": "node ../../scripts/copy-article-assets.mjs",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3000",
     "lint": "eslint ."
