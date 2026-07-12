@@ -1005,4 +1005,205 @@ body::before {
   color: rgb(var(--c-accent-text));
 }
 
+/* ---------- 列表页 ---------- */
+.list-page {
+  padding-block: 44px 64px;
+}
+
+.list-title {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-weight: 900;
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-hero);
+  color: rgb(var(--c-text));
+}
+
+.track-filter {
+  display: flex;
+  gap: 4px;
+  margin-block: 24px;
+}
+
+.track-filter-link {
+  padding: 10px 14px; /* 热区 ≥44px */
+  font-size: var(--fs-nav);
+  color: rgb(var(--c-text-2));
+}
+
+.track-filter-link[aria-current='page'] {
+  color: rgb(var(--c-text));
+  font-weight: 800;
+  border-bottom: 2px solid rgb(var(--c-accent));
+}
+
+.list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 856px; /* D4：列表区 856px */
+}
+
+/* ---------- 文章详情（D4：正文列 680px / 16px / lh 1.9） ---------- */
+.article-page {
+  padding-block: 44px 64px;
+}
+
+.article-header {
+  max-width: 680px;
+}
+
+.article-title {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-weight: 900;
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-hero);
+  color: rgb(var(--c-text));
+}
+
+.article-header .article-card-meta {
+  display: block;
+  margin-top: 12px;
+}
+
+.toc {
+  max-width: 680px;
+  margin-top: 32px;
+  padding: 16px 20px;
+  border: 1px solid rgb(var(--c-border-2));
+  background: rgb(var(--c-surface));
+}
+
+.toc ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.toc li a {
+  display: inline-block;
+  padding-block: 6px;
+  font-size: var(--fs-sub);
+  color: rgb(var(--c-text-2));
+}
+
+.toc li[data-depth='3'] {
+  padding-left: 16px;
+}
+
+.toc li[data-depth='4'] {
+  padding-left: 32px;
+}
+
+.toc li a:hover {
+  color: rgb(var(--c-accent-text));
+}
+
+.prose-devline {
+  max-width: 680px;
+  margin-top: 32px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgb(var(--c-text));
+}
+
+.prose-devline h2 {
+  margin: 44px 0 16px;
+  font-family: var(--font-display);
+  font-size: var(--fs-headline);
+  font-weight: 800;
+  line-height: 1.5;
+  color: rgb(var(--c-text));
+}
+
+.prose-devline h3,
+.prose-devline h4 {
+  margin: 32px 0 12px;
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: rgb(var(--c-text));
+}
+
+.prose-devline p {
+  margin: 16px 0;
+}
+
+.prose-devline a {
+  color: rgb(var(--c-accent-text)); /* D2 粉-文：正文链接 */
+  border-bottom: 1px solid var(--accent-soft);
+}
+
+.prose-devline a:hover {
+  border-bottom-color: rgb(var(--c-accent-text));
+}
+
+.prose-devline code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-tint);
+  padding: 1px 5px;
+}
+
+.prose-devline pre {
+  margin: 24px 0;
+}
+
+.prose-devline pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose-devline img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid rgb(var(--c-border-2));
+}
+
+.prose-devline blockquote {
+  margin: 20px 0;
+  padding: 8px 20px;
+  border-left: 3px solid var(--accent-soft);
+  color: rgb(var(--c-text-2));
+}
+
+.prose-devline ul,
+.prose-devline ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.prose-devline li {
+  margin: 6px 0;
+}
+
+.prose-devline li::marker {
+  color: rgb(var(--c-accent-text));
+}
+
+.prose-devline table {
+  width: 100%;
+  margin: 24px 0;
+  border-collapse: collapse;
+  font-size: var(--fs-sub);
+}
+
+.prose-devline th,
+.prose-devline td {
+  border: 1px solid rgb(var(--c-border-2));
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.prose-devline hr {
+  border: none;
+  border-top: 1px solid rgb(var(--c-border-2));
+  margin: 32px 0;
+}
+
 /* ==== 后续任务追加区（保持此注释在文件末尾之前） ==== */
