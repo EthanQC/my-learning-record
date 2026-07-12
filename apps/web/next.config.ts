@@ -13,10 +13,6 @@ const nextConfig: NextConfig = {
 
   output: 'standalone',
 
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-
   // 图片优化
   images: {
     remotePatterns: [
