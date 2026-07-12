@@ -2,6 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { frontmatterSchema } from './content-schema';
+import { compileMDX } from 'next-mdx-remote/rsc';
+import remarkGfm from 'remark-gfm';
+import rehypePrettyCode from 'rehype-pretty-code';
+import { remarkHeadingIds, remarkArticleImages, type HeadingItem } from './mdx-plugins';
+import type { Frontmatter } from './content-schema';
+
+export type { HeadingItem } from './mdx-plugins';
 
 export type Article = {
   slug: string;
@@ -34,7 +41,7 @@ export function contentRoot(): string {
 }
 
 /** 中文 350 字/分 + 英文 200 词/分，向上取整，至少 1 分钟 */
-function readingMinutes(markdown: string): number {
+function readingMinutesOf(markdown: string): number {
   const text = markdown
     .replace(/```[\s\S]*?```/g, '')
     .replace(/!\[[^\]]*\]\([^)]*\)/g, '');
@@ -75,9 +82,57 @@ export async function getAllArticles(): Promise<Article[]> {
         tags: fm.tags,
         summary: fm.summary,
         draft: fm.draft,
-        readingMinutes: readingMinutes(matter(raw).content),
+        readingMinutes: readingMinutesOf(matter(raw).content),
       });
     }
   }
   return articles.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+}
+
+/** §6 代码高亮：shiki 多主题 CSS 变量方案，代码块随 data-theme 即时切换 */
+const prettyCodeOptions = {
+  themes: {
+    duo: 'github-light',
+    editorial: 'github-light',
+    night: 'rose-pine-moon',
+  },
+  defaultColor: false as const,
+  keepBackground: false,
+};
+
+export async function getArticleMDX(
+  track: string,
+  slug: string
+): Promise<{
+  content: React.ReactElement;
+  frontmatter: Frontmatter;
+  headings: HeadingItem[];
+  readingMinutes: number;
+} | null> {
+  if (track !== 'deep' && track !== 'intro') return null;
+  if (!/^[a-zA-Z0-9-]+$/.test(slug)) return null; // 防路径穿越
+  const filePath = path.join(contentRoot(), track, `${slug}.mdx`);
+  if (!fs.existsSync(filePath)) return null;
+
+  const raw = fs.readFileSync(filePath, 'utf8');
+  const { data, content: body } = matter(raw);
+  const frontmatter = frontmatterSchema.parse(data);
+  const headings: HeadingItem[] = [];
+  const assetsDir = path.join(contentRoot(), track, `${slug}.assets`);
+
+  const { content } = await compileMDX({
+    source: body,
+    options: {
+      mdxOptions: {
+        remarkPlugins: [
+          remarkGfm,
+          remarkHeadingIds(headings),
+          remarkArticleImages(track, slug, assetsDir),
+        ],
+        rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+      },
+    },
+  });
+
+  return { content, frontmatter, headings, readingMinutes: readingMinutesOf(body) };
 }
