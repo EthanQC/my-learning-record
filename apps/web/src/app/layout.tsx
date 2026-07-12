@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css';
 import { notoSerifSC } from '@/lib/fonts';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 
 // §6 metadata 基建：兜底硬编码，NEXT_PUBLIC_SITE_URL 仅用于覆盖
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://qingverse.com';
@@ -49,9 +49,9 @@ export default function RootLayout({
         {/* §4：body 第一个子元素，同步脚本阻塞后续渲染，效果等同 head 内联 */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
         <script dangerouslySetInnerHTML={{ __html: THEME_COLOR_SYNC }} />
-        <Header />
+        <SiteHeader />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <SiteFooter />
         {/* §5 /stats 采集：GoatCounter count.js，异步无 cookie；本地开发不计数 */}
         {process.env.NODE_ENV === 'production' && (
           <script
