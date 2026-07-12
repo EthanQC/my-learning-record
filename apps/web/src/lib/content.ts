@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { frontmatterSchema } from './content-schema';
-import { compileMDX } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import rehypePrettyCode from 'rehype-pretty-code';
 import { remarkHeadingIds, remarkArticleImages, type HeadingItem } from './mdx-plugins';
@@ -91,12 +90,11 @@ export async function getAllArticles(): Promise<Article[]> {
 
 /** §6 代码高亮：shiki 多主题 CSS 变量方案，代码块随 data-theme 即时切换 */
 const prettyCodeOptions = {
-  themes: {
+  theme: {
     duo: 'github-light',
     editorial: 'github-light',
     night: 'rose-pine-moon',
   },
-  defaultColor: false as const,
   keepBackground: false,
 };
 
@@ -120,6 +118,7 @@ export async function getArticleMDX(
   const headings: HeadingItem[] = [];
   const assetsDir = path.join(contentRoot(), track, `${slug}.assets`);
 
+  const { compileMDX } = await import('next-mdx-remote/rsc');
   const { content } = await compileMDX({
     source: body,
     options: {

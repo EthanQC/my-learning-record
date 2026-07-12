@@ -7,7 +7,19 @@ export interface HeadingItem {
   depth: number;
 }
 
-function extractText(node: any): string {
+// mdast 节点的最小结构类型（只声明本文件用到的字段，同 markdown.ts P2-T3 先例）
+interface MdNode {
+  type: string;
+  depth?: number;
+  url?: string;
+  value?: string;
+  children?: MdNode[];
+  data?: {
+    hProperties?: Record<string, unknown>;
+  };
+}
+
+function extractText(node: MdNode): string {
   if (!node) return '';
   if (node.type === 'text' || node.type === 'inlineCode') return node.value || '';
   if (Array.isArray(node.children)) {
@@ -29,10 +41,10 @@ function slugify(text: string): string {
 
 /** 收集 h1-h4 标题、为其加 id（迁移自旧 markdown.ts） */
 export function remarkHeadingIds(headings: HeadingItem[]) {
-  return () => (tree: any) => {
+  return () => (tree: MdNode) => {
     const slugCount = new Map<string, number>();
-    const walk = (node: any) => {
-      if (node.type === 'heading' && node.depth >= 1 && node.depth <= 4) {
+    const walk = (node: MdNode) => {
+      if (node.type === 'heading' && typeof node.depth === 'number' && node.depth >= 1 && node.depth <= 4) {
         const text = extractText(node);
         const base = slugify(text);
         const n = slugCount.get(base) || 0;
@@ -53,8 +65,8 @@ export function remarkHeadingIds(headings: HeadingItem[]) {
  * 构建时校验源文件存在于 content/articles/<track>/<slug>.assets/，缺失 fail build。
  */
 export function remarkArticleImages(track: string, slug: string, assetsDir: string) {
-  return () => (tree: any) => {
-    const walk = (node: any) => {
+  return () => (tree: MdNode) => {
+    const walk = (node: MdNode) => {
       if (node.type === 'image' && node.url) {
         const url: string = node.url;
         const isExternal = url.startsWith('http://') || url.startsWith('https://');
