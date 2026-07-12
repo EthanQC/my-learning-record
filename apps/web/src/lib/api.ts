@@ -25,10 +25,15 @@ export const API_BASE = isServer
   ? ensureApiBase(serverOrigin)           // => http://api:9000/api
   : ensureApiBase(clientOrigin);          // => https://qingverse.com/api
 
+// Next.js 扩展的 fetch 选项（RequestInit + next 缓存配置）
+type FetchInit = RequestInit & {
+  next?: { revalidate?: number | false; tags?: string[] };
+};
+
 // 统一 JSON 请求（带超时）
 async function fetchJSON<T>(
   url: string,
-  init?: RequestInit,
+  init?: FetchInit,
   timeoutMs = 8000
 ): Promise<T> {
   const controller = new AbortController();
@@ -38,7 +43,7 @@ async function fetchJSON<T>(
       credentials: 'omit',
       signal: controller.signal,
       ...(init || {}),
-    } as any);
+    });
     if (!res.ok) {
       const text = await res.text().catch(() => '');
       throw new Error(`HTTP ${res.status} ${res.statusText} - ${text}`);
@@ -85,7 +90,7 @@ export interface Stats {
 export async function getStats(): Promise<Stats> {
   try {
     return await fetchJSON<Stats>(`${API_BASE}/stats`, {
-      next: { revalidate: 60 } as any,
+      next: { revalidate: 60 },
     });
   } catch {
     return {
@@ -103,8 +108,8 @@ export async function getPosts(category?: string): Promise<PostMeta[]> {
     const url = category
       ? `${API_BASE}/posts?category=${encodeURIComponent(category)}`
       : `${API_BASE}/posts`;
-    const data = await fetchJSON<any>(url, { next: { revalidate: 60 } as any });
-    return Array.isArray(data) ? data as PostMeta[] : [];
+    const data = await fetchJSON<unknown>(url, { next: { revalidate: 60 } });
+    return Array.isArray(data) ? (data as PostMeta[]) : [];
   } catch {
     return [];
   }
@@ -113,17 +118,17 @@ export async function getPosts(category?: string): Promise<PostMeta[]> {
 // 获取文章详情（失败抛错；页面可根据需要再兜底）
 export async function getPost(slug: string): Promise<Post> {
   return await fetchJSON<Post>(`${API_BASE}/posts/${encodeURIComponent(slug)}`, {
-    next: { revalidate: 60 } as any,
+    next: { revalidate: 60 },
   });
 }
 
 // 获取分类列表（后端返回 null 时兜底为 []）
 export async function getCategories(): Promise<Category[]> {
   try {
-    const data = await fetchJSON<any>(`${API_BASE}/categories`, {
-      next: { revalidate: 60 } as any,
+    const data = await fetchJSON<unknown>(`${API_BASE}/categories`, {
+      next: { revalidate: 60 },
     });
-    return Array.isArray(data) ? data as Category[] : [];
+    return Array.isArray(data) ? (data as Category[]) : [];
   } catch {
     return [];
   }
