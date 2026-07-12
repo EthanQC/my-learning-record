@@ -4,12 +4,13 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { ArticleCard } from '@/components/ArticleCard';
 import { HeadlineCard } from '@/components/HeadlineCard';
 import { RailTab } from '@/components/RailTab';
-import { getAllArticles } from '@/lib/content';
+import { getAllArticles, getArticleMDX } from '@/lib/content';
 
 const THEMES = ['duo', 'editorial', 'night'] as const;
 
 async function PreviewSections() {
   const articles = await getAllArticles();
+  const sample = await getArticleMDX('deep', 'hello-deep'); // 含 go 代码块的夹具
   return (
     <div className="space-y-6 p-6">
       <SiteHeader />
@@ -18,7 +19,7 @@ async function PreviewSections() {
         <ArticleCard key={`${a.track}/${a.slug}`} article={a} />
       ))}
       <RailTab />
-      {/* Task 15 追加：prose 样张（含代码块） */}
+      {sample && <div className="prose-devline">{sample.content}</div>}
       {/* Task 16 追加：项目卡 */}
       <SiteFooter />
     </div>
