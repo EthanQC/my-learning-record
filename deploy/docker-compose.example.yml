@@ -1,66 +1,34 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql8
-    restart: unless-stopped
-    # ports:  # 生产环境不暴露 MySQL 端口，如需本地调试可取消注释
-    #   - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      
-      # 创建应用用户
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      TZ: Asia/Shanghai
-      LANG: C.UTF-8
-    command: ["mysqld","--character-set-server=utf8mb4","--collation-server=utf8mb4_0900_ai_ci"]
-    volumes:
-      - mysql-data:/var/lib/mysql
-      - ../apps/api/db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
-    networks: [app]
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u${MYSQL_USER} -p${MYSQL_PASSWORD} --silent"]
-      interval: 5s
-      timeout: 3s
-      retries: 20
-
-  api:
-    image: ${REGISTRY}/qingverse-api:${API_TAG}
-    container_name: qv-api
-    restart: unless-stopped
-    environment:
-      # 使用应用用户，不用 root
-      MYSQL_DSN: ${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(mysql:3306)/${MYSQL_DATABASE}?parseTime=true&charset=utf8mb4
-      CORS_ORIGINS: ${CORS_ORIGINS}
-      ADDR: 0.0.0.0:9000
-      ADMIN_TOKEN: ${ADMIN_TOKEN:-}
-      CONTENT_DIR: /app/content
-    depends_on:
-      mysql:
-        condition: service_healthy
-    networks: [app]
-    mem_limit: 384m
-    cpus: "0.80"
-    volumes:
-    - ../content:/app/content:ro
-
   web:
     image: ${REGISTRY}/qingverse-web:${WEB_TAG}
     container_name: qv-web
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_BASE_URL: ${PUBLIC_API_BASE_URL}
-      INTERNAL_API_BASE_URL: http://api:9000
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://qingverse.com}
       NODE_OPTIONS: --max_old_space_size=256
     networks: [app]
     ports:
       - "3000:3000"
-    volumes:
-      - ../content:/app/content:ro
     mem_limit: 512m
     cpus: "1.00"
+
+  goatcounter:
+    # 固定版本，禁用 :latest 漂移；实际 tag 由 Task 8 预检步骤解析当前稳定版后写入 deploy/.env 的 GOATCOUNTER_TAG，
+    # 并记录镜像 digest（升级需手动改 tag 重新预拉、重测）。
+    image: arp242/goatcounter:${GOATCOUNTER_TAG}
+    container_name: goatcounter
+    restart: unless-stopped
+    environment:
+      # 监听 8081，与 Caddyfile 的 reverse_proxy http://goatcounter:8081 对齐（规格 §6）
+      GOATCOUNTER_LISTEN: ":8081"
+      # TLS 由 Caddy 终结，容器内走纯 HTTP
+      GOATCOUNTER_TLS: "http"
+    volumes:
+      # 官方镜像的 SQLite 与数据目录固定在 /home/goatcounter/goatcounter-data
+      - goatcounter-data:/home/goatcounter/goatcounter-data
+    networks: [app]
+    mem_limit: 128m
 
   caddy:
     image: caddy:2
@@ -69,18 +37,21 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      # Caddyfile 里的 {$DOMAIN}（主站块，可逗号多值）与 {$STATS_DOMAIN}（stats 子域，单值）从这里解析
+      DOMAIN: ${DOMAIN:-qingverse.com}
+      STATS_DOMAIN: ${STATS_DOMAIN:-stats.qingverse.com}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config
-      - ../content:/srv:ro  # 挂载 content 目录用于图片服务
-    depends_on: [web, api]
+    depends_on: [web]
     networks: [app]
 
 volumes:
-  mysql-data:
   caddy-data:
   caddy-config:
+  goatcounter-data:
 
 networks:
   app:
