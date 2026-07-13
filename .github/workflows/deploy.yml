@@ -1,12 +1,11 @@
-name: Build & Deploy Qingverse 
+name: Build & Deploy Devline
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - "apps/api/**"
       - "apps/web/**"
-      - "content/**"
+      - "content/articles/**"
       - "deploy/**"
       - ".github/workflows/**"
   workflow_dispatch:
@@ -83,20 +82,6 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build & Push API image
-        uses: docker/build-push-action@v6
-        with:
-          context: apps/api
-          file: apps/api/Dockerfile
-          platforms: linux/amd64
-          push: true
-          tags: |
-            ${{ secrets.ACR_REGISTRY }}/${{ secrets.ACR_NAMESPACE }}/qingverse-api:${{ steps.vars.outputs.tag }}
-          build-args: |
-            GOPROXY=https://proxy.golang.com.cn,https://goproxy.cn,https://goproxy.io,direct
-          cache-from: type=gha,scope=api
-          cache-to: type=gha,mode=max,scope=api
-
       - name: Build & Push Web image
         uses: docker/build-push-action@v6
         with:
@@ -131,13 +116,12 @@ jobs:
 
             cd deploy
 
-            # 更新 API_TAG / WEB_TAG 为本次构建的 tag
-            sed -i "s/^API_TAG=.*/API_TAG=${{ needs.build.outputs.tag }}/" .env
+            # 更新 WEB_TAG 为本次构建的 tag（API 已退役，无 API_TAG）
             sed -i "s/^WEB_TAG=.*/WEB_TAG=${{ needs.build.outputs.tag }}/" .env
 
-            # 拉取新镜像并重启
-            docker compose pull api web
-            docker compose up -d api web
+            # 拉取新镜像并重启（只操作 web；goatcounter 不随部署重启）
+            docker compose pull web
+            docker compose up -d web
             docker compose restart caddy
 
             docker image prune -f
