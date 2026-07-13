@@ -41,6 +41,19 @@ jobs:
       - name: Build
         run: npm run build:web
 
+      - name: CSS size check
+        run: node scripts/check-css-size.mjs
+
+      - name: No raw hex in components
+        run: node scripts/check-no-raw-hex.mjs
+
+      - name: Brand ban check
+        run: |
+          if grep -rl "情长" apps/web/src apps/web/.next/server/app 2>/dev/null; then
+            echo "构建产物或源码出现禁用品牌词"; exit 1
+          fi
+          echo "brand ban check OK"
+
   build:
     needs: checks
     runs-on: ubuntu-latest
