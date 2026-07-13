@@ -112,7 +112,7 @@ jobs:
 
             cd deploy
 
-            # 更新 WEB_TAG 为本次构建的 tag（API 已退役，无 API_TAG）
+            # 更新 WEB_TAG 为本次构建的 tag（API 链路已退役，该变量已移除）
             sed -i "s/^WEB_TAG=.*/WEB_TAG=${{ needs.build.outputs.tag }}/" .env
 
             # 拉取新镜像并重启（只操作 web；goatcounter 不随部署重启）
