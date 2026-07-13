@@ -16,7 +16,7 @@ async function PreviewSections() {
   return (
     <div className="space-y-6 p-6">
       <SiteHeader />
-      <HeadlineCard article={articles[0]} />
+      {articles[0] && <HeadlineCard article={articles[0]} />}
       {articles.map((a) => (
         <ArticleCard key={`${a.track}/${a.slug}`} article={a} />
       ))}
