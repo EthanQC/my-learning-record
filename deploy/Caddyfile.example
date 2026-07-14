@@ -46,9 +46,13 @@
     reverse_proxy http://web:3000
   }
 
-  # 静态资产长缓存：/_next/static/* 含 next/font 字体分片（/_next/static/media/）
-  @static path /_next/static/*
-  header @static Cache-Control "public, max-age=31536000, immutable"
+  # 静态资产长缓存：/_next/static/* 含 next/font 字体分片（/_next/static/media/）。
+  # Next standalone server 对这些内容哈希路径自带
+  # `Cache-Control: public, max-age=31536000, immutable`（框架内置行为，与
+  # next.config.ts 的 headers() 配置无关，无法在那里关闭）。这里如果再显式
+  # header 一次，reverse_proxy 会把上游这条头以 Add 语义追加，而不是替换，
+  # 实测导致响应里出现两条完全相同的 Cache-Control（F6）。因此不在 Caddy 侧
+  # 重复下发，缓存头单源交给 Next 自己。
 
   header {
     X-Frame-Options "SAMEORIGIN"
