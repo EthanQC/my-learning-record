@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devline 切流交付说明</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2328; --muted: #656d76; --border: #d0d7de;
+    --accent: #0969da; --card: #f6f8fa; --ok: #1a7f37; --warn: #9a6700; --bad: #cf222e;
+    --mark: #fff8c5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --fg: #e6edf3; --muted: #8d96a0; --border: #30363d;
+      --accent: #4493f8; --card: #161b22; --ok: #3fb950; --warn: #d29922; --bad: #f85149;
+      --mark: #4d3800;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #ffffff; --fg: #1f2328; --muted: #656d76; --border: #d0d7de;
+    --accent: #0969da; --card: #f6f8fa; --ok: #1a7f37; --warn: #9a6700; --bad: #cf222e;
+    --mark: #fff8c5;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #8d96a0; --border: #30363d;
+    --accent: #4493f8; --card: #161b22; --ok: #3fb950; --warn: #d29922; --bad: #f85149;
+    --mark: #4d3800;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.75; font-size: 16px;
+  }
+  .layout { display: flex; max-width: 1180px; margin: 0 auto; gap: 2rem; padding: 2rem 1.25rem; }
+  nav.toc {
+    position: sticky; top: 2rem; align-self: flex-start; flex: 0 0 230px;
+    border: 1px solid var(--border); border-radius: 8px; padding: 1rem; background: var(--card);
+    font-size: 0.9rem; max-height: calc(100vh - 4rem); overflow-y: auto;
+  }
+  nav.toc h2 { margin: 0 0 .5rem; font-size: .95rem; color: var(--muted); }
+  nav.toc ol { margin: 0; padding-left: 1.2rem; }
+  nav.toc li { margin: .35rem 0; }
+  nav.toc a { color: var(--accent); text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+  main { flex: 1; min-width: 0; }
+  h1 { font-size: 1.6rem; line-height: 1.4; border-bottom: 2px solid var(--border); padding-bottom: .6rem; margin-top: 0; }
+  h2 { font-size: 1.25rem; margin-top: 2.2rem; border-bottom: 1px solid var(--border); padding-bottom: .35rem; }
+  .meta { color: var(--muted); margin: .25rem 0 1rem; }
+  .callout {
+    border-left: 4px solid var(--warn); background: var(--card);
+    padding: .75rem 1rem; border-radius: 0 8px 8px 0; margin: 1.25rem 0; font-size: .95rem;
+  }
+  .callout.info { border-left-color: var(--accent); }
+  code { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: .1em .35em; font-size: .88em;
+         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; word-break: break-all; }
+  ul.facts > li { margin: .7rem 0; }
+  ol.facts > li { margin: .7rem 0; }
+  .tablewrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .92rem; }
+  th, td { border: 1px solid var(--border); padding: .5rem .75rem; text-align: left; vertical-align: top; }
+  th { background: var(--card); }
+  .ok { color: var(--ok); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; }
+  .warn { color: var(--warn); font-weight: 600; }
+  .pending { color: var(--warn); font-weight: 700; }
+  mark { background: var(--mark); color: inherit; padding: 0 .2em; border-radius: 3px; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .85rem; }
+  @media (max-width: 800px) {
+    .layout { flex-direction: column; }
+    nav.toc { position: static; flex: none; width: 100%; max-height: none; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc">
+  <h2>目录</h2>
+  <ol>
+    <li><a href="#rollback">回滚信息</a></li>
+    <li><a href="#downtime">停机窗口</a></li>
+    <li><a href="#cutover">切流结果</a></li>
+    <li><a href="#verify">上线验证结果 (T9–T13)</a></li>
+    <li><a href="#deviation">规格偏差</a></li>
+    <li><a href="#pending">未实测项 / 待用户项</a></li>
+    <li><a href="#residual">残留（接受项）</a></li>
+    <li><a href="#todo">阶段一遗留待办</a></li>
+  </ol>
+</nav>
+<main>
+<h1>Devline 切流交付说明</h1>
+<p class="meta">日期：2026-07-14　·　执行依据：<code>specs/2026-07-03-devline-redesign-design.md</code> §6–8、§7A</p>
+
+<div class="callout">
+<strong>脱敏口径：</strong>本文进公开仓库。ACR 私有仓库真实地址/命名空间、GoatCounter 管理密码、阶段一遗留的完整旧 commit SHA 均<mark>不出现</mark>，一律用占位符 <code>&lt;ACR&gt;</code> 或指向仓库外权威记录 <code>phase4-rollback.md</code>（与 <code>phase1-log.md</code> 同级，<code>/Users/abble/backup-devline/</code>）。新 main SHA（<code>fee0c52</code> 等）属公开信息，正常引用。</div>
+
+<div class="callout info">
+<strong>完成度口径：</strong>本文档已实测项均给出真实命令输出/截图证据；未实测或待用户操作的项目在「未实测项 / 待用户项」一节逐条点名说明原因，不笼统宣称「全部完成」。</div>
+
+<h2 id="rollback">回滚信息（切流前记录，规格 §7A）</h2>
+<ul class="facts">
+  <li><strong>旧线上镜像 tag</strong>：<code>API_TAG=c751b0c</code> / <code>WEB_TAG=c751b0c</code>，<code>REGISTRY=&lt;ACR 私有仓库，真实地址见 GitHub secrets ACR_REGISTRY/ACR_NAMESPACE 与仓库外 phase4-rollback.md&gt;</code></li>
+  <li><strong>切流前容器状态</strong>（<code>docker ps</code> 原始输出，镜像地址已脱敏）：
+    <div class="tablewrap"><table>
+      <thead><tr><th>容器</th><th>镜像</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td><code>qv-web</code></td><td><code>&lt;ACR&gt;/qingverse-web:c751b0c</code></td><td>Up 27 hours</td></tr>
+        <tr><td><code>qv-api</code></td><td><code>&lt;ACR&gt;/qingverse-api:c751b0c</code></td><td>Up 27 hours</td></tr>
+        <tr><td><code>qv-caddy</code></td><td><code>caddy:2</code></td><td>Up 27 hours</td></tr>
+        <tr><td><code>mysql8</code></td><td><code>mysql:8.0</code></td><td>Up 31 hours (healthy)</td></tr>
+      </tbody>
+    </table></div>
+  </li>
+  <li><strong>旧配置备份</strong>：服务器 <code>/home/w/backups/pre-devline-cutover/</code>（<code>.env</code> / <code>docker-compose.yml</code> / <code>Caddyfile</code>，属主 <code>w:w</code>；路径按 Task 1 已确认体系修正，非 brief 原文 <code>~/backups/...</code>，因 SSH 登录用户是 root、部署用户是 w，<code>~</code> 在 root 会话下会解析到 <code>/root</code>）。</li>
+  <li><strong>回滚步骤</strong>（§7A，路径为 <code>/home/w</code> 下真实路径）：
+    <ol class="facts">
+      <li><code>cd /home/w/workspace/my-learning-record/deploy</code></li>
+      <li><code>sudo -u w docker compose down</code></li>
+      <li><code>sudo -u w cp /home/w/backups/pre-devline-cutover/{.env,docker-compose.yml,Caddyfile} .</code></li>
+      <li><code>sudo -u w docker compose up -d</code></li>
+      <li>旧镜像仍在 ACR；<code>docker image prune</code> 只清服务器本地悬挂镜像，不动 ACR 上的 <code>c751b0c</code> tag，回滚时可直接从 ACR 拉取旧镜像</li>
+    </ol>
+  </li>
+  <li><strong>mysql-data 卷处置决定</strong>：<span class="ok">保留归档</span>（已定，不删除）</li>
+</ul>
+
+<h2 id="downtime">停机窗口</h2>
+<div class="tablewrap"><table>
+  <thead><tr><th>项</th><th>值</th></tr></thead>
+  <tbody>
+    <tr><td>开始</td><td><code>2026-07-14 05:59:20Z</code></td></tr>
+    <tr><td>结束</td><td><code>2026-07-14 05:59:29Z</code></td></tr>
+    <tr><td>时长</td><td class="ok">约 9 秒</td></tr>
+    <tr><td>流程</td><td><code>docker compose down</code>（旧 4 容器栈）→ 替换配置/镜像 tag → <code>docker compose up -d</code>（新 3 容器栈）；<code>down</code> 未加 <code>-v</code>，卷未删除</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="cutover">切流结果</h2>
+<ul class="facts">
+  <li><strong>合并方式</strong>：<code>git merge --no-ff redesign/devline → main</code>，合并提交 <code>2b0e046</code>（一次性并入 33 个提交）。合并后追加 2 个上线验证发现的可访问性修复提交：<code>f827165</code>（项目卡文字对比度）、<code>fee0c52</code>（主题切换器选中项 hover 态对比度）。<strong>当前 main HEAD = <code>fee0c52</code></strong>。</li>
+  <li><strong>容器编排</strong>：4 容器（<code>qv-web</code> / <code>qv-api</code> / <code>qv-caddy</code> / <code>mysql8</code>）→ 3 容器（<code>qv-web</code> / <code>qv-caddy</code> / <code>goatcounter</code>）。</li>
+  <li><strong>退役组件</strong>：Go API 服务与 MySQL 数据库容器均已退役（新前台为纯静态/SSG + ISR 架构，不再需要后端 API）。</li>
+  <li><strong>mysql-data 卷处置</strong>：<span class="ok">保留归档，未删除</span>（<code>down</code> 未加 <code>-v</code>），与 Task 6 既定决定一致。</li>
+  <li><strong>服务器版本</strong>：<code>deploy/.env</code> <code>WEB_TAG=fee0c52</code>，与本地 <code>origin/main</code>、服务器 <code>git log -1</code>、<code>qv-web</code> 容器镜像 tag 四方一致核对通过（Task 13 Step 6）。</li>
+</ul>
+
+<h2 id="verify">上线验证结果（Task 9–13，全部针对生产域名 <code>https://qingverse.com</code> 实测，非本地/非模拟）</h2>
+<div class="tablewrap"><table>
+  <thead><tr><th>任务</th><th>范围</th><th>结论</th><th>关键证据</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>T9</strong></td>
+      <td>HTTP 层：配置漂移、410 前缀清单、404 兜底、RSS/sitemap/robots、缓存头、<code>/api</code> 透传</td>
+      <td class="ok">PASS</td>
+      <td>服务器 <code>Caddyfile</code>/<code>docker-compose.yml</code> 脱敏后与 <code>.example</code> 逐字节一致；410 前缀清单 9/9 命中（含旧图片路径前缀）；未知路径透传 404（品牌文案逐字匹配）；<code>feed.xml</code>/<code>sitemap.xml</code>/<code>robots.txt</code> 域名正确、<code>localhost</code> 计数为 0（线上零文章，Option B 空态首发预期内）；CSS 响应头含 <code>public, max-age=31536000, immutable</code>，HTML 为 <code>s-maxage=31536000</code>（不含 immutable）；<code>/api/*</code> 未反代到已退役旧 API，透传得 404</td>
+    </tr>
+    <tr>
+      <td><strong>T10</strong></td>
+      <td>Playwright 截图矩阵</td>
+      <td class="ok">PASS</td>
+      <td>39 张线上真实截图（5 页 × 3 主题 × 2 视口 = 30 张 + 404×3 + 两轨空态×3主题=6 张；因线上零文章，以两轨空态截图替代不存在的文章详情页，总数仍吻合 36+3=39 的验收目标）；三主题 <code>getComputedStyle</code> 背景色实测 <code>#FDFBFC</code>/<code>#FAF6F3</code>/<code>#171219</code>，与 D1 规格逐字节一致</td>
+    </tr>
+    <tr>
+      <td><strong>T11</strong></td>
+      <td>主题持久化、<code>prefers-color-scheme</code>、rail-tab 键盘、字体请求</td>
+      <td class="ok">PASS</td>
+      <td>UI 点击切主题后刷新持久化（<code>night</code>）；<code>prefers-color-scheme: dark</code> 首访落夜航；rail-tab 用真实点击+真实 <code>ArrowDown</code>/<code>ArrowUp</code> 键盘手势验证（roving tabindex 正确切换 <code>deep</code>⇄<code>intro</code>）；全新隔离浏览器上下文冷加载字体请求：<code>duo</code>=0 个 <code>.woff2</code>，<code>editorial</code>/<code>night</code> 各 5 个 <code>.woff2</code>（均来自自托管 <code>/_next/static/media/</code>，0 个 Google Fonts），满足 D3 自托管字体切片规格；<code>suppressHydrationWarning</code> 确认写在 <code>&lt;html&gt;</code> 标签（源码定点核查 + DOM 属性行为 + 控制台无 hydration 警告三重证据）</td>
+    </tr>
+    <tr>
+      <td><strong>T12</strong></td>
+      <td>Lighthouse 移动端性能、WCAG AA 对比度扫描</td>
+      <td class="ok">PASS<br><span class="warn">（含当场发现并修复 2 处真实违规）</span></td>
+      <td>Lighthouse mobile Performance=94、LCP=1.23s，达标（≥90 / ≤2.5s）；<code>axe-core</code> 三主题 × 5 页扫描发现 duo 主题下项目卡（<code>.project-card-body dt</code>/<code>.project-card-link</code>，22 处节点）与主题切换器选中项 hover 态 2 处真实 AA 违规（根因相同：<code>--accent-text</code> 在 <code>--surface-tint</code> 浅粉底上仅 4.46–4.47:1，低于正文 4.5:1 门槛）；均已定位根因、独立数学复核确认、修复上线（新增语义 token <code>--c-accent-on-tint</code>，duo <code>#BD375F</code> 4.83:1、editorial <code>#A21F4D</code> 4.81:1），CI（<code>checks</code>/<code>build</code>/<code>deploy</code>）全绿，线上 axe 复扫 0 violations，真实 hover 态 <code>getComputedStyle</code> 现场验证 ≥4.5:1 全达标</td>
+    </tr>
+    <tr>
+      <td><strong>T13</strong></td>
+      <td>版本三方一致性、情长/qingchang grep、隐私复查、统计链路两状态</td>
+      <td class="ok">PASS<br><span class="pending">（统计成功态 PENDING）</span></td>
+      <td>本地/服务器 git/<code>.env</code>/容器镜像 tag 四方一致 = <code>fee0c52</code>；容器构建产物 + 线上页面 grep「情长」「qingchang」均 CLEAN；隐私复查（全新 clone 全历史对象扫描 + 线上 410 + sitemap 零 murmurs）无回归，与阶段一 Task 8 结论一致；统计链路降级态（<code>/stats</code> 显示「统计服务暂不可用」，浏览器网络面板实测 <code>count.js</code>/<code>counter/TOTAL.json</code> 均 <code>ERR_CONNECTION_CLOSED</code>，根因为 <code>stats.qingverse.com</code> DNS <code>NXDOMAIN</code>，GoatCounter 后端内部 <code>wget goatcounter:8081/status</code> 确认健康）已用真实浏览器验证并截图存档；成功态因 DNS 未生效无法产生真实证据，如实标注 PENDING，未伪造</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<h2 id="deviation">规格偏差（逐条如实记录）</h2>
+<ol class="facts">
+  <li><strong>CSS 总预算 50KB → 80KB</strong>：D3 自托管字体切片管线（202 个 <code>@font-face</code>）占 65.2KB，设计 CSS 本身仅 6.3KB，二者相加突破原 50KB 预算。用户 2026-07-13 裁决：选项 A，总预算放宽至 80KB（不再要求写死具体 KB 数，见首页项目 outcome 文案 commit <code>a73ab98</code>）。</li>
+  <li><strong>10KB 主题增量子指标未做机器断言</strong>：§6 规格中「单主题相对基线增量 ≤10KB」这一子指标未落地为 CI 可执行的自动化断言，仅有总预算 80KB 门禁生效。</li>
+  <li><strong>Option B 空态首发</strong>：全部内容夹具（4 篇 MDX）均置 <code>draft: true</code>，线上当前零文章，<code>/articles</code>、<code>/articles/deep</code>、<code>/articles/intro</code> 均为空态渲染。此为阶段三 Task 20 Step 0 既定决策，非本次切流故障。</li>
+  <li><strong>备案信息实为粤（非京）</strong>：页脚 ICP 备案号为「粤ICP备2025487305号」「粤公网安备44030002008906号」，与规格草稿中假设的京字头不符，以服务器实际备案地为准，已在阶段三如实记档。</li>
+  <li><strong>验证工具替代</strong>：MCP Playwright 在部分环节出现启动超时，改用 Browser pane / <code>playwright</code> CLI 直接驱动完成验证，验证覆盖范围未因此缩水。</li>
+  <li><strong>AA 对比度违规为「发现并修复」而非「遗留」</strong>：T12 验收扫描当场发现的 2 处真实 AA 违规（duo 项目卡 + 主题切换器 hover 态）均已在同一交付窗口内定位根因、独立复核、修复、部署并线上复测确认，未作为遗留问题带入下一阶段。</li>
+</ol>
+
+<h2 id="pending">未实测项 / 待用户项（如实点名，不笼统宣称「全部完成」）</h2>
+<ol class="facts">
+  <li><strong><code>stats.qingverse.com</code> 对外 HTTPS</strong>：<span class="pending">待用户手动添加 DNS 记录</span>（<code>stats</code> 主机记录，类型 A，值 <code>120.24.178.92</code>）。多次尝试自动化添加均被阿里云控制台风控机制阻断（弹窗遮罩致截图/读取注入失效，后改用 CDP 注入仍触发「服务器异常登录提醒」安全告警并永久挂起），为避免触发账号锁定风险已停止自动化尝试，交回用户手动操作。DNS 记录生效后，服务器 Caddy 的 ACME/<code>certmagic</code> 会自动重试签发证书，无需额外人工步骤。</li>
+  <li><strong>GoatCounter 公开面板（public dashboard）</strong>：统计站点已建成（<code>num_sites=1</code>，站点 <code>stats.qingverse.com</code>），登录凭据（管理邮箱/密码）已通过仓库外权威记录 <code>phase4-rollback.md</code> 交付，<strong>不写入本文档</strong>。待上述 DNS 生效后，用户需登录 <code>https://stats.qingverse.com</code> → Settings → 勾选公开面板，这是 <code>/stats</code> 页面免登录取数的前提。在此之前 <code>/stats</code> 页面稳定显示「统计服务暂不可用」的降级态文案（已实测确认，非故障）。</li>
+  <li><strong>统计成功态未实测</strong>：依赖上述两项（DNS 生效 + 公开面板勾选）均落地后才能产生真实的成功态证据；当前状态下任何「成功态截图」都只能是伪造的，故未拍摄、如实标注 PENDING。</li>
+  <li><strong>GSC（Google Search Console）两项收尾</strong>：agent 无法代操作，属人工步骤，交由用户在 qingverse.com 资产下完成：① 站点地图 → 提交 <code>https://qingverse.com/sitemap.xml</code>；② 移除 → 新请求 → 移除前缀 <code>https://qingverse.com/murmurs</code> 开头的所有网址（<code>/murmurs*</code> 的 410 已上线，此操作用于加速清除搜索引擎缓存）。用户执行后，提交时间与 GSC 显示的请求状态应补记入本文档；本次交付时用户尚未执行，记为待办。</li>
+</ol>
+
+<h2 id="residual">残留（接受项，承阶段一既定决策）</h2>
+<ul class="facts">
+  <li><strong>GitHub 悬挂对象</strong>：旧 SHA 直链在仓库 <code>git gc</code> 之前仍可通过 GitHub 服务端访问（含按 SHA <code>fetch</code> 可完整取回旧历史）。这包含两批：① 阶段一 force-push 后的旧 tip/迁入 commit（完整 SHA 仅存仓库外 <code>phase1-log.md</code>，本文档不重复列出）；② 本阶段 Task 6 隐私修复中 <code>git commit --amend</code> + <code>force-with-lease</code> 产生的悬挂 commit <code>ab34fab</code>（该 commit 曾短暂含真实 ACR 私有仓库地址，已被 amend 覆盖移出 HEAD，但悬挂对象本身在 gc 前仍可达）。用户此前已就阶段一同类残留书面接受「选项 B」（不提交 GitHub Support 工单，完整敏感值仅存仓库外记录），本阶段沿用同一口径，不新增处理动作。</li>
+  <li><strong>完整敏感值</strong>：ACR 私有仓库真实地址/命名空间、GoatCounter 管理密码等，仅存于仓库外 <code>phase4-rollback.md</code>（与 <code>phase1-log.md</code> 同级），公开仓库内一律使用占位符或不出现。</li>
+</ul>
+
+<h2 id="todo">阶段一遗留待办（现切流已稳定，处理窗口已开）</h2>
+<p>以下两项在阶段一交付说明中即被记为「阶段四待办」，现切流稳定，可择期处理：</p>
+<ol class="facts">
+  <li><strong>GSC 资产验证 + 两组前缀 410 后移除请求</strong>：即上文「未实测项」第 4 条的两个 GSC 操作（提交新 sitemap、移除 <code>/murmurs*</code> 前缀），待用户执行。</li>
+  <li><strong>ACR/VPS 旧 web 镜像清理</strong>：ACR 私有仓库与服务器本地仍保留旧前台重写前的 <code>web</code> 镜像 tag（烘焙了旧版 murmurs 内容），阶段一决策为「切流稳定后再清」。现主站已切流并经 Task 9–13 全面验证稳定运行，可视用户安排执行 <code>docker image prune</code> 类清理；清理前需确认不影响当前回滚方案（回滚仍以 §7A 步骤为准，清理仅移除已确认不再需要的悬挂本地镜像，不动 ACR 上仍在用作回滚基线的 <code>c751b0c</code> tag）。</li>
+</ol>
+
+<footer>Devline Phase 4 · Task 14 · 交付说明收尾与提交 · 对应 markdown：<code>docs/superpowers/delivery/2026-07-devline-cutover.md</code></footer>
+</main>
+</div>
+</body>
+</html>
