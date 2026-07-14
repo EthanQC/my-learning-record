@@ -958,6 +958,13 @@ body::before {
   border-radius: 6px; /* D5：B 项目卡 6px */
 }
 
+/* T12 验收发现：--c-accent-text 在 --surface-tint 上仅 4.46:1<AA，
+   仅 duo 用 --surface-tint 做卡片底色，故仅 duo 场景换用达标色值（4.83:1） */
+[data-theme='duo'] .project-card-body dt,
+[data-theme='duo'] .project-card-link {
+  color: rgb(var(--c-project-card-accent-text));
+}
+
 [data-theme='editorial'] .project-card {
   background: rgb(var(--c-surface)); /* D1：A 的 tint 仅小面积底衬，项目卡走 surface */
   border-radius: 0;

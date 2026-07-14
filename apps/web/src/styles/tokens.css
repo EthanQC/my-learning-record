@@ -67,6 +67,7 @@
   --accent-soft: rgb(246 189 210);    /* #F6BDD2 */
   --c-accent-strong: 198 58 100;  /* #C63A64  AA 修正 */
   --c-accent-text: 198 58 100;    /* #C63A64  AA 修正 */
+  --c-project-card-accent-text: 189 55 95; /* #BD375F  AA 修正：--c-accent-text 在 --surface-tint(#FDEEF4) 上仅 4.46:1<AA(T12验收发现)，此值 4.83:1 达标，仅 duo 项目卡场景使用 */
   --c-on-accent: 255 255 255;     /* #FFFFFF on #C63A64 = 5.01:1 */
   --c-track-deep: 23 20 26;       /* #17141A */
   --c-track-deep-dim: 217 210 214;/* #D9D2D6 */
