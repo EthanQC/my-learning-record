@@ -13,20 +13,17 @@ const nextConfig: NextConfig = {
 
   output: 'standalone',
 
-  // 图片优化
+  // 图片优化：全站未用 next/image，彻底关闭优化器端点，避免 remotePatterns 通配
+  // 把 /_next/image 变成可拉取任意远端 URL 的开放代理（F1，见 review-confirmed.json）
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    unoptimized: true,
   },
 
   // 压缩配置
   compress: true,
 
-  // 缓存配置
+  // 缓存配置。/_next/static/* 的 Cache-Control 归口 Caddy（deploy/Caddyfile.example
+  // 的 @static 块已覆盖，含 next/font 字体分片），此处不重复下发（F6）
   headers: async () => [
     {
       source: '/(.*)',
@@ -34,15 +31,6 @@ const nextConfig: NextConfig = {
         {
           key: 'X-DNS-Prefetch-Control',
           value: 'on',
-        },
-      ],
-    },
-    {
-      source: '/_next/static/(.*)',
-      headers: [
-        {
-          key: 'Cache-Control',
-          value: 'public, max-age=31536000, immutable',
         },
       ],
     },

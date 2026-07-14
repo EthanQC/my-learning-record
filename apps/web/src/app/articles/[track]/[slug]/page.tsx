@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getAllArticles, getArticleMDX, TRACK_LABEL, type Track } from '@/lib/content';
 import { formatDate } from '@/lib/format';
 import { Toc } from '@/components/Toc';
-import { SITE } from '@/lib/site';
+import { SITE, buildAlternates } from '@/lib/site';
 
 export const dynamicParams = false;
 
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: frontmatter.title,
     description: frontmatter.summary,
-    alternates: { canonical: `/articles/${track}/${slug}` },
+    alternates: buildAlternates(`/articles/${track}/${slug}`),
     openGraph: {
       type: 'article',
       title: frontmatter.title,

@@ -3,7 +3,9 @@ import type { Project } from '@/lib/projects';
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="project-card">
-      <h3 className="project-card-name">{project.name}</h3>
+      {/* h2：卡片是页面 h1 下的顶层内容单元，避免 H1→H3 跳级（axe heading-order，F5）;
+          class 未变，视觉尺寸沿用既有 .project-card-name 样式 */}
+      <h2 className="project-card-name">{project.name}</h2>
       <dl className="project-card-body">
         <div>
           <dt>问题</dt>

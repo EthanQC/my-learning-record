@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import { getAllArticles } from '@/lib/content';
 import { ArticleCard } from '@/components/ArticleCard';
 import { TrackFilter } from '@/components/TrackFilter';
+import { buildAlternates } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: '文章',
   description: 'Devline 全部文章：深度线与科普线',
-  alternates: { canonical: '/articles' },
+  alternates: buildAlternates('/articles'),
 };
 
 export default async function ArticlesPage() {

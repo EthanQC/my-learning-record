@@ -1,4 +1,4 @@
-// 生成 OG 图（1200×630）、apple-icon（180）、favicon.ico（32）——双线视觉母体（§5.1）
+// 生成 OG 图（1200×630）、apple-icon（180）、favicon.ico（16/32/48）——双线视觉母体（§5.1）
 // 用法：node scripts/generate-brand-assets.mjs（仓库根执行）
 import fs from 'node:fs';
 import path from 'node:path';
@@ -31,8 +31,14 @@ await sharp(Buffer.from(ICON_SVG(180)))
   .png()
   .toFile(path.join(appDir, 'apple-icon.png'));
 
-const png32 = await sharp(Buffer.from(ICON_SVG(32))).png().toBuffer();
-fs.writeFileSync(path.join(appDir, 'favicon.ico'), await pngToIco(png32));
+// §5 icon 套件#2：favicon.ico（32×32 兜底）。注意 png-to-ico 在“单文件”调用路径下会
+// 无条件把输入放大成 256×256 再打包（见 node_modules/png-to-ico/index.js），生成一个
+// ~270KB 的未压缩 256 层——必须显式传入按目标尺寸各自生成的 PNG Buffer 数组，走它的
+// “多文件”路径，才能得到只含 16/32/48 三层的小体积 ICO（F8）。
+const icoLayers = await Promise.all(
+  [16, 32, 48].map((size) => sharp(Buffer.from(ICON_SVG(size))).png().toBuffer())
+);
+fs.writeFileSync(path.join(appDir, 'favicon.ico'), await pngToIco(icoLayers));
 
 const ogSize = fs.statSync(path.join(appDir, 'opengraph-image.png')).size;
 console.log(`opengraph-image.png: ${(ogSize / 1024).toFixed(1)}KB（预算 150KB）`);

@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { ProjectCard } from '@/components/ProjectCard';
 import { PROJECTS } from '@/lib/projects';
+import { buildAlternates } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: '项目',
   description: 'Devline 项目：问题 → 方案 → 结果的 case-study',
-  alternates: { canonical: '/projects' },
+  alternates: buildAlternates('/projects'),
 };
 
 export default function ProjectsPage() {

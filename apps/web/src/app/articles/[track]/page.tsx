@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAllArticles, TRACKS, TRACK_LABEL, type Track } from '@/lib/content';
 import { ArticleCard } from '@/components/ArticleCard';
 import { TrackFilter } from '@/components/TrackFilter';
+import { buildAlternates } from '@/lib/site';
 
 export const dynamicParams = false; // 未知 track 直接 404
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${label}文章`,
     description: `Devline ${label}文章列表`,
-    alternates: { canonical: `/articles/${track}` },
+    alternates: buildAlternates(`/articles/${track}`),
   };
 }
 

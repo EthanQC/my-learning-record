@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { getAllArticles } from '@/lib/content';
 import { StatsDashboard } from '@/components/StatsDashboard';
+import { buildAlternates } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: '统计',
   description: 'Devline 流量统计：自托管 GoatCounter，无 cookie，不追踪个人',
-  alternates: { canonical: '/stats' },
+  alternates: buildAlternates('/stats'),
 };
 
 export default async function StatsPage() {

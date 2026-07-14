@@ -65,10 +65,11 @@ export default async function HomePage() {
           去重规则（§5）：头条属于某轨道时，该轨道面板排除头条；另一轨道面板不受影响 */}
       <section className="container-devline home-section home-lists">
         {TRACKS.map((track) => {
-          const list = articles.filter(
-            (a) =>
-              a.track === track &&
-              !(headline && headline.track === track && a.slug === headline.slug)
+          // 空态判定必须用去重前的轨道总篇数：若只用 trackAll.length===0 判空，
+          // 唯一一篇恰是头条时会被去重挤空 list，误报「首篇打磨中」且丢失「看全部」入口（F2）
+          const trackAll = articles.filter((a) => a.track === track);
+          const list = trackAll.filter(
+            (a) => !(headline && headline.track === track && a.slug === headline.slug)
           );
           return (
             <div
@@ -79,7 +80,7 @@ export default async function HomePage() {
               data-panel={track}
               className="home-panel"
             >
-              {list.length === 0 ? (
+              {trackAll.length === 0 ? (
                 <EmptyTrackNotice track={track} />
               ) : (
                 <>

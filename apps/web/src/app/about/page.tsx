@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { SITE } from '@/lib/site';
+import { SITE, buildAlternates } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: '关于',
   description: '关于 Devline 与它的作者',
-  alternates: { canonical: '/about' },
+  alternates: buildAlternates('/about'),
 };
 
 const STACK = ['Go', 'MySQL', 'Redis', 'Docker', 'Next.js', 'TypeScript', 'CI/CD'];

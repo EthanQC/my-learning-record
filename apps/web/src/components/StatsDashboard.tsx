@@ -36,7 +36,7 @@ type StatsState =
       totalUV: number;
       todayPV: number;
       trend: { date: string; pv: number }[];
-      top: { title: string; track: 'deep' | 'intro'; pv: number }[];
+      top: { path: string; title: string; track: 'deep' | 'intro'; pv: number }[];
     };
 
 export function StatsDashboard({ articles }: { articles: ArticleRef[] }) {
@@ -66,6 +66,7 @@ export function StatsDashboard({ articles }: { articles: ArticleRef[] }) {
         Promise.all(
           articles.map((a) =>
             fetchCounter(a.path, '').then((c) => ({
+              path: a.path,
               title: a.title,
               track: a.track,
               pv: parseCount(c?.count),
@@ -138,7 +139,7 @@ export function StatsDashboard({ articles }: { articles: ArticleRef[] }) {
         <p className="section-label">文章浏览榜</p>
         <ol>
           {state.top.map((t) => (
-            <li key={t.title}>
+            <li key={t.path}>
               <span className="track-dot" data-track={t.track} aria-hidden="true" />
               <span className="stats-top-title">{t.title}</span>
               <span className="article-card-meta">{t.pv.toLocaleString()}</span>
