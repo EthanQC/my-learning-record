@@ -1,0 +1,189 @@
+/* ============================================================
+   Devline design tokens —— 唯一色值来源
+   规格：docs/superpowers/specs/2026-07-03-devline-redesign-design.md
+   D1 色板 / D3 字体 / D4 字阶 / D5 装饰 / D6 动效
+   - 颜色存 RGB 通道值（--c-*），支持 Tailwind <alpha-value>（§6）
+   - 自带透明度的 token（--surface-tint / --accent-soft / 辉光）存完整色值
+   - token 定义在 [data-theme] 上，:root 放 duo 兜底（D1 / §4 /dev/themes 前提）
+   - 组件层禁止出现 hex（D1）；本文件是唯一允许 hex/裸 RGB 的样式层
+   ============================================================ */
+
+/* ---------- 全局（与主题无关） ---------- */
+:root {
+  /* D3 三条字体栈 */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-serif: var(--font-noto-serif), 'Songti SC', 'STSong', 'SimSun', serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+
+  /* D4 字阶（375px ↔ 1120px 线性流式） */
+  --fs-hero: clamp(28px, 2.4vw + 19px, 46px);
+  --fs-headline: clamp(17px, 0.67vw + 14.5px, 22px);
+  --fs-title: 15px;
+  --fs-body: 16px;
+  --fs-sub: clamp(14px, 0.53vw + 12px, 16px);
+  --fs-meta: 12px;
+  --fs-nav: 14px;
+  --fs-brand: 24px;
+  --lh-body: 1.9;
+
+  /* D6 动效 token */
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* §5 主题切换器色卡圆点（三点并排即品牌展示；固定为各主题 --accent 值） */
+  --dot-duo: 236 90 135;       /* #EC5A87 */
+  --dot-editorial: 194 37 92;  /* #C2255C */
+  --dot-night: 242 118 159;    /* #F2769F */
+}
+
+/* D4：移动端字阶 */
+@media (max-width: 640px) {
+  :root {
+    --fs-title: 14px;
+    --fs-meta: 11px;
+    --fs-brand: 19px;
+  }
+}
+
+/* ---------- 双线 B（duo，默认主题；:root 兜底） ---------- */
+:root,
+[data-theme='duo'] {
+  color-scheme: light;
+  --theme-color: #FDFBFC; /* §4 meta theme-color */
+
+  /* D1 色板 */
+  --c-bg: 253 251 252;            /* #FDFBFC */
+  --c-surface: 255 255 255;       /* #FFFFFF */
+  --surface-tint: rgb(253 238 244);   /* #FDEEF4 */
+  --c-text: 23 20 26;             /* #17141A */
+  --c-text-2: 92 82 90;           /* #5C525A */
+  --c-text-3: 122 110 118;        /* #7A6E76  AA 修正 */
+  --c-text-muted: 184 172 180;    /* #B8ACB4  仅纯装饰 */
+  --c-border: 226 216 221;        /* #E2D8DD */
+  --c-border-2: 239 231 235;      /* #EFE7EB */
+  --c-accent: 236 90 135;         /* #EC5A87 */
+  --accent-soft: rgb(246 189 210);    /* #F6BDD2 */
+  --c-accent-strong: 198 58 100;  /* #C63A64  AA 修正 */
+  --c-accent-text: 198 58 100;    /* #C63A64  AA 修正 */
+  --c-on-accent: 255 255 255;     /* #FFFFFF on #C63A64 = 5.01:1 */
+  --c-track-deep: 23 20 26;       /* #17141A */
+  --c-track-deep-dim: 217 210 214;/* #D9D2D6 */
+  --c-track-intro: 236 90 135;    /* #EC5A87 */
+  --c-track-intro-dim: 242 191 210; /* #F2BFD2 */
+  --c-rail-deep-outline: 138 126 134; /* #8A7E86 D1 组件级修正（3.77:1 ≥ 3:1） */
+  --c-focus-ring: 23 20 26;       /* §5 focus ring 亮主题 #17141A */
+
+  /* D3/D5：B 标题用重磅无衬线 */
+  --font-display: var(--font-sans);
+  --font-meta: var(--font-sans);
+  --lh-hero: 1.3;
+  --ls-hero: -0.02em;
+
+  /* D4/D5 章节引子（B：13px/800/字距 0.12em） */
+  --fs-label: 13px;
+  --ls-label: 0.12em;
+  --fw-label: 800;
+  --font-label: var(--font-sans);
+
+  /* D5 阴影：硬错位投影零模糊 */
+  --shadow-card: 4px 4px 0 rgb(var(--c-track-deep));
+  --shadow-card-hover: 6px 6px 0 rgb(var(--c-track-deep));
+  --shadow-headline: 6px 6px 0 var(--accent-soft);
+  --shadow-pill: 3px 3px 0 var(--accent-soft);
+  --glow-hover: none;
+  --glow-text: none;
+}
+
+/* ---------- 编辑刊 A（editorial） ---------- */
+[data-theme='editorial'] {
+  color-scheme: light;
+  --theme-color: #FAF6F3;
+
+  --c-bg: 250 246 243;            /* #FAF6F3 */
+  --c-surface: 255 255 255;       /* #FFFFFF */
+  --surface-tint: rgb(243 196 211);   /* #F3C4D3 仅小面积底衬 */
+  --c-text: 34 26 32;             /* #221A20 */
+  --c-text-2: 90 76 84;           /* #5A4C54 */
+  --c-text-3: 117 103 112;        /* #756770  AA 修正 */
+  --c-text-muted: 185 170 178;    /* #B9AAB2 */
+  --c-border: 228 217 214;        /* #E4D9D6 */
+  --c-border-2: 237 227 224;      /* #EDE3E0 */
+  --c-accent: 194 37 92;          /* #C2255C */
+  --accent-soft: rgb(243 196 211);    /* #F3C4D3 */
+  --c-accent-strong: 194 37 92;   /* #C2255C */
+  --c-accent-text: 194 37 92;     /* #C2255C（5.26:1 原值过 AA） */
+  --c-on-accent: 255 255 255;     /* #FFFFFF on #C2255C = 5.7:1 */
+  --c-track-deep: 34 26 32;       /* #221A20 */
+  --c-track-deep-dim: 228 217 214;/* #E4D9D6 */
+  --c-track-intro: 194 37 92;     /* #C2255C */
+  --c-track-intro-dim: 243 196 211; /* #F3C4D3 */
+  --c-rail-deep-outline: 34 26 32;  /* A 未激活深度描边 = --track-deep（无 B 特例） */
+  --c-focus-ring: 34 26 32;
+
+  --font-display: var(--font-serif); /* D3：衬线只写在 A/C 作用域 */
+  --font-meta: var(--font-sans);
+  --lh-hero: 1.4;   /* D4：衬线 lh 1.4、不加负字距 */
+  --ls-hero: 0;
+
+  /* D4/D5 章节引子（A：12px/字距 0.2em + 22px 短红线，短红线在组件 CSS 里画） */
+  --fs-label: 12px;
+  --ls-label: 0.2em;
+  --fw-label: 700;
+  --font-label: var(--font-sans);
+
+  /* D5：A 无投影，气质靠留白与细线 */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-headline: none;
+  --shadow-pill: none;
+  --glow-hover: none;
+  --glow-text: none;
+}
+
+/* ---------- 夜航 C（night，兼任暗色模式） ---------- */
+[data-theme='night'] {
+  color-scheme: dark; /* §4：否则 UA 滚动条/表单控件首帧闪白 */
+  --theme-color: #171219;
+
+  --c-bg: 23 18 25;               /* #171219 */
+  --c-surface: 31 24 35;          /* #1F1823 */
+  --surface-tint: rgb(242 118 159 / 0.08);
+  --c-text: 244 237 242;          /* #F4EDF2 */
+  --c-text-2: 156 143 160;        /* #9C8FA0 */
+  --c-text-3: 148 138 155;        /* #948A9B  AA 修正 */
+  --c-text-muted: 124 112 128;    /* #7C7080 */
+  --c-border: 42 34 46;           /* #2A222E */
+  --c-border-2: 58 47 64;         /* #3A2F40 */
+  --c-accent: 242 118 159;        /* #F2769F */
+  --accent-soft: rgb(242 118 159 / 0.4);
+  --c-accent-strong: 242 118 159; /* D1：C 填色直接用 --accent */
+  --c-accent-text: 242 118 159;   /* 6.92:1 原值过 AA */
+  --c-on-accent: 23 18 25;        /* #171219 on #F2769F = 6.9:1 */
+  --c-track-deep: 201 191 206;    /* #C9BFCE 月白（「墨」是语义色非固定 hex） */
+  --c-track-deep-dim: 58 47 64;   /* #3A2F40 */
+  --c-track-intro: 242 118 159;   /* #F2769F */
+  --c-track-intro-dim: 58 47 64;  /* #3A2F40 */
+  --c-rail-deep-outline: 201 191 206;
+  --c-focus-ring: 242 118 159;    /* §5 focus ring 夜航 #F2769F */
+
+  --font-display: var(--font-serif);
+  --font-meta: var(--font-mono); /* D4：C 主题 meta 用 --font-mono */
+  --lh-hero: 1.4;
+  --ls-hero: 0;
+
+  /* D4/D5 章节引子（C：12px mono，// 与 $ 前缀在组件 CSS 里加） */
+  --fs-label: 12px;
+  --ls-label: 0;
+  --fw-label: 700;
+  --font-label: var(--font-mono);
+
+  /* D5：C 无投影；辉光三件套 */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-headline: none;
+  --shadow-pill: none;
+  --glow-hover: 0 0 20px rgb(242 118 159 / 0.15);
+  --glow-text: 0 0 24px rgb(242 118 159 / 0.45);
+}

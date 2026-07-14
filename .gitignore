@@ -62,3 +62,8 @@ yarn-error.log*
 next-env.d.ts
 # 可视化 brainstorm 会话产物
 .superpowers/
+
+apps/web/public/article-assets/
+
+# 本地 agent 工具配置(浏览器面板 dev server 定义,不入库)
+.claude/

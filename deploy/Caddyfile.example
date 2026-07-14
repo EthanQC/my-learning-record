@@ -5,36 +5,62 @@
 {$DOMAIN} {
   encode zstd gzip
 
-  @api_health path /api/health
-  handle @api_health {
-    rewrite * /health
-    reverse_proxy http://api:9000
+  # 旧 URL 前缀统一 410 Gone，不做 301（清单逐字来自设计文档 §6）
+  @gone path /posts/* /notes/* /murmurs* /interview-questions/* /interview-experiences* /internship-records* /categories/* /images/*
+  handle @gone {
+    header Content-Type "text/html; charset=utf-8"
+    respond <<HTML
+    <!doctype html>
+    <html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>410 · Devline</title>
+    <style>
+    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#FDFBFC;color:#17141A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif}
+    .wrap{max-width:640px;width:100%;padding:48px 20px}
+    .rail{height:4px;background:#17141A;width:42%}
+    .rail.pink{height:4px;background:#EC5A87;width:34%;margin:10px 0 0 24%}
+    h1{font-size:clamp(24px,4vw,34px);font-weight:900;line-height:1.3;margin:28px 0 12px}
+    p{color:#5C525A;font-size:15px;line-height:1.8;margin:0 0 28px}
+    a{display:inline-block;padding:10px 20px;border:2px solid #17141A;color:#17141A;text-decoration:none;font-weight:700;margin-right:12px}
+    a.pink{border-color:#C63A64;color:#C63A64}
+    </style>
+    </head>
+    <body>
+    <div class="wrap">
+    <div class="rail"></div>
+    <div class="rail pink"></div>
+    <h1>410 · 这条线已随改版下线</h1>
+    <p>你访问的旧地址已永久移除，去看看新的 Devline。</p>
+    <a href="/">回首页</a><a class="pink" href="/articles">看文章</a>
+    </div>
+    </body>
+    </html>
+    HTML 410
   }
 
-  @api path /api/*
-  handle @api {
-    reverse_proxy http://api:9000
-  }
-
-  # 静态图片服务 - 直接从 content 目录提供图片
-  # 需要在 docker-compose 中挂载 content 目录到 caddy
-  @images path /images/*
-  handle @images {
-    root * /srv
-    uri strip_prefix /images
-    file_server
-  }
-
+  # 除 410 清单外的未知路径全部透传给 Next.js 渲染 404 页（设计文档 §6）
   handle {
     reverse_proxy http://web:3000
   }
 
+  # 静态资产长缓存：/_next/static/* 含 next/font 字体分片（/_next/static/media/）
+  @static path /_next/static/*
+  header @static Cache-Control "public, max-age=31536000, immutable"
+
   header {
     X-Frame-Options "SAMEORIGIN"
     Referrer-Policy "strict-origin-when-cross-origin"
-    # 图片缓存
-    Cache-Control "public, max-age=31536000" {
-      path /images/*
-    }
   }
+}
+
+# ⚠️ 用独立单值变量 {$STATS_DOMAIN}，不要写 stats.{$DOMAIN}：
+# 服务器 .env 的 DOMAIN 是逗号多值（deploy/.env.example: `DOMAIN=yourdomain.com, www.yourdomain.com`），
+# 主站块 `{$DOMAIN} {` 用逗号多主机名是合法的；但 `stats.{$DOMAIN}` 的 `stats.` 前缀只会贴到第一个主机名，
+# 第二个 www.<域名> 会漏进 stats 块被 goatcounter 劫持。因此 stats 子域用单值 STATS_DOMAIN（Task 8 Step 4 写入）。
+{$STATS_DOMAIN} {
+  encode zstd gzip
+  reverse_proxy http://goatcounter:8081
 }

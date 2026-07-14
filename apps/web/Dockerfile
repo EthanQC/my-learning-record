@@ -41,12 +41,11 @@ COPY --from=deps /repo/apps/web/node_modules ./node_modules
 # 2. 拷贝 web 的完整源码
 COPY apps/web/ ./
 
-# 3. 拷贝仓库根目录下的 content 目录（你之前已经有用到它）
-COPY content/ ./content/
+# 3. 构建期只需要新内容目录（prebuild 拷贝图片 + SSG 编译 MDX）
+COPY content/articles/ ./content/articles/
 
-# 4. 通过 build-arg 传入对外 API 地址（默认生产）
-ARG NEXT_PUBLIC_API_BASE_URL=https://qingverse.com
-ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
+# 3.1 prebuild 脚本（package.json 里以 ../../scripts/ 引用，从 /app 解析为 /scripts/）
+COPY scripts/copy-article-assets.mjs /scripts/copy-article-assets.mjs
 
 # 5. 给构建过程多一点内存，避免 Next.js 构建时爆内存
 ENV NODE_OPTIONS=--max-old-space-size=2048
@@ -68,9 +67,6 @@ COPY --from=build /app/.next/standalone ./
 # 静态资源
 COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public
-
-# 运行期如果还需要 content（例如你动态读 markdown 写文章页面）
-COPY --from=build /app/content ./content
 
 EXPOSE 3000
 CMD ["node", "server.js"]

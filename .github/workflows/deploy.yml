@@ -1,12 +1,11 @@
-name: Build & Deploy Qingverse 
+name: Build & Deploy Devline
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - "apps/api/**"
       - "apps/web/**"
-      - "content/**"
+      - "content/articles/**"
       - "deploy/**"
       - ".github/workflows/**"
   workflow_dispatch:
@@ -17,12 +16,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: main
+        uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -41,6 +38,19 @@ jobs:
       - name: Build
         run: npm run build:web
 
+      - name: CSS size check
+        run: node scripts/check-css-size.mjs
+
+      - name: No raw hex in components
+        run: node scripts/check-no-raw-hex.mjs
+
+      - name: Brand ban check
+        run: |
+          if grep -rl "情长" apps/web/src apps/web/.next/server/app 2>/dev/null; then
+            echo "构建产物或源码出现禁用品牌词"; exit 1
+          fi
+          echo "brand ban check OK"
+
   build:
     needs: checks
     runs-on: ubuntu-latest
@@ -49,43 +59,27 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: main
+        uses: actions/checkout@v5
 
       - name: Set tag
         id: vars
         run: echo "tag=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Login to Aliyun ACR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ secrets.ACR_REGISTRY }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build & Push API image
-        uses: docker/build-push-action@v6
-        with:
-          context: apps/api
-          file: apps/api/Dockerfile
-          platforms: linux/amd64
-          push: true
-          tags: |
-            ${{ secrets.ACR_REGISTRY }}/${{ secrets.ACR_NAMESPACE }}/qingverse-api:${{ steps.vars.outputs.tag }}
-          build-args: |
-            GOPROXY=https://proxy.golang.com.cn,https://goproxy.cn,https://goproxy.io,direct
-          cache-from: type=gha,scope=api
-          cache-to: type=gha,mode=max,scope=api
-
       - name: Build & Push Web image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: apps/web/Dockerfile
@@ -118,13 +112,12 @@ jobs:
 
             cd deploy
 
-            # 更新 API_TAG / WEB_TAG 为本次构建的 tag
-            sed -i "s/^API_TAG=.*/API_TAG=${{ needs.build.outputs.tag }}/" .env
+            # 更新 WEB_TAG 为本次构建的 tag（API 链路已退役，该变量已移除）
             sed -i "s/^WEB_TAG=.*/WEB_TAG=${{ needs.build.outputs.tag }}/" .env
 
-            # 拉取新镜像并重启
-            docker compose pull api web
-            docker compose up -d api web
+            # 拉取新镜像并重启（只操作 web；goatcounter 不随部署重启）
+            docker compose pull web
+            docker compose up -d web
             docker compose restart caddy
 
             docker image prune -f

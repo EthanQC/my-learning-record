@@ -1,27 +1,21 @@
-import { MetadataRoute } from "next";
-import { getPosts, getCategories } from "@/lib/api";
+import type { MetadataRoute } from 'next';
+import { getAllArticles } from '@/lib/content';
+import { SITE } from '@/lib/site';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const STATIC_PATHS = ['/', '/articles', '/articles/deep', '/articles/intro', '/projects', '/about', '/stats'];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [posts, categories] = await Promise.all([getPosts(), getCategories()]);
+  const articles = await getAllArticles();
 
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: `${siteUrl}/`, lastModified: new Date() },
-    { url: `${siteUrl}/about`, lastModified: new Date() },
-    { url: `${siteUrl}/posts`, lastModified: new Date() },
-    { url: `${siteUrl}/contact`, lastModified: new Date() },
-  ];
-
-  const postPages: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${siteUrl}/posts/${post.slug}`,
-    lastModified: post.date ? new Date(post.date) : new Date(),
-  }));
-
-  const categoryPages: MetadataRoute.Sitemap = categories.map((c) => ({
-    url: `${siteUrl}/categories/${c.name}`,
+  const staticPages: MetadataRoute.Sitemap = STATIC_PATHS.map((p) => ({
+    url: `${SITE.url}${p === '/' ? '' : p}` || SITE.url,
     lastModified: new Date(),
   }));
 
-  return [...staticPages, ...postPages, ...categoryPages];
+  const articlePages: MetadataRoute.Sitemap = articles.map((a) => ({
+    url: `${SITE.url}/articles/${a.track}/${a.slug}`,
+    lastModified: new Date(a.date),
+  }));
+
+  return [...staticPages, ...articlePages];
 }
