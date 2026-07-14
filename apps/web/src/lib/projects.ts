@@ -13,7 +13,7 @@ export const PROJECTS: Project[] = [
     name: '本站改造：Devline',
     problem: '旧站是动态渲染的个人博客，依赖一整套 Go API + MySQL，内容与品牌都不再匹配「技术 IP 平台」的目标。',
     approach: '重构为纯静态 Next.js：MDX 内容管线 + 三主题 design token 体系 + rail-tab 双轨交互，架构从 4 容器减到 3。',
-    outcome: '零后端依赖的内容站，git push 即发布；三主题共用一套 DOM 即时切换，全站 CSS gzip ≤ 50KB。',
+    outcome: '零后端依赖的内容站，git push 即发布；三主题共用一套 DOM 即时切换，首屏无字体阻塞。',
     link: 'https://github.com/EthanQC/my-learning-record',
   },
   {
