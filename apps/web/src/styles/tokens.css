@@ -67,7 +67,7 @@
   --accent-soft: rgb(246 189 210);    /* #F6BDD2 */
   --c-accent-strong: 198 58 100;  /* #C63A64  AA 修正 */
   --c-accent-text: 198 58 100;    /* #C63A64  AA 修正 */
-  --c-project-card-accent-text: 189 55 95; /* #BD375F  AA 修正：--c-accent-text 在 --surface-tint(#FDEEF4) 上仅 4.46:1<AA(T12验收发现)，此值 4.83:1 达标，仅 duo 项目卡场景使用 */
+  --c-accent-on-tint: 189 55 95; /* #BD375F  AA 修正：--c-accent-text 在 --surface-tint(#FDEEF4) 上仅 4.46:1<AA(T12验收发现)，此值 4.83:1 达标。用于 duo 下 accent 文字落在 --surface-tint 的场景：项目卡 + 主题切换器 hover 选中项 */
   --c-on-accent: 255 255 255;     /* #FFFFFF on #C63A64 = 5.01:1 */
   --c-track-deep: 23 20 26;       /* #17141A */
   --c-track-deep-dim: 217 210 214;/* #D9D2D6 */
@@ -115,6 +115,7 @@
   --accent-soft: rgb(243 196 211);    /* #F3C4D3 */
   --c-accent-strong: 194 37 92;   /* #C2255C */
   --c-accent-text: 194 37 92;     /* #C2255C（5.26:1 原值过 AA） */
+  --c-accent-on-tint: 162 31 77;  /* #A21F4D  AA 修正：--c-accent-text(#C2255C) 在 --surface-tint(#F3C4D3) 上仅 3.68:1<AA；此值 4.81:1 达标。editorial 项目卡走白底，故此 token 仅用于主题切换器 hover 选中项 */
   --c-on-accent: 255 255 255;     /* #FFFFFF on #C2255C = 5.7:1 */
   --c-track-deep: 34 26 32;       /* #221A20 */
   --c-track-deep-dim: 228 217 214;/* #E4D9D6 */

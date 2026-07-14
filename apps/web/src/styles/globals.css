@@ -171,6 +171,14 @@ pre {
   color: rgb(var(--c-accent-text));
 }
 
+/* T12 同根因：选中项 hover 时背景变 --surface-tint，--accent-text 落在浅粉底上 <AA
+   （duo 4.47:1 / editorial 3.68:1，14px/700 属正文，门槛 4.5:1）。仅这两个用
+   --surface-tint 的主题需换达标色；night 的 --surface-tint 是深底半透明叠加(5.74:1)不受影响 */
+[data-theme='duo'] .theme-switcher-option[aria-checked='true']:hover,
+[data-theme='editorial'] .theme-switcher-option[aria-checked='true']:hover {
+  color: rgb(var(--c-accent-on-tint));
+}
+
 @media (max-width: 640px) {
   .theme-switcher-text {
     display: none; /* §5：移动端仅色点图标 */
@@ -962,7 +970,7 @@ body::before {
    仅 duo 用 --surface-tint 做卡片底色，故仅 duo 场景换用达标色值（4.83:1） */
 [data-theme='duo'] .project-card-body dt,
 [data-theme='duo'] .project-card-link {
-  color: rgb(var(--c-project-card-accent-text));
+  color: rgb(var(--c-accent-on-tint));
 }
 
 [data-theme='editorial'] .project-card {
