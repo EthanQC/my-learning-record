@@ -47,6 +47,13 @@ COPY content/articles/ ./content/articles/
 # 3.1 prebuild 脚本（package.json 里以 ../../scripts/ 引用，从 /app 解析为 /scripts/）
 COPY scripts/copy-article-assets.mjs /scripts/copy-article-assets.mjs
 
+# 4. 搜索引擎站长验证串（NEXT_PUBLIC_* 在构建期内联，必须走 build-arg 而非运行期 env；
+#    值由 deploy.yml 的 build-args 从 GitHub Repository variables 传入，未设置时为空=不渲染 meta）
+ARG NEXT_PUBLIC_GSC_VERIFICATION=
+ARG NEXT_PUBLIC_BING_VERIFICATION=
+ENV NEXT_PUBLIC_GSC_VERIFICATION=$NEXT_PUBLIC_GSC_VERIFICATION
+ENV NEXT_PUBLIC_BING_VERIFICATION=$NEXT_PUBLIC_BING_VERIFICATION
+
 # 5. 给构建过程多一点内存，避免 Next.js 构建时爆内存
 ENV NODE_OPTIONS=--max-old-space-size=2048
 
