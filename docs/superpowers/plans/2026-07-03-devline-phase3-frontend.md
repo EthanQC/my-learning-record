@@ -51,6 +51,7 @@
 - 内容目录：`content/articles/<track>/<slug>.mdx`，图片 `content/articles/<track>/<slug>.assets/`
 
 **执行约定**：所有命令默认在仓库根 `/Users/abble/my-learning-record` 执行；`npm install` 一律用 `-w apps/web` 工作区语法；测试用 `npx tsx --test`（tsx 在 Task 1 安装）。
+> **勘误（2026-07-16）**：仓库根口径的 `npx tsx --test apps/web/tests/*.test.ts` 会因根目录无 tsconfig 导致 JSX 转译回退而假失败（railtab 两例 `React is not defined`）。标准测试命令已固化为仓库根 `npm test`（委托 `apps/web` 工作区、cwd 自动切换），并已加入 CI checks 门禁；tokens.test.ts 的路径读取同日改为 cwd 无关。
 
 ---
 

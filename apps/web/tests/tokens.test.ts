@@ -2,9 +2,11 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+// 基于本文件定位，不依赖 cwd（此前硬编码仓库根前缀，导致从 apps/web 跑会 ENOENT）
 const css = fs.readFileSync(
-  path.join(process.cwd(), 'apps/web/src/styles/tokens.css'),
+  path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src/styles/tokens.css'),
   'utf8'
 );
 
