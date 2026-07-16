@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss';
-import typography from '@tailwindcss/typography';
 import plugin from 'tailwindcss/plugin';
 
 export default {
@@ -65,7 +64,6 @@ export default {
     },
   },
   plugins: [
-    typography,
     // §6：主题变体仅限装饰差异（阴影/圆角/伪元素），组件配色一律走 token
     plugin(({ addVariant }) => {
       addVariant('theme-duo', "[data-theme='duo'] &");

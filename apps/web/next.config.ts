@@ -22,8 +22,9 @@ const nextConfig: NextConfig = {
   // 压缩配置
   compress: true,
 
-  // 缓存配置。/_next/static/* 的 Cache-Control 归口 Caddy（deploy/Caddyfile.example
-  // 的 @static 块已覆盖，含 next/font 字体分片），此处不重复下发（F6）
+  // 缓存配置。/_next/static/*（含 next/font 字体分片）的 Cache-Control 由 Next standalone
+  // server 内置下发（public, max-age=31536000, immutable），不受此处 headers() 控制；
+  // Caddy 侧也已移除重复下发（F6/F6-补充，见 deploy/Caddyfile.example）
   headers: async () => [
     {
       source: '/(.*)',

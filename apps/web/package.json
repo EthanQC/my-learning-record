@@ -8,7 +8,8 @@
     "prebuild": "node ../../scripts/copy-article-assets.mjs",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3000",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -22,7 +23,6 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

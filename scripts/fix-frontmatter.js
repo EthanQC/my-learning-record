@@ -5,6 +5,9 @@ const matter = require("gray-matter");
 
 const ROOT = path.join(process.cwd(), "content");
 const DRY = process.argv.includes("--dry");
+// 只服务冻结的旧内容（blog/notes 等）。content/articles 走 zod schema（apps/web/src/lib/content-schema.ts）
+// 与 publish-article 流程，本脚本不认识 track/draft 字段且正则重写可能破坏 MDX，必须排除。
+const EXCLUDE = path.join(ROOT, "articles");
 
 function ymd(d) { return d.toISOString().slice(0,10); }
 
@@ -18,7 +21,7 @@ function firstParagraph(md) {
   return (p || "").replace(/\s+/g," ").slice(0,180);
 }
 function walk(dir) {
-  if (!fs.existsSync(dir)) return [];
+  if (!fs.existsSync(dir) || dir === EXCLUDE) return [];
   const out = [];
   for (const name of fs.readdirSync(dir)) {
     const p = path.join(dir, name);

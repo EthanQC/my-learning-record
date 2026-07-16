@@ -1,10 +1,9 @@
 {
   "name": "my-learning-record",
   "version": "1.0.0",
-  "description": "个人学习记录与技术博客（Next.js + Go + MySQL），上线于 qingverse.com",
-  "main": "index.js",
+  "description": "Devline——双线个人技术博客（Next.js 静态站，Go API 代码仅归档保留），上线于 qingverse.com",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run test -w apps/web",
     "dev:web": "npm --prefix apps/web run dev",
     "build:web": "npm --prefix apps/web run build",
     "start:web": "npm run start -w apps/web",
@@ -25,8 +24,7 @@
   "homepage": "https://github.com/EthanQC/my-learning-record#readme",
   "private": true,
   "workspaces": [
-    "apps/*",
-    "packages/*"
+    "apps/*"
   ],
   "devDependencies": {
     "@types/node": "^24.10.0",

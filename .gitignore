@@ -65,5 +65,10 @@ next-env.d.ts
 
 apps/web/public/article-assets/
 
-# 本地 agent 工具配置(浏览器面板 dev server 定义,不入库)
-.claude/
+# 旧 Windows/C++ 时代残留的编辑器配置，不入库
+.vscode/
+
+# 本地 agent 工具配置(浏览器面板 dev server 定义,不入库)；
+# 例外：项目 skill（publish-article 发文流水线等）按规格入库
+.claude/*
+!.claude/skills/
