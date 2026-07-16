@@ -84,6 +84,12 @@
   color: rgb(var(--c-accent-text)); /* C：等宽注释前缀 */
 }
 
+/* C：hero 引子取 D5 的第二种前缀语言「$ 命令」（mockup visual-style.html 夜航 hero：$ devline --track=…），
+   其余章节引子维持「// 注释」 */
+[data-theme='night'] .hero .section-label::before {
+  content: '$ ';
+}
+
 /* ---------- shiki 代码块三主题切换（§6 代码高亮：三行 CSS 按 data-theme 选变量） ---------- */
 pre code span {
   color: var(--shiki-duo);
@@ -539,6 +545,36 @@ pre {
 [data-theme='editorial'] .article-card {
   border-color: rgb(var(--c-border));
   border-radius: 0;
+}
+
+/* A：标签胶囊 10px / 按钮 2px（D5 圆角差异表；mockup visual-style.html 方向 A） */
+[data-theme='editorial'] .article-card-tag {
+  border-radius: 10px;
+}
+[data-theme='editorial'] .notfound-btn,
+[data-theme='editorial'] .empty-track {
+  border-radius: 2px;
+}
+
+/* A：期刊大序号 01/02（mockup 方向 A 文章索引；D1 标注纯装饰、对 AT 隐藏——
+   content 备选文本置空即 CSS 层的 aria-hidden 等价物；不支持该语法的引擎会整条丢弃，仅少装饰无副作用） */
+[data-theme='editorial'] .home-panel {
+  counter-reset: devline-ordinal;
+}
+[data-theme='editorial'] .home-panel .article-card {
+  counter-increment: devline-ordinal;
+  position: relative;
+  padding-left: 58px;
+}
+[data-theme='editorial'] .home-panel .article-card::before {
+  content: counter(devline-ordinal, decimal-leading-zero) / '';
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  font-family: Georgia, var(--font-serif);
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--ordinal-color);
 }
 
 /* C：1px 发丝线 + 左侧 2px 轨色边，圆角 0 8px 8px 0，hover 辉光（D5） */

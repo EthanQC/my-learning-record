@@ -123,6 +123,7 @@
   --c-track-intro-dim: 243 196 211; /* #F3C4D3 */
   --c-rail-deep-outline: 34 26 32;  /* A 未激活深度描边 = --track-deep（无 B 特例） */
   --c-focus-ring: 34 26 32;
+  --ordinal-color: rgb(217 194 203); /* #D9C2CB 期刊大序号——D1 标注纯装饰（1.56:1 对比度豁免），仅 A 使用 */
 
   --font-display: var(--font-serif); /* D3：衬线只写在 A/C 作用域 */
   --font-meta: var(--font-sans);
