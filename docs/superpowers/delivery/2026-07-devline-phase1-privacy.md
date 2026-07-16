@@ -59,6 +59,7 @@
 
 1. **阶段二**：新站稳定运行后，清理阿里云 ACR 上重写前的 qingverse-web 旧 tag 镜像，并在服务器本地 `docker rmi` 对应旧镜像。**阶段三**：评估去掉 `apps/web/Dockerfile` 的 `COPY content/ ./content/`（与运行时 bind-mount 内容目录冗余），让新构建的镜像不再烘焙 content。
 2. （可选）清空 GitHub Actions 缓存、删除重写前的旧 run，收窄旧 SHA 经 Actions 元数据 / `git fetch` 的可发现性（不做也已书面接受为现状，见上文「表述修正」）。
+   **2026-07-16 复核补记：此项实际已完成**（好于本文档原记载）——重写前 run 已全部删除（现存最早 run = 29187862093，2026-07-12 重写后首次 dispatch；旧 run 29161727843 查询返回 404），Actions 缓存现存 79 个全部晚于 2026-07-12 首次重写后构建。「Actions 元数据零门槛暴露旧 SHA」的暴露面已关闭；剩余残留仅为需预知完整 SHA 才能访问的 GitHub 悬挂对象（仍属用户书面接受的选项 B 范围）。
 3. `.superpowers/sdd/` 下各任务报告（含完整旧 SHA、真实文件名等敏感值，已 git-ignored）迁出仓库工作目录，不长期留在仓库内。
 4. CI workflow 的 Node 20 弃用告警，随后续 Node 版本升级一并处理。
 5. 阶段三：从 HEAD 移除 `/murmurs` 路由代码（`apps/web/src/app/murmurs/`）；阶段四：完成 GSC 资产验证后，为图片前缀与 `/murmurs` 页面一并提交 410 + 移除请求（沿用原计划，非本次新增）。
