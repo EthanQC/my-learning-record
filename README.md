@@ -25,7 +25,8 @@
 ├ content/
 │  ├ articles/ # 站点文章（deep/ 深度线、intro/ 科普线、PUBLISH_LOG.md 发布日志）
 │  ├ blog/     # 面经、实习记录等（归档，不在站点展示）
-│  └ notes/    # 各方向学习笔记（归档，不在站点展示）
+│  ├ notes/    # 各方向学习笔记（归档，不在站点展示）
+│  └ tech-intro/ # 旧「技术入门」系列（归档，不在站点展示）
 ├ deploy/      # 服务器 compose + Caddyfile + .env 的 .example 三件套
 ├ scripts/     # CI 门禁与内容工具脚本
 └ docs/        # 设计规格 / 阶段计划 / 交付说明（superpowers/ 下）
