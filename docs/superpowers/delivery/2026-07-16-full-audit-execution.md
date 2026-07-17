@@ -37,13 +37,13 @@
 
 10. `scripts/validate-article.mjs`：zod frontmatter（复用 content-schema.ts 单一事实源）+ 图片引用存在性校验，成功/失败双路径实测。
 11. `content/articles/PUBLISH_LOG.md`：交接节模板表头初始化。
-12. `.claude/skills/publish-article/SKILL.md`：完整流程指令（两道人工门/白名单/Budget/7 项线上验证）；`.gitignore` 收窄为 `.claude/*` + `!.claude/skills/`。
+12. `.claude/skills/publish-article/SKILL.md`：完整流程指令（两道人工门/白名单/Budget/完整验证阶梯——7 级中第 5–7 级为线上断言）；`.gitignore` 收窄为 `.claude/*` + `!.claude/skills/`。
 
 **文档与仓库卫生（commit `0a438ad`、`819ad27`）**
 
-13. **根 README 重写**（763 行旧站说明书 → Devline 现架构）：删 Go+MySQL/Swagger/API_TAG 全部字样、go-mod badge、152 条死链目录索引，以及 **63 条 murmurs 死链**（隐私迁移一致性，最高优先）；license badge 摘除（无 LICENSE 实体）。
+13. **根 README 重写**（763 行旧站说明书 → Devline 现架构）：删除全部过时的 Go+MySQL 架构描述（仅保留一处「已退役、apps/api 归档」说明性提及）、Swagger/API_TAG 字样、go-mod badge、152 条死链目录索引，以及 **63 条 murmurs 死链**（隐私迁移一致性，最高优先）；license badge 摘除（无 LICENSE 实体）。
 14. apps/web/README 从 create-next-app 原始模板重写为项目实况。
-15. 残留清理：package.json 描述/main/packages\* 空壳、tsconfig 死别名 `@lib/*`、死依赖 @tailwindcss/typography、.env.local.example（原指向已退役 API）、next.config.ts 过时缓存注释（与 Caddyfile 互相指认矛盾）、`.vscode/`（Windows C++ 残留，入 gitignore）、废弃脚本 add-frontmatter/generate-summaries 删除、fix-frontmatter 遍历收窄排除 content/articles。
+15. 残留清理：package.json 描述/main/packages\* 空壳、tsconfig 死别名 `@lib/*`、死依赖 @tailwindcss/typography、.env.local.example **重写**为真实变量（原两变量指向已退役 API）、next.config.ts 过时缓存注释（与 Caddyfile 互相指认矛盾）、`.vscode/`（Windows C++ 残留，入 gitignore）、废弃脚本 add-frontmatter/generate-summaries 删除、fix-frontmatter 遍历收窄排除 content/articles。
 16. **验证截图归档（抢救易失数据）**：42 张切流验证截图从 /private/tmp 会话目录归档至 `~/backup-devline/phase4-screenshots/`；补拍 stats 成功态与 GoatCounter 公开面板 2 张入 `supplement-2026-07-16/`；路径清单补入切流交付说明（Task 14 验收补齐）。
 17. 交付说明补记（md/html 同步）：切流文档 HEAD 时点表述、d578aae/d80181d 交付后提交、规格偏差第 7 条（D6 退场动效机制取舍）与第 8 条（在线数→今日 PV 替代）、偏差 #2 已补齐标注、GSC 通道说明；阶段一文档旧 run 实清补记。
 
@@ -66,3 +66,15 @@
 ## 六、残留接受项（口径不变）
 
 GitHub 悬挂对象（gc 前旧 SHA 直链可达，用户已书面接受选项 B；可发现性已随旧 run 清理收窄至"需预知完整 SHA"）；完整敏感值仅存仓库外 `phase4-rollback.md`/`phase1-log.md`。
+
+## 七、独立复审（2026-07-17，用户要求对本报告结论再验证）
+
+复审方式：14 个反证代理，把本报告拆成 14 组可证伪断言，各自只用本地证据（git/文件/实跑命令）尽力反驳；服务器与线上侧由 controller 亲自复测。**结论：核心结论全部站住（11 组 CONFIRMED、3 组 PARTIAL），未发现任何"宣称完成实际未做"的项；PARTIAL 项全部当场整改（commit `f888d83`）**：
+
+1. **validate-article.mjs 图片校验假阳性（复审最重要发现，已修）**：脚本按字面相对路径找图，而运行时事实源 `remarkArticleImages` 把已落位文章的 `./x.png` 解析到 `<slug>.assets/x.png`——两篇能通过 next build 的合法文章（hello-deep/hello-intro）被脚本误判失败；围栏代码块内示例引用、`/` 开头站内绝对路径也会误报。已全部对齐运行时规则修复，五路实测（两篇此前假阳性文章 / 零图 / 缺 title+缺图失败路径 / 代码块+绝对路径）通过。此项同时暴露我初版"双路径实测"的不足：成功样本图片引用为 0，没覆盖图片分支。
+2. **SKILL.md 缺规格的复盘规则（已补）**：规格 L118「每发 5 篇复盘摩擦点 + 首月每篇抽查一项验证证据」未写入 SKILL，已补「复盘规则（改进循环）」一节。
+3. **报告与 README 三处措辞不精确（已修正）**：①"删 MySQL 全部字样"字面不成立（README 保留一处退役说明性提及，本节上文已改述）；②"7 项线上验证"应为"7 级验证阶梯（线上为第 5–7 级）"；③.env.local.example 是重写非删除。README 目录树漏列 content/tech-intro/ 已补。
+4. **文档小勘误（已修）**：cutover「交付后补完」导语仍写"4 项…同日"（实际 5 项且第 5 项为 07-16），md/html 同步修正；deploy/.env.example 补 NEXT_PUBLIC_SITE_URL 构建期内联说明（此前该说明只在 apps/web 侧）。
+5. **确认无漏网**：完整性代理将首轮审计的全部 24 个非 done 事项逐条对照当前 HEAD——19 项已解决、5 项即"待用户"清单、3 个因限额未复核项均已落位（偏差第 7/8 条 + GSC 通道），无两边都不属于的漏网事项。
+6. **线上/服务器复测（controller 亲测）**：四方一致 `819ad27`；/articles 空态、410 清单、/api 透传、feed/robots/sitemap、stats 链路（count.js/TOTAL.json 200）全部正常；线上 CSS bundle 实际包含 `devline-ordinal` 与 night `$` 前缀规则；verification meta 为 0 属预期（Variables 未配置）。
+7. 复审代理另记录了若干**不构成缺陷的边界说明**：CSS 主题增量断言对 `:root,[data-theme=duo]` 组合规则整条计入（保守多算方向，无假通过风险）；规格 L43 的 `node scripts/validate-article.mjs` 措辞已过时（脚本 import TS 须经 tsx，SKILL 与脚本注释为准）。
