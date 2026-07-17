@@ -55,13 +55,26 @@
 - 浏览器实测：三主题目检（editorial 序号/圆角、night `$`/`//` 前缀、辉光正常）；stats 成功态 tiles 渲染（累计 PV 5/UV 5）；GoatCounter 公开面板免登录可访。
 - 本地门禁全绿：lint / tsc / 13 单测 / build / CSS 71.7KB≤80KB + 主题增量 1.7KB≤10KB / no-raw-hex。
 
-## 五、待用户项（agent 无法代操作或需用户拍板）
+## 五、待用户项（初版；第 2/4/5 项已于 2026-07-17 授权落地，见第八章）
 
-1. **GSC 两项收尾**：先完成 qingverse.com 资产验证——现在有两条路：① 在仓库 Settings → Secrets and variables → Variables 配 `NEXT_PUBLIC_GSC_VERIFICATION`（meta 通道本次已打通，配好后任意一次部署即生效）；② DNS TXT 验证。验证后：提交 sitemap `https://qingverse.com/sitemap.xml` + 移除前缀 `https://qingverse.com/murmurs`。完成后补记入切流交付说明。
-2. **ACR 云端旧镜像清理**（可选，风险低）：ACR 控制台删除重写前旧 web tag，保留 `c751b0c` 回滚基线。需 ACR 凭据。
-3. **首篇真实文章发布**：发文系统已就绪，对 Claude Code 说「发布 <文章路径>」即走全流程（First task 后半段：真实 run 偏差记入 PUBLISH_LOG）。这是让站点走出 Option B 空态的唯一路径。
-4. **LICENSE 决策**：仓库现无 LICENSE 文件（badge 已摘）；package.json 仍声明 ISC。开源则补 LICENSE 文件，不开源建议改 `"license": "UNLICENSED"`。
-5. **avatar.jpg 去留**（phase3 人工确认清单唯一未闭环项）：`apps/web/public/avatar.jpg` 留仓未用——删除，或在关于页启用照片。
+1. **GSC 两项收尾**：先完成 qingverse.com 资产验证——① 仓库 Variables 配 `NEXT_PUBLIC_GSC_VERIFICATION`（meta 通道）；② DNS TXT 验证。验证后提交 sitemap + 移除 `/murmurs` 前缀。**（2026-07-17 更新：站点侧已全部备好，验证卡在 Google↔大陆服务器超时，改走 DNS TXT，仍需用户在 hichina 控制台加一条记录——详见第八章。）**
+2. ~~**ACR 云端旧镜像清理**~~ **→ 已完成（2026-07-17，见第八章）**。
+3. **首篇真实文章发布**：发文系统已就绪，对 Claude Code 说「发布 <文章路径>」即走全流程。这是让站点走出 Option B 空态的唯一路径。（用户明确此项不授权自动执行。）
+4. ~~**LICENSE 决策**~~ **→ 已完成：`license` 改 `UNLICENSED`（2026-07-17，见第八章）**。
+5. ~~**avatar.jpg 去留**~~ **→ 已完成：删除（2026-07-17，见第八章）**。
+
+## 八、待用户项落地（2026-07-17，用户授权「所有你能直接做的都做，除发文章」）
+
+四项授权项中 3 项已完成、1 项（GSC）站点侧全部备好但卡在外部网络约束：
+
+1. **LICENSE = UNLICENSED（已完成）**：`package.json` 的 `license` 由 `ISC` 改为 `UNLICENSED`（仓库无 LICENSE 文件、不开源，口径对齐；README 的 license badge 已于 `819ad27` 摘除）。commit `6f342bd`。
+2. **删除未用 avatar.jpg（已完成）**：`git rm apps/web/public/avatar.jpg`（src 零引用，phase3 人工确认清单最后一项；需要时可从 git 历史找回）。commit `6f342bd`。
+3. **ACR 云端旧镜像清理（已完成）**：用服务器 `/home/w/.docker/config.json` 的 ACR 凭据经 registry v2 API（`scope=*` token 授权 DELETE），删除 `qingverse-web` 73 个 tag 中 64 个未被当前 `main` 可达的重写前 tag（含全部烘焙 murmurs 内容的旧镜像 + 3 个日期式旧 tag），按 digest 保护清单避免误删在役 tag 的共享层。**保留 10 个**：9 个在役/近期 tag + `c751b0c`（§7A 回滚基线）。至此重写前烘焙 murmurs 的镜像在 VPS 本地与 ACR 云端均已清空。
+4. **GSC 资产验证（站点侧全部备好，验证卡在外部网络约束 → 仍需用户加一条 DNS 记录）**：
+   - 站点侧三通道全部就位：① meta 标签（`NEXT_PUBLIC_GSC_VERIFICATION` 配入仓库 Variables，随 `6f342bd` 部署，线上已渲染）；② HTML 验证文件（`/googleaf3e76e84c749c1b.html`，线上 200）；③ DNS TXT 记录值已取出。
+   - controller 真实浏览器登录 GSC 发起验证，**HTML 文件方式两次失败，原因 = `The connection to your server timed out`**：Google 验证器从海外经 GFW 抓取阿里云深圳服务器超时。诊断排除 IPv6（无 AAAA 记录），确认 TLS 握手实测 1.4–4.6s，叠加国际链路触发超时；meta/文件方式同依赖服务器抓取、同链路同样受阻。
+   - **唯一可靠路径 = DNS TXT**（Google 直接查 DNS，绕开 web 服务器）。但加 TXT 需用户 hichina（阿里云/万网）DNS 控制台：assistant 登录阿里云触发风控且属用户账号操作，服务器上无任何阿里云 CLI/AccessKey 可走 API——故此步为用户人工项。
+   - **待用户操作**：在 hichina 为 `qingverse.com` 加一条 **TXT** 记录，主机记录 `@`，值 `google-site-verification=eUrqUnEAjrsKFVODf2QNmFoaTIN-WCcNcH5F_97IIto`；DNS 生效后回 GSC 点 VERIFY。验证通过后再在 GSC 内提交 sitemap `https://qingverse.com/sitemap.xml` + 移除前缀 `https://qingverse.com/murmurs`（这两步同样必须验证通过后才能操作）。
 
 ## 六、残留接受项（口径不变）
 

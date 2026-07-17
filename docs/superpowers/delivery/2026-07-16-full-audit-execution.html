@@ -82,6 +82,7 @@
     <li><a href="#user">待用户项</a></li>
     <li><a href="#residual">残留接受项</a></li>
     <li><a href="#rereview">独立复审（07-17）</a></li>
+    <li><a href="#userdone">待用户项落地（07-17）</a></li>
   </ol>
 </nav>
 <main>
@@ -148,13 +149,13 @@
   <li>本地门禁全绿：lint / tsc / 13 单测 / build / CSS 71.7KB≤80KB + 主题增量 1.7KB≤10KB / no-raw-hex。</li>
 </ul>
 
-<h2 id="user">五、待用户项（agent 无法代操作或需用户拍板）</h2>
+<h2 id="user">五、待用户项（初版；第 2/4/5 项已于 2026-07-17 授权落地，见<a href="#userdone">第八章</a>）</h2>
 <ol class="facts">
-  <li><strong>GSC 两项收尾</strong>：先完成 qingverse.com 资产验证——两条路任选：① 仓库 Settings → Secrets and variables → <strong>Variables</strong> 配 <code>NEXT_PUBLIC_GSC_VERIFICATION</code>（meta 通道本次已打通，配好后任意一次部署即生效）；② DNS TXT 验证。验证后：提交 sitemap <code>https://qingverse.com/sitemap.xml</code> + 移除前缀 <code>https://qingverse.com/murmurs</code>。完成后补记入切流交付说明。</li>
-  <li><strong>ACR 云端旧镜像清理</strong>（可选，风险低）：ACR 控制台删除重写前旧 web tag，保留 <code>c751b0c</code> 回滚基线。需 ACR 凭据。</li>
-  <li><strong>首篇真实文章发布</strong>：发文系统已就绪，对 Claude Code 说「发布 &lt;文章路径&gt;」即走全流程。这是让站点走出 Option B 空态的唯一路径。</li>
-  <li><strong>LICENSE 决策</strong>：仓库现无 LICENSE 文件（badge 已摘）；package.json 仍声明 ISC。开源则补 LICENSE 文件，不开源建议改 <code>"license": "UNLICENSED"</code>。</li>
-  <li><strong>avatar.jpg 去留</strong>（phase3 人工确认清单唯一未闭环项）：<code>apps/web/public/avatar.jpg</code> 留仓未用——删除，或在关于页启用照片。</li>
+  <li><strong>GSC 两项收尾</strong>：先完成 qingverse.com 资产验证——① 仓库 Variables 配 <code>NEXT_PUBLIC_GSC_VERIFICATION</code>（meta 通道）；② DNS TXT 验证。验证后提交 sitemap + 移除 <code>/murmurs</code> 前缀。<strong>（2026-07-17 更新：站点侧已全部备好，验证卡在 Google↔大陆服务器超时，改走 DNS TXT，仍需用户在 hichina 控制台加一条记录——详见第八章。）</strong></li>
+  <li><del>ACR 云端旧镜像清理</del> <strong>→ <span class="ok">已完成</span>（2026-07-17，见第八章）</strong>。</li>
+  <li><strong>首篇真实文章发布</strong>：发文系统已就绪，对 Claude Code 说「发布 &lt;文章路径&gt;」即走全流程。这是让站点走出 Option B 空态的唯一路径。（用户明确此项不授权自动执行。）</li>
+  <li><del>LICENSE 决策</del> <strong>→ <span class="ok">已完成</span>：<code>license</code> 改 <code>UNLICENSED</code>（2026-07-17，见第八章）</strong>。</li>
+  <li><del>avatar.jpg 去留</del> <strong>→ <span class="ok">已完成</span>：删除（2026-07-17，见第八章）</strong>。</li>
 </ol>
 
 <h2 id="residual">六、残留接受项（口径不变）</h2>
@@ -170,6 +171,22 @@
   <li><strong>确认无漏网</strong>：完整性代理将首轮审计的全部 24 个非 done 事项逐条对照当前 HEAD——19 项已解决、5 项即「待用户」清单、3 个因限额未复核项均已落位（偏差第 7/8 条 + GSC 通道），无两边都不属于的漏网事项。</li>
   <li><strong>线上/服务器复测（controller 亲测）</strong>：四方一致 <code>819ad27</code>；/articles 空态、410 清单、/api 透传、feed/robots/sitemap、stats 链路全部正常；线上 CSS bundle 实际包含 <code>devline-ordinal</code> 与 night <code>$</code> 前缀规则；verification meta 为 0 属预期（Variables 未配置）。</li>
   <li>复审代理另记录了若干<strong>不构成缺陷的边界说明</strong>：CSS 主题增量断言对 <code>:root,[data-theme=duo]</code> 组合规则整条计入（保守多算方向，无假通过风险）；规格 L43 的 <code>node scripts/validate-article.mjs</code> 措辞已过时（脚本 import TS 须经 tsx，SKILL 与脚本注释为准）。</li>
+</ol>
+
+<h2 id="userdone">八、待用户项落地（2026-07-17，用户授权「所有你能直接做的都做，除发文章」）</h2>
+<p>四项授权项中 <strong>3 项已完成</strong>、1 项（GSC）站点侧全部备好但卡在外部网络约束：</p>
+<ol class="facts">
+  <li><strong>LICENSE = UNLICENSED（<span class="ok">已完成</span>）</strong>：<code>package.json</code> 的 <code>license</code> 由 <code>ISC</code> 改为 <code>UNLICENSED</code>（仓库无 LICENSE 文件、不开源，口径对齐；README 的 license badge 已于 <code>819ad27</code> 摘除）。commit <code>6f342bd</code>。</li>
+  <li><strong>删除未用 avatar.jpg（<span class="ok">已完成</span>）</strong>：<code>git rm apps/web/public/avatar.jpg</code>（src 零引用，phase3 人工确认清单最后一项；需要时可从 git 历史找回）。commit <code>6f342bd</code>。</li>
+  <li><strong>ACR 云端旧镜像清理（<span class="ok">已完成</span>）</strong>：用服务器 <code>/home/w/.docker/config.json</code> 的 ACR 凭据经 registry v2 API（<code>scope=*</code> token 授权 DELETE），删除 <code>qingverse-web</code> 73 个 tag 中 <strong>64 个</strong>未被当前 <code>main</code> 可达的重写前 tag（含全部烘焙 murmurs 内容的旧镜像 + 3 个日期式旧 tag），按 digest 保护清单避免误删在役 tag 的共享层。<strong>保留 10 个</strong>：9 个在役/近期 tag + <code>c751b0c</code>（§7A 回滚基线）。至此重写前烘焙 murmurs 的镜像在 VPS 本地与 ACR 云端均已清空。</li>
+  <li><strong>GSC 资产验证（站点侧全部备好，<span class="warn">验证卡在外部网络约束</span> → 仍需用户加一条 DNS 记录）</strong>：
+    <ul class="facts">
+      <li>站点侧三通道全部就位：① meta 标签（<code>NEXT_PUBLIC_GSC_VERIFICATION</code> 配入仓库 Variables，随 <code>6f342bd</code> 部署，线上已渲染）；② HTML 验证文件（<code>/googleaf3e76e84c749c1b.html</code>，线上 200）；③ DNS TXT 记录值已取出。</li>
+      <li>controller 真实浏览器登录 GSC 发起验证，<strong>HTML 文件方式两次失败，原因 = <code>The connection to your server timed out</code></strong>：Google 验证器从海外经 GFW 抓取阿里云深圳服务器超时。诊断排除 IPv6（无 AAAA 记录），确认 TLS 握手实测 1.4–4.6s，叠加国际链路触发超时；meta/文件方式同依赖服务器抓取、同链路同样受阻。</li>
+      <li><strong>唯一可靠路径 = DNS TXT</strong>（Google 直接查 DNS，绕开 web 服务器）。加 TXT 需用户 hichina（阿里云/万网）DNS 控制台：assistant 登录阿里云触发风控且属用户账号操作，服务器上无任何阿里云 CLI/AccessKey 可走 API——故此步为用户人工项。</li>
+      <li><strong>待用户操作</strong>：在 hichina 为 <code>qingverse.com</code> 加一条 <strong>TXT</strong> 记录，主机记录 <code>@</code>，值 <code>google-site-verification=eUrqUnEAjrsKFVODf2QNmFoaTIN-WCcNcH5F_97IIto</code>；DNS 生效后回 GSC 点 VERIFY。验证通过后再在 GSC 内提交 sitemap <code>https://qingverse.com/sitemap.xml</code> + 移除前缀 <code>https://qingverse.com/murmurs</code>（这两步同样必须验证通过后才能操作）。</li>
+    </ul>
+  </li>
 </ol>
 
 <footer>Devline 全量审查与执行 · 2026-07-16 · 对应 markdown：<code>docs/superpowers/delivery/2026-07-16-full-audit-execution.md</code></footer>
