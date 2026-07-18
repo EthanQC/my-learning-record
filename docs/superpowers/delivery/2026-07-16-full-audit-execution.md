@@ -57,7 +57,7 @@
 
 ## 五、待用户项（初版；第 2/4/5 项已于 2026-07-17 授权落地，见第八章）
 
-1. **GSC 两项收尾**：先完成 qingverse.com 资产验证——① 仓库 Variables 配 `NEXT_PUBLIC_GSC_VERIFICATION`（meta 通道）；② DNS TXT 验证。验证后提交 sitemap + 移除 `/murmurs` 前缀。**（2026-07-17 更新：站点侧已全部备好，验证卡在 Google↔大陆服务器超时，改走 DNS TXT，仍需用户在 hichina 控制台加一条记录——详见第八章。）**
+1. ~~**GSC 两项收尾**~~ **→ 已完成（2026-07-18：DNS TXT 验证通过 + sitemap 提交 + /murmurs 移除请求提交，见第八章）**。
 2. ~~**ACR 云端旧镜像清理**~~ **→ 已完成（2026-07-17，见第八章）**。
 3. **首篇真实文章发布**：发文系统已就绪，对 Claude Code 说「发布 <文章路径>」即走全流程。这是让站点走出 Option B 空态的唯一路径。（用户明确此项不授权自动执行。）
 4. ~~**LICENSE 决策**~~ **→ 已完成：`license` 改 `UNLICENSED`（2026-07-17，见第八章）**。
@@ -74,7 +74,7 @@
    - 站点侧三通道全部就位：① meta 标签（`NEXT_PUBLIC_GSC_VERIFICATION` 配入仓库 Variables，随 `6f342bd` 部署，线上已渲染）；② HTML 验证文件（`/googleaf3e76e84c749c1b.html`，线上 200）；③ DNS TXT 记录值已取出。
    - controller 真实浏览器登录 GSC 发起验证，**HTML 文件方式两次失败，原因 = `The connection to your server timed out`**：Google 验证器从海外经 GFW 抓取阿里云深圳服务器超时。诊断排除 IPv6（无 AAAA 记录），确认 TLS 握手实测 1.4–4.6s，叠加国际链路触发超时；meta/文件方式同依赖服务器抓取、同链路同样受阻。
    - **唯一可靠路径 = DNS TXT**（Google 直接查 DNS，绕开 web 服务器）。但加 TXT 需用户 hichina（阿里云/万网）DNS 控制台：assistant 登录阿里云触发风控且属用户账号操作，服务器上无任何阿里云 CLI/AccessKey 可走 API——故此步为用户人工项。
-   - **待用户操作**：在 hichina 为 `qingverse.com` 加一条 **TXT** 记录，主机记录 `@`，值 `google-site-verification=eUrqUnEAjrsKFVODf2QNmFoaTIN-WCcNcH5F_97IIto`；DNS 生效后回 GSC 点 VERIFY。验证通过后再在 GSC 内提交 sitemap `https://qingverse.com/sitemap.xml` + 移除前缀 `https://qingverse.com/murmurs`（这两步同样必须验证通过后才能操作）。
+   - ~~**待用户操作**：在 hichina 加 TXT 记录~~ **→ 全部完成（2026-07-18）**：用户添加 TXT 后 `dig` 三方（权威 NS/8.8.8.8/223.5.5.5）确认生效，GSC 重新发起添加资产即「**Ownership auto verified**」（验证方式 = Domain name provider）。随后 **sitemap 已提交**（Submitted Jul 18, 2026；初始 "Couldn't fetch" 属即时态+已知抓取慢，Google 周期性重试）、**`/murmurs` 前缀移除请求已提交**（Requested Jul 18, 2026，Status: Processing request）。TXT 记录与 public/ 验证文件须保留。**至此 5 项待用户项仅剩「首篇文章发布」1 项（用户明确保留）。**
 
 ## 六、残留接受项（口径不变）
 
